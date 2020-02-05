@@ -1,2 +1,2 @@
 html:
-	htlatex yyang173-thesis.tex myxhtml
+	make4ht -ul yyang173-thesis.tex myxhtml
