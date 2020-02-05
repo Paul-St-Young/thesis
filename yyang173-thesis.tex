@@ -9,7 +9,7 @@
 \usepackage{comment}
 
 \input{./papers/nonbo/pre}
-\graphicspath{{./papers/bandgap/},{./papers/nonbo/}}
+\graphicspath{{./papers/bandgap/},{./papers/nonbo/},{./papers/licp/}}
 
 \newcommand{\toprule}{\hline\hline}
 \newcommand{\midrule}{\hline}
@@ -143,10 +143,8 @@ Fixed-phase diffusion Monte Carlo uses a trial wavefunction to modify the Hamilt
 \section{Discussion}
 
 \chapter{Effect of ions on the electronic momentum distribution}
-\section{Introduction}
-\section{Methods}
-\section{Results}
-\section{Discussion}
+\include{papers/licp/licp}
+\input{papers/licp/licp.bbl}
 
 \chapter{Finite-size correction to the fundamental gap of insulators}
 \include{papers/bandgap/bandgap}
