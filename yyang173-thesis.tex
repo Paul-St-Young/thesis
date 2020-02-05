@@ -1,0 +1,156 @@
+\documentclass[draftthesis,fullpage]{uiucthesis}
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{braket}
+\usepackage{subfiles}
+\usepackage{comment}
+
+%\input{./papers/nonbo/pre}
+%\graphicspath{{./papers/bandgap/},{./papers/nonbo/}}
+
+\newcommand{\toprule}{\hline\hline}
+\newcommand{\midrule}{\hline}
+\newcommand{\bottomrule}{\hline\hline}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\up}{\uparrow}
+\newcommand{\dn}{\downarrow}
+\newcommand{\ham}{\mathcal{H}}
+
+\begin{document}
+
+\title{Electron-ion Correlation and Finite-size Effects in\\
+       Quantum Monte Carlo Simulations}
+\author{Yubo ``Paul'' Yang}
+\department{Physics}
+\schools{B.S., Denison University, 2014}
+\phdthesis
+\advisor{David M. Ceperley}
+\degreeyear{2020}
+\committee{Assistant Professor Prof B. K. Clark, Chair\\Professor Prof D. M. Ceperley, Director of Research\\Professor Prof J. N. Eckstein\\Professor Prof ??}
+%\maketitle
+
+%\include{sections/frontmatter}
+%\tableofcontents
+%\include{sections/lists}
+\mainmatter
+
+\chapter{Introduction}
+\section{The Many-body Problem}
+%\subsection{Hydrogen Atom}
+%\subsection{H$_2$ Molecule}
+\subsection{Born-Oppenheimer Approximation (BOA)}
+\section{Beyond the BOA}
+\section{Hydrogen under Pressure}
+\subsection{Solid phases and the Wigner-Huntington transition}
+\subsection{Liquid phases and the liquid-liquid transition}
+\subsection{The melting transition and critical point}
+\section{Lithium Compton Profile}
+\section{Insulator Band Gap}
+\section{Outline}
+
+\chapter{Methods}
+\section{Mean-field Theory}
+\subsection{Hartree-Fock (HF)}
+\subsection{Density Functional Theory (DFT)}
+\section{Classical Monte Carlo}
+\subsection{Markov Chain Monte Carlo (MCMC)}
+\subsection{Sample the Boltzmann Distribution $e^{-\beta H}$}
+
+\section{Quantum Monte Carlo}
+\begin{table}[h]
+\centering
+\begin{tabular}{cccccc}
+\toprule
+     & Temperature & Classical & Quantum & Quantization & Sign Problem \\
+\midrule
+PIMC &     any     &   yes     &   yes   & first & $\braket{\sigma}\propto \exp\left[ -\beta N (F_f-F_b) \right]$ \\
+DMC  &    zero     &    no     &   yes   & first & $\braket{\sigma}\propto \exp\left[ -\beta N (F_f-F_T) \right]$ \\
+FP-DMC & zero & no & yes & first & no \\
+VMC & low & no & yes & first & no \\
+AFQMC & low & no & yes & second & ? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Path Integral Monte Carlo (PIMC)}
+Path integral Monte Carlo samples the thermal density matrix in particle positions space (first quantization), applicable to any temperature. Seamless transition from Classical to quantum regimes. Ergodicity problem in sampling closed paths. Sign problem for fermions.
+
+\begin{equation}
+\rho = e^{-\beta \ham}
+\end{equation}
+
+\begin{equation}
+Z = \text{Tr} \left( \rho \right)
+\end{equation}
+
+\begin{equation}
+\rho = \sum\limits_{i=0}^\infty \epsilon_i \ket{\Psi_i}\bra{\Psi_i} 
+\end{equation}
+
+\begin{equation}
+\rho_F(\mathcal{P}\bs{R}, \bs{R}'; \beta) = \sum\limits_{\mathcal{P}} (-1)^{\mathcal{P}} \rho_D (\mathcal{P}\bs{R}, \bs{R}'; \beta)
+\end{equation}
+
+\begin{equation}
+\dfrac{d\rho}{d\beta} = -\ham \rho
+\end{equation}
+
+\subsection{Diffusion Monte Carlo (DMC)}
+Diffusion Monte Carlo (DMC) uses an open path to sample ground-state wavefunction. The simulation and be interpreted as imaginary time evolution a trial wavefunction to project out the ground state. No ergodicity problem thanks to importance sampling using a physical guiding function. Sign problem for fermions remain in exact transient-estimate implementation.
+
+\subsection{Fixed-phase Diffusion Monte Carlo (FP-DMC)}
+Fixed-phase diffusion Monte Carlo uses a trial wavefunction to modify the Hamiltonian to resist change in the phase of the sampled path. No sign problem, but result is exact only if the phase of the trial wavefunction coincides with that of the exact ground-state wavefunction.
+
+\subsection{Variational Monte Carlo (VMC)}
+
+%\subsection{Auxiliary field quantum Monte Carlo (AFQMC)}
+
+\chapter{Slater-Jastrow wavefunction}
+\section{Overview}
+\section{Single-particle orbitals}
+\subsection{cusp correction}
+\section{Momentum distribution and the Fermi surface}
+\section{Jastrow pair function}
+\subsection{Mean-spherical approximation (MSA)}
+\subsection{Gaskell Random Phase Approximation (RPA)}
+\subsection{Extension to multi-component plasma}
+\section{Structure factor and the dielectric function}
+\section{Back flow transformation}
+\section{Beyond Slater-Jastrow}
+
+\chapter{Theory and Observation of Finite-size Effects}
+\section{Overview}
+\section{Periodic boundary condition (PBC)}
+\section{Thermodynamic limit}
+\subsection{Shell-filling effect}
+\subsection{Electronic structure factor $S(k)$}
+\subsection{Jastrow pair function $U(k)$}
+\subsection{Electronic momentum distribution $n(k)$}
+\section{Grand-canonical twist-averaged boundary condition (GC-TABC)}
+
+\chapter{Benchmark of dynamic-ion QMC on small molecules}
+%\include{papers/nonbo/nonbo}
+%\input{papers/nonbo/nonbo.bbl}
+
+\chapter{Application of dynamic-ion QMC to solid hydrogen}
+\section{Introduction}
+\section{Methods}
+\section{Results}
+\section{Discussion}
+
+\chapter{Effect of ions on the electronic momentum distribution}
+\section{Introduction}
+\section{Methods}
+\section{Results}
+\section{Discussion}
+
+\chapter{Finite-size correction to the fundamental gap of insulators}
+%\include{papers/bandgap/bandgap}
+
+\chapter{Classical many-body potential from QMC forces}
+
+\end{document}
