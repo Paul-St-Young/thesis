@@ -1,0 +1,529 @@
+\begin{thebibliography}{10}
+
+\bibitem{Tubman_ECG}
+Norm~M. Tubman, Ilkka Kyl\"anp\"a\"a, Sharon Hammes-Schiffer, and David~M.
+  Ceperley.
+\newblock Beyond the born-oppenheimer approximation with quantum monte carlo
+  methods.
+\newblock {\em Phys. Rev. A}, 90:042507, Oct 2014.
+
+\bibitem{cederbaum1}
+Lorenz~S. Cederbaum.
+\newblock The exact molecular wavefunction as a product of an electronic and a
+  nuclear wavefunction.
+\newblock {\em J. Chem. Phys.}, 138(22):--, 2013.
+
+\bibitem{gross2014}
+Seung~Kyu Min, Ali Abedi, Kwang~S. Kim, and E.K.U. Gross.
+\newblock Is the molecular berry phase an artifact of the born-oppenheimer
+  approximation?
+\newblock {\em Phys. Rev. Lett.}, 113:263004, Dec 2014.
+
+\bibitem{boent}
+PeterA. Bouvrie, AnaP. Majtey, MalteC. Tichy, JesusS. Dehesa, and AngelR.
+  Plastino.
+\newblock Entanglement and the born-oppenheimer approximation in an exactly
+  solvable quantum many-body system.
+\newblock {\em The European Physical Journal D}, 68(11), 2014.
+
+\bibitem{Martinez_Review}
+Benjamin~G. Levine and Todd~J. Mart\'inez.
+\newblock Isomerization through conical intersections.
+\newblock {\em Annu. Rev. Phys. Chem.}, 58(1):613--634, 2007.
+
+\bibitem{cederbaum12}
+Lorenz~S. Cederbaum.
+\newblock Erratum: “the exact molecular wavefunction as a product of an
+  electronic and a nuclear wavefunction” [j. chem. phys.138, 224110 (2013)].
+\newblock {\em J. Chem. Phys.}, 141(2):--, 2014.
+
+\bibitem{mitroy2013}
+Jim Mitroy, Sergiy Bubin, Wataru Horiuchi, Yasuyuki Suzuki, Ludwik Adamowicz,
+  Wojciech Cencek, Krzysztof Szalewicz, Jacek Komasa, D.~Blume, and K\'alm\'an
+  Varga.
+\newblock Theory and application of explicitly correlated gaussians.
+\newblock {\em Rev. Mod. Phys.}, 85:693--749, May 2013.
+
+\bibitem{Sharon_NEO-HF}
+Simon~P. Webb, Tzvetelin Iordanov, and Sharon Hammes-Schiffer.
+\newblock Multiconfigurational nuclear-electronic orbital approach:
+  Incorporation of nuclear quantum effects in electronic structure
+  calculations.
+\newblock {\em J. Chem. Phys.}, 117(9):4106--4118, 2002.
+
+\bibitem{Sharon_XCNEO-HF1}
+Arindam Chakraborty, Michael~V. Pak, and Sharon Hammes-Schiffer.
+\newblock Inclusion of explicit electron-proton correlation in the
+  nuclear-electronic orbital approach using gaussian-type geminal functions.
+\newblock {\em J. Chem. Phys.}, 129(1):--, 2008.
+
+\bibitem{Sharon_XCNEO-HF2}
+Andrew Sirjoosingh, Michael~V. Pak, Chet Swalina, and Sharon Hammes-Schiffer.
+\newblock Reduced explicitly correlated hartree-fock approach within the
+  nuclear-electronic orbital framework: Theoretical formulation.
+\newblock {\em J. Chem. Phys.}, 139(3):--, 2013.
+
+\bibitem{Sharon_XCNEO-HF}
+Chet Swalina, Michael~V. Pak, Arindam Chakraborty, and Sharon Hammes-Schiffer.
+\newblock Explicit dynamical electron-proton correlation in the
+  nuclear-electronic orbital framework.
+\newblock {\em J. Phys. Chem. A}, 110(33):9983--9987, 2006.
+
+\bibitem{Kurt_XCNEO-HF}
+Kurt~R. Brorsen, Andrew Sirjoosingh, Michael~V. Pak, and Sharon
+  Hammes-Schiffer.
+\newblock Nuclear-electronic orbital reduced explicitly correlated hartree-fock
+  approach: Restricted basis sets and open-shell systems.
+\newblock {\em J. Chem. Phys.}, 142(21):--, 2015.
+
+\bibitem{Kurt_XCNEO-HF1}
+Andrew Sirjoosingh, Michael~V. Pak, Kurt~R. Brorsen, and Sharon
+  Hammes-Schiffer.
+\newblock Quantum treatment of protons with the reduced explicitly correlated
+  hartree-fock approach.
+\newblock {\em J. Chem. Phys.}, 142(21):--, 2015.
+
+\bibitem{Sharon_NEO-DFT}
+Arindam Chakraborty, Michael Pak, and Sharon Hammes-Schiffer.
+\newblock Development of electron-proton density functionals for multicomponent
+  density functional theory.
+\newblock {\em Phys. Rev. Lett.}, 101:153001, Oct 2008.
+
+\bibitem{Sharon_NEO-DFT2}
+Andrew Sirjoosingh, Michael~V. Pak, and Sharon Hammes-Schiffer.
+\newblock Multicomponent density functional theory study of the interplay
+  between electron-electron and electron-proton correlation.
+\newblock {\em J. Chem. Phys.}, 136(17):--, 2012.
+
+\bibitem{Sharon_NEO-DFT3}
+Andrew Sirjoosingh, Michael~V. Pak, and Sharon Hammes-Schiffer.
+\newblock Derivation of an electron–proton correlation functional for
+  multicomponent density functional theory within the nuclear–electronic
+  orbital approach.
+\newblock {\em J. Chem. Theory Comput.}, 7(9):2689--2693, 2011.
+
+\bibitem{Gross_NEO-DFT}
+T.~Kreibich and E.~Gross.
+\newblock Multicomponent density-functional theory for electrons and nuclei.
+\newblock {\em Phys. Rev. Lett.}, 86:2984--2987, Apr 2001.
+
+\bibitem{Gross_NEO-DFT1}
+Thomas Kreibich, Robert van Leeuwen, and E.~Gross.
+\newblock Multicomponent density-functional theory for electrons and nuclei.
+\newblock {\em Phys. Rev. A}, 78:022501, Aug 2008.
+
+\bibitem{Ilkka_Path}
+Ilkka Kyl\"anp\"a\"a, Tapio Rantala, and David Ceperley.
+\newblock Few-body reference data for multicomponent formalisms: Light-nuclei
+  molecules.
+\newblock {\em Phys. Rev. A}, 86:052506, Nov 2012.
+
+\bibitem{Ilkka_Path1}
+Ilkka Kyl\"anp\"a\"a and Tapio~T. Rantala.
+\newblock First-principles simulation of molecular dissociation–recombination
+  equilibrium.
+\newblock {\em J. Chem. Phys.}, 135(10):--, 2011.
+
+\bibitem{Ilkka_Path2}
+Ilkka Kyl\"anp\"a\"a and Tapio~T. Rantala.
+\newblock Finite temperature quantum statistics of h3+ molecular ion.
+\newblock {\em J. Chem. Phys.}, 133(4):--, 2010.
+
+\bibitem{Anderson_DMC}
+James~B. Anderson.
+\newblock A random‐walk simulation of the schrödinger equation: H+3.
+\newblock {\em J. Chem. Phys.}, 63(4):1499--1503, 1975.
+
+\bibitem{lester1}
+Brian~L. Hammond, Peter~J. Reynolds, and William~A. Lester.
+\newblock {\em Monte Carlo Methods in Ab Initio Quantum Chemistry}.
+\newblock World Scientific, 1994.
+
+\bibitem{Stuart_Review}
+Stuart~M. Rothstein.
+\newblock A survey on pure sampling in quantum monte carlo methods.
+\newblock {\em Can. J. Chem.}, 91(7):505--510, 2013.
+
+\bibitem{Needs_Review}
+R~J Needs, M~D Towler, N~D Drummond, and P~L\'pez R\'ios.
+\newblock Continuum variational and diffusion quantum monte carlo calculations.
+\newblock {\em J. Phys-Condens. Mat.}, 22(2):023201, 2010.
+
+\bibitem{Needs_Old_Review}
+R.~J. Needs and M.~D. Towler.
+\newblock The diffusion quantum monte carlo method: Designing trial wave
+  functions for nio.
+\newblock {\em Int. J. Mod Phys B}, 17(28):5425--5434, 2003.
+
+\bibitem{QMC_Review}
+W.~M.~C. Foulkes, L.~Mitas, R.~J. Needs, and G.~Rajagopal.
+\newblock Quantum monte carlo simulations of solids.
+\newblock {\em Rev. Mod. Phys.}, 73:33--83, Jan 2001.
+
+\bibitem{grossman1}
+Jeffrey~C. Grossman.
+\newblock Benchmark quantum monte carlo calculations.
+\newblock {\em J. Chem. Phys.}, 117(4):1434--1440, 2002.
+
+\bibitem{Ceperley_1987}
+D.~Ceperley and B.~Alder.
+\newblock Ground state of solid hydrogen at high pressures.
+\newblock {\em Phys. Rev. B}, 36:2092--2106, Aug 1987.
+
+\bibitem{Natoli_1993}
+V.~Natoli, Richard Martin, and D.~Ceperley.
+\newblock Crystal structure of atomic hydrogen.
+\newblock {\em Phys. Rev. Lett.}, 70:1952--1955, Mar 1993.
+
+\bibitem{Natoli_1995}
+Vincent Natoli, Richard Martin, and David Ceperley.
+\newblock Crystal structure of molecular hydrogen at high pressure.
+\newblock {\em Phys. Rev. Lett.}, 74:1601--1604, Feb 1995.
+
+\bibitem{Chen_1995}
+Bin Chen and James~B. Anderson.
+\newblock Improved quantum monte carlo calculation of the ground‐state energy
+  of the hydrogen molecule.
+\newblock {\em J. Chem. Phys.}, 102(7):2802--2805, 1995.
+
+\bibitem{Coldwell_H2_2008}
+S.~A. Alexander and R.~L. Coldwell.
+\newblock Fully nonadiabatic properties of all h2 isotopomers.
+\newblock {\em J. Chem. Phys.}, 129(11):--, 2008.
+
+\bibitem{Gabriele_H2_2004}
+Luca Bertini, Massimo Mella, Dario Bressanini, and Gabriele Morosi.
+\newblock Borromean binding in ${\mathrm{h}}_{2}$ with yukawa potential: A
+  nonadiabatic quantum monte carlo study.
+\newblock {\em Phys. Rev. A}, 69:042504, Apr 2004.
+
+\bibitem{Sandro_finiteT-noBO_2012}
+Guglielmo Mazzola, Andrea Zen, and Sandro Sorella.
+\newblock Finite-temperature electronic simulations without the
+  born-oppenheimer constraint.
+\newblock {\em J. Chem. Phys.}, 137(13):--, 2012.
+
+\bibitem{Umrigar_Alleviation}
+C.~J. Umrigar, Julien Toulouse, Claudia Filippi, S.~Sorella, and R.~G. Hennig.
+\newblock Alleviation of the fermion-sign problem by optimization of many-body
+  wave functions.
+\newblock {\em Phys. Rev. Lett.}, 98:110201, Mar 2007.
+
+\bibitem{Toulouse_Bench}
+Julien Toulouse and C.~J. Umrigar.
+\newblock Full optimization of jastrow–slater wave functions with application
+  to the first-row atoms and homonuclear diatomic molecules.
+\newblock {\em J. Chem. Phys.}, 128(17):--, 2008.
+
+\bibitem{Brown_Bench}
+M.~D. Brown, J.~R. Trail, P.~L\'opez~R\'ios, and R.~J. Needs.
+\newblock Energies of the first row atoms from quantum monte carlo.
+\newblock {\em J. Chem. Phys.}, 126(22):--, 2007.
+
+\bibitem{Seth_Bench}
+P.~Seth, P.~L\'opez R\'ios, and R.~J. Needs.
+\newblock Quantum monte carlo study of the first-row atoms and ions.
+\newblock {\em J. Chem. Phys.}, 134(8):--, 2011.
+
+\bibitem{Nightingale_Linear}
+M.~Nightingale and Vilen Melik-Alaverdian.
+\newblock Optimization of ground- and excited-state wave functions and van der
+  waals clusters.
+\newblock {\em Phys. Rev. Lett.}, 87:043401, Jul 2001.
+
+\bibitem{Umrigar_Linear}
+C.~Umrigar and Claudia Filippi.
+\newblock Energy and variance optimization of many-body wave functions.
+\newblock {\em Phys. Rev. Lett.}, 94:150201, Apr 2005.
+
+\bibitem{Chaban_MCSCF}
+Galina Chaban, Michael~W. Schmidt, and Mark~S. Gordon.
+\newblock Approximate second order method for orbital optimization of scf and
+  mcscf wavefunctions.
+\newblock {\em Theor. Chem. Acc.}, 97(1-4):88--95, 1997.
+
+\bibitem{Szabo}
+Attila Szabo and Neil~S. Ostlund.
+\newblock {\em Modern Quantum Chemistry}.
+\newblock McGraw-Hill, Inc., 1989.
+
+\bibitem{GAMESS}
+Michael~W. Schmidt, Kim~K. Baldridge, Jerry~A. Boatz, Steven~T. Elbert, Mark~S.
+  Gordon, Jan~H. Jensen, Shiro Koseki, Nikita Matsunaga, Kiet~A. Nguyen, Shujun
+  Su, Theresa~L. Windus, Michel Dupuis, and John~A. Montgomery.
+\newblock General atomic and molecular electronic structure system.
+\newblock {\em J. Comput. Chem.}, 14(11):1347--1363, 1993.
+
+\bibitem{Pauncz_CSF}
+Ruben Pauncz.
+\newblock {\em Spin Eigenfunctions: Construction and Use}.
+\newblock Plenum Press, New York, 227 West 17th Street, New York, N.Y. 10011,
+  1979.
+
+\bibitem{dunning}
+Thom~H. Dunning.
+\newblock Gaussian basis sets for use in correlated molecular calculations. i.
+  the atoms boron through neon and hydrogen.
+\newblock {\em J. Chem. Phys.}, 90(2):1007--1023, 1989.
+
+\bibitem{roos}
+Per-Olof Widmark, Per-Åke Malmqvist, and BjörnO. Roos.
+\newblock Density matrix averaged atomic natural orbital (ano) basis sets for
+  correlated molecular wave functions.
+\newblock {\em Theoretica chimica acta}, 77(5):291--306, 1990.
+
+\bibitem{cusp}
+A.~Ma, M.~D. Towler, N.~D. Drummond, and R.~J. Needs.
+\newblock Scheme for adding electron–nucleus cusps to gaussian orbitals.
+\newblock {\em J. Chem. Phys.}, 122(22):--, 2005.
+
+\bibitem{Kato}
+Tosio Kato.
+\newblock On the eigenfunctions of many-particle systems in quantum mechanics.
+\newblock {\em Commun. Pur. Appl. Math.}, 10(2):151--177, 1957.
+
+\bibitem{QMCPACK_Kim}
+Jeongnim Kim, Kenneth~P Esler, Jeremy McMinis, Miguel~A Morales, Bryan~K Clark,
+  Luke Shulenburger, and David~M Ceperley.
+\newblock Hybrid algorithms in quantum monte carlo.
+\newblock {\em J. Phys. Conf. Ser.}, 402(1):012008, 2012.
+
+\bibitem{QMCPACK_Esler}
+K.P. Esler, Jeongnim Kim, D.M. Ceperley, and L.~Shulenburger.
+\newblock Accelerating quantum monte carlo simulations of real materials on gpu
+  clusters.
+\newblock {\em Comput. Sci. Eng.}, 14(1):40--51, Jan 2012.
+
+\bibitem{CCCBDB}
+NIST Computational Chemistry Comparison and Benchmark Database, NIST Standard
+  Reference Database Number 101, Release 16a, August 2013. Editor: Russell D.
+  Johnson III, http://cccbdb.nist.gov/.
+
+\bibitem{Cederbaum_Review}
+Graham~A. Worth and Lorenz~S. Cederbaum.
+\newblock Beyond born-oppenheimer: Molecular dynamics through a conical
+  intersection.
+\newblock {\em Annu. Rev. Phys. Chem.}, 55(1):127--158, 2004.
+
+\bibitem{Wang_Li}
+L.~M. Wang, Z.-C. Yan, H.~X. Qiao, and G.~W.~F. Drake.
+\newblock Variational upper bounds for low-lying states of lithium.
+\newblock {\em Phys. Rev. A}, 83:034503, Mar 2011.
+
+\bibitem{Stanke_Be}
+Monika Stanke, Jacek Komasa, Sergiy Bubin, and Ludwik Adamowicz.
+\newblock Five lowest $^{1}s$ states of the be atom calculated with a
+  finite-nuclear-mass approach and with relativistic and qed corrections.
+\newblock {\em Phys. Rev. A}, 80:022514, Aug 2009.
+
+\bibitem{Bubin_B}
+Sergiy Bubin and Ludwik Adamowicz.
+\newblock Correlated-gaussian calculations of the ground and low-lying excited
+  states of the boron atom.
+\newblock {\em Phys. Rev. A}, 83:022505, Feb 2011.
+
+\bibitem{Davidson_Atoms}
+Subhas~J. Chakravorty, Steven~R. Gwaltney, Ernest~R. Davidson, Farid~A. Parpia,
+  and Charlotte~F. Fischer.
+\newblock Ground-state correlation energies for atomic ions with 3 to 18
+  electrons.
+\newblock {\em Phys. Rev. A}, 47:3649--3670, May 1993.
+
+\bibitem{Stanke_Li}
+Monika Stanke, Jacek Komasa, Dariusz K\ifmmode~\mbox{\c{e}}\else
+  \c{e}\fi{}dziera, Sergiy Bubin, and Ludwik Adamowicz.
+\newblock Accuracy limits on the description of the lowest $s$ excitation in
+  the li atom using explicitly correlated gaussian basis functions.
+\newblock {\em Phys. Rev. A}, 78:052507, Nov 2008.
+
+\bibitem{Bubin_BeH_noBO}
+Sergiy Bubin and Ludwik Adamowicz.
+\newblock Calculations of the ground states of beh and beh+ without the
+  born-oppenheimer approximation.
+\newblock {\em J. Chem. Phys.}, 126(21):--, 2007.
+
+\bibitem{Bubin_C}
+Sergiy Bubin, Michele Pavanello, Wei-Cheng Tung, Keeper~L. Sharkey, and Ludwik
+  Adamowicz.
+\newblock Born–oppenheimer and non-born–oppenheimer, atomic and molecular
+  calculations with explicitly correlated gaussians.
+\newblock {\em Chem. Rev.}, 113(1):36--79, 2013.
+
+\bibitem{Nakashima_Li+}
+Hiroyuki Nakashima and Hiroshi Nakatsuji.
+\newblock Solving the schrödinger equation for helium atom and its
+  isoelectronic ions with the free iterative complement interaction (ici)
+  method.
+\newblock {\em J. Chem. Phys.}, 127(22):--, 2007.
+
+\bibitem{Puchalski_Be+}
+Mariusz Puchalski, Dariusz K\ifmmode~\mbox{\c{e}}\else \c{e}\fi{}dziera, and
+  Krzysztof Pachucki.
+\newblock Ground state of li and ${\text{be}}^{+}$ using explicitly correlated
+  functions.
+\newblock {\em Phys. Rev. A}, 80:032521, Sep 2009.
+
+\bibitem{Bubin_B+}
+Sergiy Bubin, Jacek Komasa, Monika Stanke, and Ludwik Adamowicz.
+\newblock Isotope shifts of the three lowest s1 states of the b+ ion calculated
+  with a finite-nuclear-mass approach and with relativistic and quantum
+  electrodynamics corrections.
+\newblock {\em J. Chem. Phys.}, 132(11):--, 2010.
+
+\bibitem{Bubin_C+}
+Sergiy Bubin and Ludwik Adamowicz.
+\newblock Accurate variational calculations of the ground 2po(1s22s22p) and
+  excited 2s(1s22s2p2) and 2po(1s22s23p) states of singly ionized carbon atom.
+\newblock {\em J. Chem. Phys.}, 135(21):--, 2011.
+
+\bibitem{Klopper_IP}
+Wim Klopper, Rafa\l{}~A. Bachorz, David~P. Tew, and Christof H\"attig.
+\newblock Sub-mev accuracy in first-principles computations of the ionization
+  potentials and electron affinities of the atoms h to ne.
+\newblock {\em Phys. Rev. A}, 81:022503, Feb 2010.
+
+\bibitem{NIST_Atoms}
+J.~E. Sansonetti and W.~C. Martin.
+\newblock Handbook of basic atomic spectroscopic data.
+\newblock {\em J. Phys. Chem. Ref. Data}, 34(4):1559--2259, 2005.
+
+\bibitem{masses}
+All calculations are performed for the most abundant isotope. In units of
+  electron mass, the isotope masses for Li, Be, B, C, N, O, F are taken to be
+  12782.4327, 16419.2608, 20214.7648 6, 21862.7553, 25512.1484, 29141.0754,
+  34613.1200, respectively. The Li mass used for the LiH molecule is
+  12649.6690, which is slightly different from that used for the atomic Li
+  simulations, but we do not expect this to affect our results within our
+  statistical errors.
+
+\bibitem{Morale_Bench}
+Miguel~A. Morales, Jeremy McMinis, Bryan~K. Clark, Jeongnim Kim, and Gustavo~E.
+  Scuseria.
+\newblock Multideterminant wave functions in quantum monte carlo.
+\newblock {\em J. Chem. Theory Comput.}, 8(7):2181--2188, 2012.
+
+\bibitem{Rappe_Bench}
+Myung~Won Lee, Massimo Mella, and Andrew~M. Rappe.
+\newblock Electronic quantum monte carlo calculations of atomic forces,
+  vibrations, and anharmonicities.
+\newblock {\em J. Chem. Phys.}, 122(24):--, 2005.
+
+\bibitem{Sharkey_N}
+Keeper~L. Sharkey and Ludwik Adamowicz.
+\newblock An algorithm for nonrelativistic quantum-mechanical
+  finite-nuclear-mass variational calculations of nitrogen atom in l = 0, m = 0
+  states using all-electrons explicitly correlated gaussian basis functions.
+\newblock {\em J. Chem. Phys.}, 140(17):--, 2014.
+
+\bibitem{Booth_FCIQMC}
+George~H. Booth and Ali Alavi.
+\newblock Approaching chemical accuracy using full configuration-interaction
+  quantum monte carlo: A study of ionization potentials.
+\newblock {\em J. Chem. Phys.}, 132(17):--, 2010.
+
+\bibitem{Shiwei_AFQMC}
+Shiwei Zhang and Henry Krakauer.
+\newblock Quantum monte carlo method using phase-free random walks with slater
+  determinants.
+\newblock {\em Phys. Rev. Lett.}, 90:136401, Apr 2003.
+
+\bibitem{Tubman_Release}
+Norm~M. Tubman, Jonathan~L DuBois, Randolph~Q. Hood, and Berni~J. Alder.
+\newblock Prospects for release-node quantum monte carlo.
+\newblock {\em J. Chem. Phys.}, 135(18):--, 2011.
+
+\bibitem{Tubman_ACS}
+Norm~M. Tubman, Jonathan~L. DuBois, and Berni~J. Alder.
+\newblock {\em Recent Results in the Exact Treatment of Fermions at Zero and
+  Finite Temperature}, chapter~5, pages 41--50.
+
+\bibitem{Cencek_LiH}
+Wojciech Cencek and Jacek Rychlewski.
+\newblock Benchmark calculations for he2+ and lih molecules using explicitly
+  correlated gaussian functions.
+\newblock {\em Chem. Phys. Lett.}, 320(5–6):549 -- 552, 2000.
+
+\bibitem{klop1}
+Wim Klopper.
+\newblock personal communication.
+
+\bibitem{Klopper_DBOC}
+The DBOC values for the atoms and ions provided by Prof. Wim Klopper are
+  calculated at the CCSD/d-aug-cc-pwCVQZ level using CFOUR.
+
+\bibitem{CFOUR}
+CFOUR, a quantum chemical program package written by J.F. Stanton, J. Gauss,
+  M.E. Harding, P.G. Szalay and others.
+
+\bibitem{Harding}
+Michael~E. Harding, Thorsten Metzroth, J\"urgen Gauss, and Alexander~A. Auer.
+\newblock Parallel calculation of ccsd and ccsd(t) analytic first and second
+  derivatives.
+\newblock {\em J. Chem. Theory Comput.}, 4(1):64--74, 2008.
+
+\bibitem{Merkt_H2}
+Jinjun Liu, Edcel~J. Salumbides, Urs Hollenstein, Jeroen C.~J. Koelemeij, Kjeld
+  S.~E. Eikema, Wim Ubachs, and Frédéric Merkt.
+\newblock Determination of the ionization and dissociation energies of the
+  hydrogen molecule.
+\newblock {\em J. Chem. Phys.}, 130(17):--, 2009.
+
+\bibitem{Bubin_LiH_noBO}
+Sergiy Bubin, Ludwik Adamowicz, and Marcin Molski.
+\newblock An accurate non-born–oppenheimer calculation of the first purely
+  vibrational transition in lih molecule.
+\newblock {\em J. Chem. Phys.}, 123(13):--, 2005.
+
+\bibitem{Bubin_BH_noBO}
+Sergiy Bubin, Monika Stanke, and Ludwik Adamowicz.
+\newblock Non-born–oppenheimer calculations of the bh molecule.
+\newblock {\em J. Chem. Phys.}, 131(4):--, 2009.
+
+\bibitem{HH}
+K.~P. Huber and G.~Herzberg.
+\newblock {\em Molecular Spectra and Molecular Structure: Constants of Diatomic
+  Molecules}.
+\newblock Van Nostrand Reinhold, New York, 1979, 1979.
+
+\bibitem{Adamowicz_LiH}
+Wei-Cheng Tung, Michele Pavanello, and Ludwik Adamowicz.
+\newblock Very accurate potential energy curve of the lih molecule.
+\newblock {\em J. Chem. Phys.}, 134(6):--, 2011.
+
+\bibitem{Feller_Corrections}
+David Feller, Kirk~A. Peterson, and David~A. Dixon.
+\newblock A survey of factors contributing to accurate theoretical predictions
+  of atomization energies and molecular structures.
+\newblock {\em J. Chem. Phys.}, 129(20):--, 2008.
+
+\bibitem{Koput_BeH}
+Jacek Koput.
+\newblock The ab initio ground-state potential energy function of beryllium
+  monohydride, beh.
+\newblock {\em J. Chem. Phys.}, 135(24):--, 2011.
+
+\bibitem{Miliordos_BH}
+Evangelos Miliordos and Aristides Mavridis.
+\newblock Ab initio investigation of the electronic structure and bonding of
+  bh, bh-, and hbbh molecules.
+\newblock {\em J. Chem. Phys.}, 128(14):--, 2008.
+
+\bibitem{Feller_DBOC}
+The DBOC references provided by Prof. David Feller are calculated at the
+  CCSD(T)/aug-cc-pVTZ level using CFOUR.
+
+\bibitem{Bubin_LiH-_noBO}
+Sergiy Bubin and Ludwik Adamowicz.
+\newblock Nonrelativistic molecular quantum mechanics without approximations:
+  Electron affinities of lih and lid.
+\newblock {\em J. Chem. Phys.}, 121(13):6249--6253, 2004.
+
+\bibitem{switch}
+We note that LiH ground state energies which we compare against are mislabeled
+  in Ref.~\cite{Bubin_LiH-_noBO}, with $\text{LiH}^-$ and LiD being switched.
+
+\bibitem{fell1}
+David Feller.
+\newblock personal communication.
+
+\end{thebibliography}

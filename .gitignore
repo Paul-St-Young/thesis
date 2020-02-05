@@ -1,4 +1,7 @@
 yyang173-thesis.pdf
 *.aux
 *.log
+*.out
 *.synctex.gz
+
+*eps-converted-to.pdf
