@@ -29,8 +29,8 @@ We optimize the CSF and Jastrow coefficients, $\vec{\alpha}$ and $\vec{\beta}$, 
 %\input{Table/cas}
 
 \begin{figure}[h]
-\includegraphics[width=9cm]{fig1a}
-\includegraphics[width=9cm]{fig1b}
+\includegraphics[width=0.4\textwidth]{fig1a}
+\includegraphics[width=0.4\textwidth]{fig1b}
 \caption{Dragged-node approach for simulation of atomic and molecular systems in QMC. {\bf (a)} For atomic systems we can consider the entire wave function shifting with the ion. This process can be visualized by following a contour of the wave function. The thick dashed circle represents a contour of the electronic wave function when the proton is at its reference position $\vec{R}_o$, and the thin dashed circle represents the same contour when the proton has moved to a new position $\vec{R}$. To evaluate the ion-dependent electronic wave function $\bar{\psi}_e(\vec{r},\vec{R})$, we simply map the electron to its proper place in the reference wave function $\psi_e(\vec{r};\vec{R}_o)$. That is, $\bar{\psi}_e(\vec{r},\vec{R})=\bar{\psi}_e(\vec{r}+\vec{s},\vec{R}_o)=\psi_e(\vec{r}+\vec{s};\vec{R}_o)$ where $\vec{s}$ is the shift required to put the proton back to its reference position. {\bf (b)} For H$_2^+$, we pick one of the protons as an ``anchor'' and approximate the new wave function by dragging the reference wave function with the ``anchor'' proton. We also rotate the wave function to align its axis of symmetry with the orientation of the two protons. \label{fig:drag}}
 \end{figure}
 
@@ -59,6 +59,7 @@ Using definitions from Ref.~\cite{Cederbaum_Review}, the adiabatic approximation
 \begin{threeparttable}
 
 \caption{Ground-state energies for atoms and ions and the ionization energies for the atoms:  fixed-node DMC results of this work (FN-DMC) for atoms and ions with and without the Born-Oppenheimer approximation. The rows marked with bold \textbf{FN-DMC} are our nonadiabatic results. The ionization potentials (IPs) are reported in the last section of the table. Energies are given in units of Hartree. For the highly accurate Hylleraas and ECG results, up to 8 digits are reported in the table. \label{tab:ionization}}
+\small
 \begin{tabular}
 % siunitx setup
 {
@@ -179,7 +180,7 @@ The systems with the most error are O and F, for which other QMC studies seem to
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=.4]{atom-ECG}
+\includegraphics[width=0.8\textwidth]{atom-ECG}
 \caption{FN-DMC ground state energies for $\text{Be}^+$, Be, $\text{B}^+$, B, $\text{C}^+$ relative to ECG references~\cite{Stanke_Be,Puchalski_Be+,Bubin_BeH_noBO,Bubin_B,Bubin_B+,Bubin_C+} for either clamped-ion or nonadiabatic calculations. These relative energies provide an estimate for the fixed-node error in the electronic and electron-ion wave functions, respectively.\label{fig:atom-ECG}}
 \end{figure}
 
@@ -189,7 +190,7 @@ No reference calculations exist for the heavier atoms N,O, and F. However, it is
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=.37]{ionization}
+\includegraphics[width=0.8\textwidth]{ionization}
 \caption{Calculated ionization energies relative to reference data. The same reference is used for both clamped-ion and nonadiabatic results. The calculated energies are all within 1 mHa of the reference. \label{fig:ionization}}
 \end{figure}
 
@@ -198,14 +199,12 @@ The ionization potentials are reported in Table \ref{tab:ionization} and shown i
 For the atoms considered in this work, ionization energies have previously been predicted to be independent of all nonadiabatic effects beyond the DBOC to within an accuracy of 0.1 mHa.~\cite{Klopper_IP} This prediction is based on calculations that are reported to be exact and agree to high accuracy with experiment. As shown in Figure \ref{fig:ionization}, the ionization potentials calculated with and without the Born-Oppenheimer approximation are all within 1 mHa of the reference energies. Further, the clamped-ion and nonadiabatic predictions for the ionization potentials are statistically indistinguishable for all systems studied, consistent with the previous study.~\cite{Klopper_IP}
 
 \begin{figure}[h]
-\includegraphics[scale=.4]{atom-nad-ad}
+\includegraphics[width=0.8\textwidth]{atom-nad-ad}
 \caption{The nonadiabatic contribution to ground-state energies of atoms and ions calculated with FN-DMC. The nonadiabatic contribution is partitioned into the DBOC and the remaining correction. A hatched bar indicates the contribution is negative. The numerical DBOC data is provided in Table \ref{tab:nad-ad-atoms}. \label{fig:atom-nad-ad}} %nonadiabatic contribution shows very little dependence with the ionized state.
 \end{figure}
 
-
-
 \begin{figure}[h]
-\includegraphics[scale=.4]{analytical}
+\includegraphics[width=0.8\textwidth]{analytical}
 \caption{The nonadiabatic contribution to ground-state energies of ions and their corresponding hydrogen-like atoms calculated with FN-DMC and analytically as shown in Eq. \ref{eq:analytical}. \label{fig:analytical}}
 \end{figure}
 
@@ -242,6 +241,7 @@ We note that the nonadiabatic correction to the atomic ground-state energies of 
 \setlength{\extrarowheight}{1pt}
 \begin{threeparttable}
 \caption{Ground-state energies and atomization energies: fixed-node DMC results of this work for all first row hydrides with and without the Born-Oppenheimer approximation. The rows marked with bold \textbf{FN-DMC} are our nonadiabatic results. All atomization energies are estimated for 0K. $D_o$ includes zero-point energy contribution, while $D_e$ does not. Both total energies and dissociation energies are given in units of Hartree. \label{tab:atomization}}
+\small
 \begin{tabular}
 % siunitx setup
 {
@@ -318,7 +318,7 @@ In Table \ref{tab:atomization}, we present our results on a series of molecular 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=.37]{dia-ECG}
+\includegraphics[width=0.8\textwidth]{dia-ECG}
 \caption{The nonadiabatic FN-DMC ground-state energies of LiH, BeH and BH relative to ECG references. The error bars for the nonadiabatic ECG references are shown as thick dark lines, and the error bars for the FN-DMC calculations are comparable to the size of the symbols. \label{fig:dia-ECG}}
 \end{figure}
 
@@ -328,14 +328,14 @@ The atomization energies of the diatomic systems are reported in Table \ref{tab:
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=.4]{atomization}
+\includegraphics[width=0.8\textwidth]{atomization}
 \caption{Atomization energies of first row hydrides obtained with FN-DMC relative to experimental data. The adiabatic results are estimated by adding zero-point energies from Ref.~\cite{Feller_Corrections} to the clamped-nuclei results. \label{fig:atomization}}
 \end{figure}
 
 In Figure \ref{fig:atomization}, we compare both our clamped-nuclei and our nonadiabatic results to experimental data. We also provide adiabatic estimates by adding the zero-point energies calculated with coupled-cluster techniques in Ref.~\cite{Feller_Corrections} to our clamped-nuclei results. To calculate experimental atomization energies starting from the clamped-nuclei results, energetic corrections due to zero-point motion of the nuclei, nonadiabatic effects, spin-orbit coupling and relativistic effects should be included. For these highly adiabatic systems, the inclusion of zero-point motion alone is sufficient to bring our clamped-nuclei results to within 2 mHa of the experimental results. Except for the case of CH, the nonadiabatic results agree closely with their adiabatic counterparts and are closer to the experimental values, although for BH the experimental error bar is too large to provide a high-accuracy comparison. For CH, the experimental result suggests that our electron-ion wave function for this molecule has an unusually large fixed-node error.
 
 \begin{figure}[h]
-\includegraphics[scale=.4]{dia-nad-ad}
+\includegraphics[width=0.8\textwidth]{dia-nad-ad}
 \caption{The nonadiabatic contribution to the ground-state energies in hydrides calculated with FN-DMC. The adiabatic reference energies are calculated by adding zero-point energy contributions from Ref.~\cite{Feller_Corrections} to our clamped-nuclei results. The nonadiabatic contribution is partitioned into the DBOC and the remaining correction. A hatched bar indicates the contribution is negative. \label{fig:dia-nad-ad}}
 \end{figure}
 
@@ -344,8 +344,6 @@ To estimate the nonadiabatic contribution to the ground-state energies for these
 For BeH, OH, and HF, the nonadiabatic contribution is almost entirely accounted for by the DBOC with the remaining correction being zero within error bars. For LiH, BH, and CH, the remaining amount of nonadiabatic contribution seems to be nonzero, and appears quite significant in CH. However, if the electron-ion wave function is significantly lower in quality than the electronic wave function for a given system, then the amount of nonadiabatic contribution will be overestimated. We also use the zero-point energies from Feller et. al.~\cite{Feller_Corrections} as corrections, which may introduce some additional uncertainty.  Regardless, our current predictions suggest that nonadiabatic effects in BH and CH are larger than in the other systems we considered.
 
 For the LiH molecule, we also calculated the electron affinity for comparison to ECG results. We calculated the ground-state energy of LiH$^-$ to be $-8.08222(2)$~Ha for the case of clamped-nuclei. With nonadiabatic effects included, our result is  $-8.07811(3)$~Ha. Our nonadiabatic result is in good agreement with a previous ECG study,~\cite{Bubin_LiH-_noBO} which reported a value of $-8.07856887$~Ha. We report an electron affinity of $0.01187(4)$~Ha, which can be compared to the ECG prediction of $0.012132(2)$~Ha and agrees with the experimental value of $0.0126(4)$ Ha.~\cite{switch}
-
-
 
 \begin{table}[h]
 \setlength{\extrarowheight}{1pt}
@@ -368,3 +366,184 @@ We calculated the ground-state energies of first-row atoms and their correspondi
 We found the ionization energies of the atoms to be independent of the Born-Oppenheimer approximation, consistent with a previous high-level quantum chemistry study.~\cite{Klopper_IP} In contrast, the atomization energies of the hydrides showed effects of nonadiabaticity, although they were generally much less than 1 mHa. This work obtained the first nonadiabatic QMC benchmark data for non-relativistic ground-state energies and obtained the lowest variational result for BH and the only results for CH, OH and HF, to the best of our knowledge.
 
 In comparing to accurate benchmark results obtained with other methods, we have demonstrated the validity of our wave function ansatz, namely it does produce a high-quality electron-ion wave function. This technique also has the potential to solve interesting larger-scale problems due to its ease of implementation, as well as the polynomial scaling in computational time with respect to the number of electrons.
+
+% beyond dragged node 
+\subsection{Dragged Node Approximation}
+The fixed-node approximation is generally going to result in errors in the
+energy that overestimate the nonadiabatic effects. This is a result of the increased complexity of optimizing wave functions for the full electron-ion system. When the clamped-ion energies are more accurate than the electron-ion energies, then we will overestimate the nonadiabatic energy. It should be noted that in some cases the energies for the full electron-ion simulations are more accurate than for the corresponding clamped-ion simulations, as seen in previous benchmark comparisons of (Be,Be+,B,B+,C+) (6).
+While it does appear that in some cases the nonadiabatic simulations are as good as or more accurate than our clamped-ion simulations, this is less likely for molecular systems in which the ions can move relative to each other.
+Our recent simulations with quantum Monte Carlo have used a particular type of nodal structure which is called the dragged-node approximation (1, 6).
+This approximation can be used for wave functions in the form of Eq. (2) in which we start by generating a wave function defined at the equilibrium geometry.
+When the ions change position the wave function changes based on the basis set dependence of the ion coordinates.
+The change in the wave function causes a corresponding change in the nodes.
+The dragged-node approximation is completely variational when used in FN-DMC.
+For systems that do not show strong nonadiabatic behavior the dragged-node approximation should yield excellent results.
+It was surprising that the energy contribution from nonadiabatic effects in our previous FN-DMC calculation of the CH molecule (6) was larger than expected, indicating that we might need to use better wave function forms to accurately simulate the energy for CH.
+
+\subsection{Improving Wave Functions}
+The wave function in Eq. (3) is much more general than what we included in
+our previous studies but is more difficult to generate. In general it is not feasible to do a full wave function evaluation for each new configuration of the ions.
+However, for diatomic molecules it is feasible to precompute and optimize wave functions at different distances and then use the precomputed wave functions in order to interpolate wave function amplitudes at other ion positions.
+There are several different ways this can be done.
+The first approach we considered is to use a grid with regard to the distance between the ions and calculate a fully optimized electronic wave function at each grid point.
+Then one would evaluate the electronic wave function at each grid point and use an interpolation scheme to determine the full wave function.
+This would be multiplied by a purely ionic wave function, as in Eq. (3).
+Although this is technically a feasible way to generate improved wave functions, we found that this approach was difficult to implement with regards to maintaining a smooth wave function.
+A second approach, for which we present results here, parameterizes the
+determinant coefficients as a function of the ion positions.
+For a diatomic system, this corresponds to generating a 1D function for each determinant coefficient.
+This is an improvement over the dragged-node approximation, as the coefficients of the determinants are allowed to change with ion distance, and can capture complicated ion dependences of the nodes.
+In future work it also might be possible to extend this type of wave function to at least three particles, which would require fitting functions for the determinant coefficients in higher dimensions.
+
+\subsection{Wave Function Details}
+The process for generating wave functions of the types in Eq. (2) and Eq.
+(3) requires the determination of several types of variational parameters. For a wave function given by Eq. (2), we use an initial guess for the wave function that is generated from complete active space self-consistent-field (CASSCF) (43, 44) calculations using the quantum chemistry package GAMESS-US (45).
+The optimized orbitals are then used in a configuration interaction singles and doubles (CISD) calculation to generate a series of configuration state functions (CSFs) (46). For the small systems LiH and BeH, a CASSCF calculation with a large active space is used in place of CISD.
+The multi-CSF expansion of the wavefunction can be expressed as eq.~(\ref{eq:psi_gms}). Each CSF is
+a linear combination of determinants, so the wave function can be equivalently written as a linear combination of determinants (5). The Roos Augmented Triple Zeta ANO basis (47) is used for the molecular systems except for the smallest system LiH, where the cc-pV5Z basis is used (48).
+
+After the multi-CSF expansion is generated, we impose the electron-nucleus
+cusp condition on each molecular orbital (49) and add a Jastrow factor to the wave function to include electron correlation (50). Our Jastrow factor contains electronelectron, electron-nucleus and electron-electron-nucleus terms. The full electronic wave function used in FN-DMC is eq.~(\ref{eq:psie}).
+For the second type of wave function, we consider a form of type Eq. (3) as discussed in the previous section. We specifically tested this wave function for the CH molecule by implementing the following additional steps. At the equilibrium C-H separation Re=2.1165 a.u., we optimize the electronic wave function, which includes all determinant coefficients and a Jastrow. At two C-H separations near equilibrium $R_{left}$=2.0 a.u., $R_{right}$=2.25 a.u., we reoptimize only the determinant coefficients of the electronic wave function, keeping all the other wave function parameters fixed. For each determinant coefficient, we approximate its dependence on the distance between the ion positions $R$ with an interpolation given by the following equation,
+\begin{align}
+c_i^*(R) = c_i(R_{\text{left}}) + 
+\dfrac{c_i(R_{\text{right}}) - c_i(R_{\text{left}})}{R_{\text{right}}-R_{\text{left}}}\times(R-R_{\text{left}}). \label{eq:interpolation}
+\end{align}
+We can consider a diagnostic test to determine when this type of improvement might be important.
+The potential energy surface as a function of the C-H distance is plotted for several different nodal surfaces in Figure~\ref{fig:ch-cold}.
+In particular we calculate clamped-ion energies that correspond to the dragged-node approximation as well as energies from a linear interpolated wave function as given by Eq. (7).
+The reference result is obtained by re-optimizing the Jastrow factor and the determinant coefficients at every C-H separation.
+The region for the most probable ion distances is indicated by the vertical dashed lines.
+Over the region of important ion distances, the potential energy surface from the interpolated wave function is improved over the dragged-node potential energy surface when compared to the fully optimized potential energy surface.
+Further away from the region of interest, both the dragged-node and the interpolated wave functions deviate signficantly from the reference data.
+This region is seldom ever sampled during our FN-DMC simulations and is not expected to affect our results.
+
+
+\begin{figure}[h]
+\includegraphics[width=0.8\textwidth]{CH-cold}
+\caption{Clamped-ion VMC total energy as a function of C-H separation using a hierarchy of wave functions. The dashed lines mark the FWHM of the distribution of C-H separation.  Within the region marked by the dashed lines it can be seen that the interpolated wave function results are a closer match to the reference 're-opt' energies than the dragged-node energies. \label{fig:ch-cold}}
+\end{figure}
+
+\subsection{Results and Discussion}
+In our previous study, wave functions of the form in Eq. (2) were used to
+simulate several different molecular systems (6). To determine the nonadiabatic
+contribution for each system we partition the energy into different components,
+which includes the clamped-ion energies, the zero point energy (ZPE) and the
+diagonal Born-Oppenheimer energy (DBOC). Everything that remained we
+consider to be the nonadiabatic energy. Using standard quantum chemistry tools
+all of the above terms can be calculated or approximated to high accuracy with
+the exception of the nonadiabatic energy. As a result the nonadiabatic energy is
+a quantity that has not been theoretically calculated for many systems. In our
+previous study the nonadiabatic energy was less than 0.1 mHa for most of the
+systems considered. There are two exceptions, where the nonadiabatic energy
+was larger, for the cases of BH and CH molecules.
+Our new results for CH with the improved wave functions can be seen in Table
+1. Due to the variational property of FN-DMC, it is evident that these energies
+are improved over the previous best results for the CH molecule, which is not
+unexpected given the differences between the interpolated wave function and the
+dragged-node wave function as seen in Figure~\ref{fig:ch-cold}. Our previous results showed a
+nonadiabatic energy of 1.9 mHa. Our new results show a nonadiabatic energy of
+0.9 mHa, which can be seen for the largest determinant expansion in Table~\ref{tab:nad-ch-energy}. This
+is consistent with our previous results, mainly that the CH molecule is somewhat
+nonadiabatic, even though our new estimate of the nonadiabatic energy is smaller.
+For a system with a moderate amount of nonadiabatic energy, more effort is needed
+in generating accurate wave functions. Improving the wave functions beyond the
+dragged-node approximation will lower the estimate of the nonadiabatic energy,
+but it is likely to remain somewhat large if the improvements of the wave function
+correspond to degrees of freedom beyond the Born-Oppenehimer approximation.
+This is what we see for CH, as the nonadiabatic energy is still relatively large in
+comparison to other systems. We note that this is still not a definitive estimate of
+the nonadiabatic energy, but it is likely the best estimate ever calculated for this
+system.
+
+\begin{table}[h]
+\caption{DMC energy and variance with static ions, dynamic ions with dragged-node (``drag'') and dynamic ions with determinant coefficient interpolation (``interp.'').\label{tab:nad-ch-energy}}
+\begin{tabular}{llll}
+\hline\hline
+$N_{\text{det}}$ & Energy (Ha) & Variance (Ha$^2$) & method \\
+\hline
+35   & -38.4709(1) &  0.3130(5) &    static \\
+35   & -38.4622(2) &  0.3169(3) &   drag \\
+35   & -38.4621(2) &  0.3173(3) &  interp. \\
+723  & -38.4770(1)&  0.2489(3) &    static \\
+723  & -38.4667(1) &  0.334(2)~  &   drag \\
+723  & -38.4679(1) &  0.2713(7) &  interp. \\
+4739 & -38.4781(1) &  0.2300(4) &    static \\
+4739 & -38.4676(1) &  0.334(5)~  &   drag \\
+4739 & -38.4687(2) &  0.267(7)~  &  interp. \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+We also noticed interesting behavior that results from improving the quality
+of the electron nodes. We performed clamped-ion (static) and fully nonadiabatic
+(dynamic) calculations using different truncations levels for the determinant
+expansion. The FN-DMC energy and variance for the various calculations are
+shown in Table 1. As we include more determinants in our wave function,
+both the energy and variance of the static calculation decrease. However, the
+same does not happen for the variance of the dragged-node approximation, in
+which we see the surprising result that the variance increases. This suggests
+that the clamped-ion wave functions are being improved to a larger extent than
+the dragged-node wave functions with increasing determinant number. It is also
+interesting to note that for the wave functions with the smallest determinant
+expansion (Ndet = 35), the variance is almost the same between the clamped-ion
+and dragged-node wave functions.
+The energy and variance with determinant coefficient interpolation is
+generally improved from our previous wave function with the dragged-node
+approximation. A comparison between the dynamic runs with and without
+interpolation also shows that coefficient interpolation becomes more important
+for larger determinant expansions. In particular, the variance improves with
+increasing determinant number, showing similar behavior to that of the static
+wave function.
+
+\begin{figure}[h]
+\includegraphics[width=0.8\textwidth]{ch-only}
+\caption{Nonadiabatic energy of CH with and without determinant coefficient interpolation.  The wave function ``interp'' denotes that the determinant coefficients depend on C-H separation through linear interpolation. For the largest two determinant expansions a more significant contribution from nonadiabatic effects is observed than the smallest determinant expansion. \label{fig:ch-interp} }
+\end{figure}
+
+In Figure~\ref{fig:ch-interp} we show the various contributions to the difference between
+the static and dynamic ground-state energies. Due to the difference in energy
+scales for the quantities of interest, we only plot the diagonal Born-Oppenheimer
+energy and the nonadiabatic energy. To calculate the nonadiabatic energy we
+take the estimated zero-point energy for CH to be 6.438 mHa (54). The diagonal
+Born-Oppenheimer correction is estimated to be 2.11 mHa (6). Our best result is
+given by the 4739 determinant interpolated wave function in Figure~\ref{fig:ch-interp}. Clearly,
+there is an increase in the nonadiabatic energy of the CH molecule that results
+from using the dragged-node approximation. The improvement seen by using the
+interpolated wave function instead of the dragged-node approximation is 1 mHa
+for the CH molecule; a relatively large change in the energy. This improvement is
+unlikely for any of the other molecules under consideration based on our previous
+benchmarking. That the dragged-node approximation produced such a large error
+for the CH molecule suggests at the very least that the nodal structure of its wave
+function has more complex dependence on the ion configuration than the rest of
+the molecules under consideration.
+
+Figure~\ref{fig:ch-interp} also reveals that the nonadiabatic energy is only observed with the
+large determinant expansions. There are several possible explanations for this. It
+is possible we are optimzing the static wave function signficantly better than the
+electron-ion wave function. There is some indication of this from the variance
+of the dragged-node approximation, but this is less evident for the interpolated
+wave function. Another possible explanation is that only when the wave function
+is highly optimized do significant changes arise in the wave function amplitudes
+with regard to ion positions. A related effect is that large fluctuations of the ion
+distance can be surpressed if the wave function and the related nodal surface is
+not well optimized at large ion distances. Such effects can be mitigated altogether
+with the interpolated wave function approach, and are likely to be surpressed with
+increasing the number of determinants for the electronic part of the wave function,
+even for the dragged-node wave function. In Figure 3, we compare our new results
+for CH with the nonadiabatic contributions from previous work. It is evident
+that the CH nonadiabatic energy is still much larger than all the other molecular
+systems.
+
+In this work, we demonstrated a new approach for generating electron-ion
+wave functions for diatomic systems. This approach is accurate than those used
+in previous quantum Monte Carlo work. These wave functions are generated
+from highly accurate clamped-ion quantum chemistry techniques, from which the
+derived nodes can be much more complex than those given by the dragged-node
+approximation. We have specifically considered the nonadiabatic energy in the CH
+molecule, and we show that even with the improved wave function that there is still
+a slightly larger contribution from nonadiabatic effects. Further calculations are
+possible to improve our results here, such as release node calculations. However,
+it is of interest to start testing our wave function forms on larger systems and
+to develop further understanding of what types of nonadiabatic effects can be
+captured with our current formalism.

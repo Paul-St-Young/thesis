@@ -96,12 +96,12 @@ without the need for
 explicit studies at different sizes or referring to DFT or to experimental information
 external to the QMC calculation.
 
-The paper is organized as follows. In section~\ref{sec:gctabc}, we describe the main ideas behind our new band gap method based on the grand canonical ensemble. In section~\ref{sec:fse}, we derive finite size corrections to energy differences based on an explicit many-body wavefunction and exact diagrammatic relations. In section~\ref{sec:methods}, we describe the computational methods used to calculate the fundamental gap. In section~\ref{sec:results}, we show results for H$_2$, C, and Si crystals
-and compare with available experimental values of the gap in section~\ref{sec:compare}.
-Finally in section~\ref{sec:conclude}, we summarize general features of the method
+The paper is organized as follows. In section~\ref{sec:bg-gctabc}, we describe the main ideas behind our new band gap method based on the grand canonical ensemble. In section~\ref{sec:bg-fse}, we derive finite size corrections to energy differences based on an explicit many-body wavefunction and exact diagrammatic relations. In section~\ref{sec:bg-methods}, we describe the computational methods used to calculate the fundamental gap. In section~\ref{sec:bg-results}, we show results for H$_2$, C, and Si crystals
+and compare with available experimental values of the gap in section~\ref{sec:bg-compare}.
+Finally in section~\ref{sec:bg-conclude}, we summarize general features of the method
  and outline possible extensions and applications.
 
-\section{Grand-Canonical twist averaged boundary condition (GCTABC)\label{sec:gctabc}}
+\section{Grand-Canonical twist averaged boundary condition (GCTABC)\label{sec:bg-gctabc}}
 
 In the following, we consider $N_e$ electrons in a perfect crystal,
 neglecting both zero point  and thermal motion of the ions.
@@ -153,7 +153,7 @@ and the ground state energy density $e_0(\mu)$ coincide exactly with the corresp
 thermodynamic limit values for a sufficiently large value of $M_\theta$, e.g. when the sum over twists becomes an integral over the 
 Brillouin zone.  Size effects remaining after twist averaging are due to electron-electron correlations.
 
-Figure~\ref{fig:H_C2CP250}(a) illustrates $e_0(\mu)$ and $n_e(\mu)$ for solid molecular hydrogen, computed from HSE functional and from QMC (see section \ref{sec:methods} for details). The value of the  band
+Figure~\ref{fig:H_C2CP250}(a) illustrates $e_0(\mu)$ and $n_e(\mu)$ for solid molecular hydrogen, computed from HSE functional and from QMC (see section \ref{sec:bg-methods} for details). The value of the  band
 gap can be directly extracted from the width of the incompressible region.
 Alternatively, if we
 eliminate $\mu$ in favor of $n_e$, and plot $e_0$ as a function of $n_e$ (as in Fig.~\ref{fig:H_C2CP250}(b)),
@@ -190,7 +190,7 @@ Size corrections as discussed in the text are included.
  \label{fig:H_C2CP250}}
 \end{figure*}
 
-\section{Finite size effects\label{sec:fse}}
+\section{Finite size effects\label{sec:bg-fse}}
 
 \subsection{Potential energy}
 
@@ -552,7 +552,7 @@ The horizontal lines mark experimental inverse dielectric constants.
 \label{fig:c-si-gk}}
 \end{figure*}
 
-\section{Computational methods\label{sec:methods}}
+\section{Computational methods\label{sec:bg-methods}}
 
 We have performed electronic QMC calculations on three insulating solids:
 molecular hydrogen at high pressure,
@@ -569,7 +569,7 @@ For hydrogen, we used a supercell with  $2 \times 2 \times 1$ primitive cells so
 For hydrogen, the twist convergence has been achieved using a $8 \times 8 \times 8$ twist grid. For C and Si, the twist grid density decreases with increasing system size. The supplementary material~\cite{supp} contains the QMC calculated energies and variances of the insulating ground states
 of the various systems obtained after twist averaging and two-body finite size corrections.
 
-\section{Results\label{sec:results}}
+\section{Results\label{sec:bg-results}}
 
 For any single-particle theory, such as Kohn-Sham DFT,
 the densities and energies, $n_e(\mu)$ and $e_0(\mu)$,
@@ -641,7 +641,7 @@ multi-determinant trial wave functions \cite{Zhao19}, possible for small superce
 could be done in the future.
 
 So far, in our analysis of C and Si, we have imposed the experimentally known dielectric constant
-in the leading order Madelung correction. As described in Sec.~\ref{sec:fse},
+in the leading order Madelung correction. As described in Sec.~\ref{sec:bg-fse},
 there is no need for any external knowledge to perform the size extrapolation as the value
 of the Madelung correction can be obtained from the behavior of the static structure factor,
 calculable within the same QMC run, see  Figs~\ref{fig:c-si-skpm} and \ref{fig:c-si-gk}. However, since
@@ -713,7 +713,7 @@ For these calculations, we use calculations for one supercell and use its struct
  HSE DFT slightly underestimates the gap, however the deviations from the plateau on both sides are quite similar.
 
 \section{Comparison with experiment}
-\label{sec:compare}
+\label{sec:bg-compare}
 
 Our best values for the fundamental electronic gap (BF-DMC)  significantly overestimate the experimentally measured values for C and Si  by 1.1 and 0.5 eV, respectively as shown in Table \ref{tab:c-si-gap-corr}. There are two main sources of systematic errors which need to be taken into account: the use of pseudo-potentials and the neglect of electron-phonon coupling.
 
@@ -786,7 +786,7 @@ Si &  1.7(1)  & $-0.25$ ($G_0W_0$)\cite{GomezAbal08}  & $-0.06$ ($DFT$) \cite{Mo
 
 
 \section{Conclusions}
-\label{sec:conclude}
+\label{sec:bg-conclude}
 
 We have introduced a method to calculate the fundamental gap of insulators and semi-conductors
 using QMC. Using grand-canonical twist averaging, 

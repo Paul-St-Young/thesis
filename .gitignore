@@ -3,5 +3,8 @@ yyang173-thesis.pdf
 *.log
 *.out
 *.synctex.gz
+*.bbl
+*.blg
+*.toc
 
 *eps-converted-to.pdf

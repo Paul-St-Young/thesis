@@ -8,6 +8,12 @@
 \usepackage{subfiles}
 \usepackage{comment}
 
+%% allow one reference for each chapter
+%\usepackage[sectionbib]{natbib}
+%\usepackage{chapterbib}
+%%\usepackage[sectionbib]{chapterbib}
+
+% import figures from difference folders
 \input{./papers/nonbo/pre}
 \graphicspath{{./papers/bandgap/},{./papers/nonbo/},{./papers/licp/}}
 
@@ -34,7 +40,7 @@
 %\maketitle
 
 %\include{sections/frontmatter}
-%\tableofcontents
+\tableofcontents
 %\include{sections/lists}
 \mainmatter
 
@@ -133,6 +139,12 @@ Fixed-phase diffusion Monte Carlo uses a trial wavefunction to modify the Hamilt
 \section{Grand-canonical twist-averaged boundary condition (GC-TABC)}
 
 \chapter{Benchmark of dynamic-ion QMC on small molecules}
+This chapter is based on the following article(s):
+
+\textit{I}. Yubo Yang, Ilkka Kyl\"anp\"a\"a, Norm Tubman, Jaron Krogel, Sharon Hammes-Schiffer, and David Ceperley, ``How large are nonadiabatic effects in atomic and diatomic systems?" J. Chem. Phys. \textbf{143}, 124308 (2015).
+
+\textit{II}. Norm Tubman, Yubo Yang, Sharon Hammes-Schiffer, and David Ceperley, ``Interpolated wave functions for nonadiabatic simulations with the fixed-node quantum Monte Carlo method," ACS Symp. Ser. \textbf{1234}, pp. 47-61 (2016).
+
 \include{papers/nonbo/nonbo}
 \input{papers/nonbo/nonbo.bbl}
 
@@ -143,10 +155,18 @@ Fixed-phase diffusion Monte Carlo uses a trial wavefunction to modify the Hamilt
 \section{Discussion}
 
 \chapter{Effect of ions on the electronic momentum distribution}
+This chapter is based on the following article(s):
+
+\textit{I}. Yubo Yang, Nozomu Hiraoka, Kazuhiro Matsuda, Markus Holzmann, and David Ceperley, "Quantum Monte Carlo Compton profiles of solid and liquid lithium," arXiv: 1912.12295
+
 \include{papers/licp/licp}
 \input{papers/licp/licp.bbl}
 
 \chapter{Finite-size correction to the fundamental gap of insulators}
+This chapter is based on the following article(s):
+
+\textit{I}. Yubo Yang, Vitaly Gorelov, Carlo Pierleoni, Markus Holzmann, and David Ceperley, ``Electronic band gaps from quantum Monte Carlo methods," Phys. Rev. B ??. 005100 (2020).
+
 \include{papers/bandgap/bandgap}
 
 \chapter{Classical many-body potential from QMC forces}
