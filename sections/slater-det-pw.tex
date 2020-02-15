@@ -1,0 +1,142 @@
+\subsection{Slater Determinant in Plane Wave Basis}
+
+\textit{Based on notes from D. M. Ceperley dated Aug. 1 2018}
+
+When the orbitals are expressed in plane wave basis
+\begin{align}
+\phi_i(\bs{r}) = \sum\limits_{\bs{k}} c_{i\bs{k}} e^{i\bs{k}\cdot\bs{r}}, \label{eq:pw-orb}
+\end{align}
+and require the orbitals to be orthonormal.
+\begin{align}
+\int_\Omega d\bs{r} \phi_i(\bs{r})^*\phi_j(\bs{r}) = \delta_{ij} \Rightarrow 
+\Omega \sum\limits_{\bs{k}} c_{i\bs{k}}^*c_{j\bs{k}} = \delta_{ij}. \label{eq:on_orbs}
+\end{align}
+
+We can verify that the determinant written in eq~(\ref{eq:det}) is normalized
+\begin{align}
+\braket{} \equiv& \int d\bs{r}_1\dots d\bs{r}_N \Psi^*~ \Psi \nonumber \\
+=& \frac{1}{N!} \sum\limits_{\mathcal{P},\mathcal{P'}} (-1)^{\mathcal{P}} (-1)^{\mathcal{P'}}
+\left(
+\prod\limits_{l=1}^{N} \int d\bs{r}_l \phi^*_{\mathcal{P}_l}(\bs{r}_l)\phi_{\mathcal{P}_l'}(\bs{r}_l)
+\right)\nonumber \\
+=& \frac{1}{N!} \sum\limits_{\mathcal{P},\mathcal{P'}} (-1)^{\mathcal{P}} (-1)^{\mathcal{P'}}
+\left(
+\prod\limits_{l=1}^{N} \delta_{\mathcal{P}_l,\mathcal{P}_l'}
+\right) \nonumber \\
+=& \frac{1}{N!} \sum\limits_{\mathcal{P}} = 1. \label{eq:det-norm}
+\end{align}
+The key step in eq~(\ref{eq:det-norm}) is to separate and distribute the many-body integrals into the product.
+
+\subsection{Properties of the Slater Determinant}
+
+Many properties of the slater determinant can be evaluated analytically. Here we focus on reciprocal-space properties accessible by scattering experiments: the momentum distribution $n(\bs{k})$ and the static structure factor $S(\bs{k})$. %They are the Fourier transform of the one-body reduced density matrix (1RDM) and two-body reduced density matrix (2RDM), respectively.
+
+\subsubsection{Momentum Distribution}
+
+The momentum distribution is the Fourier transform of the 1RDM [IE (5.9)]. The 1RDM can be calculated from the many-body wavefunction
+\begin{align}
+\rho(\bs{x}, \bs{x}') = N\int d\bs{r}_2\dots\bs{r}_N \Psi^*(\bs{x}, \bs{r}_2, \dots) \Psi(\bs{x}', \bs{r}_2, \dots).
+\end{align}
+Given a Slater determinant wavefunction eq~(\ref{eq:det}), all the $d\bs{r}$ integrals can be done analytically
+\begin{align}
+\rho(\bs{x}, \bs{x}') =& N\int d\bs{r}_2\dots d\bs{r}_N
+\left(
+\frac{1}{N!}\sum\limits_{\mathcal{P}, \mathcal{P}'} (-1)^{\mathcal{P}} (-1)^{\mathcal{P}'}
+\phi_{\mathcal{P}_1}^*(\bs{x})\phi_{\mathcal{P}_1'}(\bs{x}')
+\prod\limits_{l=2}^{N}\phi_{\mathcal{P}_l^*}(\bs{r}_l)\phi_{\mathcal{P}_l'}(\bs{r}_l) 
+\right) \nonumber \\
+=& \frac{N}{N!} \sum\limits_{\mathcal{P}, \mathcal{P}'} (-1)^{\mathcal{P}} (-1)^{\mathcal{P}'}
+\left(
+\phi_{\mathcal{P}_1}^*(\bs{x})\phi_{\mathcal{P}_1'}(\bs{x}')
+\prod\limits_{l=2}^N \delta_{\mathcal{P}_l,\mathcal{P}_l'}
+\right) \nonumber \\
+=& \frac{N}{N!} \sum\limits_{\mathcal{P}} \phi_{\mathcal{P}_1}^*(\bs{x})\phi_{\mathcal{P}_1}(\bs{x}') \nonumber \\
+=& \sum\limits_{\mathcal{P}_1=1}^N \phi_{\mathcal{P}_1}^*(\bs{x})\phi_{\mathcal{P}_1}(\bs{x}'). \label{eq:det-1rdm}
+\end{align}
+Notice that the diagonal ($\bs{x}=\bs{x}'$) of the 1RDM is particle density. Given PW orbitals eq~(\ref{eq:pw-orb})
+\begin{align}
+n(\bs{k}) =& \frac{1}{(2\pi)^3N}\int d\bs{r} d\bs{r}'' e^{-i\bs{k}\cdot\bs{r}''} \rho(\bs{r}, \bs{r}-\bs{r}'') \nonumber \\
+= & \frac{1}{(2\pi)^3N} \sum\limits_{i, \bs{g}, \bs{g}'} c_{i\bs{g}}^*c_{i\bs{g}'}
+\int d\bs{r} d\bs{r}'' e^{-i\bs{g}\cdot\bs{r}}e^{i\bs{g}'\cdot(\bs{r}-\bs{r}'')} \nonumber \\
+=&  \frac{1}{(2\pi)^3N} \sum\limits_{i, \bs{g}, \bs{g}'} c_{i\bs{g}}^*c_{i\bs{g}'} \Omega\delta_{\bs{g}, \bs{g}'}\Omega\delta_{\bs{g}',-\bs{k}} \nonumber \\
+=& \frac{\Omega}{(2\pi)^3}\frac{\Omega}{N}\sum_{i=1}^{N} \vert c_{i,-\bs{k}}\vert^2.\label{eq:det-nofk}
+\end{align}
+Given the current definitions, $\int d\bs{k} n(\bs{k}) = 1$ for an infinite system. In practice, one bins the Fourier coefficient squared of all occupied orbitals at allowed momenta of the supercell.
+
+\subsubsection{Static Structure Factor}
+
+The static structure factor is the density-density correlation in reciprocal space
+\begin{align}
+S_{\bs{q}} \equiv& \braket{\rho_{\bs{q}}\rho_{-\bs{q}}} \equiv \braket{
+(\frac{1}{\sqrt{N}}\sum\limits_{i=1}^N e^{i\bs{q}\cdot\bs{r}_i})
+(\frac{1}{\sqrt{N}}\sum\limits_{j=1}^N e^{-i\bs{q}\cdot\bs{r}_j})
+} \nonumber \\
+=& \frac{1}{N}\sum_{ij}\braket{e^{i\bs{q}\cdot(\bs{r}_i-\bs{r}_j)}} =
+1 + \frac{1}{N}\sum_{i\neq j}\braket{e^{i\bs{q}\cdot(\bs{r}_i-\bs{r}_j)}} \nonumber \\
+=& 1+(N-1)\braket{e^{i\bs{q}\cdot(\bs{r}_1-\bs{r}_2)}}.
+\end{align}
+Focus on the many-body integral
+\begin{align}
+\braket{e^{i\bs{q}\cdot(\bs{r}_1-\bs{r}_2)}} = \dfrac{1}{N!} \sum\limits_{\mathcal{P},\mathcal{P'}} 
+(-1)^{\mathcal{P}} (-1)^{\mathcal{P'}} \int d\bs{r}_1\dots d\bs{r}_N
+e^{i\bs{q}\cdot(\bs{r}_1-\bs{r}_2)}
+\prod\limits_{l=1}^{N} \phi^*_{\mathcal{P}_l}(\bs{r}_l)\phi_{\mathcal{P}_l'}(\bs{r}_l). \label{eq:eiqr1r2}
+\end{align}
+Similar to eq~(\ref{eq:det-norm}) and eq~(\ref{eq:det-nofk}), $\mathcal{P}_l=\mathcal{P}'_l, \forall l\neq1, 2$. Define $\mathcal{P}_1=i$, $\mathcal{P}_2=j$, then $\mathcal{P}_{1,2}'=i, j$ contributes a positive term, and $\mathcal{P}_{1,2}'=j, i$ contributes a negative term. Thus eq~(\ref{eq:eiqr1r2}) simplifies
+\begin{align}
+\braket{e^{i\bs{q}\cdot(\bs{r}_1-\bs{r}_2)}} =& \dfrac{1}{N(N-1)} \sum\limits_{i, j}
+ \int d\bs{r}_1d\bs{r}_2
+e^{i\bs{q}\cdot(\bs{r}_1-\bs{r}_2)} \times \nonumber \\
+&\left[
+\phi^*_{i}(\bs{r}_1)\phi_{i}(\bs{r}_1)\phi^*_{j}(\bs{r}_2)\phi_{j}(\bs{r}_2) - 
+\phi^*_{i}(\bs{r}_1)\phi_{j}(\bs{r}_1)\phi^*_{j}(\bs{r}_2)\phi_{i}(\bs{r}_2)
+\right] \nonumber \\
+=& \dfrac{1}{N(N-1)} \sum\limits_{i\neq j} \left[
+\int d\bs{r}_1 e^{i\bs{q}\cdot\bs{r}_1} \phi^*_{i}(\bs{r}_1)\phi_{i}(\bs{r}_1) \right.
+\int d\bs{r}_1 e^{-i\bs{q}\cdot\bs{r}_2} \phi^*_{j}(\bs{r}_2)\phi_{j}(\bs{r}_2) \nonumber \\
+& \left. - \int d\bs{r}_1 e^{i\bs{q}\cdot\bs{r}_1} \phi^*_{i}(\bs{r}_1)\phi_{j}(\bs{r}_1)
+\int d\bs{r}_1 e^{-i\bs{q}\cdot\bs{r}_2} \phi^*_{j}(\bs{r}_2)\phi_{i}(\bs{r}_2)
+\right] \nonumber \\
+=& \dfrac{1}{N(N-1)} \sum\limits_{i\neq j} \left[
+m_{ii}(\bs{q})m_{jj}(-\bs{q}) - m_{ij}(\bs{q})m_{ji}(-\bs{q})
+\right],
+\end{align}
+where we have defined the matrix of integrals
+\begin{align}
+m_{ij}(\bs{q}) \equiv \int d\bs{r} \phi_i^*(\bs{r}) \phi_j(\bs{r}) e^{i\bs{q}\cdot\bs{r}}. \label{eq:det-mijq}
+\end{align}
+Notice $m_{ij}^*(\bs{q}) = m_{ji}(-\bs{q})$, thus
+\begin{align}
+S_{\bs{q}} =& 1+\frac{1}{N} \sum_{i\neq j} \left[ m_{ii}(\bs{q})m_{jj}^*(\bs{q}) - m_{ij}(\bs{q})m_{ij}^*(\bs{q}) \right] \nonumber \\
+=& 1+\frac{1}{N} \left[
+\vert \sum_{i} m_{ii}(\bs{q}) \vert^2 -\sum_{i, j} \vert m_{ij}(\bs{q}) \vert^2
+\right]. \label{eq:det-sofk}
+\end{align}
+
+\subsubsection{Example: Free Fermions}
+The ground-state wavefunction of non-interacting fermions is a determinant of plane waves. The first $N$ plane-wave orbitals with the lowest momenta are filled. In case of degeneracy, the wavefunction will have a non-zero net momentum. %If $N$ does not fully fill the outer-most k-shell (there are degenerate unfilled orbitals at the Fermi energy), then the ground state must be an equal superposition of determinants. The determinant expansion should have $\left( \begin{array}{c} N_s\\ N_{left} \end{array} \right)$ terms, where $N_s$ is the number of states in the partially filled k-shell.
+
+Simply stated, the free fermion wavefunction is a determinant eq~(\ref{eq:det}) whose orbitals each have a single Fourier component
+\begin{align}
+c_{i\bs{k}} = \frac{1}{\sqrt{\Omega}} \delta_{\bs{k},\bs{k}_i}.
+\end{align}
+We see from eq~(\ref{eq:det-nofk}) that the momentum distribution $n(\bs{k})$ of the free fermions is a step function, which is constant within the Fermi surface and zero outside. As for the static structure factor $S(\bs{k})$, first note that the matrix of integrals $m_{ij}(\bs{q})$ eq~(\ref{eq:det-mijq}) is sparse
+\begin{align}
+m_{ij}(\bs{q}) = c_{i\bs{k}_i}^* c_{j\bs{k}_j} \Omega\delta_{\bs{q}, \bs{k}_i-\bs{k}_j} = \delta_{\bs{q}, \bs{k}_i-\bs{k}_j}. \label{eq:det-free-mijq}
+\end{align}
+Plug (\ref{eq:det-free-mijq}) into (\ref{eq:det-sofk}) and
+\begin{align}
+S_{\bs{q}} = \left\{
+\begin{array}{lr}
+N & \bs{q}=\bs{0} \\
+ 1-\frac{1}{N}\sum\limits_{i, j} \vert \delta_{\bs{q}, \bs{k}_i-\bs{k}_j} \vert^2 & \bs{q}\neq\bs{0}
+\end{array}\right..
+\end{align}
+Eq~(\ref{eq:det-free-mijq}) has a simple geometric interpretation. Namely, $m_{ij}(\bs{q})$ is non-zero only if $\bs{q}$ connects two occupied plane wave orbitals. In the thermodynamic limit, the geometric interpretation allows $S(\bs{k})$ to be calculated from a simple integral
+\begin{align}
+S(\bs{k}\neq\bs{0}) =& 1-\left(\frac{4\pi k_F^3}{3}\right)^{-1}2\int_{q/2}^{k_F} dk \pi(k_F^2-k^2) \nonumber \\
+=& \left\{ \begin{array}{lr}
+\frac{3}{4}\left(\frac{q}{k_F}\right) - \frac{1}{16} \left(\frac{q}{k_F}\right)^3 & q<2k_F\\
+1 & q\ge 2k_F
+\end{array}\right..
+\end{align}
