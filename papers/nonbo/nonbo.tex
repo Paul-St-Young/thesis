@@ -9,7 +9,7 @@ Diffusion Monte Carlo~\cite{Anderson_DMC,lester1,Stuart_Review,Needs_Review,Need
 
 If the trial wave function has the same nodal surface as the exact ground-state wave function, FN-DMC will obtain the exact ground-state energy.  Approximate nodal surfaces can be generated through optimization of the full wave function. Such approximate nodal surfaces have been tested and validated on a wide range of systems, and consistently provide an excellent approximation of the exact ground-state energy, comparable to the state of the art in \textit{ab initio} simulations.~\cite{grossman1} In addition, the energies generated with FN-DMC are variational with respect to the ground-state energy.
 
-In all but a handful of previous QMC simulations,~\cite{Ceperley_1987,Natoli_1993,Natoli_1995,Chen_1995,Coldwell_H2_2008,Gabriele_H2_2004,Sandro_finiteT-noBO_2012} calculations are performed with nuclei "clamped" to their equilibrium positions. However, such an assumption is not fundamentally required by FN-DMC. %In our previous work we find that the most important effects for optimizing are the nodes due to electron-electron correlation~\cite{Tubman_ECG}, and in this regard we use more sophisticated terms in the electronic part of the wave function than in the ionic part.
+In all but a handful of previous QMC simulations,~\cite{Ceperley_1987,Natoli_1993,Natoli_1995,Chen_1995,Coldwell_H2_2008,Gabriele_H2_2004,Sandro_finiteT-noBO_2012} calculations are performed with nuclei ``clamped" to their equilibrium positions. However, such an assumption is not fundamentally required by FN-DMC. %In our previous work we find that the most important effects for optimizing are the nodes due to electron-electron correlation~\cite{Tubman_ECG}, and in this regard we use more sophisticated terms in the electronic part of the wave function than in the ionic part.
 
 \subsection{Electronic Wave Function and Optimization}
 
@@ -29,8 +29,8 @@ We optimize the CSF and Jastrow coefficients, $\vec{\alpha}$ and $\vec{\beta}$, 
 %\input{Table/cas}
 
 \begin{figure}[h]
-\includegraphics[width=0.4\textwidth]{fig1a}
-\includegraphics[width=0.4\textwidth]{fig1b}
+\includegraphics[width=0.49\textwidth]{fig1a}
+\includegraphics[width=0.49\textwidth]{fig1b}
 \caption{Dragged-node approach for simulation of atomic and molecular systems in QMC. {\bf (a)} For atomic systems we can consider the entire wave function shifting with the ion. This process can be visualized by following a contour of the wave function. The thick dashed circle represents a contour of the electronic wave function when the proton is at its reference position $\vec{R}_o$, and the thin dashed circle represents the same contour when the proton has moved to a new position $\vec{R}$. To evaluate the ion-dependent electronic wave function $\bar{\psi}_e(\vec{r},\vec{R})$, we simply map the electron to its proper place in the reference wave function $\psi_e(\vec{r};\vec{R}_o)$. That is, $\bar{\psi}_e(\vec{r},\vec{R})=\bar{\psi}_e(\vec{r}+\vec{s},\vec{R}_o)=\psi_e(\vec{r}+\vec{s};\vec{R}_o)$ where $\vec{s}$ is the shift required to put the proton back to its reference position. {\bf (b)} For H$_2^+$, we pick one of the protons as an ``anchor'' and approximate the new wave function by dragging the reference wave function with the ``anchor'' proton. We also rotate the wave function to align its axis of symmetry with the orientation of the two protons. \label{fig:drag}}
 \end{figure}
 
@@ -42,7 +42,7 @@ Once a satisfactory electronic wave function has been obtained, we construct the
 \end{align}
 where $\vec{R}$ denotes the spatial coordinates of all ions and $\bar{\psi}_e(\vec{r},\vec{R})$ is an ion-dependent electronic wave function adapted from the clamped-nuclei wave function $\psi_e(\vec{r};\vec{R}_o)$ through basis set dependence. Due to the localization of Gaussian basis sets around nuclei, as used in quantum chemistry calculations, the nodes of $\bar{\psi}_e$ change based on the ionic positions, which we have previously called the dragged-node approximation.~\cite{Tubman_ECG}
 %In general, the nodes only coincide with those obtained in the clamped-ion limit when the ions are at their equilibrium positions $\bar{\psi}_e(\vec{r},\vec{R}_o)=\psi_e(\vec{r};\vec{R}_o)$. However, for atoms and ions this approximation is equivalent to re-optimizing the electronic wave function at each ionic configuration, i.e. $\bar{\psi}_e(\vec{r},\vec{R})=\psi_e(\vec{r};\vec{R})$. 
-Although there are approaches for going beyond the dragged-node approximation, it was demonstrated to be highly accurate over a range of molecules in previous work.~\cite{Tubman_ECG} For the systems considered here, we can impose various symmetries of the Hamiltonian onto the wave function that arise from the relative motion of the ions. In Fig.~\ref{fig:drag} we demonstrate this approach for the simple cases of a hydrogen atom and an H$_2^+$ molecular ion. This approach can be generalized for use in larger systems or even applied to parts of a bigger system, e.g., treating light ions as quantum particles and heavy ions as "clamped".
+Although there are approaches for going beyond the dragged-node approximation, it was demonstrated to be highly accurate over a range of molecules in previous work.~\cite{Tubman_ECG} For the systems considered here, we can impose various symmetries of the Hamiltonian onto the wave function that arise from the relative motion of the ions. In Fig.~\ref{fig:drag} we demonstrate this approach for the simple cases of a hydrogen atom and an H$_2^+$ molecular ion. This approach can be generalized for use in larger systems or even applied to parts of a bigger system, e.g., treating light ions as quantum particles and heavy ions as ``clamped".
 
 The term $\psi_I$ consists of simple products of Gaussian wave functions over each pair of nuclei,
 \begin{align}
@@ -175,7 +175,7 @@ IP (Ref.)\tnote{e} & 0.198130 & 0.342572 & 0.304980 & 0.414014 & 0.534775 & 0.50
 
 To assess the quality of our results for atoms and ions~\cite{masses}, we compare to previous results from highly accurate simulations, as presented in Table \ref{tab:ionization}. For the clamped-ion results, QMC~\cite{Brown_Bench,Toulouse_Bench,Seth_Bench,Morale_Bench,Rappe_Bench} and quantum chemistry benchmarks are available for comparison. To illustrate the high-quality QMC techniques used in this work, we compare our clamped-ion atomic results with a recent QMC benchmark study.~\cite{Seth_Bench} The ground-state FN-DMC energies consistently agree across all systems studied (except for O$^{+}$) within 0.1 mHa. This shows that similar nodes can be obtained with different forms of the wave function. In particular, our large ($\sim$ 1000 CSF) multi-determinant expansions can be compared with the approach used by Seth {\it et al.},~\cite{Seth_Bench} which relies on moderately-sized multi-determinant expansions ($\sim$ 100 CSF) with a backflow transformation. For certain atoms we can compare to more accurate simulation techniques. For C$^+$ as well as the neutral and ionized Li, Be and B, highly accurate ECG calculations that are all converged well beyond 0.1 mHa to the true ground-state energy are available. The convergence is corroborated by results from the Hylleraas method for Li~\cite{Wang_Li} and Be$^+$.~\cite{Puchalski_Be+} In Table \ref{tab:ionization} we have used the lowest variational results as our references for these systems, as the convergence is such that the accuracy is higher than other current theoretical or experimental estimates. 
 
-All of our clamped-ion results agree within 0.2 mHa of the ECG references, as shown in Figure \ref{fig:atom-ECG}. The error bars for the reference ECG results are absorbed into the DMC error bars for clarity, although the ECG error bars are orders of magnitude smaller compared to the DMC error bars. While ECG results exist for C and N, they are not well converged and are not suitable references.~\cite{Bubin_C,Sharkey_N} The benchmark results in Ref.~\cite{Davidson_Atoms} are a standard for atomic energies, and we report them as our references in Table \ref{tab:ionization} for the larger atoms. However, these benchmark results are not consistently accurate to 0.1 mHa. For instance, if we use the ECG results for $\text{C}^+$ with the most accurate ionization reference energy, then we find a reference energy for the C atom of -37.84489 Ha, which is 0.1 mHa higher than that reported in Ref.~\cite{Davidson_Atoms}. %Nevertheless, a comparison of our results with the references suggests that our ground-state energies for the neutral and ionized N,O,F are not accurate to the sub mHa level. 
+All of our clamped-ion results agree within 0.2 mHa of the ECG references, as shown in Figure \ref{fig:atom-ECG}. The error bars for the reference ECG results are absorbed into the DMC error bars for clarity, because the ECG error bars are orders of magnitude smaller compared to the DMC error bars. While ECG results exist for C and N, they are not well converged and are not suitable references.~\cite{Bubin_C,Sharkey_N} The benchmark results in Ref.~\cite{Davidson_Atoms} are a standard for atomic energies, and we report them as our references in Table \ref{tab:ionization} for the larger atoms. However, these benchmark results are not consistently accurate to 0.1 mHa. For instance, if we use the ECG results for $\text{C}^+$ with the most accurate ionization reference energy, then we find a reference energy for the C atom of -37.84489 Ha, which is 0.1 mHa higher than that reported in Ref.~\cite{Davidson_Atoms}. %Nevertheless, a comparison of our results with the references suggests that our ground-state energies for the neutral and ionized N,O,F are not accurate to the sub mHa level. 
 The systems with the most error are O and F, for which other QMC studies seem to experience similar difficulties.~\cite{Seth_Bench,Booth_FCIQMC,Brown_Bench,Shiwei_AFQMC} We note that for some of these systems it may be possible to absorb the sign problem and increase the accuracy further in future studies.~\cite{Tubman_Release,Tubman_ACS} %However, a systematic exploration of these alternatives is beyond the scope of the current study.
 
 \begin{figure}[h]
@@ -361,88 +361,75 @@ HF   &  12.0(4) &  9.34 &  2.799624  &  0.1(4)  \\
 \end{tabular}
 \end{table}
 
-\section{Conclusion}
-We calculated the ground-state energies of first-row atoms and their corresponding ions and hydrides with and without the Born-Oppenheimer approximation. In addition, we examined the amount of nonadiabatic contribution to the ground-state energies of all systems studied and determined the amount to be up to a few mHa. In the case of CH, the nonadiabatic effects beyond the DBOC were unusually large, although we could not rule out the possibility that this discrepancy is due to the fixed-node error in our simulations. %The nonadiabatic contribution is a monotonically increasing function of the total nuclear charge except for BH and CH.
-We found the ionization energies of the atoms to be independent of the Born-Oppenheimer approximation, consistent with a previous high-level quantum chemistry study.~\cite{Klopper_IP} In contrast, the atomization energies of the hydrides showed effects of nonadiabaticity, although they were generally much less than 1 mHa. This work obtained the first nonadiabatic QMC benchmark data for non-relativistic ground-state energies and obtained the lowest variational result for BH and the only results for CH, OH and HF, to the best of our knowledge.
-
-In comparing to accurate benchmark results obtained with other methods, we have demonstrated the validity of our wave function ansatz, namely it does produce a high-quality electron-ion wave function. This technique also has the potential to solve interesting larger-scale problems due to its ease of implementation, as well as the polynomial scaling in computational time with respect to the number of electrons.
-
 % beyond dragged node 
 \subsection{Dragged Node Approximation}
-The fixed-node approximation is generally going to result in errors in the
-energy that overestimate the nonadiabatic effects. This is a result of the increased complexity of optimizing wave functions for the full electron-ion system. When the clamped-ion energies are more accurate than the electron-ion energies, then we will overestimate the nonadiabatic energy. It should be noted that in some cases the energies for the full electron-ion simulations are more accurate than for the corresponding clamped-ion simulations, as seen in previous benchmark comparisons of (Be,Be+,B,B+,C+) (6).
-While it does appear that in some cases the nonadiabatic simulations are as good as or more accurate than our clamped-ion simulations, this is less likely for molecular systems in which the ions can move relative to each other.
-Our recent simulations with quantum Monte Carlo have used a particular type of nodal structure which is called the dragged-node approximation (1, 6).
-This approximation can be used for wave functions in the form of Eq. (2) in which we start by generating a wave function defined at the equilibrium geometry.
+In our current approach, the fixed-node approximation generally causes an overestimate the nonadiabatic effects. This is a result of the increased complexity of optimizing wave functions for the full electron-ion system. When the clamped-ion energies are more accurate than the electron-ion energies, we overestimate the nonadiabatic energy. It should be noted that in some cases the energies for the full electron-ion simulations are more accurate than for the corresponding clamped-ion simulations, as seen in the comparisons of Be, Be+, B, B+, and C+ in Fig.~\ref{fig:ionization}.
+However, this is less likely for molecular systems in which the ions can move relative to each other.
+All our simulations up to this point have used a particular type of approximation to the nodal structure called the dragged-node approximation.
+This approximation can be used for wave functions in the form of Eq.~\ref{eq:psi_gms} in which we start by generating a wave function defined at the equilibrium geometry.
 When the ions change position the wave function changes based on the basis set dependence of the ion coordinates.
 The change in the wave function causes a corresponding change in the nodes.
 The dragged-node approximation is completely variational when used in FN-DMC.
 For systems that do not show strong nonadiabatic behavior the dragged-node approximation should yield excellent results.
-It was surprising that the energy contribution from nonadiabatic effects in our previous FN-DMC calculation of the CH molecule (6) was larger than expected, indicating that we might need to use better wave function forms to accurately simulate the energy for CH.
+It was surprising that the energy contribution from nonadiabatic effects of the CH molecule was larger than other hydrides, indicating that we might need to use better wave function forms to accurately simulate CH.
 
 \subsection{Improving Wave Functions}
-The wave function in Eq. (3) is much more general than what we included in
-our previous studies but is more difficult to generate. In general it is not feasible to do a full wave function evaluation for each new configuration of the ions.
-However, for diatomic molecules it is feasible to precompute and optimize wave functions at different distances and then use the precomputed wave functions in order to interpolate wave function amplitudes at other ion positions.
+We improve the electron-ion wavefunction by updating the electronic part using quantum chemistry rather than relying on the dragged-node approximation
+\begin{align}
+\Psi_{CISD}(\bs{r},\bs{R}) &= \sum_i c_i(\bs{R}) \phi_i(\bs{r},\bs{R}_o), \label{eq:nonbo-best-psi}
+\end{align}
+where the determinant expansion coefficients $c_i(\bs{R})$ now depend on the positions of the ions as opposed to being fixed to their equilibrium values as in Eq.~\ref{eq:psi_gms}.
+
+The wave function in Eq.~\ref{eq:nonbo-best-psi} is more general than Eq.~\ref{eq:psi_gms}
+but is more difficult to generate. In practice, it is not feasible to regenerate both the orbitals and expansion coefficients for each new configuration of the ions.
+However, for diatomic molecules we can precompute and optimize wave functions at different distances and then use the precomputed wave functions to interpolate wave function amplitudes at other ion positions.
 There are several different ways this can be done.
-The first approach we considered is to use a grid with regard to the distance between the ions and calculate a fully optimized electronic wave function at each grid point.
-Then one would evaluate the electronic wave function at each grid point and use an interpolation scheme to determine the full wave function.
-This would be multiplied by a purely ionic wave function, as in Eq. (3).
-Although this is technically a feasible way to generate improved wave functions, we found that this approach was difficult to implement with regards to maintaining a smooth wave function.
+The first approach we considered is to use a grid of bond lengths and calculate a fully optimized electronic wave function at each grid point.
+Then one would calculate the electronic wave function at each grid point and use an interpolation scheme to determine the electron-ion wave function.
+Although technically feasible, we found it difficult to maintain a smooth wave function within this approach.
 A second approach, for which we present results here, parameterizes the
 determinant coefficients as a function of the ion positions.
 For a diatomic system, this corresponds to generating a 1D function for each determinant coefficient.
-This is an improvement over the dragged-node approximation, as the coefficients of the determinants are allowed to change with ion distance, and can capture complicated ion dependences of the nodes.
-In future work it also might be possible to extend this type of wave function to at least three particles, which would require fitting functions for the determinant coefficients in higher dimensions.
+This is an improvement over the dragged-node approximation, because the coefficients of the determinants are allowed to change with ion distance and can capture complicated ion dependences of the nodes.
+%In future work, it may also be possible to extend this type of wave function to at least three particles, which would require fitting functions for the determinant coefficients in higher dimensions.
 
-\subsection{Wave Function Details}
-The process for generating wave functions of the types in Eq. (2) and Eq.
-(3) requires the determination of several types of variational parameters. For a wave function given by Eq. (2), we use an initial guess for the wave function that is generated from complete active space self-consistent-field (CASSCF) (43, 44) calculations using the quantum chemistry package GAMESS-US (45).
-The optimized orbitals are then used in a configuration interaction singles and doubles (CISD) calculation to generate a series of configuration state functions (CSFs) (46). For the small systems LiH and BeH, a CASSCF calculation with a large active space is used in place of CISD.
-The multi-CSF expansion of the wavefunction can be expressed as eq.~(\ref{eq:psi_gms}). Each CSF is
-a linear combination of determinants, so the wave function can be equivalently written as a linear combination of determinants (5). The Roos Augmented Triple Zeta ANO basis (47) is used for the molecular systems except for the smallest system LiH, where the cc-pV5Z basis is used (48).
-
-After the multi-CSF expansion is generated, we impose the electron-nucleus
-cusp condition on each molecular orbital (49) and add a Jastrow factor to the wave function to include electron correlation (50). Our Jastrow factor contains electronelectron, electron-nucleus and electron-electron-nucleus terms. The full electronic wave function used in FN-DMC is eq.~(\ref{eq:psie}).
-For the second type of wave function, we consider a form of type Eq. (3) as discussed in the previous section. We specifically tested this wave function for the CH molecule by implementing the following additional steps. At the equilibrium C-H separation Re=2.1165 a.u., we optimize the electronic wave function, which includes all determinant coefficients and a Jastrow. At two C-H separations near equilibrium $R_{left}$=2.0 a.u., $R_{right}$=2.25 a.u., we reoptimize only the determinant coefficients of the electronic wave function, keeping all the other wave function parameters fixed. For each determinant coefficient, we approximate its dependence on the distance between the ion positions $R$ with an interpolation given by the following equation,
+\subsection{Results and Discussion}
+We tested the improved wave function Eq.~\ref{eq:nonbo-best-psi} for the CH molecule by implementing the following additional steps. At the equilibrium C-H separation $R_o$=2.1165 a.u., we optimize the electronic wave function, which includes all determinant coefficients and a Jastrow. At two C-H separations near equilibrium $R_{left}$=2.0 a.u., $R_{right}$=2.25 a.u., we reoptimize only the determinant coefficients of the electronic wave function, keeping all other parameters fixed. For each determinant coefficient, we approximate its dependence on the distance between the ion separations $R$ with a linear interpolation
 \begin{align}
 c_i^*(R) = c_i(R_{\text{left}}) + 
 \dfrac{c_i(R_{\text{right}}) - c_i(R_{\text{left}})}{R_{\text{right}}-R_{\text{left}}}\times(R-R_{\text{left}}). \label{eq:interpolation}
 \end{align}
 We can consider a diagnostic test to determine when this type of improvement might be important.
 The potential energy surface as a function of the C-H distance is plotted for several different nodal surfaces in Figure~\ref{fig:ch-cold}.
-In particular we calculate clamped-ion energies that correspond to the dragged-node approximation as well as energies from a linear interpolated wave function as given by Eq. (7).
+In particular, we calculate clamped-ion energies that correspond to the dragged-node approximation as well as energies from a linear interpolated wave function as given by Eq.~\ref{eq:interpolation}.
 The reference result is obtained by re-optimizing the Jastrow factor and the determinant coefficients at every C-H separation.
 The region for the most probable ion distances is indicated by the vertical dashed lines.
-Over the region of important ion distances, the potential energy surface from the interpolated wave function is improved over the dragged-node potential energy surface when compared to the fully optimized potential energy surface.
-Further away from the region of interest, both the dragged-node and the interpolated wave functions deviate signficantly from the reference data.
-This region is seldom ever sampled during our FN-DMC simulations and is not expected to affect our results.
-
+Over the region of important ion separations, the potential energy surface from the interpolated wave function is improved over the dragged-node potential energy surface when compared to the fully optimized potential energy surface.
+Further away from the region of interest, both the dragged-node and the interpolated wave functions deviate significantly from reference data.
+This region is seldom sampled during our FN-DMC simulations and is not expected to introduce a large bias into our results.
 
 \begin{figure}[h]
 \includegraphics[width=0.8\textwidth]{CH-cold}
 \caption{Clamped-ion VMC total energy as a function of C-H separation using a hierarchy of wave functions. The dashed lines mark the FWHM of the distribution of C-H separation.  Within the region marked by the dashed lines it can be seen that the interpolated wave function results are a closer match to the reference 're-opt' energies than the dragged-node energies. \label{fig:ch-cold}}
 \end{figure}
 
-\subsection{Results and Discussion}
-In our previous study, wave functions of the form in Eq. (2) were used to
-simulate several different molecular systems (6). To determine the nonadiabatic
+%In our previous study, wave functions of the form in Eq. (2) were used to
+%simulate several different molecular systems (6).
+To determine the nonadiabatic
 contribution for each system we partition the energy into different components,
 which includes the clamped-ion energies, the zero point energy (ZPE) and the
-diagonal Born-Oppenheimer energy (DBOC). Everything that remained we
+diagonal Born-Oppenheimer correction (DBOC). Everything that remained we
 consider to be the nonadiabatic energy. Using standard quantum chemistry tools
 all of the above terms can be calculated or approximated to high accuracy with
 the exception of the nonadiabatic energy. As a result the nonadiabatic energy is
-a quantity that has not been theoretically calculated for many systems. In our
-previous study the nonadiabatic energy was less than 0.1 mHa for most of the
+a quantity that has not been theoretically calculated for many systems. We see from Fig.~\ref{fig:dia-nad-ad} that the nonadiabatic energy was less than 0.1 mHa for most of the
 systems considered. There are two exceptions, where the nonadiabatic energy
 was larger, for the cases of BH and CH molecules.
-Our new results for CH with the improved wave functions can be seen in Table
-1. Due to the variational property of FN-DMC, it is evident that these energies
+Our new results for CH with the improved wave functions can be seen in Table~\ref{tab:nad-ch-energy}. Due to the variational property of FN-DMC, it is evident that these energies
 are improved over the previous best results for the CH molecule, which is not
 unexpected given the differences between the interpolated wave function and the
 dragged-node wave function as seen in Figure~\ref{fig:ch-cold}. Our previous results showed a
-nonadiabatic energy of 1.9 mHa. Our new results show a nonadiabatic energy of
+nonadiabatic energy of 1.9 mHa, whereas our new results show a nonadiabatic energy of
 0.9 mHa, which can be seen for the largest determinant expansion in Table~\ref{tab:nad-ch-energy}. This
 is consistent with our previous results, mainly that the CH molecule is somewhat
 nonadiabatic, even though our new estimate of the nonadiabatic energy is smaller.
@@ -479,14 +466,14 @@ We also noticed interesting behavior that results from improving the quality
 of the electron nodes. We performed clamped-ion (static) and fully nonadiabatic
 (dynamic) calculations using different truncations levels for the determinant
 expansion. The FN-DMC energy and variance for the various calculations are
-shown in Table 1. As we include more determinants in our wave function,
+shown in Table~\ref{tab:nad-ch-energy}. As we include more determinants in our wave function,
 both the energy and variance of the static calculation decrease. However, the
 same does not happen for the variance of the dragged-node approximation, in
 which we see the surprising result that the variance increases. This suggests
 that the clamped-ion wave functions are being improved to a larger extent than
 the dragged-node wave functions with increasing determinant number. It is also
 interesting to note that for the wave functions with the smallest determinant
-expansion (Ndet = 35), the variance is almost the same between the clamped-ion
+expansion ($N_{det}$ = 35), the variance is almost the same between the clamped-ion
 and dragged-node wave functions.
 The energy and variance with determinant coefficient interpolation is
 generally improved from our previous wave function with the dragged-node
@@ -505,30 +492,29 @@ In Figure~\ref{fig:ch-interp} we show the various contributions to the differenc
 the static and dynamic ground-state energies. Due to the difference in energy
 scales for the quantities of interest, we only plot the diagonal Born-Oppenheimer
 energy and the nonadiabatic energy. To calculate the nonadiabatic energy we
-take the estimated zero-point energy for CH to be 6.438 mHa (54). The diagonal
-Born-Oppenheimer correction is estimated to be 2.11 mHa (6). Our best result is
+take the estimated zero-point energy for CH to be 6.438 mHa~\cite{Feller_Corrections}. The diagonal
+Born-Oppenheimer correction is estimated to be 2.11 mHa. Our best result is
 given by the 4739 determinant interpolated wave function in Figure~\ref{fig:ch-interp}. Clearly,
 there is an increase in the nonadiabatic energy of the CH molecule that results
 from using the dragged-node approximation. The improvement seen by using the
 interpolated wave function instead of the dragged-node approximation is 1 mHa
-for the CH molecule; a relatively large change in the energy. This improvement is
-unlikely for any of the other molecules under consideration based on our previous
-benchmarking. That the dragged-node approximation produced such a large error
+for the CH molecule; a relatively large change in the energy.
+That the dragged-node approximation produced such a large error
 for the CH molecule suggests at the very least that the nodal structure of its wave
 function has more complex dependence on the ion configuration than the rest of
 the molecules under consideration.
 
 Figure~\ref{fig:ch-interp} also reveals that the nonadiabatic energy is only observed with the
 large determinant expansions. There are several possible explanations for this. It
-is possible we are optimzing the static wave function signficantly better than the
+is possible we are optimizing the static wave function significantly better than the
 electron-ion wave function. There is some indication of this from the variance
 of the dragged-node approximation, but this is less evident for the interpolated
 wave function. Another possible explanation is that only when the wave function
 is highly optimized do significant changes arise in the wave function amplitudes
 with regard to ion positions. A related effect is that large fluctuations of the ion
-distance can be surpressed if the wave function and the related nodal surface is
+distance can be suppressed if the wave function and the related nodal surface is
 not well optimized at large ion distances. Such effects can be mitigated altogether
-with the interpolated wave function approach, and are likely to be surpressed with
+with the interpolated wave function approach, and are likely to be suppressed with
 increasing the number of determinants for the electronic part of the wave function,
 even for the dragged-node wave function. In Figure 3, we compare our new results
 for CH with the nonadiabatic contributions from previous work. It is evident
@@ -541,9 +527,16 @@ in previous quantum Monte Carlo work. These wave functions are generated
 from highly accurate clamped-ion quantum chemistry techniques, from which the
 derived nodes can be much more complex than those given by the dragged-node
 approximation. We have specifically considered the nonadiabatic energy in the CH
-molecule, and we show that even with the improved wave function that there is still
+molecule, and we show that even with the improved wave function, there is still
 a slightly larger contribution from nonadiabatic effects. Further calculations are
 possible to improve our results here, such as release node calculations. However,
 it is of interest to start testing our wave function forms on larger systems and
 to develop further understanding of what types of nonadiabatic effects can be
 captured with our current formalism.
+
+
+\section{Conclusion}
+We calculated the ground-state energies of first-row atoms and their corresponding ions and hydrides with and without the Born-Oppenheimer approximation. In addition, we examined the amount of nonadiabatic contribution to the ground-state energies of all systems studied and determined the amount to be up to a few mHa. In the case of CH, the nonadiabatic effects beyond the DBOC were unusually large, although we found that a large part of this discrepancy is due to the fixed-node error.
+We found the ionization energies of the atoms to be independent of the Born-Oppenheimer approximation, consistent with a previous high-level quantum chemistry study.~\cite{Klopper_IP} In contrast, the atomization energies of the hydrides showed effects of nonadiabaticity, although they were generally much less than 1 mHa. This work obtained the first nonadiabatic QMC benchmark data for non-relativistic ground-state energies and obtained the lowest variational result for BH and the only results for CH, OH and HF, to the best of our knowledge.
+
+In comparing to accurate benchmark results obtained with other methods, we have demonstrated the validity of our wave function ansatz, namely it does produce a high-quality electron-ion wave function. This technique also has the potential to solve interesting larger-scale problems due to its ease of implementation, as well as the polynomial scaling in computational time with respect to the number of electrons.
