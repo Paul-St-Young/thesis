@@ -64,9 +64,91 @@
 \chapter{Methods}
 \section{Mean-field Theory}
 \subsection{Hartree-Fock (HF)}
+
+\newcommand{\hcore}{H^{\text{core}}_{\mu\nu}}
+
+\subsubsection{Minimum-basis H$_2$}
+
+Instead of starting with the tedious derivation of the Fock operator and its iterative numerical solver, I will first show a concrete application of restricted Hartree-Fock (RHF) to minimum-basis hydrogen molecule (H$_2$). %The minimum basis consists of two 1s functions, one centered at each nucleus $\{\phi_\mu\}$, $\mu=1,\dots,K$, where $K=2$.
+On p. 140 of A. Szabo and N. S. Ostlund, the restricted Fock operator in any basis $\{\phi_\mu\}$ is written as
+\begin{align}
+F_{\mu\nu} = \hcore + \sum\limits_{a=1}^{N/2} 2(\mu\nu|aa) - (\mu a|a\nu),
+\end{align} % (3.148)
+where $a$ labels molecular orbitals, which are eigenstates of the Fock operator. $\hcore$ is the one-electron part of the Hamiltonian expressed in the given basis % (3.149)
+\begin{align} \label{eq:hf-hcore}
+\hcore = \int d\bs{r}_1 \phi_\mu^*(\bs{r}_1)\left(
+-\frac{1}{2}\nabla_1^2-\sum\limits_A \dfrac{Z_A}{\vert\bs{r}_1-\bs{R}_A\vert}
+\right)  \phi_\nu(\bs{r}_1).
+\end{align}
+The two-electron integral notation $(\mu\nu|\lambda\sigma)$ is defined by eq.~(3.155) in Szabo
+\begin{align} \label{eq:hf-eri}
+(\mu\nu|\lambda\sigma) = \iint d\bs{r}_1 d\bs{r}_2 \phi_\mu^*(\bs{r}_1)\phi_{\nu}(\bs{r}_1)
+\frac{1}{\vert\bs{r}_1-\bs{r}_2\vert}
+\phi_\lambda^*(\bs{r}_2)\phi_\sigma(\bs{r}_2).
+\end{align}
+We immediately note that the Fock operator is a peculiar one-electron operator that depends on its own eigenstates. A self-consistent solution to $F_{\mu\nu}$ will involve guessing, checking and reiterating.
+
+Suppose each molecular orbital $a$ is written as a linear combination of the basis functions
+\begin{align}
+\psi_a = \sum\limits_{\mu=1}^K C_{\mu a} \phi_\mu,
+\end{align}
+then the Fock operator can be written as
+\begin{align}
+F_{\mu\nu} = \hcore + \sum\limits_{\lambda\sigma} P_{\lambda\sigma} \left[
+(\mu\nu|\sigma\lambda) - \frac{1}{2}(\mu\lambda|\sigma\nu)
+\right],
+\end{align} % (3.154)
+where $P_{\lambda\sigma}=2\sum_{a=1}^{N/2} C_{\lambda a}C_{\sigma a}^*$ is the density matrix, % (3.145)
+and 
+
+Conceptually, the simplest approach would be to use the ground-state wavefunctions of the two hydrogen atoms as the basis for the hydrogen molecule. We can guess the ground-state wavefunction of the hydrogen molecule. First, the spins of the two electrons anti-align, so they are distinguishable particles. Second, due to symmetries imposed by the two protons, the ground state must be equal superposition of the two basis functions. Third, the lowest-energy solution has no node. Therefore, the ground state of H$_2$ in the minimum basis is
+\begin{align}
+\psi_1 = \left[2(1+S_{12})\right]^{-1/2} \left(
+\phi_1 + \phi_2
+\right),
+\end{align}
+where $S_{12}=\braket{\phi_1|\phi_2}$. That is $C_{11}=C_{12}=\left[2(1+S_{12})\right]^{-1/2}$.
+\begin{align}
+P_{\lambda\sigma} = \left[2(1+S_{12})\right]^{-1/2}\left(\begin{array}{cc}
+1 & 1 \\
+1 & 1
+\end{array}\right).
+\end{align}
+This guess was obtained as early as 1927 by V. W. Heitler and F. London. Unfortunately, the multi-center integrals eq.~(\ref{eq:hf-hcore}) and (\ref{eq:hf-eri}), needed to evaluate the total energy, are difficult to evaluate using Slater type orbitals (STOs) (see thesis of Michał Lesiuk). Thus, Heitler-London used an upper bound to approximate the two-electron integral and obtain a bond length of 1.5 bohr and binding energy of 2.5 eV, noticeably different from the experimental values of 1.4 bohr and 4.5 eV.
+
+In modern quantum chemistry, instead of directly approximating the integrals, we approximate each basis function as a sum of Gaussian functions. This reduces the multi-center integrals to single-center integrals, because a product of Gaussians centered on different atoms is also Gaussian but with a different center. The so-called STO-3g basis expresses a STO as a sum of 3 ``primitive Gaussians'' (see eq. (3.225) of Szabo). Using this basis, the bond length and binding energy become 1.35 bohr and 3.2 eV, which roughly halves discrepancy with experiment when compared to the Heitler-London values.
+
+In Fig. , I show the STO-3g basis compared to the exact STO it approximates
+
+\begin{comment}
+\begin{align}
+\chi_{nlm}(r, \theta, \phi;\zeta) \equiv \dfrac{(2\zeta)^{n+1/2}}{\sqrt{(2n)!}}
+r^{n-1}e^{-\zeta r} Y_{lm}(\theta, \phi).
+\end{align}
+\begin{align}
+g(r; \sigma) = \dfrac{1}{\sigma\sqrt{2\pi}} e^{-\dfrac{r^2}{2\sigma^2}}.
+\end{align}
+\end{comment}
+
+\subsubsection{The Hartree-Fock equations}
+The Hartree-Fock equations are a set of linear equations that couple spin orbitals in the determinant wavefunction. They can be obtained by minimizing the energy of the Slater determinant with the constraint that the spin orbitals within the determinant remain orthonormal. Using the method of Lagrangian multipliers, this constraint optimization problem can be converted to a set of linear equations. These linear equations take the form of an eigenvalue problem, thus it is more concise to define the one-body operator on the left hand side as the Fock operator. (see eq.~(3.49) in Szabo).
+
+The Fock operator can be written as a sum of one-electron part (the term in the parenthesis in eq.~(\ref{eq:hf-hcore})) and an effective mean-field interaction
+\begin{align}
+f(\bs{r}) = h(\bs{r}) + v_{HF}[\{\psi_a\}](\bs{r}),
+\end{align}
+where the square brackets indicate that the mean-field interaction depends on the spin orbitals.
+
+
 \subsection{Density Functional Theory (DFT)}
+
+
 \section{Classical Monte Carlo}
+
+
 \subsection{Markov Chain Monte Carlo (MCMC)}
+
+
 \subsection{Sample the Boltzmann Distribution $e^{-\beta H}$}
 
 \section{Quantum Monte Carlo}
@@ -202,14 +284,10 @@ This chapter is based on the following article(s):
 
 \textit{II}. Norm Tubman, Yubo Yang, Sharon Hammes-Schiffer, and David Ceperley, ``Interpolated wave functions for nonadiabatic simulations with the fixed-node quantum Monte Carlo method," ACS Symp. Ser. \textbf{1234}, pp. 47-61 (2016).
 
-%\include{papers/nonbo/nonbo}
-%\input{papers/nonbo/nonbo.bbl}
+\include{papers/nonbo/nonbo}
+\input{papers/nonbo/nonbo.bbl}
 
 \chapter{Application of dynamic-ion QMC to solid hydrogen}
-\section{Introduction}
-\section{Methods}
-\section{Results}
-\section{Discussion}
 
 \chapter{Effect of ions on the electronic momentum distribution}
 This chapter is based on the following article(s):
