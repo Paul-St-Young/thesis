@@ -494,8 +494,7 @@ scales for the quantities of interest, we only plot the diagonal Born-Oppenheime
 energy and the nonadiabatic energy. To calculate the nonadiabatic energy we
 take the estimated zero-point energy for CH to be 6.438 mHa~\cite{Feller_Corrections}. The diagonal
 Born-Oppenheimer correction is estimated to be 2.11 mHa. Our best result is
-given by the 4739 determinant interpolated wave function in Figure~\ref{fig:ch-interp}. Clearly,
-there is an increase in the nonadiabatic energy of the CH molecule that results
+given by the 4739 determinant interpolated wave function in Figure~\ref{fig:nonbo-ch-star}. There is an apparent increase in the nonadiabatic energy of the CH molecule that results
 from using the dragged-node approximation. The improvement seen by using the
 interpolated wave function instead of the dragged-node approximation is 1 mHa
 for the CH molecule; a relatively large change in the energy.
@@ -503,6 +502,15 @@ That the dragged-node approximation produced such a large error
 for the CH molecule suggests at the very least that the nodal structure of its wave
 function has more complex dependence on the ion configuration than the rest of
 the molecules under consideration.
+
+\begin{figure}[h]
+\includegraphics[width=0.8\textwidth]{4738}
+\caption{Nonadiabatic energy of diatomic molecules. The best (4739
+determinant) result for CH with determinant coefficient interpolation is shown
+with *. Note that for all the molcules except for BH and CH the nonadiabatic
+energies are roughly 0.1 mHa or smaller.}
+\label{fig:nonbo-ch-star}
+\end{figure}
 
 Figure~\ref{fig:ch-interp} also reveals that the nonadiabatic energy is only observed with the
 large determinant expansions. There are several possible explanations for this. It
@@ -516,13 +524,13 @@ distance can be suppressed if the wave function and the related nodal surface is
 not well optimized at large ion distances. Such effects can be mitigated altogether
 with the interpolated wave function approach, and are likely to be suppressed with
 increasing the number of determinants for the electronic part of the wave function,
-even for the dragged-node wave function. In Figure 3, we compare our new results
+even for the dragged-node wave function. In Fig.~\ref{fig:nonbo-ch-star}, we compare our improved results
 for CH with the nonadiabatic contributions from previous work. It is evident
-that the CH nonadiabatic energy is still much larger than all the other molecular
+that the CH nonadiabatic energy is still larger than all the other molecular
 systems.
 
 In this work, we demonstrated a new approach for generating electron-ion
-wave functions for diatomic systems. This approach is accurate than those used
+wave functions for diatomic systems. This approach is more accurate than those used
 in previous quantum Monte Carlo work. These wave functions are generated
 from highly accurate clamped-ion quantum chemistry techniques, from which the
 derived nodes can be much more complex than those given by the dragged-node
@@ -534,9 +542,8 @@ it is of interest to start testing our wave function forms on larger systems and
 to develop further understanding of what types of nonadiabatic effects can be
 captured with our current formalism.
 
-
 \section{Conclusion}
-We calculated the ground-state energies of first-row atoms and their corresponding ions and hydrides with and without the Born-Oppenheimer approximation. In addition, we examined the amount of nonadiabatic contribution to the ground-state energies of all systems studied and determined the amount to be up to a few mHa. In the case of CH, the nonadiabatic effects beyond the DBOC were unusually large, although we found that a large part of this discrepancy is due to the fixed-node error.
+We calculated the ground-state energies of first-row atoms and their corresponding ions and hydrides with and without the Born-Oppenheimer approximation. In addition, we examined the amount of nonadiabatic contribution to the ground-state energies of all systems studied and determined the amount to be up to a few mHa. In the case of CH, the nonadiabatic effects beyond the DBOC were unusually large, although we found that a large part of this discrepancy was due to the fixed-node error.
 We found the ionization energies of the atoms to be independent of the Born-Oppenheimer approximation, consistent with a previous high-level quantum chemistry study.~\cite{Klopper_IP} In contrast, the atomization energies of the hydrides showed effects of nonadiabaticity, although they were generally much less than 1 mHa. This work obtained the first nonadiabatic QMC benchmark data for non-relativistic ground-state energies and obtained the lowest variational result for BH and the only results for CH, OH and HF, to the best of our knowledge.
 
 In comparing to accurate benchmark results obtained with other methods, we have demonstrated the validity of our wave function ansatz, namely it does produce a high-quality electron-ion wave function. This technique also has the potential to solve interesting larger-scale problems due to its ease of implementation, as well as the polynomial scaling in computational time with respect to the number of electrons.
