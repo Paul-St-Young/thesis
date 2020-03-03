@@ -22,7 +22,7 @@ Full-core and pseudopotential QMC calculations have been performed on both  the 
 \end{equation}
 where $u(\bs{r})$ is the electron-electron Jastrow pair function, $\chi(\bs{r})$ is the electron-ion Jastrow pair function and $\bs{r}_i$ is the position of the i$^{th}$ electron. The Slater determinant $D^{\up/\dn}$ is composed of single-particle orbitals obtained using Kohn-Sham (KS) DFT with the LDA functional. In the full-core calculation, we remove the approximate electron-ion cusp from the orbitals and re-introduce the exact cusp condition in the Jastrow function~\cite{Ceperley1981}. The electron-ion Jastrow pair function is split into a sum of core and valence pieces. A flexible Bspline with 16 adjustable knots is used for the core piece ($r<2$ bohr). An electron-electron-ion three-body Jastrow is also added to further improve the all-electron wavefunction. In the pseudopotential calculation, we treat the lithium atoms as pseudo ions of charge +1. The core, screened by 1s electrons, is replaced by the BFD pseudopotential~\cite{Burkatzki2007}.  The electron-electron Jastrow pair function is expressed as a sum of real-space and reciprocal-space parts to accurately describe long-range plasmon fluctuations.
 
-In variational Monte Carlo (VMC), we sample $\vert \psi_T \vert^2$ using Metropolis Monte Carlo and directly calculate properties from the many-body wavefunction. The momentum distribution is calculated using the direct estimator in reciprocal space\cite{McMillan1965}. In DMC, an ensemble of electron configurations evolve according to the Green's function of the non-relativistic Schr\"odinger equation in imaginary time. Using the trial wavefunction $\psi_T$ as guiding function and phase reference, the long-time solution samples the mixed distribution $\psi^*_T\psi_{FP}$, in the limit of small time step. $\psi_{FP}$ is the fixed-phase ground-state wavefunction. If the phase of $\psi_T$ were exact, then $\psi_{FP}$ would be the exact ground-state wavefunction.~\cite{Ortiz1993} The difference between the expectation value of an observable in the fixed-phase and the mixed distributions is the mixed-estimator bias. We gauge simulation quality by monitoring kinetic, potential, and total energies as well as pair correlation functions and the momentum distribution. We observe fast equilibration, small variance and small mixed-estimator bias in all monitored quantities. The DMC momentum distribution is linearly extrapolated to remove the mixed-estimator bias. For more details on the computational methods and data processing, see the supplementary materials.
+In variational Monte Carlo (VMC), we sample $\vert \psi_T \vert^2$ using Metropolis Monte Carlo and directly calculate properties from the many-body wavefunction. The momentum distribution is calculated using the direct estimator in reciprocal space~\cite{McMillan1965}. In DMC, an ensemble of electron configurations evolve according to the Green's function of the non-relativistic Schr\"odinger equation in imaginary time. Using the trial wavefunction $\psi_T$ as guiding function and phase reference, the long-time solution samples the mixed distribution $\psi^*_T\psi_{FP}$, in the limit of small time step. $\psi_{FP}$ is the fixed-phase ground-state wavefunction. If the phase of $\psi_T$ were exact, then $\psi_{FP}$ would be the exact ground-state wavefunction.~\cite{Ortiz1993} The difference between the expectation value of an observable in the fixed-phase and the mixed distributions is the mixed-estimator bias. We gauge simulation quality by monitoring kinetic, potential, and total energies as well as pair correlation functions and the momentum distribution. We observe fast equilibration, small variance and small mixed-estimator bias in all monitored quantities. The DMC momentum distribution is linearly extrapolated to remove the mixed-estimator bias. For more details on the computational methods and data processing, see the supplementary materials.
 
 We use GCTABC to improve the momentum distribution \cite{PhysRevLett.97.076404,Holzmann2009}. A previous QMC calculation~\cite{Filippi1999} used real wavefunctions and canonical twist average boundary condition (CTABC); each boundary condition (twist) had the same number of electrons. Use of real trial functions restricted the accessible momenta to those commensurate with the simulation cell. CTABC can occupy states outside of the Fermi surface at certain twists, which artificially smears the Fermi surface. In contrast, the grand-canonical twist average technique enforces constant chemical potential at all twists. We adjust the number of electrons at each twist such that no state outside the Fermi surface is occupied. This allows us to sample the momentum distribution at momenta arbitrarily close to the Fermi surface while maintaining a sharp Fermi surface. In practice, we impose the occupation of the orbitals in the Slater determinant according to the LDA Fermi energy. In principle, one might modify the Fermi surface by estimating the chemical potential directly within QMC \cite{yang2019electronic}. However, this is much more computationally demanding and is beyond the scope of the current study and not thought to be necessary for lithium.
 
@@ -49,7 +49,8 @@ We used LAMMPS~\cite{Plimpton1995} for the MD simulations, QE~\cite{Giannozzi200
 Figure~\ref{fig:sl-jp-djp} shows the valence Compton profiles of solid and liquid lithium from experiment and processed QMC data. The raw QMC data have been processed to account for finite-size effects, thermal disorder, pseudopotential bias, density change, final-state effects, and instrument resolution. The QMC Compton profiles agree with experiment immediately inside the Fermi surface (0.2 a.u.$<$p$<$0.4 a.u.) and at large momenta (p$>$0.9  a.u.). However, the QMC Compton profiles show less high-momentum component immediately outside the Fermi surface and too much low-momentum component. Both the theoretical and experimental valence Compton profiles satisfy the normalization sum rule ($\int_{-\infty}^{\infty} J(p)dp=1$) to better than 0.3\%. The difference between QMC and experiment Compton profiles can be interpreted as a shift of momentum density from zero to slightly above the Fermi momentum. 
 
 \begin{figure}[h]
-\includegraphics[width=\linewidth]{li58_sl-jp}
+\centering
+\includegraphics[width=0.8\linewidth]{li58_sl-jp}
 \caption{Valence electronic Compton profiles of solid (solid line) and liquid (dashed line) lithium from QMC (thin) and experiment (thick). The top panel shows the Compton profiles on an absolute scale. The bottom panel shows  $\Delta J(p)=J_{QMC}-J_{expt}$.}\label{fig:sl-jp-djp}
 \end{figure}
 
@@ -57,7 +58,8 @@ Figure~\ref{fig:s-l-djp} shows the change of the Compton profile when the liquid
 The main change is a density-induced outward shift of the Fermi surface. This shift manifests in Fig.~\ref{fig:s-l-djp} as a peak at the solid Fermi momentum $p_F\approx0.578$ a.u. and a parabolic dip centered around $p=0$. Another important difference is the emergence of secondary Fermi surfaces, due to Umklapp scattering in the solid. We expect secondary Fermi surfaces to center around the reciprocal lattice of the lithium crystal. Crystalline lithium is BCC with a lattice constant of $\sim 6.63$ bohr, so its reciprocal lattice is FCC with a lattice constant of $\sim 1.895$ a.u.. The nearest neighbor to $\Gamma$ is $p_1=1.34$ a.u.  along [110]. Therefore, the closest secondary Fermi surface is located at $p_1-p_F=0.762$ a.u., which is exactly where we observe a small peak in Fig.~\ref{fig:s-l-djp}.
 
 \begin{figure}[h]
-\includegraphics[width=\linewidth]{li52e_sl-djp}
+\centering
+\includegraphics[width=0.8\linewidth]{li52e_sl-djp}
 \caption{Difference between solid and liquid valence electronic Compton profiles.\label{fig:s-l-djp}}
 \end{figure}
 
@@ -68,11 +70,13 @@ In Fig.~\ref{fig:nk}, 1D slices of the QMC valence momentum distributions are sh
 To obtain the valence momentum distribution from the full-core QMC calculation, we remove the momentum distribution of the 1s core electrons. The 1s orbital of the neutral lithium atom is calculated using Hartree-Fock (HF) with a cc-pV5Z basis. The most pronounced effect of the pseudopotential is to increase the electronic momentum density inside the Fermi surface, raising $n(0)$ by more than 5\%. In contrast, the effect of increasing system size peaks at the Fermi momentum. The main effect of finite system size is to increase the magnitude of the discontinuity at the Fermi momentum. The effects of pseudopotential and finite system size can be better shown in the momentum distribution differences.
 
 \begin{figure}[h]
-\begin{minipage}{\columnwidth}
+\begin{minipage}{0.48\columnwidth}
+\centering
 \includegraphics[width=\linewidth]{li57_dmcfc-fcv-dir}
 (a) full-core valence \textit{vs} pseudopotential
 \end{minipage}
-\begin{minipage}{\columnwidth}
+\begin{minipage}{0.48\columnwidth}
+\centering
 \includegraphics[width=\linewidth]{li52g_bfd-crystal-n54-n432-nk}
 (b) 432 atoms \textit{vs} 54 atoms
 \end{minipage}
@@ -84,12 +88,14 @@ In Fig.~\ref{fig:dnk}, we show two sets of momentum distribution differences in 
 
 Now consider how the finite size of our supercell affects the results: the finite-size correction (FSC). Figure~\ref{fig:dnk}(b) shows the difference between the 432-atom and 54-atom pseudopotential calculations. The difference peaks at the Fermi surface and goes to zero at high momenta.  The FSC results shown here are used to validate the approach outlined in ref.~\cite{Holzmann2009} and ref.~\cite{Holzmann2011}.
 
-\begin{figure}
-\begin{minipage}{\columnwidth}
+\begin{figure}[h]
+\begin{minipage}{0.49\columnwidth}
+\centering
 \includegraphics[width=\linewidth]{li57_dmcfc-ppc-dir}
 (a) full-core valence - pseudopotential
 \end{minipage}
-\begin{minipage}{\columnwidth}
+\begin{minipage}{0.49\columnwidth}
+\centering
 \includegraphics[width=\linewidth]{li52g_bfd-crystal-n54-n432-dnk}
 (b) 432 atoms - 54 atoms
 \end{minipage}
@@ -100,19 +106,18 @@ In Fig.~\ref{fig:crystal-vcp}, we show our best QMC Compton profile in the cryst
 
 The Compton profile reported by Filippi and Ceperley \cite{Filippi1999} is closer to our full-core than to our pseudopotential result. This is because they accounted for proper core-valence orthogonalization using full-core LDA. Pseudopotential QMC was used to estimate the correlation correction, rather than directly provide the Compton profile.
 
-
-\begin{figure}
-\includegraphics[width=\linewidth]{li62g_crystal-jp}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{li62g_crystal-jp}
 \caption{Spherical average of the valence Compton profile of lithium BCC crystal at $r_s=3.25$. The red solid line is the best QMC result with all processing steps applied. The red dotted curve is our pseudopotential QMC result. The black curve is experiment on polycrystal lithium. \label{fig:crystal-vcp}}
 \end{figure}
 
 Taking our best QMC Compton profiles (thin lines in Fig.~\ref{fig:sl-jp-djp}) as reference, we show the remaining difference between the QMC and the experiment Compton profiles as the black curves in Fig.~\ref{fig:sl-corrections}. We also show the effect of each processing step in the calculation of $J(p)$. Finite-size and convolution corrections both peak at the Fermi momentum and are small at the scale of the remaining discrepancy. The density correction is small in the solid but substantial in the liquid, because QMC calculations have been performed close to the solid density. In both cases, the density correction contracts the Fermi sphere and has little effect above the Fermi momentum. In contrast, the pseudopotential correction nearly vanishes at the Fermi momentum, smoothly transfers low-momentum components to high momenta, and remains non-zero well above the Fermi momentum. The $n(k)$ tail correction is needed to recover the normalization sum rule, because the QMC $n(k)$ is truncated at a finite momentum $k_c$. The exact shape of $n(k)$ tail may not be accurate above $k_c$, because the assumed functional form is simple (see supplemental materials). Fortunately, the effect of $n(k)$ tail within $k_c$ is simply to shift the entire Compton profile up by a constant as dictated by the normalization sum rule. The tail and pseudopotential corrections are the only ones that can change the high-momentum tail of the Compton profile.
 
-
-
-\begin{figure}
-\includegraphics[width=\linewidth]{li58_solid-the-djp}
-\includegraphics[width=\linewidth]{li58_liquid-the-djp}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.49\linewidth]{li58_solid-the-djp}
+\includegraphics[width=0.49\linewidth]{li58_liquid-the-djp}
 \caption{Valence Compton profile corrections. The solid black curve is experiment relative to ``best'' theory. The dotted black curve is experiment relative to pseudopotential QMC result with no correction. Each colored curve shows the effect of neglecting a processing step from the theoretical Compton profile. When added to the processed result (solid black curve), the sum of all colored curves approximately recovers the unprocessed result (dotted black curve). \label{fig:sl-corrections}}
 \end{figure}
 
@@ -127,8 +132,9 @@ In the absence of other interactions, the ground-state electronic density will b
 
 The qualitative effect of the pseudopotential is clear from its construction. When designing a pseudopotential, one smooths the valence orbital inside the core region. This will decrease the electronic momentum density at high momenta, and increase it at low momenta. Indeed, one can reproduce the pseudopotential correction semi-quantitatively by considering the smoothing of the pseudized valence orbital in the lithium atom (Fig.~\ref{fig:hf-ppc}). We see that augmented planewave (APW) calculations~\cite{Baruah1999,Bross2004,Bross2005,Bross2012} tend to reproduce the experimental Compton profiles better at low momenta than pseudopotential calculations.
 
-\begin{figure}
-\includegraphics[width=\linewidth]{li42c_bfd-dmcppc}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{li42c_bfd-dmcppc}
 \caption{Pseudopotential correction derived from QMC and HF. The green curve is the same QMC pseudopotential correction as shown in Fig.~\ref{fig:sl-corrections}. The dashed blue curve is the pseudopotential correction derived from the all-electron v.s. pseudized lithium atom using HF. The gray vertical line marks the Fermi momentum. \label{fig:hf-ppc}}
 \end{figure}
 
@@ -138,8 +144,6 @@ Our pseudopotential correction (PPC) is not perfect. It was derived in the perfe
 
 Thermal disorder is also unlikely to be responsible for the remaining discrepancy because disorder-correction is small at the scale of the remaining correction. This can be seen by comparing the discrepancy in the perfect crystal (Fig.~\ref{fig:crystal-vcp}) to the discrepancy in the disordered solid (Fig.~\ref{fig:sl-jp-djp}). The two remaining discrepancies are similar in both shape and magnitude.
 
-
-
 {\bf Electron-Electron Correlation}  The effect of electron-electron (ee) correlation on the momentum distribution is similar to electron-ion interaction in that it increases high-momentum components, decreases low-momentum components and reduces the discontinuity at the Fermi surface. The Slater-Jastrow wavefunction is a first-order modification of the free-electron Slater determinant by the Coulomb interaction~\cite{Holzmann2003} but it does not capture all correlation effects.
 However, we expect the Slater-Jastrow wavefunction to be accurate for simple metals. 
 Further, it can be systematically improved, for example by using backflow transformations \cite{PhysRevB.91.115106}. 
@@ -147,12 +151,6 @@ Calculations on the homogeneous electron gas indicate a small decrease of the di
 at the Fermi 
 surface \cite{Holzmann2011} reducing the discrepancy with experiment. Quantitative studies of
 backflow effects on the lithium Compton profiles should be addressed in the future.
-
-
-
-
-
-
 
 {\bf Fermi surface}  The Fermi surface of BCC lithium is anisotropic with pronounced secondary features. The DFT Fermi surface is used in the QMC simulation to determine which momentum states to occupy.
 For solid lithium, the Fermi surface is nearly spherical. Our DFT Fermi surface of the BCC crystal has a maximum anisotropy of $\delta=5.0\%$, where
@@ -168,7 +166,6 @@ at zero temperature is essentially given by the Debye frequency.
 The Debye temperature of lithium ($<$400K) is much lower than the Fermi temperature of the electrons, so we expect the remaining electron-phonon coupling (not included
 in our QMC calculations) to be limited very close to the Fermi surface in momentum space, rendering the effect invisible at the scale of Fig.~\ref{fig:s-l-djp}.
 
-
 {\bf Finite size effects}  Finite-size effects (FSE) are more challenging to deal with in a many-body simulation than in an effective one-particle theory such as DFT which is formulated for an infinite lattice. In DFT, a calculation performed in a larger simulation cell simply makes the momentum-space grid denser. In contrast, finite system size increases the magnitude of the discontinuity at the Fermi surface in QMC. This effect was found to decrease slowly with system size in the homogeneous electron gas~\cite{Holzmann2009}. This FSE  was analyzed and understood in the homogeneous electron gas~\cite{Holzmann2009,Holzmann2011}. We adopted the same approach here and found good results. In particular, we corrected the FSE using the leading-order expression
 \begin{equation} \label{eq:nk-fsc}
 \delta n_{\bs{k}}^{(1)} = \int_{-\pi/L}^{\pi/L} \frac{d^3\bs{q}}{(2\pi)^3} \left[
@@ -177,8 +174,9 @@ u_q (1-S_q) - nu_q^2 S_q
 \end{equation}
 where $u_q$ and $S_q$ are the Jastrow pair function and the structure factor in reciprocal space, which are assumed to take RPA forms at small $q$ and $n$ is the valence electron density. The corrected $n(k)$ from the 54-atom and 432-atom simulations agree well with each other as shown in Fig.~\ref{fig:liquid-nk-fsc}. Therefore, we think finite-size error has been satisfactorily accounted for, and is not responsible for the remaining discrepancy.
 
-\begin{figure}
-\includegraphics[width=\linewidth]{li58h_liquid-fsc}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{li58h_liquid-fsc}
 \caption{Finite-size correction in the liquid phase. Dotted lines are pseudopotential QMC $n(k)$ with no correction. Color encodes the number of lithium atoms in the simulation cell. The solid lines correspond to the dotted lines in color and have been corrected using the leading-order expression Eq.~(\ref{eq:nk-fsc}). \label{fig:liquid-nk-fsc}}
 \end{figure}
 
