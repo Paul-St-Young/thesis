@@ -43,7 +43,7 @@ based on the above formula.
 High-precision methods for correlation energies as, for example, provided
 by quantum Monte Carlo (QMC) \cite{rev1,rev2,rev3,Ruggeri18} or coupled cluster methods
 \cite{Shepherd13,Gruber18} can be used.  
-In this paper, we propose a method for accurate calculations of the fundamental gap
+In this work, we propose a method for accurate calculations of the fundamental gap
 within explicitly correlated methods and demonstrate its use with fixed-node diffusion Monte Carlo (DMC) benchmark studies on solid H$_2$,  C, and Si.
 
 Methods based on correlated many-body wave functions
@@ -78,7 +78,7 @@ The fundamental gap was then estimated indirectly by introducing
 a ``scissor operator'' \cite{Azadi2017} which assumes a rigid shift of
 the underlying DFT band structure over the whole Brillouin zone.
 
-In this paper, we show that twisted boundary conditions within the grand canonical ensemble
+In this work, we show that twisted boundary conditions within the grand canonical ensemble
 can be used
 to  determine the fundamental gap from QMC without relying on the ``scissor'' approximation.
 We prove that to leading order, finite size effects due to two-body correlations are of order $1/L$,
@@ -96,7 +96,7 @@ without the need for
 explicit studies at different sizes or referring to DFT or to experimental information
 external to the QMC calculation.
 
-The paper is organized as follows. In Sec.~\ref{sec:bg-gctabc}, we describe the main ideas behind our band-gap method based on the grand canonical ensemble. In Sec.~\ref{sec:bg-fse}, we derive finite size corrections to energy differences based on an explicit many-body wave function and exact diagrammatic relations. In Sec.~\ref{sec:bg-methods}, we describe the computational methods used to calculate the fundamental gap. In Sec.~\ref{sec:bg-results}, we show results for H$_2$, C, and Si crystals
+The chapter is organized as follows. In Sec.~\ref{sec:bg-gctabc}, we describe the main ideas behind our band-gap method based on the grand canonical ensemble. In Sec.~\ref{sec:bg-fse}, we derive finite size corrections to energy differences based on an explicit many-body wave function and exact diagrammatic relations. In Sec.~\ref{sec:bg-methods}, we describe the computational methods used to calculate the fundamental gap. In Sec.~\ref{sec:bg-results}, we show results for H$_2$, C, and Si crystals
 and compare with available experimental values of the gap in Sec.~\ref{sec:bg-compare}.
 Finally in Sec.~\ref{sec:bg-conclude}, we summarize general features of the method
  and outline possible extensions and applications.
@@ -170,7 +170,7 @@ to determine the fundamental gap in each spin sector. %(different
 %twist angles for spin up and down electrons may also be used in the grand-canonical sampling).
 In practice, the charge gap in the spinless sector can
 be determined by  adding or removing pairs of electrons. The extensions of our definitions and formulas to this case are straightforward,
-e.g., $\Delta_{N_e}=[E_0(N_e+2)+E_0(N_e-2)-2E_0(N_e)]/2$. We follow this procedure of spin-neutral excitations in the remainder of the paper.
+e.g., $\Delta_{N_e}=[E_0(N_e+2)+E_0(N_e-2)-2E_0(N_e)]/2$. We follow this procedure of spin-neutral excitations in the remainder of this chapter.
 
 \begin{figure*}
 \begin{minipage}[b]{0.49\columnwidth}
@@ -795,7 +795,7 @@ We have introduced a method to calculate the fundamental gap of insulators and s
 using QMC. Using grand-canonical twist averaging, 
 the value of the gap can be determined at any point in the Brillouin zone whether the system has a direct or indirect gap. Although it is 
 possible to map out the whole band structure, we have focused on the minimal, fundamental gap
-in this paper. We have shown that for charged systems, finite size supercell calculations
+in this work. We have shown that for charged systems, finite size supercell calculations
 are necessarily biased by a finite size error decaying as $1/L$, where the prefactor
 is determined by the absolute value of the Madelung constant and the inverse dielectric constant.
 We have pointed out that the $1/L$ functional form is encoded in the long wavelength behavior of
