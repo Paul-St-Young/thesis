@@ -1,0 +1,169 @@
+\subsection{Supercell}
+All quantum Monte Carlo (QMC) calculations are performed using 72-atom simulation cells. Each simulation cell is tiled from the optimized unit cell using a supercell matrix.
+\begin{align}
+A_s = S A \Rightarrow \left(\begin{array}{c}
+\bs{a}_s \\
+\bs{b}_s \\
+\bs{c}_s
+\end{array}\right) = S\left(\begin{array}{c}
+\bs{a} \\
+\bs{b} \\
+\bs{c}
+\end{array}\right),
+\end{align}
+where $\bs{a}$, $\bs{b}$, $\bs{c}$ are the lattice vectors of the unit cell. $\bs{a}_s$, $\bs{b}_s$, $\bs{c}_s$ are the lattice vectors of the simulation cell. $S$ is the supercell matrix. The supercell matrices are chosen to maximize the simulation cell radius. %Ideally, one should maximize the image radius $R_{WS}$ instead.
+\begin{table}[h]
+\caption{Supercell matrices.}
+\begin{tabular}{cccc}
+\hline\hline
+Cmca-4 & Cmca-12 & C2/c-24 & I4$_1$/amd \\
+\hline
+$\left(\begin{array}{ccc}
+ 3 &  3 &  0 \\
+-1 &  2 &  1 \\
+ 2 & -1 &  1
+\end{array}\right)$ & $\left(\begin{array}{ccc}
+ 2 &  1 &  -1 \\
+-1 &  1 &  0 \\
+ 2 &  1 &  1
+\end{array}\right)$ & $\left(\begin{array}{ccc}
+ 2 &  1 &  0 \\
+ 1 &  2 &  0 \\
+ 0 &  0 &  1
+\end{array}\right)$ & $\left(\begin{array}{ccc}
+ 2 & -2 &  1 \\
+ 2 &  3 &  0 \\
+-2 &  1 &  1
+\end{array}\right)$ \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+In Fig.~\ref{fig:cell-radius}, the image radius (a.k.a. radius of the real-space Wigner-Seitz cell) $R_{WS}$ and simulation cell radius $R_{sc}$ are shown as a function of density.
+
+\begin{figure}[h]
+\includegraphics[width=0.8\columnwidth]{101a1_cell-radius}
+\caption{Supercell radius as a function of density. $r_s$ is the Wigner-Seitz radius, which is determined by the average electron density $\frac{4\pi}{3}r_s=\rho$, where $\rho=N_e/\Omega$, with $\Omega$ the supercell volume. $R_{WS}$ is the radius of the real-space Wigner-Seitz cell of the supercell. $2R_{WS}$ is the minimum distance between periodic images. \label{fig:cell-radius}}
+\end{figure}
+
+\subsection{Wavefunction}
+
+All QMC calculations are performed using the QMCPACK code. We use Slater-Jastrow-Backflow (SJB) wavefunction. The orbitals in the Slater determinant are cusp-corrected DFT orbitals. The vdw-DF functional is used to generate orbitals for the molecular structures, whereas the PBE functional is used for the atomic structure. The orbital generating DFT runs have different settings compared to the geometry optimization runs.
+
+To generate the orbitals, we perform DFT directly in the supercell. All calculations use the bare Coulomb interaction and a plane wave cutoff of 50 Ry. First, we run a self-consistent calculation to converge the charge density on a shifted $8^3$ Monkhorst-Pack grid. Second, we run a non-self-consistent calculation on an unshifted Monkhorst-Pack grid to generate the orbitals needed by all twists. $4^3$ twists are used for the molecular phase, while $6^3$ twists are used for the atomic phase. Finally, we divide each orbital by an electron-ion Jastrow wavefunction to remove the electron-ion cusp from the orbital. This electron-ion Jastrow wavefunction is constructed using Fourier components commensurate with the simulation cell (i.e. on the reciprocal lattice vectors of the simulation cell $\bs{G}_s$)
+\begin{align}
+J_{ei}(\bs{r}_j; \bs{R}) \propto& \exp\left\{ \text{iFFT}\left[ 
+U_{\bs{k}}^{ep}  \left(\sum\limits_{J=1}^{N_p} \frac{e^{-i\bs{k}\cdot\bs{R}_J}}{N_p}  \right)
+\right] \right\} \nonumber\\
+\propto& \exp\left\{ 
+\sum\limits_{\bs{k}\neq\bs{0}}^{\bs{k}\in\bs{G}_s} e^{i\bs{k}\cdot\bs{r}_j}~
+U_{\bs{k}}^{ep} 
+\left(\sum\limits_{J=1}^{N_p} \frac{e^{-i\bs{k}\cdot\bs{R}_J}}{N_p}  \right)
+\right\},\label{eq:rpa-ep-jas}
+\end{align}
+where $\bs{r}_j$ is any single electron coordinate. $\bs{R}$ contains all ionic coordinates. $N_p$ is the number of protons. iFFT stands for ``inverse fast Fourier transform''. The Jastrow potential $U_{\bs{k}}^{ep}$ in eq.~(\ref{eq:rpa-ep-jas}) is chosen to be the RPA form written by Ceperley and Alder
+\begin{align}
+2U^{ep}_k = -a_k(1+a_k)^{-1/2},
+\end{align}
+where $a_k=\frac{12}{r_s^3k^4}$ in Hartree atomic units. $r_s$ is the Wigner-Seitz radius.
+
+When a single-particle orbital is divided by eq.~(\ref{eq:rpa-ep-jas}), the electron-ion cusp is removed from the orbital. We re-introduce the electron-ion cusp in the Jastrow part of the trial wavefunction. 
+
+There are 48 optimizable parameters in our wavefunction. We use short-range B-spline Jastrow pair potentials which are smoothly cut off at $R_{WS}$ (the image radius). There are three Jastrow potentials (uu, ud, ep) between up and up electrons, up and down electrons, electron and proton. We use short-range B-spline back flow transformation functions which are smoothly cut off $R_{WS}$. There are three backflow correlation functions (uu, ud, ep) similar to the Jastrow setup. Each B-spline has 8 optimizable knots.
+
+\subsection{QMC Data}
+
+At each density, we perform one VMC and two DMC calculations. Each QMC calculation is labeled by a series index. The VMC calculation is series 0. The first DMC calculation with a relatively large time step is series 1. The second DMC calculation with a relatively small time step is series 2. We post-process the raw results (series 0 - 2) to produce series 3 and 4. We linearly extrapolate the DMC results (series 1, 2) to zero time step and label the results series 3. We linearly extrapolate the VMC and the t=0 DMC results (series 0, 3) to obtain pure-estimator kinetic and potential energies and label them series 4.
+
+Twist-average QMC energies are displayed in the following table. The dUlr column contains the many-body finite size correction which will be described in the next section.
+
+\begin{table}[h]
+\small
+\input{papers/hsolid/tables/cmca4_series-le-5}
+\caption{Cmca-4}
+\end{table}
+
+\begin{table}[h]
+\small
+\input{papers/hsolid/tables/cmca12_series-le-5}
+\caption{Cmca-12}
+\end{table}
+
+\begin{table}[h]
+\small
+\input{papers/hsolid/tables/c2c_series-le-5}
+\caption{C2/c-24}
+\end{table}
+
+\begin{table}[h]
+\small
+\input{papers/hsolid/tables/i41amd_series-le-5}
+\caption{I4$_1$/amd}
+\end{table}
+
+\subsection{Many-body Finite Size Correction}
+
+We use the fluctuating structure factor $\delta S(\bs{k})\equiv \braket{(\rho_{\bs{k}}-\bar{\rho}_{\bs{k}})(\rho_{-\bs{k}}-\bar{\rho}_{-\bs{k}})}$ to calculate many-body finite size correction (FSC) to the potential energy. The integrand is cut off using optimized long-range Coulomb potential in reciprocal space $v_k^{lr}$
+\begin{align}
+\Delta V^{lr} = \left[\int - \sum\right] \frac{1}{2}v^{lr}_k \delta S(\bs{k}).
+\end{align}
+Total energy FSC ($\Delta E$) is a sum of kinetic ($\Delta T$) and potential ($\Delta V$) corrections regardless of whether mixed-estimator (m) or pure-estimator (p) is used
+\begin{align}
+\Delta E = \Delta T_m + \Delta V_m = \Delta T_p + \Delta V_p.
+\end{align}
+Without long-range wavefunction components, the mixed-estimator kinetic FSC is approximately zero ($\Delta T_m \approx 0$). Therefore
+\begin{align}
+\left\{\begin{array}{l}
+\Delta E \approx \Delta V_m \\
+\Delta T_p \approx \Delta V_m - \Delta V_p
+\end{array}\right..
+\end{align}
+FSC of the Virial pressure ($\Delta P$) is then
+\begin{align}
+\left\{\begin{array}{l}
+\Delta P_m = (2\Delta T_m + \Delta V_m)/(3\Omega) \approx (\Delta V_m)/(3\Omega) \\
+\Delta P_p = (2\Delta T_p + \Delta V_p)/(3\Omega) \approx (2\Delta V_m-\Delta V_p)/(3\Omega)
+\end{array}\right., \label{eq:pm-pp-fsc}
+\end{align}
+where $\Omega$ is volume. Regardless of whether mix-estimator or pure-estimator value is used for the Virial pressure, the FSC DMC enthalpy-pressure data agree well with equation of state derived from the total energy (Fig.~\ref{fig:si-static-hp}).
+
+\subsection{Finite Size Corrected Data}
+
+\begin{figure}[h]
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=0.8\columnwidth]{101sd_ev-s3}
+%\caption{Energy v.s. volume.\label{fig:si-static-ev}}
+\end{minipage}
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=0.8\columnwidth]{101se_hp}
+%\caption{Enthalpy v.s. pressure.\label{fig:si-static-hp}}
+\end{minipage}
+\caption{Static-lattice DMC equation-of-state (EOS) relative to Drummond reference $E(\nu) = \frac{2.14020118}{\nu^2} + \frac{0.60521235}{\nu} - 0.6073132$, where $\nu$ is volume per proton in bohr$^3$ and $E(\nu)$ is in Hartree atomic unit. Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-volume EOS. The EOS is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of inverse volume. The markers are finite-size corrected simulation data without performing a fit. \label{fig:static-qmc-vs-drummond}}
+\end{figure}
+
+\begin{comment}
+Finally, we divide each orbital by an electron-ion Jastrow constructed on the reciprocal lattice vectors of the simulation cell $\bs{G}_s$
+\begin{align}
+J_{ei}(\bs{r}; \bs{R}) = \exp\left\{ -\frac{1}{2\Omega} \sum\limits_{\bs{k}\neq\bs{0}}^{\bs{k}\in\bs{G}_s}
+U_{\bs{k}}^{ei} 
+\left(\frac{1}{N}\sum\limits_{j=1}^{N_e} e^{i\bs{k}\cdot\bs{r}_j} \right)
+\left(\frac{1}{N}\sum\limits_{J=1}^{N_p} e^{-i\bs{k}\cdot\bs{R}_J}  \right)
+\right\},\label{eq:rpa-ep-jas}
+\end{align}
+\begin{align}
+J_{ei}(\bs{r}_j; \bs{R}) =& \exp\left\{ \text{iFFT}\left[ 
+U_{\bs{k}}^{ep}  \left(\sum\limits_{J=1}^{N_p} \frac{e^{-i\bs{k}\cdot\bs{R}_J}}{N_p}  \right)
+\right] \right\}\\
+=& \exp\left\{ 
+-\frac{(2\pi)^3}{\Omega N_k} \sum\limits_{\bs{k}\neq\bs{0}}^{\bs{k}\in\bs{G}_s} e^{i\bs{k}\cdot\bs{r}_j}~
+U_{\bs{k}}^{ep} 
+\left(\sum\limits_{J=1}^{N_p} \frac{e^{-i\bs{k}\cdot\bs{R}_J}}{N_p}  \right)
+\right\},\label{eq:rpa-ep-jas}
+\end{align}
+where $\Omega$ is the simulation cell volume. $\bs{r}$ contain all electronic coordinates, $\bs{R}$ contain all ionic coordinates. $N_e$ is the number of electrons, while $N_p$ is the number of protons.
+The Jastrow potential $U_{\bs{k}}^{ei}$ in eq.~(\ref{eq:rpa-ep-jas}) is chosen to be the RPA form written by Ceperley and Alder
+\begin{align}
+2U^{ei}_k = -a_k(1+a_k)^{-1/2},
+\end{align}
+where $a_k=\frac{12}{r_s^3k^4}$ in Hartree atomic units.
+\end{comment}
