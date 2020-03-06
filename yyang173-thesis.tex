@@ -8,19 +8,28 @@
 \usepackage{subfiles}
 \usepackage{comment}
 
+%% try bibtex
 %\usepackage[
-%backend=biber,
-%style=alphabetic,
-%sorting=ynt
+%backend=bibtex,
+%citestyle=numeric-comp,
+%sorting=none
 %]{biblatex}
+%\defbibheading{general}{\section{References}}
+%\defbibheading{all}{\chapter{References}}
 %\addbibresource{papers/licp/licp-ref.bib}
+%\addbibresource{papers/nonbo/nonbo-ref.bib}
 
+%% try chapter bib
 %\usepackage{chapterbib}
 %\usepackage[backend=bibtex]{biblatex}
 
 % import figures from difference folders
 \input{./papers/nonbo/pre}
-\graphicspath{{./papers/bandgap/},{./papers/nonbo/},{./papers/licp/}}
+\graphicspath{{./papers/bandgap/},{./papers/nonbo/},{./papers/licp/},
+{./papers/hsolid/figures/c2c/},{./papers/hsolid/figures/cmca4/},
+{./papers/hsolid/figures/cmca12/},{./papers/hsolid/figures/i41amd/},
+{./papers/hsolid/figures/}
+}
 
 \newcommand{\toprule}{\hline\hline}
 \newcommand{\midrule}{\hline}
@@ -49,6 +58,7 @@
 %\include{sections/lists}
 \mainmatter
 
+%\begin{comment}}
 \include{sections/introduction}
 
 \chapter{Methods}
@@ -56,11 +66,14 @@
 \input{sections/monte-carlo}
 \include{sections/slater-jastrow}
 \include{sections/finite-size-correction}
+%\end{comment}
 
 \include{papers/nonbo/nonbo-chapter}
-\chapter{Application of dynamic-ion QMC to solid hydrogen}
+%\include{papers/hsolid/hsolid-chapter}
 \include{papers/licp/licp-chapter}
 \include{papers/bandgap/bandgap-chapter}
-\chapter{Classical many-body potential from QMC forces}
+%\chapter{Classical many-body potential from QMC forces}
+
+%\printbibliography[heading=all]
 
 \end{document}
