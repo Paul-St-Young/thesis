@@ -1,4 +1,6 @@
 \documentclass[draftthesis,fullpage]{uiucthesis}
+\usepackage[utf8]{inputenc}
+%\usepackage{fdsymbol}
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{4}
 
@@ -8,12 +10,13 @@
 \usepackage{subfiles}
 \usepackage{comment}
 
-%% try bibtex
-%\usepackage[
-%backend=bibtex,
-%citestyle=numeric-comp,
-%sorting=none
-%]{biblatex}
+% try bibtex
+\usepackage[
+backend=bibtex,
+citestyle=numeric-comp,
+sorting=none
+]{biblatex}
+\addbibresource{sections/hsolid}
 %\defbibheading{general}{\section{References}}
 %\defbibheading{all}{\chapter{References}}
 %\addbibresource{papers/licp/licp-ref.bib}
@@ -53,27 +56,29 @@
 \committee{Assistant Professor Prof B. K. Clark, Chair\\Professor Prof D. M. Ceperley, Director of Research\\Professor Prof J. N. Eckstein\\Professor Prof T. L. Hughes}
 %\maketitle
 
+%% crtl + T to comment; crtl + U to uncomment.
 %\include{sections/frontmatter}
-\tableofcontents
+%\tableofcontents
 %\include{sections/lists}
 \mainmatter
 
-%\begin{comment}}
-\include{sections/introduction}
+\include{sections/hsolid-intro}
 
-\chapter{Methods}
-\input{sections/mean-field-theory}
-\input{sections/monte-carlo}
-\include{sections/slater-jastrow}
-\include{sections/finite-size-correction}
-%\end{comment}
+%\include{sections/introduction}
+%
+%\chapter{Methods}
+%\input{sections/mean-field-theory}
+%\input{sections/monte-carlo}
+%\include{sections/slater-jastrow}
+%\include{sections/finite-size-correction}
 
-\include{papers/nonbo/nonbo-chapter}
-\include{papers/hsolid/hsolid-chapter}
-\include{papers/licp/licp-chapter}
-\include{papers/bandgap/bandgap-chapter}
+%\include{papers/nonbo/nonbo-chapter}
+%\include{papers/hsolid/hsolid-chapter}
+%\include{papers/licp/licp-chapter}
+%\include{papers/bandgap/bandgap-chapter}
 %\chapter{Classical many-body potential from QMC forces}
 
+\printbibliography
 %\printbibliography[heading=all]
 
 \end{document}

@@ -9,3 +9,6 @@
 2. Modify "myxhtml.cfg" to convert .eps and .pdf to .png.
 3. After htlatex, transfer figures along with .html. eg.
   `find papers -name "*.png" | xargs tar -zcvf papers.tgz`
+
+### remove abstract from .bib
+biber.exe --tool --configfile=remabs.conf hsolid.bib
