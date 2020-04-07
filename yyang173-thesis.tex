@@ -17,10 +17,11 @@ citestyle=numeric-comp,
 sorting=none
 ]{biblatex}
 \addbibresource{sections/hsolid}
-%\defbibheading{general}{\section{References}}
-%\defbibheading{all}{\chapter{References}}
-%\addbibresource{papers/licp/licp-ref.bib}
-%\addbibresource{papers/nonbo/nonbo-ref.bib}
+\addbibresource{sections/hcalcs}
+\defbibheading{general}{\section{References}}
+\defbibheading{all}{\chapter{References}}
+\addbibresource{papers/licp/licp-ref.bib}
+\addbibresource{papers/nonbo/nonbo-ref.bib}
 
 %% try chapter bib
 %\usepackage{chapterbib}
@@ -54,14 +55,14 @@ sorting=none
 \advisor{David M. Ceperley}
 \degreeyear{2020}
 \committee{Assistant Professor Prof B. K. Clark, Chair\\Professor Prof D. M. Ceperley, Director of Research\\Professor Prof J. N. Eckstein\\Professor Prof T. L. Hughes}
-%\maketitle
 
-%% crtl + T to comment; crtl + U to uncomment.
+% crtl + T to comment; crtl + U to uncomment.
+%\maketitle
 %\include{sections/frontmatter}
-%\tableofcontents
+\tableofcontents
 %\include{sections/lists}
 \mainmatter
-
+%
 %\include{sections/introduction}
 %
 %\chapter{Methods}
@@ -69,13 +70,13 @@ sorting=none
 %\input{sections/monte-carlo}
 %\include{sections/slater-jastrow}
 %\include{sections/finite-size-correction}
-
+%
 %\include{papers/nonbo/nonbo-chapter}
 \include{sections/hsolid-intro}
-%\include{papers/hsolid/hsolid-chapter}
+%%\include{papers/hsolid/hsolid-chapter}
 %\include{papers/licp/licp-chapter}
 %\include{papers/bandgap/bandgap-chapter}
-%\chapter{Classical many-body potential from QMC forces}
+%%\chapter{Classical many-body potential from QMC forces}
 
 \printbibliography
 %\printbibliography[heading=all]

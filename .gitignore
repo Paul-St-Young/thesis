@@ -1,6 +1,8 @@
 yyang173-thesis.pdf
 yyang173-thesis-blx.bib
 yyang173-thesis.run.xml
+yyang173-thesis.lof
+yyang173-thesis.lot
 *.aux
 *.log
 *.out
