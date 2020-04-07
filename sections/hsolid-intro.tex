@@ -1,5 +1,6 @@
-\section{Hydrogen under Pressure}
+\chapter{QMC Study of Solid Hydrogen at Megabar Pressures}
 
+\section{Introduction}
 \subsection{Solid phases}
 
 As element number one with the simplest atomic structure, hydrogen has surprising complex phases at megabar pressures.
@@ -33,3 +34,30 @@ Melting of $H_2$ solid around 150 GPa is particularly interesting. Shock wave co
 %\subsection{Liquid phases and the liquid-liquid transition}
 
 \subsection{The melting transition and critical point}
+
+\section{Methods}
+\input{papers/hsolid/supp1-geo}
+\input{papers/hsolid/supp2-static-qmc}
+
+\section{Results}
+
+\subsection{Energy vs. Volume}
+\begin{figure}[h]
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=0.8\columnwidth]{101sd_ev-s3}
+%\caption{Energy v.s. volume.\label{fig:si-static-ev}}
+\end{minipage}
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=0.8\columnwidth]{101se_hp}
+%\caption{Enthalpy v.s. pressure.\label{fig:si-static-hp}}
+\end{minipage}
+\caption{Static-lattice DMC equation-of-state (EOS) relative to Drummond reference $E(\nu) = \frac{2.14020118}{\nu^2} + \frac{0.60521235}{\nu} - 0.6073132$, where $\nu$ is volume per proton in bohr$^3$ and $E(\nu)$ is in Hartree atomic unit. Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-volume EOS. The EOS is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of inverse volume. The markers are finite-size corrected simulation data without performing a fit. \label{fig:static-qmc-vs-drummond}}
+\end{figure}
+
+\subsection{Enthalpy vs. Pressure}
+In Fig.~\ref{fig:static-enthalpy-vs-pressure}, enthalpies of the candidate structures are plotted relative the my C2/c reference EOS (Yang SJB N72 dskcorr). The EOSs are obtained by fitting the total energy to a quadratic function of inverse volume. The solid lines with symbols are my results. The dot-dashed lines are McMinis' relative enthalpies extracted from Fig. 1 of ref.~\cite{McMinis2015}. The dashed line is McMinis' atomic structure enthalpy shifted by 48 meV/p (1.8 mha/p) to match my energies. The dotted line is Azadi's atomic structure enthalpy.
+
+\begin{figure}[h]
+\includegraphics[width=0.8\textwidth]{87b_refit}
+\caption{Enthalpy v.s. pressure using Yang SJB N72 dskcorr C2/c as reference.\label{fig:static-enthalpy-vs-pressure}}
+\end{figure}
