@@ -2,7 +2,27 @@
 
 \section{Introduction}
 
-\subsection{Solid phases}
+% why is hydrogen under pressure interesting?
+Properties and phase transitions of hydrogen under megabar pressures is important in diverse fields of study. For astronomy, models of the interior of giant gas planets such as Jupiter and Saturn depend critically on the nature of the molcular liquid to atomic liquid transition (LLT), namely whether it is first-order or continuous~\cite{Hubbard2016,Wahl2017}. For condensed matter, metallic hydrogen holds promise for a room temperature conventional superconductor~\cite{McMahon2011,McMahon2012}. For computational physics, hydrogen remains an important benchmark for both electronic structure~\cite{Motta2017} and ion dynamics methods. With no need for a pseudopotential, simulations of hydrogen avoid a significant source of bias. However, the low mass of the nuclear necessitates quantum treatment of the lattice degree of freedom (often beyond the harmonic approximation) in accurate simulations.
+
+% what controversies are there in experiment?
+Established experimental results on high-pressure hydrogen are limited in variety. At room temperature and below, diamond anvil cell (DAC) is the dominant apparatus to achieve such high pressures. Small size of the cell and fragility of the sample limit experimental probes to low-power optics such as infrared and Raman spectroscopy\cite{RangaI.F.2017}. Hydrogen is a weak scatterer of X-Rays~\cite{Zha2014}, thus excluding this excellent tool for structural determination in most experiments. Only recently has X-ray been performed up to 254 GPa~\cite{Akahama2010,Ji2019}.
+At high temperatures, shock wave compression is the main method to achieve megabar pressures. Due to the transient nature of theses experiments, acquiring and analyzing shock-wave data is challenging. Most notably, one cannot directly measure temperature, which may cause misinterpretation of raw data~\cite{Celliers2018,Knudson2004,Knudson2017}.
+Given the experimental difficulties, predictive simulations are highly desirable as they can inform and verify experiments~\cite{Pierleoni2016b}.
+
+% what controversies are there in calculations?
+Simulation of high-pressure hydrogen is challenging. Without experimental structural information from X-ray, many theoretical calculations have been performed on structures found in density functional theory (DFT) random structure searches~\cite{Pickard2007}. Constraint by computational cost, these searches are limited to Classical protons, causing the methods to miss, for example, saddle-point structures that can be stabilized by nuclear quantum effect~\cite{Monserrat2016}.
+%Most theoretical studies of high-pressure hydrogen suffer a similar dilemma between accuracy and practicality.
+%On the one hand,
+Predictive simulations of hydrogen require accurate methods both in the description of the electronic ground-state Born-Oppenheimer (BO) potential energy surface (PES) and in the inclusion of nuclear quantum effect beyond the quasi-harmonic approximation.
+%On the other hand, to explore such large pressure and temperature ranges using first-principle methods is not only time consuming, but also prone to other limitations such as inadequate treatment of finite-size effect, nuclear quantum effect, and simulation timescale. Further, some experimentally measurable properties, such as emission, absorption, infrared, and Raman spectra, heat conductivity, and diffusion constants are difficult to calculate in the most accurate electronic methods, e.g., DMC.
+The popular Perdew-Burke-Ernzerhof (PBE) density functional (DF) in DFT erroneously predicts some molecular structures to be metallic~\cite{Drummond2015}. However, its use in conjunction with Classical molecular dynamics (MD) results in reasonable transition pressure for the LLT due to error cancellation~\cite{Morales2013a}.
+This and other fortuitous cancellations of error has lead many to believe that the PBE functional provides a good description of solid hydrogen and caused much confusion in the community. PBE predicts a conductive molecular structure above 200 GPa, a molecular-to-atomic transition around 300 GPa~\cite{McMinis2015}, and low-temperature superconducting liquid. All these predictions contradict experimental evidence. Systematic benchmark of the PES from various DFT functionals against QMC found the vdW-DF1 functional to be the most accurate for molecular hydrogen~\cite{Clay2016}. However, this functional has yet to gain widespread adoption due to higher computational cost and lower popularity compared to PBE.
+
+In this chapter, I will focus on the solid phases of hydrogen. Section~\ref{sec:hsoli-expt} summarizes experimental observations, while section~\ref{sec:hsoli-calcs} summarizes relevant computational studies.
+
+\subsection{Experiments}
+\label{sec:hsoli-expt}
 
 As element number one with the simplest atomic structure, hydrogen has surprising complex phases at megabar pressures.
 The phase diagram differs for the isotopes, e.g., hydrogen H, deuterium D, and spin isomers of molecular hydrogen.
@@ -24,15 +44,30 @@ Finally, at sufficiently high pressures, the hydrogen molecules will dissociate 
 
 While the phase boundaries of solid hydrogen are reasonably well-established below 400 K and 400 GPa by diamond-anvil cell (DAC) experiments~\cite{Dias2019}, characterizations of the solid structures are limited. Due to small scattering cross section and small sample size in DAC experiments, only a handful of X-ray~\cite{Hazen1987,MAO1988,Loubeyre1996,Kawamura2002,Goncharenko2005a,Akahama2010,Ji2019} and only one neutron~\cite{Goncharenko2005a} scattering experiments haven been published over the past 40 years. Most of our understanding of solid hydrogen is built upon IR and Raman spectra, which provide partial information on the microscopic details of the solid structures. This lack of definitive structural information poses significant difficulty for both theoretical and experimental understanding of solid hydrogen. Experimentally, this has lead to the misidentification of a triple point as a critical point~\cite{Lorenzana1990,Cui1994}, subtlety in the detection of a new phase~\cite{Eremets2009,Howie2012}, among many debates over interpretation of optical data. One particularly challenging transition to detect is the melting of the molecular crystal.
 
-\subsection{The melting transition and critical point}
+\subsection{Calculations}
+\label{sec:hsoli-calcs}
 
-The melting temperature of solid hydrogen is typically determined in one of three ways: 1. visual observation of motion due to sample, contaminant, or laser speckle~\cite{Gregoryanz2003}, 2. discontinuous change in the Raman spectrum, e.g. vibron frequency jump, disappearance of librons~\cite{Gregoryanz2003,Subramanian2011,Zha2017}, 3. plateau temperature during laser heating~\cite{Deemyad2008}, and 4. rapid change in interferences pattern~\cite{Eremets2009}.
-As sample size decreases with pressure, visual detection of melting becomes more difficult. Further, the refractive indexes of hydrogen and diamond approach each other around 140 GPa, defeating detection by interference pattern~\cite{Zha2017}.
-The vibron discontinuity caused by melting reduces from $\sim$ 3 cm$^{-1}$ at 10 GPa to $\sim$ 1 cm$^{-1}$ at 45 GPa~\cite{Gregoryanz2003}, making melting detection more difficult at higher pressures.
-Finally, disappearance of librons alone cannot be taken as proof of melting, because it could be due to loss of sample.
-Due to these difficulties, the precise melting temperatures above 100 GPa are debate. Although, there is broad consensus that the melting line increases from 200 K at ambient pressure to $\sim$ 1000 K at 90 GPa, then decreases with increasing pressure.
+Early computational studies~\cite{Kaxiras1991,Nagara1992,Mazin1995,Kohanoff1997,Johnson2000} of solid hydrogen rely on assumed crystal structures based on symmetry considerations and the local density approximation (LDA) for density functional. This situation changed in 2007 when random structure searching found new candidate crystal structures that have lower enthalpy than all previously proposals~\cite{Pickard2007}. Layered structures having C2/c and Cmca symmetries became the main candidates for phase III.
+Three diffusion Monte Carlo studies followed to characterize the candidate structures by Azadi \textit{et al.}~\cite{Azadi2014}, McMinis \textit{et al.}~\cite{McMinis2015}, and Drummond \textit{et al.}~\cite{Drummond2015}.
+Azadi used PBE-optimized geometries and included anharmonic phonon zero-point energy and predicted molecular dissociation at 374 GPa, from Cmca-12 to I4$_1$/amd. In contrast, McMinis used vdW-DF-optimized geometries and harmonic phonon zero-point energy and predicted a dissociation pressure of 447(3) GPa.
+In hind sight, the McMinis prediction is in better agreement of experiments performed after the calculation.
 
-Melting of $H_2$ solid around 150 GPa is particularly interesting. Shock wave compression data indicate a molecular liquid to atomic liquid transition $\sim$ 1000 K at 150 GPa. Thus, $H_2$ molecules should dissociate almost immediately after the solid melts. Eremets and Trojan observed a shark drop in measured resistivity as the $H_2$ solid melts at 146 GPa~\cite{Eremets2009}. This observation is consistent with the current liquid-liquid transition (LLT) line.
+At the low pressure side, a new hexagonal candidate structure for phase III was proposed by Monserrat \textit{et al.}~\cite{Monserrat2016}, then calculated to be more stable than C2/c below 210 GPa~\cite{Azadi2019}.
+
+Bandgap of the C2/c structure shows closure around 460 GPa, when extrapolated from  was IR measurements up to 420 GPa~\cite{Loubeyre2020}. Most recent DMC calculation of the bandgap is in excellent agreement with experiment~\cite{Gorelov2019}. This new calculation is at variance with the previous prediction by Azadi \textit{et al.}~\cite{Azadi2019}, presumably due to different treatments of finite-size effect.
+
+Finally, a recent coupled cluster calculation of the molecular candidate structures show good agreement with DMC results~\cite{Liao2019} at the static lattice level. Although, lattice zero-point energy has yet to be included.
+
+
+%\subsection{The melting transition and critical point}
+%
+%The melting temperature of solid hydrogen is typically determined in one of three ways: 1. visual observation of motion due to sample, contaminant, or laser speckle~\cite{Gregoryanz2003}, 2. discontinuous change in the Raman spectrum, e.g. vibron frequency jump, disappearance of librons~\cite{Gregoryanz2003,Subramanian2011,Zha2017}, 3. plateau temperature during laser heating~\cite{Deemyad2008}, and 4. rapid change in interferences pattern~\cite{Eremets2009}.
+%As sample size decreases with pressure, visual detection of melting becomes more difficult. Further, the refractive indexes of hydrogen and diamond approach each other around 140 GPa, defeating detection by interference pattern~\cite{Zha2017}.
+%The vibron discontinuity caused by melting reduces from $\sim$ 3 cm$^{-1}$ at 10 GPa to $\sim$ 1 cm$^{-1}$ at 45 GPa~\cite{Gregoryanz2003}, making melting detection more difficult at higher pressures.
+%Finally, disappearance of librons alone cannot be taken as proof of melting, because it could be due to loss of sample.
+%Due to these difficulties, the precise melting temperatures above 100 GPa are debate. Although, there is broad consensus that the melting line increases from 200 K at ambient pressure to $\sim$ 1000 K at 90 GPa, then decreases with increasing pressure.
+%
+%Melting of $H_2$ solid around 150 GPa is particularly interesting. Shock wave compression data indicate a molecular liquid to atomic liquid transition $\sim$ 1000 K at 150 GPa. Thus, $H_2$ molecules should dissociate almost immediately after the solid melts. Eremets and Trojan observed a shark drop in measured resistivity as the $H_2$ solid melts at 146 GPa~\cite{Eremets2009}. This observation is consistent with the current liquid-liquid transition (LLT) line.
 
 %\subsection{Liquid phases and the liquid-liquid transition}
 
