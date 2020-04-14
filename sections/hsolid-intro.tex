@@ -5,13 +5,19 @@
 % why is hydrogen under pressure interesting?
 Properties and phase transitions of hydrogen under megabar pressures is important in diverse fields of study. For astronomy, models of the interior of giant gas planets such as Jupiter and Saturn depend critically on the nature of the molcular liquid to atomic liquid transition (LLT), namely whether it is first-order or continuous~\cite{Hubbard2016,Wahl2017}. For condensed matter, metallic hydrogen holds promise for a room temperature conventional superconductor~\cite{McMahon2011,McMahon2012}. For computational physics, hydrogen remains an important benchmark for both electronic structure~\cite{Motta2017} and ion dynamics methods. With no need for a pseudopotential, simulations of hydrogen avoid a significant source of bias. However, the low mass of the nuclei necessitates quantum treatment of the lattice degree of freedom, often beyond the harmonic approximation, in accurate simulations.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{mcmahon-phases}
+\caption{Partial phase diagram of hydrogen on log-log scale~\cite{McMahon2012rmp}.}
+\end{figure}
+
 % what controversies are there in experiment?
 Established experimental results on high-pressure hydrogen are limited in variety. At room temperature and below, diamond anvil cell (DAC) is the dominant apparatus to achieve such high pressures. Small size of the cell and fragility of the sample limit experimental probes to low-power optics such as infrared and Raman spectroscopy\cite{RangaI.F.2017}. Hydrogen is a weak scatterer of X-Rays~\cite{Zha2014}, thus excluding this excellent tool for structural determination in most experiments. Only recently has X-ray been performed up to 254 GPa~\cite{Akahama2010,Ji2019}.
 At high temperatures, shock wave compression is the main method to achieve megabar pressures. Due to the transient nature of theses experiments, acquiring and analyzing shock-wave data is challenging. Most notably, one cannot directly measure temperature, which may cause misinterpretation of raw data~\cite{Celliers2018,Knudson2004,Knudson2017}.
 Given the experimental difficulties, predictive simulations are highly desirable as they can inform and verify experiments~\cite{Pierleoni2016b}.
 
 % what controversies are there in calculations?
-Simulation of high-pressure hydrogen is challenging. Without experimental structural information from X-ray, many theoretical calculations have been performed on structures found in density functional theory (DFT) random structure searches~\cite{Pickard2007}. Constraint by computational cost, these searches are limited to Classical protons, causing the methods to miss, for example, saddle-point structures that can be stabilized by nuclear quantum effect~\cite{Monserrat2016}.
+Simulation of high-pressure hydrogen is also challenging. Without experimental structural information from X-ray, many theoretical calculations have been performed on structures found in density functional theory (DFT) random structure searches~\cite{Pickard2007}. Constraint by computational cost, these searches are limited to Classical protons, causing the methods to miss, for example, saddle-point structures that can be stabilized by nuclear quantum effect~\cite{Monserrat2016}.
 %Most theoretical studies of high-pressure hydrogen suffer a similar dilemma between accuracy and practicality.
 %On the one hand,
 Predictive simulations of hydrogen require accurate methods both in the description of the electronic ground-state Born-Oppenheimer (BO) potential energy surface (PES) and in the inclusion of nuclear quantum effect beyond the quasi-harmonic approximation.
@@ -33,25 +39,54 @@ To clarify the narrative, I will first introduce the well-established phases in 
 
 For pure p-H$_2$ at low temperature (5$\sim$10 K), three solid phases are well-established. The low-pressure phase (LP) below 100 GPa is a molecular crystal having spherically symmetric H2 molecules on hcp lattice sites. Above 110 GPa, hydrogen enters a broken-symmetry phase (BSP), where anisotropic intermolecular interactions favor the $J=2$ $v=1$ vibrational state of the H$_2$ molecules rather than the spherically symmetric $J=0$ $v=1$ state~\cite{Lorenzana1990}. Above 160 GPa, after crossing a first-order transition, one finds an orientationally-ordered phase known as the A phase (H-A)~\cite{Lorenzana1989}.
 
-The transition from LP to BSP phase is sensitive to isotope and nuclear spin. o-D$_2$, HD, and p-H$_2$ enters the BSP at 28 GPa~\cite{Silvera1981}, 70 GPa~\cite{Chijioke2006}, and 110 GPA~\cite{Lorenzana1990}, respectively. o-H2 and p-D2 have a hcp to fcc transition at ambient pressure. In contrast, the transition to the A phase is fairly robust across isotope and spin isomer variants. HD, o-D2, and p-H2 all enter the A phase between 150 and 160 GPa~\cite{Hemley1988,Lorenzana1989,Cui1994,Chijioke2006}.
+The transition from LP to BSP phase is sensitive to isotope and nuclear spin. o-D$_2$, HD, and p-H$_2$ enters the BSP at 28 GPa~\cite{Silvera1981}, 70 GPa~\cite{Chijioke2006}, and 110 GPA~\cite{Lorenzana1990}, respectively. o-H2 and p-D2 have a hcp to fcc transition at ambient pressure. In contrast, the transition to the A phase is fairly robust across isotope and spin isomer variants. HD, o-D$_2$, and p-H$_2$ all enter the A phase between 150 and 160 GPa~\cite{Hemley1988,Lorenzana1989,Cui1994,Chijioke2006}. The phase lines for o-D$_2$ and HD are shown in Fig.~\ref{fig:hsolid-phases123}. The p-H$_2$ LP-to-BSP phase line near 100 GPa is not shown. The size and shape of the BSP is the only difference between the phase diagrams of p-H$_2$, o-D$_2$, and HD.
 
-Transitions to these orientationally ordered phases are detected by changes in Raman and IR spectra. During the LP to BSP transition, one can observe clear broadening and weakening of the low-frequency roton bands around 350 cm$^{-1}$ and an associated small (15 cm$^{-1}$) discontinuity in the position of the vibron peak, which is about 4150 cm$^{-1}$ near the transition pressure 110 GPa~\cite{Lorenzana1990}. Upon further increase of pressure past 160 GPa, a much larger discontinuity of the Raman vibron (100 cm$^{-1}$) signals the onset of the A phase~\cite{Hemley1988,Lorenzana1989}. A direct transition from H-A back to the LP phase can be achieved by raising temperature. Across this transition, the intensities of the libron bands decrease discontinuously~\cite{Lorenzana1990}.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{phases123}
+\caption{Phase diagram of o-D$_2$ and HD below 200 K and 200 GPa~\cite{Chijioke2006}.}
+\label{fig:hsolid-phases123}
+\end{figure}
+
+Transitions to these orientationally ordered phases are detected by changes in Raman and IR spectra. As shown in Fig.~\ref{fig:hsolid-p-h2-bsp}, during the LP to BSP transition, one can observe clear broadening and weakening of the low-frequency roton bands around 350 cm$^{-1}$ and an associated small (15 cm$^{-1}$) discontinuity in the position of the vibron peak, which is about 4150 cm$^{-1}$ near the transition pressure 110 GPa~\cite{Lorenzana1990}. Upon further increase of pressure past 160 GPa, a much larger discontinuity of the Raman vibron (100 cm$^{-1}$) signals the onset of the A phase~\cite{Hemley1988,Lorenzana1989}. A direct transition from H-A back to the LP phase can be achieved by raising temperature. Across this transition, the intensities of the libron bands decrease discontinuously~\cite{Lorenzana1990}.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.38\columnwidth}
+\centering
+\includegraphics[width=\columnwidth]{p-h2-bsp-rotons}
+(a) rotons
+\end{minipage}
+\begin{minipage}{0.58\columnwidth}
+\centering
+\includegraphics[width=\columnwidth]{p-h2-bsp-vibron}
+(b) vibron
+\end{minipage}
+\caption{Roton and vibron changes in p-H$_2$ across the BSP transition~\cite{Lorenzana1990}.}
+\label{fig:hsolid-p-h2-bsp}
+\end{figure}
 
 The optical signatures for the LP to BSP transition in o-D2 are qualitatively similar to those in p-H2. The vibron decreases discontinuously by 3 cm$^{-1}$ rather than 15 cm$^{-1}$, while the roton bands broaden and weaken near the transition pressure of 28 GPa rather than 110 GPa~\cite{Silvera1981}. Further confirmation of these two phase transitions were later obtained from IR absorption spectra~\cite{Cui1994}. Three absorption peaks appear around 3150 cm$^{-1}$ upon entering the BSP phase and are replaced by a single broad peak at the same frequency range when the A phase is reached. The same signatures were used to identify the BSP and A phases of HD at 70 and 160 GPa, respectively~\cite{Chijioke2006}.
 In the A phase, the rather broad and pressure-independent roton band weakens, disappears, and is replaced by a few sharp and strongly pressure-dependent peaks in the frequency range 100$\sim$700 cm$^{-1}$~\cite{Goncharov1998}.
 These new modes are considered to be lattice libration modes due to their pressure dependence.
 
 %As pressure increases, anisotropic intermolecular interactions mix the free roton states until the ground state distorts and molecules become orientationally ordered to lower potential energy. This broken-symmetry phase (BSP) or phase II, stable under 140 K, is considered a quantum phase based on observed strong isotope shift of the transition pressure. o-D$_2$ reaches the BSP phase at as low as 28 GPa at 1.1 K~\cite{Silvera1981}.
-%Below 140 K and above 150 GPa, p-H$_2$ enters a different orientation-ordered H-A regardless of ortho-para content and isotope~\cite{Cui1995,Goncharov1998}.
 
-Phases with mixed ortho-para concentrations of H$_2$ are labeled I, II, and III~\cite{Dias2016,Dias2019}, which correspond to the HCP, BSP, and H-A phases of pure p-H$_2$, respectively.
-At 300 K and above 220 GPa, we enter yet another solid phase IV, characterized by a splitting of the vibron peak~\cite{Zha2013}.
-Both theory and experiment suggest that phase IV consists of alternating layers having rather different in-plane structures, possibly two types of molecules
-At $<100$ K and above 350 GPa, molecular hydrogen becomes semi-metallic, possibly due to the closure of an indirect band gap~\cite{Eremets2019}.
+Phases with mixed ortho-para concentrations of H$_2$ are labeled I, II, and III~\cite{Dias2016,Dias2019}, which correspond to the LP, BSP, and H-A phases of pure p-H$_2$, respectively.
+As shown in Fig.~\ref{fig:hsolid-phases}, at 300 K and above 220 GPa, we enter yet another solid phase IV, characterized by a splitting of the vibron peak~\cite{Zha2013}.
+Both theory and experiment suggest that phase IV consists of alternating layers having rather different in-plane structures, possibly two types of molecules.
+Below 100 K and above 350 GPa, molecular hydrogen becomes semi-metallic, possibly due to the closure of an indirect band gap~\cite{Eremets2019}.
 Then, above 425 GPa, all IR radiation is absorbed indicating a closure of the direct band gap~\cite{Loubeyre2020}.
 Finally, at sufficiently high pressures, the hydrogen molecules will dissociate to form an atomic solid, reportedly at 495 GPa~\cite{Silvera2017}. Although consensus has yet to be reached.
 
-While the phase boundaries of solid hydrogen are reasonably well-established below 400 K and 400 GPa by diamond-anvil cell (DAC) experiments, characterizations of the solid structures are limited. Due to small scattering cross section and small sample size in DAC experiments, only a handful of X-ray~\cite{Hazen1987,MAO1988,Loubeyre1996,Kawamura2002,Goncharenko2005a,Akahama2010,Ji2019} and only one neutron~\cite{Goncharenko2005a} scattering experiments haven been published over the past 40 years. Most of our understanding of solid hydrogen is built upon IR and Raman spectra, which provide partial information on the microscopic details of the solid structures. This lack of definitive structural information poses significant difficulty for both theoretical and experimental understanding of solid hydrogen. Experimentally, this has lead to the misidentification of a triple point as a critical point~\cite{Lorenzana1990,Cui1994}, subtlety in the detection of a new phase~\cite{Eremets2009,Howie2012}, among many debates over interpretation of optical data. One particularly challenging transition to detect is the melting of the molecular crystal.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{hsolid-phases}
+\caption{Tentative phase diagram of solid hydrogen below 400 K~\cite{Dias2019}.}
+\label{fig:hsolid-phases}
+\end{figure}
+
+While the phase boundaries of solid hydrogen are reasonably well-established below 400 K and 400 GPa by diamond-anvil cell (DAC) experiments, characterizations of the solid structures are limited. Due to small scattering cross section and small sample size in DAC experiments, only a handful of X-ray~\cite{Hazen1987,MAO1988,Loubeyre1996,Kawamura2002,Goncharenko2005a,Akahama2010,Ji2019} and only one neutron~\cite{Goncharenko2005a} scattering experiments haven been published over the past 40 years. Most of our understanding of solid hydrogen is built upon IR and Raman spectra, which provide partial information on the microscopic details of the solid structures. This lack of definitive structural information poses significant difficulty for both theoretical and experimental understanding of solid hydrogen. Experimentally, this has lead to the misidentification of a triple point as a critical point~\cite{Lorenzana1990,Cui1994}, subtlety in the detection of a new phase~\cite{Eremets2009,Howie2012}, among many debates over interpretation of optical data.
 
 \subsection{Calculations}
 \label{sec:hsolid-calcs}
