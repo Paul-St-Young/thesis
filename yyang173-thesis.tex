@@ -4,12 +4,14 @@
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{4}
 
-\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
 \usepackage{graphicx}
 \usepackage{braket}
 \usepackage{subfiles}
 \usepackage{comment}
 \usepackage{listings}
+
+\newtheorem{theorem}{Theorem}[section]
 
 % try bibtex
 \usepackage[
@@ -20,6 +22,7 @@ sorting=none
 \addbibresource{sections/hsolid}
 \addbibresource{sections/hcalcs}
 \addbibresource{sections/melth2}
+\addbibresource{sections/basic}
 \defbibheading{general}{\section{References}}
 \defbibheading{all}{\chapter{References}}
 \addbibresource{papers/licp/licp-ref.bib}

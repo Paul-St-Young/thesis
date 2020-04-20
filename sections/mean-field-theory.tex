@@ -60,8 +60,7 @@ F_{\mu\nu} = \hcore + \sum\limits_{\lambda\sigma} P_{\lambda\sigma} \left[
 (\mu\nu|\sigma\lambda) - \frac{1}{2}(\mu\lambda|\sigma\nu)
 \right],
 \end{align} % (3.154)
-where $P_{\lambda\sigma}=2\sum_{a=1}^{N/2} C_{\lambda a}C_{\sigma a}^*$ is the density matrix, % (3.145)
-and 
+where $P_{\lambda\sigma}=2\sum_{a=1}^{N/2} C_{\lambda a}C_{\sigma a}^*$ is the density matrix. % (3.145)
 
 Conceptually, the simplest approach would be to use the ground-state wavefunctions of the two hydrogen atoms as the basis for the hydrogen molecule. We can guess the ground-state wavefunction of the hydrogen molecule. First, the spins of the two electrons anti-align, so they are distinguishable particles. Second, due to symmetries imposed by the two protons, the ground state must be equal superposition of the two basis functions. Third, the lowest-energy solution has no node. Therefore, the ground state of H$_2$ in the minimum basis is
 \begin{align}
@@ -123,13 +122,8 @@ V_{\mu\nu}\equiv\braket{\phi_\mu|\sum\limits_{i=1}^{2}\dfrac{1}{\vert\bs{r}-\bs{
 -1.19483461 & -1.88044088
 \end{array}\right),
 \end{align}
-giving the 1-electron hamiltonian eq.~(\ref{eq:hf-hcore})
-\begin{align}
-\hcore = \left(\begin{array}{cc}
--1.120409 & -0.95837996 \\
--0.95837996 & -1.120409
-\end{array}\right).
-\end{align}
+which sum to the 1-electron hamiltonian $\hcore$ by eq.~(\ref{eq:hf-hcore})
+
 Eigenvectors of $\hcore$ are typically used to construct the initial density matrix to start a self-consist solution of the Hartree-Fock equations. However, in the case of H$_2$, these eigenvectors coincide with the final solution, so we obtain the converged density matrix with no iteration from eq.~(\ref{eq:h2-pmat})
 \begin{align}
 C_{\mu 1} = \left(\begin{array}{c}
@@ -167,9 +161,9 @@ K_{\mu\nu} = \left(\begin{array}{cc}
 F_{\mu\nu} = \left(\begin{array}{cc}
 -0.36553735 & -0.59388537 \\
 -0.59388537 & -0.36553735
-\end{array}\right).\label{eq:h2-fock-r14}
+\end{array}\right).\label{eq:h2-hf-fock-r14}
 \end{align}
-The total electronic energy is $-1.831$ ha, while the total energy is $-1.11671432$ ha after adding ion-ion repulsion. Interested reader should reproduce the Fock matrix for STO-3G H$_2$ at 1.4 bohr separation, i.e. eq.~(\ref{eq:h2-fock-r14}), to consolidate a practical understanding of RHF.
+The total energy is $-1.11671432$ ha, while the electronic contribution is $-1.831$ ha, before adding the ion-ion repulsion $V_{ii}=1/1.4$ ha. Interested reader should reproduce the Fock matrix for STO-3G H$_2$ at 1.4 bohr separation, i.e. eq.~(\ref{eq:h2-hf-fock-r14}), to consolidate a practical understanding of RHF.
 
 \subsubsection{Basis Set Error}
 
@@ -186,7 +180,59 @@ g(r; \sigma) = \dfrac{1}{\sigma\sqrt{2\pi}} e^{-\dfrac{r^2}{2\sigma^2}}.
 \end{comment}
 
 \subsection{Density Functional Theory (DFT)}
+While the Hartree-Fock method enjoys much success in the study of atoms and molecules, its complete neglect of (Coulomb) electron correlation is woefully inadequate for most solids. The total energy is dominated by inner shell contributions, which overshadow the valence contributions important for bonding and correlated excitations in solids. The HF energy eigenvalues show vanishing density of states at the Fermi level in metals and unphysically large band gaps in insulators~\cite{Perdew1981}.
+
+Density functional theory uses the three-dimensional total electron density $n(\bs{r})$ as the basic variable rather than the 3N-dimensional many-body wave function $\Psi(\bs{r}_1,\dots,\bs{r}_N)$. This is a dramatic simplification that likely lead to its dominance in modern electronic structure theory of solids and material science.
+
 \subsubsection{The Hohenberg-Kohn theorems}
+DFT was put on firm theoretical foundation by P. Hohenberg and W. Kohn (HK) in 1964~\cite{Hohenberg1964}, where they calculate the total energy $E$ from an external potential $v(\bs{r})$ and a functional of the ground-state electron density
+\begin{align}
+E\equiv \int d\bs{r} n(\bs{r}) v(\bs{r}) + F[n(\bs{r})].
+\end{align}
+Two theorems are often attributed to this work:
+\begin{theorem}
+Assuming non-degenerate ground state, any V-representable ground-state density $v(\bs{r})\Rightarrow n(\bs{r})$ uniquely determines its external potential $v(\bs{r})$.
+\end{theorem}
+\begin{proof}
+by contradiction: Suppose there are two distinct external potentials $v$ and $v'$ that give rise to the same density $n$ via different hamiltonians $H$, $H'$ and wave functions $\Psi$ and $\Psi'$, respectively. By the variational principle $\braket{\Psi'|H'|\Psi'}+\braket{\Psi'|v'-v|\Psi'}=\boxed{\braket{\Psi'|H|\Psi'}>\braket{\Psi|H|\Psi}}=\braket{\Psi|H'|\Psi}+\braket{\Psi|v'-v|\Psi}>\braket{\Psi'|H'|\Psi'}+\braket{\Psi|v'-v|\Psi}$. Since $\Psi$ and $\Psi'$ give the same density, the local term $\braket{v'-v}$ cancels to give $\braket{\Psi'|H'|\Psi'}>\braket{\Psi'|H'|\Psi'}$, which is a contradiction.
+\end{proof}
+\begin{theorem}
+Assuming number-conserving density variations, the energy functional has a unique minimum at the ground-state density.
+\end{theorem}
+\begin{proof}
+Consider an external potential $v$, its hamiltonian $H$, and its unique ground state $\Psi$ and density $n$. After a number-conserving variation, the new wave function $\Psi'$ can be used with the original hamiltonian and $\braket{\Psi'|H|\Psi'}>\braket{\Psi|H|\Psi}$ by the variational principle.
+\end{proof}
+While less publicized, HK also pointed out that the exact density functional less the direct/Column contribution can be calculated from a local energy-density functional
+\begin{align}
+G[n]\equiv F[n]-\frac{1}{2}\int d\bs{r}d\bs{r}' \dfrac{n(\bs{r})n(\bs{r}')}{\vert\bs{r}-\bs{r}'\vert}=\int \bs{r} g_{\bs{r}}[n]\\
+g_{\bs{r}}[n] \equiv \frac{1}{2}\nabla_{\bs{r}}\nabla_{\bs{r}'} n_1(\bs{r}, \bs{r}')\vert_{\bs{r}=\bs{r}'}+
+\frac{1}{2}\int d\bs{r}' \dfrac{C_2(\bs{r}-\bs{r'}/2;\bs{r}+\bs{r}'/2)}{\vert\bs{r}'\vert},
+\end{align}
+which is constructed from one- and two-body reduced density matrices $n_1$ and $C_2$. They even went as far as to relate the leading-order behavior of the density functional from uniform density to polarizability
+\begin{align}
+G[n] = G[n_0] + \int d\bs{r}d\bs{r}' K(\bs{r}-\bs{r}')\tilde{n}(\bs{r})\tilde{n}(\bs{r}')+h.o.,
+\end{align}
+where $\tilde{n}$ is a small number-conserving density variation and the kernel $K$ is related to the polarizability in reciprocal space
+\begin{align}
+K(\bs{r}-\bs{r}') = \dfrac{1}{\Omega}\sum\limits_{\bs{q}} K(\bs{q}) e^{-i\bs{q}\cdot(\bs{r}-\bs{r}')} \\
+K(\bs{q}) = \dfrac{2\pi}{q^2}\left[ \frac{1}{\alpha(\bs{q})}-1 \right] = \dfrac{2\pi}{q^2}\dfrac{1}{\epsilon(\bs{q})},
+\end{align}
+where $\alpha(\bs{q})$ and $\epsilon(\bs{q})$ are the polarizability and dielectric constant, respectively. The HK theorems and limits provide some checks for practical parametrization of the exact density functional. Unfortunately, they provide no systematic guidance one how one may start to construct numerical approximations to the exact functional.
+
 \subsubsection{The Kohn-Sham equations}
+
+
 \subsubsection{Minimum Basis H$_2$}
+The only difference between the LDA and the RHF calculations lies in the ``exchange'' matrix
+\begin{align}
+K_{\mu\nu}' = \left(\begin{array}{cc}
+0.38980073 & 0.25499926 \\
+0.25499926 & 0.38980073
+\end{array}\right)\\
+F_{\mu\nu} = \left(\begin{array}{cc}
+-0.16477935 & -0.32007715 \\
+-0.32007715 & -0.16477935
+\end{array}\right).\label{eq:h2-lda-fock-r14}
+\end{align}
+The LDA electronic contribution is $-1.73929592$ ha.
 \subsubsection{The Band Gap Problem}
