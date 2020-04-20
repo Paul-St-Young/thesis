@@ -2,8 +2,9 @@
 \subsection{Hartree-Fock (HF)}
 
 \newcommand{\hcore}{H^{\text{core}}_{\mu\nu}}
+\newcommand{\veff}{V^{\text{eff}}_{\mu\nu}}
 
-\subsubsection{The Hartree-Fock equations}
+\subsubsection{The Hartree-Fock Equations}
 The Hartree-Fock equations are a set of linear equations that couple spin orbitals in the determinant wavefunction. They can be obtained by minimizing the energy of a Slater determinant with the constraint that spin orbitals remain orthonormal. Using the method of Lagrangian multipliers, this constraint optimization problem can be converted to a set of linear equations, which take the form of an eigenvalue problem.
 %, thus it is more concise to define the one-body operator on the left hand side as the Fock operator. (see eq.~(3.49) in Szabo).
 
@@ -36,6 +37,18 @@ The two-electron integral notation $(\mu\nu|\lambda\sigma)$ is defined by eq.~(3
 \frac{1}{\vert\bs{r}_1-\bs{r}_2\vert}
 \phi_\lambda^*(\bs{r}_2)\phi_\sigma(\bs{r}_2).
 \end{align}
+The first term in the sum of eq.~(\ref{eq:roothaan-fock})
+\begin{align}
+J_{\mu\nu} \equiv (\mu\nu|aa)
+\end{align}
+is often called the Coulomb or direct operator, because it describes the Classical density-density interaction of charged particles having density distribution $\phi_a^*(\bs{r}_2)\phi_a(\bs{r}_2)$. The second term
+\begin{align}
+K_{\mu\nu} \equiv (\mu a|\nu a)
+\end{align}
+is the exchange operator and has no classical interaction. The exchange-correlation contribution to the Fock matrix is sometimes called the Hartree-Fock effective potential operator
+\begin{align}
+\veff\equiv 2J_{\mu\nu} - K_{\mu\nu}.
+\end{align}
 
 Suppose each molecular orbital $a$ is written as a linear combination of the basis functions
 \begin{align}
@@ -63,11 +76,11 @@ P_{\lambda\sigma} = \left[2(1+S_{12})\right]^{-1/2}\left(\begin{array}{cc}
 1 & 1
 \end{array}\right).
 \end{align}
-This guess was obtained as early as 1927 by V. W. Heitler and F. London. Unfortunately, the multi-center integrals eq.~(\ref{eq:hf-hcore}) and (\ref{eq:hf-eri}), needed to evaluate the total energy, have no analyical solution in the basis of Slater type orbitals (STOs) (see thesis of Michał Lesiuk). Thus, Heitler-London used an upper bound to approximate the two-electron integral and obtain a bond length of 1.5 bohr and binding energy of 2.5 eV, noticeably different from the experimental values of 1.4 bohr and 4.5 eV.
+This guess was obtained as early as 1927 by V. W. Heitler and F. London. Unfortunately, the multi-center integrals eq.~(\ref{eq:hf-hcore}) and (\ref{eq:hf-eri}), needed to evaluate the total energy, have no analyical form in the basis of Slater type orbitals (STOs) (see thesis of Michał Lesiuk). Thus, Heitler-London used an upper bound to approximate the two-electron integral and obtain a bond length of 1.5 bohr and binding energy of 2.5 eV, noticeably different from the experimental values of 1.4 bohr and 4.5 eV.
 
-In modern quantum chemistry, instead of directly approximating the integrals, we approximate each basis function as a sum of Gaussian functions. This reduces the multi-center integrals to single-center integrals, because a product of Gaussians centered on different atoms is also Gaussian but with a different center. The so-called STO-3g basis expresses a STO as a sum of 3 ``primitive Gaussians'' (see eq. (3.225) of Szabo). Using this basis, the bond length and binding energy become 1.35 bohr and 3.2 eV, which roughly halves discrepancy with experiment when compared to the Heitler-London values.
+In modern quantum chemistry, instead of directly approximating the integrals, we approximate each basis function as a sum of Gaussian functions. This reduces the multi-center integrals to single-center integrals, because a product of Gaussians centered on different atoms is also Gaussian but with a different center. The so-called STO-3g basis expresses a STO as a sum of 3 ``primitive Gaussians'' (see eq. (3.225) of Szabo). Using this basis, the bond length and binding energy become 1.35 bohr and 3.2 eV, which roughly halves the discrepancy with experiment when compared to the Heitler-London values.
 
-In Fig.~\ref{fig:sto-3g}, I show the STO-3g basis compared to the exact STO it approximates
+Figure~\ref{fig:sto-3g} shows the STO-3g basis compared to the exact STO it approximates
 \begin{align}
 \chi(r)\equiv \left(\dfrac{\zeta^3}{\pi}\right)^{1/2} e^{-\zeta r} \approx \phi(\bs{r}) = \sum\limits_{i=1}^3 c_i \left(\dfrac{2\alpha_i}{\pi}\right)^{3/4} e^{-\alpha_ir^2},
 \end{align}
@@ -104,7 +117,7 @@ T_{\mu\nu}\equiv\braket{\phi_\mu|-\frac{1}{2}\nabla^2|\phi_\nu} =
 \left(\begin{array}{cc}
 0.76003188 & 0.23645465 \\
 0.23645465 & 0.76003188
-\end{array}\right) \\
+\end{array}\right), \\
 V_{\mu\nu}\equiv\braket{\phi_\mu|\sum\limits_{i=1}^{2}\dfrac{1}{\vert\bs{r}-\bs{R}_i\vert}|\phi_\nu} = \left(\begin{array}{cc}
 -1.88044088 & -1.19483461 \\
 -1.19483461 & -1.88044088
@@ -117,7 +130,7 @@ giving the 1-electron hamiltonian eq.~(\ref{eq:hf-hcore})
 -0.95837996 & -1.120409
 \end{array}\right).
 \end{align}
-Eigenvectors of $\hcore$ are typically used to construct the initial density matrix to start a self-consist solution of the Hartree-Fock equations. However, in the case of H$_2$, these eigenvectors coincide with the final solution, so we obtain the converged density matrix with no iteration eq.~(\ref{eq:h2-pmat})
+Eigenvectors of $\hcore$ are typically used to construct the initial density matrix to start a self-consist solution of the Hartree-Fock equations. However, in the case of H$_2$, these eigenvectors coincide with the final solution, so we obtain the converged density matrix with no iteration from eq.~(\ref{eq:h2-pmat})
 \begin{align}
 C_{\mu 1} = \left(\begin{array}{c}
 0.70710678 \\ -0.70710678
@@ -143,11 +156,24 @@ $\mu$ & $\nu$ & $\lambda$ & $\sigma$ & $(\mu\nu|\lambda\sigma)$\\
 \caption{symmetry-inequivalent electron repulsion integrals for H$_2$ in STO-3G.}
 \end{table}
 \begin{align}
+J_{\mu\nu} = \left(\begin{array}{cc}
+0.67271523 & 0.44665109 \\
+0.44665109 & 0.67271523
+\end{array}\right); ~~
+K_{\mu\nu} = \left(\begin{array}{cc}
+0.59055879 & 0.52880753 \\
+0.52880753 & 0.59055879
+\end{array}\right);\\
 F_{\mu\nu} = \left(\begin{array}{cc}
 -0.36553735 & -0.59388537 \\
 -0.59388537 & -0.36553735
-\end{array}\right).
+\end{array}\right).\label{eq:h2-fock-r14}
 \end{align}
+The total electronic energy is $-1.831$ ha, while the total energy is $-1.11671432$ ha after adding ion-ion repulsion. Interested reader should reproduce the Fock matrix for STO-3G H$_2$ at 1.4 bohr separation, i.e. eq.~(\ref{eq:h2-fock-r14}), to consolidate a practical understanding of RHF.
+
+\subsubsection{Basis Set Error}
+
+\subsubsection{Static and Dynamic Correlation}
 
 \begin{comment}
 \begin{align}
@@ -160,5 +186,7 @@ g(r; \sigma) = \dfrac{1}{\sigma\sqrt{2\pi}} e^{-\dfrac{r^2}{2\sigma^2}}.
 \end{comment}
 
 \subsection{Density Functional Theory (DFT)}
+\subsubsection{The Hohenberg-Kohn theorems}
 \subsubsection{The Kohn-Sham equations}
 \subsubsection{Minimum Basis H$_2$}
+\subsubsection{The Band Gap Problem}
