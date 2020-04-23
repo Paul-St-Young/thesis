@@ -1,4 +1,4 @@
-\section{Mean-field Theory}
+\section{Effective One-Particle Theories}
 \subsection{Hartree-Fock (HF)}
 
 \newcommand{\hcore}{H^{\text{core}}_{\mu\nu}}
@@ -12,7 +12,7 @@ To derive the Hartree-Fock equations, we use a Slater determinant to evaluate th
 \begin{align} \label{eq:sdet-energy}
 E= \sum\limits_{a=1}^N [a|h|a] + \frac{1}{2}\sum\limits_{a,b=1}^N [aa|bb] - [ab|ba],
 \end{align}
-where $[a|h|a]$ denotes, and $[aa|bb]$ denotes.
+where $[a|h|a]$ denotes, and $[aa|bb]$ denotes~\cite{Szabo1996}.
 
 Constraint minimization of eq.~(\ref{eq:sdet-energy}) with the extra requirement that each spin orbital is doubly occupied leads to the restricted Hartree-Fock (RHF) Fock operator. Its first $N/2$ eigenvectors are the spin orbitals in the lowest-energy Slater determinant. The lowest energy value can be obtained by a weighted sum of its eigenvalues according to the occupation of the spin orbitals.
 
@@ -75,9 +75,9 @@ P_{\lambda\sigma} = \left[2(1+S_{12})\right]^{-1/2}\left(\begin{array}{cc}
 1 & 1
 \end{array}\right).
 \end{align}
-This guess was obtained as early as 1927 by V. W. Heitler and F. London. Unfortunately, the multi-center integrals eq.~(\ref{eq:hf-hcore}) and (\ref{eq:hf-eri}), needed to evaluate the total energy, have no analyical form in the basis of Slater type orbitals (STOs) (see thesis of Michał Lesiuk). Thus, Heitler-London used an upper bound to approximate the two-electron integral and obtain a bond length of 1.5 bohr and binding energy of 2.5 eV, noticeably different from the experimental values of 1.4 bohr and 4.5 eV.
+This guess was obtained as early as 1927 by V. W. Heitler and F. London~\cite{Heitler1927}. Unfortunately, the multi-center integrals eq.~(\ref{eq:hf-hcore}) and (\ref{eq:hf-eri}), needed to evaluate the total energy, have no analyical form in the basis of Slater type orbitals (STOs) (see thesis of Michał Lesiuk). Thus, Heitler-London used an upper bound to approximate the two-electron integral and obtain a bond length of 1.5 bohr and binding energy of 2.5 eV, noticeably different from the experimental values of 1.4 bohr and 4.5 eV.
 
-In modern quantum chemistry, instead of directly approximating the integrals, we approximate each basis function as a sum of Gaussian functions. This reduces the multi-center integrals to single-center integrals, because a product of Gaussians centered on different atoms is also Gaussian but with a different center. The so-called STO-3g basis expresses a STO as a sum of 3 ``primitive Gaussians'' (see eq. (3.225) of Szabo). Using this basis, the bond length and binding energy become 1.35 bohr and 3.2 eV, which roughly halves the discrepancy with experiment when compared to the Heitler-London values.
+In modern quantum chemistry, instead of directly approximating the integrals, we analytically evaluate the integrals by approximating each basis function as a sum of Gaussians. This reduces the multi-center integrals to single-center integrals, because a product of Gaussians centered on different atoms is also Gaussian but with a different center. The so-called STO-3g basis expresses a STO as a sum of 3 ``primitive Gaussians'' (see eq. (3.225) of Szabo). Using this basis, the bond length and binding energy become 1.35 bohr and 3.2 eV, having roughly half the discrepancy with experiment when compared to the Heitler-London values.
 
 Figure~\ref{fig:sto-3g} shows the STO-3g basis compared to the exact STO it approximates
 \begin{align}
@@ -169,6 +169,8 @@ The total energy is $-1.11671432$ ha, while the electronic contribution is $-1.8
 
 \subsubsection{Static and Dynamic Correlation}
 
+\subsubsection{Beyond Hartree-Fock}
+
 \begin{comment}
 \begin{align}
 \chi_{nlm}(r, \theta, \phi;\zeta) \equiv \dfrac{(2\zeta)^{n+1/2}}{\sqrt{(2n)!}}
@@ -185,45 +187,90 @@ While the Hartree-Fock method enjoys much success in the study of atoms and mole
 Density functional theory uses the three-dimensional total electron density $n(\bs{r})$ as the basic variable rather than the 3N-dimensional many-body wave function $\Psi(\bs{r}_1,\dots,\bs{r}_N)$. This is a dramatic simplification that likely lead to its dominance in modern electronic structure theory of solids and material science.
 
 \subsubsection{The Hohenberg-Kohn theorems}
-DFT was put on firm theoretical foundation by P. Hohenberg and W. Kohn (HK) in 1964~\cite{Hohenberg1964}, where they calculate the total energy $E$ from an external potential $v(\bs{r})$ and a functional of the ground-state electron density
+While having roots in Thomas-Fermi theory~\cite{Parr1989}, DFT was put on firm theoretical foundation by P. Hohenberg and W. Kohn (HK) in 1964~\cite{Hohenberg1964}, where they calculate the total energy $E$ from an external potential $v(\bs{r})$ and a functional of the ground-state electron density
 \begin{align}
 E\equiv \int d\bs{r} n(\bs{r}) v(\bs{r}) + F[n(\bs{r})].
 \end{align}
 Two theorems are often attributed to this work:
+\begin{definition}
+\textit{V-representable density} A density $n(\bs{r})$ is V-representable if it is the ground-state density of some Hamiltonian $H$ in an external potential $v(\bs{r})$.
+\end{definition}
 \begin{theorem}
-Assuming non-degenerate ground state, any V-representable ground-state density $v(\bs{r})\Rightarrow n(\bs{r})$ uniquely determines its external potential $v(\bs{r})$.
+Assuming non-degenerate ground state, any V-representable ground-state density $n(\bs{r})$ uniquely determines its external potential $v(\bs{r})$. %(See extension to N-representable density by M. Levy)
 \end{theorem}
 \begin{proof}
 by contradiction: Suppose there are two distinct external potentials $v$ and $v'$ that give rise to the same density $n$ via different hamiltonians $H$, $H'$ and wave functions $\Psi$ and $\Psi'$, respectively. By the variational principle $\braket{\Psi'|H'|\Psi'}+\braket{\Psi'|v'-v|\Psi'}=\boxed{\braket{\Psi'|H|\Psi'}>\braket{\Psi|H|\Psi}}=\braket{\Psi|H'|\Psi}+\braket{\Psi|v'-v|\Psi}>\braket{\Psi'|H'|\Psi'}+\braket{\Psi|v'-v|\Psi}$. Since $\Psi$ and $\Psi'$ give the same density, the local term $\braket{v'-v}$ cancels to give $\braket{\Psi'|H'|\Psi'}>\braket{\Psi'|H'|\Psi'}$, which is a contradiction.
 \end{proof}
 \begin{theorem}
-Assuming number-conserving density variations, the energy functional has a unique minimum at the ground-state density.
+Assuming number-conserving density variations that retain V-representability, the energy functional has a unique minimum at the ground-state density.
 \end{theorem}
 \begin{proof}
 Consider an external potential $v$, its hamiltonian $H$, and its unique ground state $\Psi$ and density $n$. After a number-conserving variation, the new wave function $\Psi'$ can be used with the original hamiltonian and $\braket{\Psi'|H|\Psi'}>\braket{\Psi|H|\Psi}$ by the variational principle.
 \end{proof}
-While less publicized, HK also pointed out that the exact density functional less the direct/Column contribution can be calculated from a local energy-density functional
+
+These initial proofs by HK have two important assumptions: 1. the ground-state is non-degenerate and 2. the electron density $n(\bs{r})$ is V-representable. The latter is especially sever because reasonable densities were shown to be not V-representable~\cite{Levy1982,Lieb1983}. Fortunately, M. Levy proved that both assumptions can be weakened~\cite{Levy1979}.
+\begin{definition}
+\textit{N representable density} A density $n(\bs{r})$ is N-representable if it can be obtained from some anti-symmetric wave function.
+\end{definition}
+The HK theorems hold for N-representable densities regardless of ground-state degeneracy.
+
+While less publicized, HK also pointed out that the exact density functional less the direct/Column contribution can be calculated from a local energy-density functional $g_{\bs{r}}[n]$
 \begin{align}
-G[n]\equiv F[n]-\frac{1}{2}\int d\bs{r}d\bs{r}' \dfrac{n(\bs{r})n(\bs{r}')}{\vert\bs{r}-\bs{r}'\vert}=\int \bs{r} g_{\bs{r}}[n]\\
+G[n]\equiv F[n]-\frac{1}{2}\int d\bs{r}d\bs{r}' \dfrac{n(\bs{r})n(\bs{r}')}{\vert\bs{r}-\bs{r}'\vert}=\int \bs{r} g_{\bs{r}}[n],\\
 g_{\bs{r}}[n] \equiv \frac{1}{2}\nabla_{\bs{r}}\nabla_{\bs{r}'} n_1(\bs{r}, \bs{r}')\vert_{\bs{r}=\bs{r}'}+
 \frac{1}{2}\int d\bs{r}' \dfrac{C_2(\bs{r}-\bs{r'}/2;\bs{r}+\bs{r}'/2)}{\vert\bs{r}'\vert},
 \end{align}
-which is constructed from one- and two-body reduced density matrices $n_1$ and $C_2$. They even went as far as to relate the leading-order behavior of the density functional from uniform density to polarizability
+which is constructed from one- and two-body reduced density matrices $n_1$ and $C_2$. They even went as far as to relate the leading-order behavior of the density functional to polarizability
 \begin{align}
 G[n] = G[n_0] + \int d\bs{r}d\bs{r}' K(\bs{r}-\bs{r}')\tilde{n}(\bs{r})\tilde{n}(\bs{r}')+h.o.,
 \end{align}
 where $\tilde{n}$ is a small number-conserving density variation and the kernel $K$ is related to the polarizability in reciprocal space
 \begin{align}
-K(\bs{r}-\bs{r}') = \dfrac{1}{\Omega}\sum\limits_{\bs{q}} K(\bs{q}) e^{-i\bs{q}\cdot(\bs{r}-\bs{r}')} \\
+K(\bs{r}-\bs{r}') = \dfrac{1}{\Omega}\sum\limits_{\bs{q}} K(\bs{q}) e^{-i\bs{q}\cdot(\bs{r}-\bs{r}')}, \\
 K(\bs{q}) = \dfrac{2\pi}{q^2}\left[ \frac{1}{\alpha(\bs{q})}-1 \right] = \dfrac{2\pi}{q^2}\dfrac{1}{\epsilon(\bs{q})},
 \end{align}
-where $\alpha(\bs{q})$ and $\epsilon(\bs{q})$ are the polarizability and dielectric constant, respectively. The HK theorems and limits provide some checks for practical parametrization of the exact density functional. Unfortunately, they provide no systematic guidance one how one may start to construct numerical approximations to the exact functional.
+where $\alpha(\bs{q})$ and $\epsilon(\bs{q})$ are the polarizability and dielectric constant, respectively. The HK theorems and limits provide some checks for practical parametrization of the exact density functional. Unfortunately, they provide no guidance on how one might start to construct numerical approximations to the exact functional.
 
 \subsubsection{The Kohn-Sham equations}
 
+One year after the HK paper, W. Kohn and L. J. Sham (KS)~\cite{Kohn1965} worked out practical guidelines for constructing approximations to the exact density functional. KS first partitioned the total energy to highlight the least-understood ``exchange-correlation" term $E_{xc}[n]$.
+\begin{align} \label{eq:ks-etot}
+E=\int d\bs{r} n(\bs{r}) v(\bs{r}) + \frac{1}{2}\int d\bs{r}d\bs{r}' \dfrac{n(\bs{r})n(\bs{r}')}{\vert\bs{r}-\bs{r}'\vert} + T[n] + E_{\text{xc}}[n],
+\end{align}
+where $T$ is a kinetic energy functional. KS then approximated $E_{xc}$ by the corresponding contribution in the homogeneous electron gas, the local density approximation (LDA)
+\begin{align}
+E_{\text{xc}}[n] = \int d\bs{r}n(\bs{r})\epsilon_{\text{xc}}(n(\bs{r})).
+\end{align}
+Next, by minimizing eq.~(\ref{eq:ks-etot}) with respect to number-conserving density variation, they obtained the stationary condition for the ground-state density
+\begin{align}
+\int \delta n \left[
+\dfrac{\delta T[n]}{\delta n}+
+v(\bs{r}) + \int d\bs{r}' \dfrac{n(\bs{r}')}{\vert\bs{r}-\bs{r}'\vert}+
+\dfrac{d(n\epsilon_{\text{xc}}(n))}{dn}
+\right] = 0. \label{eq:ks-dn}
+\end{align}
+To solve eq.~(\ref{eq:ks-dn}), KS \textit{assumed} that the ground-state density $n$ came from an auxiliary system of non-interacting electrons, i.e., a Slater determinant. This KS \textit{ansatz} turns eq.~(\ref{eq:ks-dn}) into a system of one-particle equations of non-interacting particles in some effective potential $v^{\text{eff}}_{KS}$ determined by the density $n(\bs{r})$. Most practical implementations of DFT use the KS auxiliary-system formulation.
+
+Practical success of the DFT LDA method was not realized until 1981, when J. P. Perdew and A. Zunger~\cite{Perdew1981} (PZ) parametrized exact quantum Monte Carlo data of the homogeneous electron gas, obtained by D. M. Ceperley and B. J. Alder~\cite{Ceperley1980} the year prior. PZ's eq.~(13-17) define the KS-DFT method and the LDA we use today. The electron density for spin $\sigma$ is a sum of occupied spin orbitals squared
+\begin{align}
+n_{\sigma} = \sum\limits_{\sigma}\sum\limits_{a=1}^{N_{\sigma}}
+f_{a\sigma} \vert\psi_{a\sigma}(\bs{r})\vert^2,
+\end{align}
+where the occupation numbers $f_{a\sigma}\in[0, 1]$, and the kinetic energy is the sum of contributions from all occupied spin orbitals
+\begin{align}
+T[n] = \sum\limits_\sigma\sum\limits_{a=1}^{N_{\sigma}}
+f_{a\sigma} \braket{\psi_{a\sigma}|-\frac{1}{2}\nabla^2|\psi_{a\sigma}}.
+\end{align}
+Minimizing eq.~(\ref{eq:ks-etot}) with the constraint that the spin orbitals remain orthonormal, PZ obtains
+\begin{align}
+\dfrac{\delta}{\delta\psi_{a\sigma}} \left[
+T[n] + \int d\bs{r}v(\bs{r}) + \int d\bs{r}\int d\bs{r}' \dfrac{n(\bs{r}')}{\vert\bs{r}-\bs{r}'\vert} +
+\dfrac{\delta}{\delta n_{\sigma}} E_{xc}(n_{\up},n_{\dn})
+\right]
+\end{align}
 
 \subsubsection{Minimum Basis H$_2$}
-The only difference between the LDA and the RHF calculations lies in the ``exchange'' matrix
+In the PZ formulation of KS-DFT, the only difference between the LDA and the RHF calculations lies in the ``exchange'' matrix
 \begin{align}
 K_{\mu\nu}' = \left(\begin{array}{cc}
 0.38980073 & 0.25499926 \\
@@ -235,4 +282,7 @@ F_{\mu\nu} = \left(\begin{array}{cc}
 \end{array}\right).\label{eq:h2-lda-fock-r14}
 \end{align}
 The LDA electronic contribution is $-1.73929592$ ha.
+
 \subsubsection{The Band Gap Problem}
+
+\subsubsection{Beyond Local Density Approximation}

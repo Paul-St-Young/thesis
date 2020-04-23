@@ -11,6 +11,8 @@
 \usepackage{comment}
 \usepackage{listings}
 
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
 
 % try bibtex
@@ -23,6 +25,7 @@ sorting=none
 \addbibresource{sections/hcalcs}
 \addbibresource{sections/melth2}
 \addbibresource{sections/basic}
+\addbibresource{sections/books}
 \defbibheading{general}{\section{References}}
 \defbibheading{all}{\chapter{References}}
 \addbibresource{papers/licp/licp-ref.bib}
@@ -72,8 +75,8 @@ sorting=none
 %\include{sections/introduction}
 %
 \chapter{Methods}
-\input{sections/mean-field-theory}
-%\input{sections/monte-carlo}
+%\input{sections/mean-field-theory}
+\input{sections/monte-carlo}
 %\include{sections/slater-jastrow}
 %\include{sections/finite-size-correction}
 %

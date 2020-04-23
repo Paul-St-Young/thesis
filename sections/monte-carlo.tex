@@ -1,8 +1,79 @@
 \section{Classical Monte Carlo}
-\subsection{Markov Chain Monte Carlo (MCMC)}
-\subsection{Sample the Boltzmann Distribution $e^{-\beta H}$}
+The Monte Carlo methods mentioned in this thesis perform high-dimensional integrals by using random numbers to sample probability distributions. These distributions must be non-negative in the entire domain of ``states'' over which they are defined. In Classical mechanics, a ``state'' of N particles is labeled by the positions $\bs{r}\equiv\{\bs{r}_i\}$ and momenta $\bs{p}\equiv\{\bs{p}_i\}$ of the particles $i=1,\dots,N$. The Classical partition function for the canonical ensemble
+\begin{align} \label{eq:classical-nvt-part}
+Z \equiv \text{Tr}(e^{-H/k_BT}) = \dfrac{1}{N!h^{3N}} \int d\bs{r} d\bs{p} e^{-H(\bs{r}, \bs{p})/k_BT},
+\end{align}
+where $H(\bs{r}, \bs{p})$ is the hamiltonian, $k_B$ is the Boltzmann constant, $h$ is the Plank constant, and $T$ is temperature. For distinguishable non-relativistic particles with mass $m$, the kinetic contribution $\dfrac{p^2}{2m}$ to eq.~(\ref{eq:classical-nvt-part}) can be integrated analytically, giving
+\begin{align}\label{eq:classical-nvt-part-v}
+Z = \dfrac{1}{N!\Lambda^{3}} \int d\bs{r} e^{-V(\bs{r})/k_BT},
+\end{align}
+where $V(\bs{r})$ is the potential energy of the system and $\Lambda$ the de Broglie wavelength
+\begin{align}
+\Lambda = \left(
+\dfrac{h^2}{2\pi mk_BT}
+\right)^{1/2}.
+\end{align}
+
+All equilibrium statistical mechanics properties can be calculated from the partition function, so the entirety of Classical equilibrium statistical mechanics reduces to the problem of evaluating the 3N-dimensional integral in eq.~(\ref{eq:classical-nvt-part-v}) and its derivatives. Monte Carlo methods are ideally suited to evaluating high-dimensional integrals, because the amount of computation increases as a polynomial of the number of dimensions rather than as an exponential in a brute-force quadrature approach.
 
 \section{Quantum Monte Carlo}
+
+The quantum partition function for the canonical ensemble needs to trace over discrete N-particle eigenstates, rather than 2N 3-dimensional variables as in eq.~(\ref{eq:classical-nvt-part})
+\begin{align}
+Z=\text{Tr}\left(
+\sum\limits_{i=1}^{\infty} e^{-E_i/k_BT}\ket{\Psi_i}\bra{\Psi_i}
+\right)=\sum\limits_{i=1}^{\infty} e^{-E_i/k_BT},
+\end{align}
+where $E_i$ and $\ket{\Psi_i}$ are the eigenvalues and eigenstates of the hamiltonian. To make contact with Classical mechanics, we put the density matrix (DM) for distinguishable particles in position basis (first quantization)
+\begin{align}
+\rho_D(\bs{r}, \bs{r}'; \beta) \equiv \braket{r|e^{-\beta H}|r'},
+\end{align}
+where $\beta\equiv \frac{1}{k_B T}$. 
+Then the partition function becomes
+\begin{align} \label{eq:quantum-nvt-zd}
+Z = \int d\bs{r}d\bs{r}' \rho_D(\bs{r},\bs{r}';\beta).
+\end{align}
+
+For $N$ non-relativistic particles each having mass $m$, $\rho_D$ can be calculated as an integral over a discretized ``path'' of particle coordinates $\{\bs{r}_m\}$
+\begin{align} \label{eq:pimc-rhod}
+\rho_D(\bs{r}_0,\bs{r}_M;\beta) = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_1\dots d\bs{r}_{M-1}
+(4\pi\lambda\tau)^{-3NM/2}\exp\left(
+-\sum\limits_{m=1}^M \left[
+\dfrac{(\bs{r}_{m-1}-\bs{r}_m)^2}{4\lambda\tau} + \tau V(\bs{r}_m)
+\right]
+\right),
+\end{align}
+where ``quantumness'' $\lambda\equiv\dfrac{\hbar^2}{2m}$, imaginary time step $\tau=\beta/M$. The quantum partition function eq.~(\ref{eq:quantum-nvt-zd}) poses no essential difficult to a Monte Carlo method when compared with its Classical counterpart eq.~(\ref{eq:classical-nvt-part-v}). One simply has to integrate $M$ Classical systems, which are coupled by the spring-like kinetic energy term in eq.~(\ref{eq:quantum-nvt-zd}). 
+% a technical difficult for bosons -> permutation moves
+If the particles are identical bosons, then one has to consider particle permutations along the path to calculate the bosonic DM
+\begin{align}
+\rho_B(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta),
+\end{align}
+where $\mathcal{P}\bs{r}_M$ contains the same $N$ coordinates as $\bs{r}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and upto $N$-particle exchanges between adjacent time slices in the path. Thus, the state space of bosonic path integral is much larger than that of Boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduces, and exact simulations are possible via the Monte Carlo method.
+
+% sign problem for fermions
+An essential difficult arises when one applies the path integral formalism to fermions. Even- and odd-permutations contribute to the fermion DM with opposite signs
+\begin{align}
+\rho_F(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} (-1)^{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta).
+\end{align}
+$\rho_F$ is no longer positive definite and cannot be interpreted as a probability distribution to be sampled by Monte Carlo. The canonical work-around is to sample the absolute value of the fermionic DM and keep the sign as an observable. This leads to the well-known fermion sign problem, where the statistical error of the MC simulation increases exponentially with system size $N$ and inverse temperature $\beta$. At zero Kelvin, all permutations are equally likely and the average sign is exactly zero. The sign problem can be absent in a particular system, for example due to particle-hole symmetry in a half-filled Hubbard model, and can be alleviated at finite-temperature. No known polynomial-scaling algorithm can solve the sign problem at absolute zero temperature.
+
+% ground-state path integral (VPI) -> RMC
+% i.e. use a trial wavefunction as link action
+One can still make progress at zero temperature by using a trial wave function along with an uncontrolled approximation.
+
+% DMC
+When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
+
+\begin{comment}
+Minus natural logarithm of the DM is defined to be the ``action''
+\begin{align}
+S\equiv-\ln \rho,
+\end{align}
+and the exponent in eq.~(\ref{eq:pimc-rhod}) is the so-called primitive approximation to the action, which slowly becomes exact as time step goes to zero $\tau\rightarrow0$. Faster time-step convergence can be achieved using better approximation to the action.
+\end{comment}
+
+\begin{comment}
 \begin{table}[h]
 \centering
 \begin{tabular}{cccccc}
@@ -17,6 +88,7 @@ AFQMC & low & no & yes & second & ? \\
 \bottomrule
 \end{tabular}
 \end{table}
+\end{comment}
 
 \subsection{Path Integral Monte Carlo (PIMC)}
 Path integral Monte Carlo samples the thermal density matrix in particle positions space (first quantization), applicable to any temperature. Seamless transition from Classical to quantum regimes. Ergodicity problem in sampling closed paths. Sign problem for fermions.
