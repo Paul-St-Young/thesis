@@ -83,8 +83,19 @@ An essential difficult arises when one applies the path integral formalism to fe
 \begin{align}
 \rho_F(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} (-1)^{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta).
 \end{align}
-$\rho_F$ is no longer positive definite and cannot be interpreted as a probability distribution to be sampled by Monte Carlo. The canonical work-around is to sample the absolute value of the fermionic DM and keep the sign as an observable. This leads to the well-known fermion sign problem, where the statistical error of the MC simulation increases exponentially with system size $N$ and inverse temperature $\beta$. At zero Kelvin, all permutations are equally likely and the average sign is exactly zero. The sign problem can be absent in a particular system, for example due to particle-hole symmetry in a half-filled Hubbard model, and can be alleviated at finite-temperature. No known polynomial-scaling algorithm can solve the sign problem at absolute zero temperature.
-
+$\rho_F$ is no longer positive definite and cannot be interpreted as a probability distribution to be sampled by Monte Carlo. The canonical work-around is to sample the absolute value of the fermionic DM, which is the bosonic DM, and keep the sign as an observable. In this way, a fermionic observable is calculated as the ratio between a signful bosonic observable and the average bosonic sign
+\begin{align} \label{eq:pimc-of}
+\braket{\hat{O}}_F \equiv \dfrac{\Tr{\hat{O}e^{-\beta H}}_F}{\Tr{e^{-\beta H}}_F}=
+\dfrac{\Tr{\hat{O}\hat{\sigma}e^{-\beta H}}_B}{\Tr{\hat{\sigma} e^{-\beta H}}_B}=
+\dfrac{\Tr{\hat{O}\hat{\sigma}e^{-\beta H}}_B/Z_B}{\Tr{\hat{\sigma} e^{-\beta H}}_B/Z_B}=\dfrac{\braket{\hat{O}\hat{\sigma}}_B}{ \braket{\hat{\sigma}}_B }.
+\end{align}
+This leads to the well-known fermion sign problem, where the denominator in eq.~(\ref{eq:pimc-of}), the average bosonic sign, goes to zero exponentially fast as system size $N$ and inverse temperature $\beta$ are increased.
+To see this, consider the total free energies of $N$ bosons vs. $N$ fermions governed by the same hamiltonian $H$. The bosonic average sign can be written as an exponential of the free energy difference
+\begin{align} \label{eq:pimc-avg-sign}
+\braket{\hat{\sigma}}_B = \dfrac{Z_F}{Z_B} = \dfrac{e^{-\beta F_F}}{e^{-\beta F_B}} = e^{-\beta (F_F-F_B)}.
+\end{align}
+Since the total free energy is extensive, the exponent in eq.~(\ref{eq:pimc-avg-sign}) is proportional to $\beta N$.
+At zero Kelvin, all permutations are equally likely and the average sign is exactly zero. The sign problem can be absent in a particular system, for example due to particle-hole symmetry in a half-filled Hubbard model, and can be alleviated at finite-temperature. No known polynomial-scaling algorithm can solve the sign problem at absolute zero temperature.
 
 % DMC
 When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
