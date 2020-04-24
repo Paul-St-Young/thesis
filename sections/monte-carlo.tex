@@ -20,9 +20,9 @@ All equilibrium statistical mechanics properties can be calculated from the part
 
 The quantum partition function for the canonical ensemble needs to trace over discrete N-particle eigenstates, rather than 2N 3-dimensional variables as in eq.~(\ref{eq:classical-nvt-part})
 \begin{align}
-Z=\text{Tr}\left(
+Z\equiv \text{Tr}(e^{-H/k_BT})=\text{Tr}\left(
 \sum\limits_{i=1}^{\infty} e^{-E_i/k_BT}\ket{\Psi_i}\bra{\Psi_i}
-\right)=\sum\limits_{i=1}^{\infty} e^{-E_i/k_BT},
+\right),
 \end{align}
 where $E_i$ and $\ket{\Psi_i}$ are the eigenvalues and eigenstates of the hamiltonian. To make contact with Classical mechanics, we put the density matrix (DM) for distinguishable particles in position basis (first quantization)
 \begin{align}
@@ -31,9 +31,13 @@ where $E_i$ and $\ket{\Psi_i}$ are the eigenvalues and eigenstates of the hamilt
 where $\beta\equiv \frac{1}{k_B T}$. 
 Then the partition function becomes
 \begin{align} \label{eq:quantum-nvt-zd}
-Z = \int d\bs{r}d\bs{r}' \rho_D(\bs{r},\bs{r}';\beta).
+Z(\beta) = \int d\bs{r} \rho_D(\bs{r},\bs{r};\beta),
 \end{align}
-
+which can be exactly factorized into two pieces
+\begin{align}
+Z(\beta) = \int d\bs{r}d\bs{r}' \rho_D(\bs{r},\bs{r};\tau)\rho_D(\bs{r},\bs{r};\beta-\tau).
+\end{align}
+This factorization can be repeated until the temperature becomes high enough $\tau\rightarrow0$, that a semi-Classical approximation to $\rho_D(\bs{r},\bs{r}';\tau)$. To preserve translational symmetry along imaginary time, $\beta$ is typically broken down into $M$ equal-length pieces.
 For $N$ non-relativistic particles each having mass $m$, $\rho_D$ can be calculated as an integral over a discretized ``path'' of particle coordinates $\{\bs{r}_m\}$
 \begin{align} \label{eq:pimc-rhod}
 \rho_D(\bs{r}_0,\bs{r}_M;\beta) = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_1\dots d\bs{r}_{M-1}
@@ -43,13 +47,36 @@ For $N$ non-relativistic particles each having mass $m$, $\rho_D$ can be calcula
 \right]
 \right),
 \end{align}
-where ``quantumness'' $\lambda\equiv\dfrac{\hbar^2}{2m}$, imaginary time step $\tau=\beta/M$. The quantum partition function eq.~(\ref{eq:quantum-nvt-zd}) poses no essential difficult to a Monte Carlo method when compared with its Classical counterpart eq.~(\ref{eq:classical-nvt-part-v}). One simply has to integrate $M$ Classical systems, which are coupled by the spring-like kinetic energy term in eq.~(\ref{eq:quantum-nvt-zd}). 
+where ``quantumness'' $\lambda\equiv\dfrac{\hbar^2}{2m}$, imaginary time step $\tau=\beta/M$. Thus, eq.~(\ref{eq:quantum-nvt-zd}) becomes an integral of a product of high-temperature DMs over all closed paths
+\begin{align} \label{eq:quantum-nvt-zd-pi}
+Z=\lim\limits_{M\rightarrow\infty} \int d\bs{r} d\bs{r}_1\dots d\bs{r}_{M-1}
+\rho_D(\bs{r},\bs{r}_1;\tau)\rho_D(\bs{r}_1,\bs{r}_2;\tau)\dots\rho_D(\bs{r}_{M-1},\bs{r};\tau).
+\end{align}
+The integral needed to evaluate the quantum partition function eq.~(\ref{eq:quantum-nvt-zd-pi}) poses no essential difficult to a Monte Carlo method when compared with its Classical counterpart eq.~(\ref{eq:classical-nvt-part-v}). One simply has to integrate $M$ Classical systems, which are coupled by the spring-like kinetic energy term in eq.~(\ref{eq:quantum-nvt-zd}). 
 % a technical difficult for bosons -> permutation moves
-If the particles are identical bosons, then one has to consider particle permutations along the path to calculate the bosonic DM
+If the particles are identical bosons, then one has to consider particle permutations along the path% to calculate the bosonic DM
 \begin{align}
 \rho_B(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta),
 \end{align}
-where $\mathcal{P}\bs{r}_M$ contains the same $N$ coordinates as $\bs{r}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and upto $N$-particle exchanges between adjacent time slices in the path. Thus, the state space of bosonic path integral is much larger than that of Boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduces, and exact simulations are possible via the Monte Carlo method.
+where $\mathcal{P}\bs{r}_M$ contains the same $N$ coordinates as $\bs{r}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and upto $N$-particle exchanges between adjacent time slices along the path. Thus, the state space of bosonic path integral is much larger than that of Boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduced and exact simulations are possible via the Monte Carlo method.
+
+% ground-state path integral (VPI) -> RMC
+% i.e. use a trial wavefunction as link action
+The ground state is costly to study using the path integral formalism presented so far, because a large number of time slices have to be included to approximate $\beta\rightarrow0$. Fortunately, one can still efficiently study the ground state with the help of a trial wave function $\ket{\Psi_T}$, so long as it is non-negative. The ground-state ``partition'' function has only one term
+\begin{align}
+Z_0 = \lim\limits_{\beta\rightarrow\infty} \braket{\Psi_0|e^{-\beta H}|\Psi_0},
+\end{align}
+where $\ket{\Psi_0}$ is the ground state of the hamiltonian $H$.
+For sufficiently large $\beta$, any trial wave function not orthogonal to the ground state $\braket{\Psi_T|\Psi_0}\neq0$ will be projected to the ground state by $e^{-\beta H}$, so
+\begin{align}
+Z_0 = \lim\limits_{\beta\rightarrow\infty}\braket{\Psi_T|e^{-\beta H}|\Psi_T} \approx \braket{\Psi_T|e^{-\beta_e H}|\Psi_T},
+\end{align}
+for some $\beta_e$ large enough to be considered ``equilibrated''. Performing path discretization as before
+\begin{align} \label{eq:pimc-vpi-z0}
+Z_0 = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_{-M}\dots d\bs{r}_0\dots d\bs{r}_{M}
+\Psi_T^*(\bs{r}_{-M})\rho(\bs{r}_{-M},\bs{r}_{-M+1};\tau)\dots\rho(\bs{r}_{M-1},\bs{r}_M;\tau)\Psi_T(\bs{r}_M),
+\end{align}
+where $\tau=\beta_e/2M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good approximate to the ground state $\ket{\Psi_0}$. No permutation needs to be sampled because quantum statistics are encoded in the trial wave function. However, there is no longer translational symmetry along imaginary time. The 2M+1 time slices each sample a different probability distribution. Observables that do not commute with the hamiltonian are unbiased only when evaluated on the middle slice $\bs{r}_0$. The trial wave functions at the ends and the DMs in the middle of eq.~(\ref{eq:pimc-vpi-z0}) must all be non-negative for the integrand to be interpreted as a probability distribution for the paths $\{\bs{r}_{-M},\dots,\bs{r}_M\}$.
 
 % sign problem for fermions
 An essential difficult arises when one applies the path integral formalism to fermions. Even- and odd-permutations contribute to the fermion DM with opposite signs
@@ -58,9 +85,6 @@ An essential difficult arises when one applies the path integral formalism to fe
 \end{align}
 $\rho_F$ is no longer positive definite and cannot be interpreted as a probability distribution to be sampled by Monte Carlo. The canonical work-around is to sample the absolute value of the fermionic DM and keep the sign as an observable. This leads to the well-known fermion sign problem, where the statistical error of the MC simulation increases exponentially with system size $N$ and inverse temperature $\beta$. At zero Kelvin, all permutations are equally likely and the average sign is exactly zero. The sign problem can be absent in a particular system, for example due to particle-hole symmetry in a half-filled Hubbard model, and can be alleviated at finite-temperature. No known polynomial-scaling algorithm can solve the sign problem at absolute zero temperature.
 
-% ground-state path integral (VPI) -> RMC
-% i.e. use a trial wavefunction as link action
-One can still make progress at zero temperature by using a trial wave function along with an uncontrolled approximation.
 
 % DMC
 When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
