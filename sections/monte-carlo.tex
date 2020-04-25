@@ -18,6 +18,10 @@ All equilibrium statistical mechanics properties can be calculated from the part
 
 \section{Quantum Monte Carlo}
 
+%A typical introduction to quantum Monte Carlo (QMC) starts with the oldest and simplest method variation Monte Carlo (VMC), then work its way to diffusion Monte Carlo (DMC) and path integral Monte Carlo.
+I will start with the most general, albeit somewhat complicated, path integral Monte Carlo (PIMC) method, because it rigorously takes temperature into account and connects well with Classical Monte Carlo. Then, I will describe ground-state methods as limits and efficiency tricks to specialize the path integral method to the ground state. While contrary to the historic progression of these methods, I find this perspective helpful for relating the methods and visualizing them in their respective niches.
+
+\subsection{Path Integral Monte Carlo (PIMC)}
 The quantum partition function for the canonical ensemble needs to trace over discrete N-particle eigenstates, rather than 2N 3-dimensional variables as in eq.~(\ref{eq:classical-nvt-part})
 \begin{align}
 Z\equiv \text{Tr}(e^{-H/k_BT})=\text{Tr}\left(
@@ -52,14 +56,15 @@ where ``quantumness'' $\lambda\equiv\dfrac{\hbar^2}{2m}$, imaginary time step $\
 Z=\lim\limits_{M\rightarrow\infty} \int d\bs{r} d\bs{r}_1\dots d\bs{r}_{M-1}
 \rho_D(\bs{r},\bs{r}_1;\tau)\rho_D(\bs{r}_1,\bs{r}_2;\tau)\dots\rho_D(\bs{r}_{M-1},\bs{r};\tau).
 \end{align}
-The integral needed to evaluate the quantum partition function eq.~(\ref{eq:quantum-nvt-zd-pi}) poses no essential difficult to a Monte Carlo method when compared with its Classical counterpart eq.~(\ref{eq:classical-nvt-part-v}). One simply has to integrate $M$ Classical systems, which are coupled by the spring-like kinetic energy term in eq.~(\ref{eq:quantum-nvt-zd}). 
+For distinguishable particles, the integral needed to evaluate the quantum partition function eq.~(\ref{eq:quantum-nvt-zd-pi}) poses no essential difficult to a Monte Carlo method when compared with its Classical counterpart eq.~(\ref{eq:classical-nvt-part-v}). One simply has to integrate $M$ Classical systems, which are coupled by the spring-like kinetic energy term in eq.~(\ref{eq:quantum-nvt-zd}).
 % a technical difficult for bosons -> permutation moves
-If the particles are identical bosons, then one has to consider particle permutations along the path% to calculate the bosonic DM
+However, if the particles are identical bosons, then one has to consider particle permutations along the path% to calculate the bosonic DM
 \begin{align}
 \rho_B(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta),
 \end{align}
 where $\mathcal{P}\bs{r}_M$ contains the same $N$ coordinates as $\bs{r}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and upto $N$-particle exchanges between adjacent time slices along the path. Thus, the state space of bosonic path integral is much larger than that of Boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduced and exact simulations are possible via the Monte Carlo method.
 
+\subsection{Variation Path Integral a.k.a. Reptation Monte Carlo}
 % ground-state path integral (VPI) -> RMC
 % i.e. use a trial wavefunction as link action
 The ground state is costly to study using the path integral formalism presented so far, because a large number of time slices have to be included to approximate $\beta\rightarrow0$. Fortunately, one can still efficiently study the ground state with the help of a trial wave function $\ket{\Psi_T}$, so long as it is non-negative. The ground-state ``partition'' function has only one term
@@ -68,16 +73,56 @@ Z_0 = \lim\limits_{\beta\rightarrow\infty} \braket{\Psi_0|e^{-\beta H}|\Psi_0},
 \end{align}
 where $\ket{\Psi_0}$ is the ground state of the hamiltonian $H$.
 For sufficiently large $\beta$, any trial wave function not orthogonal to the ground state $\braket{\Psi_T|\Psi_0}\neq0$ will be projected to the ground state by $e^{-\beta H}$, so
-\begin{align}
-Z_0 = \lim\limits_{\beta\rightarrow\infty}\braket{\Psi_T|e^{-\beta H}|\Psi_T} \approx \braket{\Psi_T|e^{-\beta_e H}|\Psi_T},
+\begin{align} \label{eq:rmc-z0}
+Z_0 = \lim\limits_{\beta\rightarrow\infty}\braket{\Psi_T|e^{-\beta H}e^{-\beta H}|\Psi_T} \approx \braket{\Psi_T|e^{-\beta_e H}e^{-\beta_e H}|\Psi_T},
 \end{align}
 for some $\beta_e$ large enough to be considered ``equilibrated''. Performing path discretization as before
 \begin{align} \label{eq:pimc-vpi-z0}
 Z_0 = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_{-M}\dots d\bs{r}_0\dots d\bs{r}_{M}
 \Psi_T^*(\bs{r}_{-M})\rho(\bs{r}_{-M},\bs{r}_{-M+1};\tau)\dots\rho(\bs{r}_{M-1},\bs{r}_M;\tau)\Psi_T(\bs{r}_M),
 \end{align}
-where $\tau=\beta_e/2M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good approximate to the ground state $\ket{\Psi_0}$. No permutation needs to be sampled because quantum statistics are encoded in the trial wave function. However, there is no longer translational symmetry along imaginary time. The 2M+1 time slices each sample a different probability distribution. Observables that do not commute with the hamiltonian are unbiased only when evaluated on the middle slice $\bs{r}_0$. The trial wave functions at the ends and the DMs in the middle of eq.~(\ref{eq:pimc-vpi-z0}) must all be non-negative for the integrand to be interpreted as a probability distribution for the paths $\{\bs{r}_{-M},\dots,\bs{r}_M\}$.
+where $\tau=\beta_e/M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good approximate to the ground state $\ket{\Psi_0}$. In this sense, $\ket{\Psi_T}\bra{\Psi_T}$ plays the role of a low-temperature density matrix to quickly close a long path, although its temperature is ill-defined. No permutation needs to be sampled because quantum statistics are encoded in the trial wave function. However, translation symmetry along imaginary time is broken. The 2M+1 time slices each sample a different probability distribution. Observables that do not commute with the hamiltonian are unbiased only when evaluated on the middle slice $\bs{r}_0$. The trial wave functions at the ends and the DMs in the middle of eq.~(\ref{eq:pimc-vpi-z0}) must all be non-negative for the integrand to be interpreted as a probability distribution for the paths $\{\bs{r}_{-M},\dots,\bs{r}_M\}$. This path is, in general, open ($\bs{r}_{-M}\neq\bs{r}_M$) and can be visualized as a ``reptile''. This method was first name variational path integral (VPI), but then popularized as reptation Monte Carlo (RMC). While the RMC method can be efficient, it still requires all $M$ Classical systems to be stored in memory at one time and intelligent Monte Carlo moves to change the reptile without ergodicity problems. This makes RMC much more troublesome to implement than Classical Monte Carlo or molecular dynamics.
 
+\subsection{Diffusion Monte Carlo}
+The diffusion Monte Carlo (DMC) method can be viewed as a simplification of RMC.
+When calculating a ground-state observable using eq.~(\ref{eq:rmc-z0}), the pure estimator
+\begin{align} \label{eq:dmc-opure}
+\braket{\hat{O}}_p \equiv \braket{\Psi_T|e^{-\beta_e H}\hat{O}e^{-\beta_e H}|\Psi_T} \approx \braket{\Psi_0|\hat{O}|\Psi_0}
+\end{align}
+is an unbiased ground-state estimate of $\hat{O}$ whether it commutes with the hamiltonian or not. We can forgo the pure estimator for a simpler algorithm. Consider the mixed estimator
+\begin{align} \label{eq:dmc-omixed}
+\braket{\hat{O}}_m \equiv \braket{\Psi_T|\hat{O}e^{-\beta_e H}|\Psi_T}\approx\braket{\Psi_T|\hat{O}|\Psi_0}.
+\end{align}
+Equation~(\ref{eq:dmc-omixed}) has the advantage that the operator can be immediately applied to a trial wave function, which is known at the beginning of the calculation. Further, the $\Psi_0$ on the r.h.s. can be interpreted as being propagated from $\Psi_T$ using the imaginary-time propagator
+\begin{align}
+\hat{U}(t) = e^{-t H}.
+\end{align}
+For any $t>\beta_e$, the observable value eq.~(\ref{eq:dmc-omixed}) should be stationary. Thus, the DMC algorithm is similar to Classical molecular dynamics. One starts with a trial wave function $t=0$ and propagates it along imaginary time. After some initial equilibration period, the mixed estimator becomes stationary. One then run for ``longer'' and accumulate statistics.
+
+DMC is specific to non-relativistic particles, where $\nabla^2$ in the kinetic energy operator turns into a Green function for diffusion $e^{-t\nabla^2}$.
+
+When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
+
+\subsection{Variational Monte Carlo}
+Variational Monte Carlo (VMC) can be viewed as a limit of DMC at zero projection time. I define VMC as a Monte Carlo algorithm that calculates the expectation value of an operator using a fixed trial wave function $\Psi_T$
+\begin{align} \label{eq:vmc}
+\braket{\hat{O}} = \braket{\Psi_T|\hat{O}|\Psi_T}.
+\end{align}
+The optimization of any parameters in the trial wave function will be referred to as variational optimization.
+For a local observable, eq.~(\ref{eq:vmc}) becomes an integral over the $3N$-dimensional particle coordinates
+\begin{align}
+\braket{O} = \int d\bs{r} \dfrac{O(\bs{r})\vert\Psi_T(\bs{r})\vert^2}{\braket{\Psi_T|\Psi_T}},
+\end{align}
+which is easily evaluated by sampling $\bs{r}$ from the probability distribution
+\begin{align}
+P(\bs{r}) = \dfrac{\vert\Psi_T(\bs{r})\vert^2}{\braket{\Psi_T|\Psi_T}},
+\end{align}
+and accumulating $O(\bs{r})$. How does one sample a generic probability distribution?
+
+
+%Variational Monte Carlo is the bread and butter of QMC methods.
+
+\subsection{Fermion Sign Problem}
 % sign problem for fermions
 An essential difficult arises when one applies the path integral formalism to fermions. Even- and odd-permutations contribute to the fermion DM with opposite signs
 \begin{align}
@@ -95,10 +140,7 @@ To see this, consider the total free energies of $N$ bosons vs. $N$ fermions gov
 \braket{\hat{\sigma}}_B = \dfrac{Z_F}{Z_B} = \dfrac{e^{-\beta F_F}}{e^{-\beta F_B}} = e^{-\beta (F_F-F_B)}.
 \end{align}
 Since the total free energy is extensive, the exponent in eq.~(\ref{eq:pimc-avg-sign}) is proportional to $\beta N$.
-At zero Kelvin, all permutations are equally likely and the average sign is exactly zero. The sign problem can be absent in a particular system, for example due to particle-hole symmetry in a half-filled Hubbard model, and can be alleviated at finite-temperature. No known polynomial-scaling algorithm can solve the sign problem at absolute zero temperature.
-
-% DMC
-When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
+At zero Kelvin, all permutations are equally likely and the average sign is exactly zero. The sign problem can be absent in a particular system, for example due to particle-hole symmetry in a half-filled Hubbard model, and can be alleviated at finite-temperature. However, no known polynomial-scaling algorithm can solve the sign problem in general.
 
 \begin{comment}
 Minus natural logarithm of the DM is defined to be the ``action''
@@ -124,36 +166,3 @@ AFQMC & low & no & yes & second & ? \\
 \end{tabular}
 \end{table}
 \end{comment}
-
-\subsection{Path Integral Monte Carlo (PIMC)}
-Path integral Monte Carlo samples the thermal density matrix in particle positions space (first quantization), applicable to any temperature. Seamless transition from Classical to quantum regimes. Ergodicity problem in sampling closed paths. Sign problem for fermions.
-
-\begin{equation}
-\rho = e^{-\beta \ham}
-\end{equation}
-
-\begin{equation}
-Z = \text{Tr} \left( \rho \right)
-\end{equation}
-
-\begin{equation}
-\rho = \sum\limits_{i=0}^\infty \epsilon_i \ket{\Psi_i}\bra{\Psi_i} 
-\end{equation}
-
-\begin{equation}
-\rho_F(\mathcal{P}\bs{R}, \bs{R}'; \beta) = \sum\limits_{\mathcal{P}} (-1)^{\mathcal{P}} \rho_D (\mathcal{P}\bs{R}, \bs{R}'; \beta)
-\end{equation}
-
-\begin{equation}
-\dfrac{d\rho}{d\beta} = -\ham \rho
-\end{equation}
-
-\subsection{Diffusion Monte Carlo (DMC)}
-Diffusion Monte Carlo (DMC) uses an open path to sample ground-state wavefunction. The simulation and be interpreted as imaginary time evolution a trial wavefunction to project out the ground state. No ergodicity problem thanks to importance sampling using a physical guiding function. Sign problem for fermions remain in exact transient-estimate implementation.
-
-\subsection{Fixed-phase Diffusion Monte Carlo (FP-DMC)}
-Fixed-phase diffusion Monte Carlo uses a trial wavefunction to modify the Hamiltonian to resist change in the phase of the sampled path. No sign problem, but result is exact only if the phase of the trial wavefunction coincides with that of the exact ground-state wavefunction.
-
-\subsection{Variational Monte Carlo (VMC)}
-
-%\subsection{Auxiliary field quantum Monte Carlo (AFQMC)}
