@@ -118,12 +118,14 @@ While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behin
 f(\bs{r},t) \equiv \Psi_T^*(\bs{r}) e^{-t(H-E_T)}\Psi_T(\bs{r}) \underset{t\rightarrow\infty}{=} \Psi_T^*(\bs{r})\Psi_0(\bs{r}),
 \end{align}
 where a trial energy $E_T$ is introduced to control the potential term.
-Substitute $\Psi_T^{-1}f$ in place of $\Psi_0$ into the imaginary-time Schr\"odinger equation
+Substitute $\Psi_T^{-1}f$ in place of $\Psi$ into the imaginary-time Schr\"odinger equation $-\partial_t \Psi = H\Psi$, where $H=-\lambda\nabla^2+V$. Then
 \begin{align} \label{eq:dmc-dfdt}
 -\partial_t f = \Psi_T H \Psi_T^{-1} f \Rightarrow -\partial_t f=-\lambda\bs{\nabla}\cdot(\bs{\nabla}-\bs{v})f+(E_L-E_T)f,
 \end{align}
+% derivation is tricky! Remember \nabla\cdot(f\nabla\psi/\psi)
 where the local energy $E_L\equiv \dfrac{H\Psi_T}{\Psi_T}$ and the drift vector $\bs{v}\equiv2\Psi_T^{-1}\bs{\nabla}\Psi_T=\bs{\nabla}\ln\Psi_T^2$.
-After this ``important-sampling transformation'', the Green function for obtaining the mixed distribution $f$ has three contributing processes: diffusion, weighting, and drift. In practice, the mixed distribution is approximated by an ensemble of walkers
+After this ``important-sampling transformation'', the Green function eq.~(\ref{eq:dmc-green}) is now modified to have three contributing processes: diffusion, drift, and weighting. The initial diffusion process becomes a drift-diffusion process guided by the trial wave function. The weighting by the bare potential energy becomes weighting by the local energy. Given suitably designed trial wave function, the $E_L$ can be made continuous, even if the original potential $V$ contains divergences, e.g., the Coulomb interaction.
+In practice, the mixed distribution is approximated by an ensemble of walkers
 \begin{align}
 f(\bs{r},t) \approx \sum\limits_{i=1}^{N_w} \delta(\bs{r}-\bs{r}_i),
 \end{align}
