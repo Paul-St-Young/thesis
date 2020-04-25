@@ -45,13 +45,13 @@ This factorization can be repeated until the temperature becomes high enough ($\
 For $N$ non-relativistic particles each having mass $m$, $\rho_D$ can be calculated as an integral over a discretized ``path'' of particle coordinates $\{\bs{r}_m\}$
 \begin{align} \label{eq:pimc-rhod}
 \rho_D(\bs{r}_0,\bs{r}_M;\beta) = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_1\dots d\bs{r}_{M-1}
-(4\pi\lambda\tau)^{-3NM/2}\exp\left(
+(4\pi\lambda\tau)^{-dNM/2}\exp\left(
 -\sum\limits_{m=1}^M \left[
 \dfrac{(\bs{r}_{m-1}-\bs{r}_m)^2}{4\lambda\tau} + \tau V(\bs{r}_m)
 \right]
 \right),
 \end{align}
-where ``quantumness'' $\lambda\equiv\dfrac{\hbar^2}{2m}$, imaginary time step $\tau=\beta/M$. Thus, the partition function eq.~(\ref{eq:quantum-nvt-zd}) becomes an integral of a product of high-temperature DMs over all closed paths
+where ``quantumness'' $\lambda\equiv\dfrac{\hbar^2}{2m}$, imaginary time step $\tau=\beta/M$, $d$ is the number of spatial dimensions. Thus, the partition function eq.~(\ref{eq:quantum-nvt-zd}) becomes an integral of a product of high-temperature DMs over all closed paths
 \begin{align} \label{eq:quantum-nvt-zd-pi}
 Z=\lim\limits_{M\rightarrow\infty} \int d\bs{r} d\bs{r}_1\dots d\bs{r}_{M-1}
 \rho_D(\bs{r},\bs{r}_1;\tau)\rho_D(\bs{r}_1,\bs{r}_2;\tau)\dots\rho_D(\bs{r}_{M-1},\bs{r};\tau).
@@ -98,16 +98,37 @@ Equation~(\ref{eq:dmc-omixed}) has the advantage that the operator can be immedi
 \begin{align}
 \hat{U}(t) = e^{-t H}.
 \end{align}
-For any $t>\beta_e$, the observable value eq.~(\ref{eq:dmc-omixed}) should be stationary. Thus, the DMC algorithm is similar to Classical molecular dynamics. One starts with a trial wave function $t=0$ and propagates it along imaginary time. After some initial equilibration period, the mixed estimator becomes stationary. One then run for ``longer'' and accumulate statistics.
+For any $t>\beta_e$, the observable value eq.~(\ref{eq:dmc-omixed}) should be stationary. The algorithm as described so far is similar to Classical molecular dynamics. One starts with a trial wave function $t=0$ and propagates it along imaginary time. After some initial equilibration period, the mixed estimator becomes stationary. One then run for ``longer'' and accumulate statistics.
 
-DMC is specific to non-relativistic particles, where $\nabla^2$ in the kinetic energy operator turns into a Green function for diffusion $e^{-t\nabla^2}$. For identical particles having mass $m$
+For non-relativistic particles, where $\nabla^2$ in the kinetic energy operator turns into a Green function for diffusion $e^{-t\nabla^2}$. For identical particles having mass $m$, $\hat{U}$ in coordinate basis is the Green function for imaginary-time Schr\"odinger equation
 \begin{align}
-\hat{U}(t) = \exp\left(-t\lambda \nabla^2 -tV\right) = \lim\limits_{t\rightarrow 0}\exp\left(-t\lambda\nabla^2\right)\exp(-tV),
+\braket{\bs{r}|\hat{U}(t)|\bs{r}'} = G(\bs{r}\leftarrow\bs{r}';t) = \braket{\bs{r}|e^{-t(\lambda \nabla^2+V)}|\bs{r}'} = \lim\limits_{t\rightarrow 0}
+\left(
+(4\pi\lambda\tau)^{-dN/2}e^{-\dfrac{(\bs{r}-\bs{r}')^2}{4\lambda\tau}}
+\right)
+\left(
+e^{-tV(\bs{r})}
+\right). \label{eq:dmc-green}
 \end{align}
-and can be interpreted as the Green function for diffusion $\exp(-\lambda\nabla^2)$ and weight accumulation $\exp(-tV)$.
-The quantumness $\lambda=\frac{\hbar^2}{2m}$ of the particle determines its diffusion constant in imaginary time. Lighter particles diffuse ``faster''. One can start with any Classical system $\bs{r}$, apply the Green functions repeatedly to update $\bs{r}$, and eventually end up sampling the mixed distribution $\braket{\Psi_T|\Psi_0}$. However, the weight of this system goes to zero or infinity exponentially fast as the simulation progresses. In practice, it is more computationally efficient to use an ensemble $\{\bs{r}_i\}$ to represent the weight. Each system in the ensemble is known as a ``walker''.
+The two terms in eq.~(\ref{eq:dmc-green}) are the Green function for diffusion and weight accumulation.
+The quantumness $\lambda=\frac{\hbar^2}{2m}$ of the particle determines its diffusion constant in imaginary time. Lighter particles diffuse ``faster''. One can, in principle, start with any Classical system $\bs{r}$, apply the Green functions repeatedly to update $\bs{r}$, and eventually end up sampling the mixed distribution $\braket{\Psi_T|\Psi_0}$.
 
-When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
+While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the Classical system being propagated goes to zero or infinity exponentially fast as the simulation progresses and whenever two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
+\begin{align}
+f(\bs{r},t) \equiv \Psi_T^*(\bs{r}) e^{-t(H-E_T)}\Psi_T(\bs{r}) \underset{t\rightarrow\infty}{=} \Psi_T^*(\bs{r})\Psi_0(\bs{r}),
+\end{align}
+where a trial energy $E_T$ is introduced to control the potential term.
+Substitute $\Psi_T^{-1}f$ in place of $\Psi_0$ into the imaginary-time Schr\"odinger equation
+\begin{align} \label{eq:dmc-dfdt}
+-\partial_t f = \Psi_T H \Psi_T^{-1} f \Rightarrow -\partial_t f=-\lambda\bs{\nabla}\cdot(\bs{\nabla}-\bs{v})f+(E_L-E_T)f,
+\end{align}
+where the local energy $E_L\equiv \dfrac{H\Psi_T}{\Psi_T}$ and the drift vector $\bs{v}\equiv2\Psi_T^{-1}\bs{\nabla}\Psi_T=\bs{\nabla}\ln\Psi_T^2$.
+After this ``important-sampling transformation'', the Green function for obtaining the mixed distribution $f$ has three contributing processes: diffusion, weighting, and drift. In practice, the mixed distribution is approximated by an ensemble of walkers
+\begin{align}
+f(\bs{r},t) \approx \sum\limits_{i=1}^{N_w} \delta(\bs{r}-\bs{r}_i),
+\end{align}
+and the trial energy $E_T$ is adjusted every so often to keep the population of walkers from explosion and distinction. Equation~(\ref{eq:dmc-dfdt}) defines the DMC algorithm.
+%When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
 
 \subsection{Variational Monte Carlo}
 Variational Monte Carlo (VMC) can be viewed as a limit of DMC at zero projection time. I define VMC as a Monte Carlo algorithm that calculates the expectation value of an operator using a fixed trial wave function $\Psi_T$
@@ -128,7 +149,7 @@ and accumulating $O(\bs{r})$. How does one sample a generic probability distribu
 Suppose we wish an isotropic diffusion process governed by
 \begin{align} \label{eq:vmc-fokker-planck}
 \dfrac{\partial f}{\partial t} = \sum\limits_{i=1}^N \lambda\dfrac{\partial}{\partial\bs{x}_i}\left(
-\dfrac{\partial}{\partial\bs{x}_i} -\bs{F}_i(\bs{r})
+\dfrac{\partial}{\partial\bs{x}_i} -\bs{v}_i(\bs{r})
 \right)f,
 \end{align}
 to have $P(\bs{r})$ as its stationary distribution
@@ -137,21 +158,23 @@ to have $P(\bs{r})$ as its stationary distribution
 \end{align}
 We can set each term in sum of the r.h.s. of eq.~(\ref{eq:vmc-fokker-planck}) to vanish
 \begin{align}
-\nabla_i^2 f = f\bs{\nabla}_i\cdot\bs{F}_i + \bs{F}_i\cdot\bs{\nabla}_if,
+\nabla_i^2 f = f\bs{\nabla}_i\cdot\bs{v}_i + \bs{v}_i\cdot\bs{\nabla}_if,
 \end{align}
 which gives the drift vector
-\begin{align}
-\bs{F}_i = \dfrac{\bs{\nabla}_if}{f} = 2\dfrac{\bs{\nabla}_i\Psi_T}{\Psi_T}.
+\begin{align} \label{eq:vmc-drift}
+\bs{v}_i = \dfrac{\bs{\nabla}_if}{f} = 2\dfrac{\bs{\nabla}_i\Psi_T}{\Psi_T}.
 \end{align}
-The drift vectors $\bs{F}_i$ push a walker towards peaks of $P(\bs{r})$, making the sampling process more efficient than a generic Metropolis Monte Carlo move that does not use information from the trial wave function.
+The drift vector $\bs{v}$ pushes a walker towards peaks of $P(\bs{r})$, making the sampling process more efficient than a generic Metropolis Monte Carlo move that does not use information from the trial wave function.
 In fact, no accept/reject procedure is needed.
 The correct stationary distribution $P(\bs{r})$ will be reached so long as the time step is small enough to accurately approximate the Green function for each step.
 The Green function for the Fokker-Planck dynamics eq.~(\ref{eq:vmc-fokker-planck}) is a drift-diffusion operator. The Langevin equation needed to solve eq.~(\ref{eq:vmc-fokker-planck}) is
 \begin{align}
-\dfrac{\partial\bs{r}(t)}{\partial t} = \lambda \bs{F}(\bs{r}(t)) + \bs{\eta},
+\dfrac{\partial\bs{r}(t)}{\partial t} = \lambda \bs{v}(\bs{r}(t)) + \bs{\eta},
 \end{align}
 where $\bs{\eta}$ is a multidimensional Gaussian with a mean of zero and a variance of $2\lambda$. In this light, the VMC algorithm is more akin to molecular dynamics than Monte Carlo. However, the most efficient algorithm is obtained when the Fokker-Planck formulation is combined with Metropolis Monte Carlo. By introducing a metropolis accept/reject procedure at each step of the Fokker-Planck dynamics, the time step bias is eliminated because detailed balance is enforced to sample $\vert\Psi_T\vert^2$. Another way to view this is that Fokker-Planck dynamics is used to construct efficient drift-diffusion moves for an exact Monte Carlo method.
 
+Equation~(\ref{eq:vmc-fokker-planck}) defines an efficient implementation of the VMC algorithm. Interestingly, the governing equation of DMC eq.~(\ref{eq:dmc-dfdt}) without the branching term is identical to that of VMC eq.~(\ref{eq:vmc-fokker-planck}) given the drift vector eq.~(\ref{eq:vmc-drift}).
+This implies that the drift-diffusion term in the DMC Green function performs sampling only. The local energy term in eq.~(\ref{eq:dmc-dfdt}) is responsible for imaginary-time projection of the trial wave function.
 %Variational Monte Carlo is the bread and butter of QMC methods.
 
 \subsection{Fermion Sign Problem} \label{sec:fermion-sign-problem}
