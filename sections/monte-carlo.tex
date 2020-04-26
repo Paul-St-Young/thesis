@@ -3,7 +3,7 @@ The Monte Carlo methods mentioned in this thesis perform high-dimensional integr
 \begin{align} \label{eq:classical-nvt-part}
 Z \equiv \text{Tr}(e^{-H/k_BT}) = \dfrac{1}{N!h^{3N}} \int d\bs{r} d\bs{p} e^{-H(\bs{r}, \bs{p})/k_BT},
 \end{align}
-where $H(\bs{r}, \bs{p})$ is the hamiltonian, $k_B$ is the Boltzmann constant, $h$ is the Plank constant, and $T$ is temperature. For distinguishable non-relativistic particles with mass $m$, the kinetic contribution $\dfrac{p^2}{2m}$ to eq.~(\ref{eq:classical-nvt-part}) can be integrated analytically, giving
+where $H(\bs{r}, \bs{p})$ is the hamiltonian, $k_B$ is the Boltzmann constant, $h$ is the Plank constant, and $T$ is temperature. For $N$ distinguishable non-relativistic particles with mass $m$, the kinetic contribution $\dfrac{p^2}{2m}$ to eq.~(\ref{eq:classical-nvt-part}) can be integrated analytically, giving
 \begin{align}\label{eq:classical-nvt-part-v}
 Z = \dfrac{1}{N!\Lambda^{3}} \int d\bs{r} e^{-\beta V(\bs{r})},
 \end{align}
@@ -29,7 +29,7 @@ where $\pi(\bs{r})$ is the Bolzmann distribution
 \pi(\bs{r}) \equiv \dfrac{e^{-\beta V(\bs{r})}}{\int d\bs{r}' e^{-\beta V(\bs{r}')}} \propto e^{-\beta V(\bs{r})}.
 \end{align}
 How does one sample a generic probability distribution such as $\pi(\bs{r})$?
-An excellent answer was given in 1953, in a paper authored by N. Metropolis. The Metropolis algorithm was worked out by the Rosenbluths, who were supervised by the Tellers. It works by constructing a Markov chain having $\pi(\bs{r})$ as its stationary state. This is achieved by a rejection method that maintains detailed balance
+An excellent answer was given a 1953 paper authored by N. Metropolis. The Metropolis algorithm was worked out by the Rosenbluths, who were supervised by the Tellers. It works by constructing a Markov chain having $\pi(\bs{r})$ as its stationary state. This is achieved by a rejection method that maintains detailed balance
 \begin{align} \label{eq:detailed-balance}
 \pi(\bs{r})P(\bs{r}\rightarrow\bs{r}')=\pi(\bs{r}')P(\bs{r}'\rightarrow\bs{r}),
 \end{align}
@@ -43,8 +43,8 @@ A(\bs{r}\rightarrow\bs{r}') = \min\left(1, \dfrac{\pi(\bs{r})T(\bs{r}\rightarrow
 \end{align}
 Using eq.~(\ref{eq:metropolis-prob}) and (\ref{eq:metropolis-accept}) to prove eq.~(\ref{eq:detailed-balance}) is a good way to appreciate the design of this acceptance probability.
 
-One can prove that $\pi(\bs{r})$ is the unique stationary state of the Markov chain constructed by the Metropolis method so long as $P(\bs{r}\rightarrow\bs{r}')$ is ergodic. That is, there is finite probability of reaching any state $\bs{r}'$ starting from any state $\bs{r}$ using $P$.
-However, in practice, a simulation can be stuck in a meta-stable state for its entire duration, for example, due to a bad initial condition. Careful monitoring and checking of convergence is a must in any serious Monte Carlo simulation.
+Mathematically, $\pi(\bs{r})$ is the unique stationary state of the Markov chain constructed by the Metropolis method so long as $P(\bs{r}\rightarrow\bs{r}')$ is ergodic. That is, there is finite probability of reaching any state $\bs{r}'$ starting from any state $\bs{r}$ using $P$.
+In practice, however, a simulation can be stuck in a meta-stable state for its entire duration, for example, due to a bad initial condition. Careful monitoring and checking of convergence is a must in any serious Monte Carlo simulation.
 
 \section{Quantum Monte Carlo}
 
@@ -93,7 +93,7 @@ However, if the particles are identical bosons (fermions pose an essential probl
 \begin{align}
 \rho_B(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta),
 \end{align}
-where $\mathcal{P}\bs{r}_M$ contains the same $N$ coordinates as $\bs{r}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and upto $N$-particle exchanges between adjacent time slices along the path. Thus, the state space of bosonic path integral is much larger than that of Boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduced and exact simulations are possible via the Monte Carlo method.
+where $\mathcal{P}\bs{r}_M$ contains the same $N$ coordinates as $\bs{r}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and upto $N$-particle exchanges between adjacent time slices along the path. Thus, the state space of bosonic path integral is much larger than that of Boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduced and exact simulations are possible for both Bolzmannons and bosons via the Monte Carlo method.
 
 \subsection{Variation Path Integral a.k.a. Reptation Monte Carlo}
 % ground-state path integral (VPI) -> RMC
@@ -105,7 +105,7 @@ Z_0 = \lim\limits_{\beta\rightarrow\infty} \braket{\Psi_0|e^{-\beta H}|\Psi_0},
 where $\ket{\Psi_0}$ is the ground state of the hamiltonian $H$.
 For sufficiently large $\beta$, any trial wave function not orthogonal to the ground state $\braket{\Psi_T|\Psi_0}\neq0$ will be projected to the ground state by $e^{-\beta H}$, so
 \begin{align} \label{eq:rmc-z0}
-Z_0 = \lim\limits_{\beta\rightarrow\infty}\braket{\Psi_T|e^{-\beta H}e^{-\beta H}|\Psi_T} \approx \braket{\Psi_T|e^{-\beta_e H}e^{-\beta_e H}|\Psi_T},
+Z_0 = \lim\limits_{\beta\rightarrow\infty}\braket{\Psi_T|e^{-\frac{\beta}{2} H}e^{-\frac{\beta}{2} H}|\Psi_T} \approx \braket{\Psi_T|e^{-\beta_e H}e^{-\beta_e H}|\Psi_T},
 \end{align}
 for some $\beta_e$ large enough to be considered ``equilibrated''. Performing path discretization as before
 \begin{align} \label{eq:pimc-vpi-z0}
@@ -116,23 +116,24 @@ where $\tau=\beta_e/M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good appro
 
 \subsection{Diffusion Monte Carlo}
 The diffusion Monte Carlo (DMC) method can be viewed as a simplification of RMC.
-When calculating a ground-state observable using eq.~(\ref{eq:rmc-z0}), the pure estimator
+When calculating a ground-state observable using eq.~(\ref{eq:rmc-z0}), the \emph{pure estimator}
 \begin{align} \label{eq:dmc-opure}
 \braket{\hat{O}}_p \equiv \braket{\Psi_T|e^{-\beta_e H}\hat{O}e^{-\beta_e H}|\Psi_T} \approx \braket{\Psi_0|\hat{O}|\Psi_0}
 \end{align}
-is an unbiased ground-state estimate of $\hat{O}$ whether it commutes with the hamiltonian or not. We can forgo the pure estimator for a simpler algorithm. Consider the mixed estimator
+is an unbiased ground-state estimate of $\hat{O}$ whether it commutes with the hamiltonian or not. We can forgo the pure estimator for a simpler algorithm. Consider the \emph{mixed estimator}
 \begin{align} \label{eq:dmc-omixed}
 \braket{\hat{O}}_m \equiv \braket{\Psi_T|\hat{O}e^{-\beta_e H}|\Psi_T}\approx\braket{\Psi_T|\hat{O}|\Psi_0}.
 \end{align}
-Equation~(\ref{eq:dmc-omixed}) has the advantage that the operator can be immediately applied to a trial wave function, which is known at the beginning of the calculation. Further, the $\Psi_0$ on the r.h.s. can be interpreted as being propagated from $\Psi_T$ using the imaginary-time propagator
+Equation~(\ref{eq:dmc-omixed}) has the advantage that the operator can be immediately applied to a trial wave function, which is known at the beginning of the calculation. Further, the $\Psi_0$ on the r.h.s. can be interpreted as being propagated from $\Psi_T$ using the \emph{imaginary-time propagator}
 \begin{align}
 \hat{U}(t) = e^{-t H}.
 \end{align}
-For any $t>\beta_e$, the observable value eq.~(\ref{eq:dmc-omixed}) should be stationary. The algorithm as described so far is similar to Classical molecular dynamics. One starts with a trial wave function $t=0$ and propagates it along imaginary time. After some initial equilibration period, the mixed estimator becomes stationary. One then run for ``longer'' and accumulate statistics.
+For any $t>\beta_e$, the observable value eq.~(\ref{eq:dmc-omixed}) should be stationary. The algorithm as described so far is similar to Classical molecular dynamics. One starts with a trial wave function $t=0$ and propagates it along imaginary time. After some initial equilibration period, the mixed estimator becomes stationary. One then runs for ``longer'' and accumulate statistics.
 
-For non-relativistic particles, where $\nabla^2$ in the kinetic energy operator turns into a Green function for diffusion $e^{-t\nabla^2}$. For identical particles having mass $m$, $\hat{U}$ in coordinate basis is the Green function for imaginary-time Schr\"odinger equation
+%For non-relativistic particles, $\nabla^2$ in the kinetic energy operator turns into a Green function for diffusion $e^{-t\nabla^2}$.
+For identical non-relativistic particles having mass $m$, $\hat{U}$ in coordinate basis is the Green function for imaginary-time Schr\"odinger equation
 \begin{align}
-\braket{\bs{r}|\hat{U}(t)|\bs{r}'} = G(\bs{r}\leftarrow\bs{r}';t) = \braket{\bs{r}|e^{-t(\lambda \nabla^2+V)}|\bs{r}'} = \lim\limits_{t\rightarrow 0}
+G(\bs{r}\leftarrow\bs{r}';t) = \braket{\bs{r}|\hat{U}(t)|\bs{r}'} =  \braket{\bs{r}|e^{-t(\lambda \nabla^2+V)}|\bs{r}'} = \lim\limits_{t\rightarrow 0}
 \left(
 (4\pi\lambda\tau)^{-dN/2}e^{-\dfrac{(\bs{r}-\bs{r}')^2}{4\lambda\tau}}
 \right)
@@ -143,24 +144,26 @@ e^{-tV(\bs{r})}
 The two terms in eq.~(\ref{eq:dmc-green}) are the Green function for diffusion and weight accumulation.
 The quantumness $\lambda=\frac{\hbar^2}{2m}$ of the particle determines its diffusion constant in imaginary time. Lighter particles diffuse ``faster''. One can, in principle, start with any Classical system $\bs{r}$, apply the Green functions repeatedly to update $\bs{r}$, and eventually end up sampling the mixed distribution $\braket{\Psi_T|\Psi_0}$.
 
-While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the Classical system being propagated goes to zero or infinity exponentially fast as the simulation progresses and whenever two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
+While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the Classical system due to the potential term goes to zero or infinity exponentially fast as the simulation progresses and whenever two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
 \begin{align}
 f(\bs{r},t) \equiv \Psi_T^*(\bs{r}) e^{-t(H-E_T)}\Psi_T(\bs{r}) \underset{t\rightarrow\infty}{=} \Psi_T^*(\bs{r})\Psi_0(\bs{r}),
 \end{align}
 where a trial energy $E_T$ is introduced to control the potential term.
-Substitute $\Psi_T^{-1}f$ in place of $\Psi$ into the imaginary-time Schr\"odinger equation $-\partial_t \Psi = H\Psi$, where $H=-\lambda\nabla^2+V$. Then
+Substitute $\Psi_T^{-1}f$ in place of $\Psi$ into the imaginary-time Schr\"odinger equation $-\partial_t \Psi = H\Psi$, where $H=-\lambda\nabla^2+V$, we have
 \begin{align} \label{eq:dmc-dfdt}
 -\partial_t f = \Psi_T H \Psi_T^{-1} f \Rightarrow -\partial_t f=-\lambda\bs{\nabla}\cdot(\bs{\nabla}-\bs{v})f+(E_L-E_T)f,
 \end{align}
 % derivation is tricky! Remember \nabla\cdot(f\nabla\psi/\psi)
 where the local energy $E_L\equiv \dfrac{H\Psi_T}{\Psi_T}$ and the drift vector $\bs{v}\equiv2\Psi_T^{-1}\bs{\nabla}\Psi_T=\bs{\nabla}\ln\Psi_T^2$.
-After this ``important-sampling transformation'', the Green function eq.~(\ref{eq:dmc-green}) is now modified to have three contributing processes: diffusion, drift, and weighting. The initial diffusion process becomes a drift-diffusion process guided by the trial wave function. The weighting by the bare potential energy becomes weighting by the local energy. Given suitably designed trial wave function, the $E_L$ can be made continuous, even if the original potential $V$ contains divergences, e.g., the Coulomb interaction.
+After this ``important-sampling transformation'', the Green function eq.~(\ref{eq:dmc-green}) is now modified to have three contributing processes: diffusion, drift, and weighting. The initial diffusion process becomes a drift-diffusion process guided by the trial wave function. Further, the weighting by the bare potential energy becomes weighting by the local energy. Given suitably designed trial wave function, $E_L$ can be made continuous, even if the original potential $V$ contains divergences, e.g., the Coulomb interaction.
 In practice, the mixed distribution is approximated by an ensemble of walkers
 \begin{align}
 f(\bs{r},t) \approx \sum\limits_{i=1}^{N_w} \delta(\bs{r}-\bs{r}_i),
 \end{align}
-and the trial energy $E_T$ is adjusted every so often to keep the population of walkers from explosion and distinction. Equation~(\ref{eq:dmc-dfdt}) defines the DMC algorithm.
+and the trial energy $E_T$ is adjusted every so often to keep the population of walkers $N_w$ from explosion and distinction. Equation~(\ref{eq:dmc-dfdt}) defines the DMC algorithm.
 %When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
+
+For bosons and Bolzmannons, DMC gives the exact ground-state energy of $H$ in the limit of infinitesimal time step and uncontrolled walker population. Observables that do not commute with the hamiltonian will suffer a mixed-estimator error, which diminishes as the trial wave function is improved to have more overlap with the ground state.
 
 \subsection{Variational Monte Carlo}
 Variational Monte Carlo (VMC) can be viewed as a limit of DMC at zero projection time. I define VMC as a Monte Carlo algorithm that calculates the expectation value of an operator using a fixed trial wave function $\Psi_T$
@@ -221,7 +224,7 @@ $\rho_F$ is no longer positive definite and cannot be interpreted as a probabili
 \dfrac{\Tr{\hat{O}\hat{\sigma}e^{-\beta H}}_B}{\Tr{\hat{\sigma} e^{-\beta H}}_B}=
 \dfrac{\Tr{\hat{O}\hat{\sigma}e^{-\beta H}}_B/Z_B}{\Tr{\hat{\sigma} e^{-\beta H}}_B/Z_B}=\dfrac{\braket{\hat{O}\hat{\sigma}}_B}{ \braket{\hat{\sigma}}_B }.
 \end{align}
-This leads to the well-known fermion sign problem, where the denominator in eq.~(\ref{eq:pimc-of}), the average bosonic sign, goes to zero exponentially fast as system size $N$ and inverse temperature $\beta$ are increased.
+While mathematically exact, this leads to the well-known fermion sign problem, where the denominator in eq.~(\ref{eq:pimc-of}), the average bosonic sign, goes to zero exponentially fast as system size $N$ and inverse temperature $\beta$ are increased.
 To see this, consider the total free energies of $N$ bosons vs. $N$ fermions governed by the same hamiltonian $H$. The bosonic average sign can be written as an exponential of the free energy difference
 \begin{align} \label{eq:pimc-avg-sign}
 \braket{\hat{\sigma}}_B = \dfrac{Z_F}{Z_B} = \dfrac{e^{-\beta F_F}}{e^{-\beta F_B}} = e^{-\beta (F_F-F_B)}.
