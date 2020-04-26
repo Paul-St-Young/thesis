@@ -5,9 +5,9 @@ Z \equiv \text{Tr}(e^{-H/k_BT}) = \dfrac{1}{N!h^{3N}} \int d\bs{r} d\bs{p} e^{-H
 \end{align}
 where $H(\bs{r}, \bs{p})$ is the hamiltonian, $k_B$ is the Boltzmann constant, $h$ is the Plank constant, and $T$ is temperature. For distinguishable non-relativistic particles with mass $m$, the kinetic contribution $\dfrac{p^2}{2m}$ to eq.~(\ref{eq:classical-nvt-part}) can be integrated analytically, giving
 \begin{align}\label{eq:classical-nvt-part-v}
-Z = \dfrac{1}{N!\Lambda^{3}} \int d\bs{r} e^{-V(\bs{r})/k_BT},
+Z = \dfrac{1}{N!\Lambda^{3}} \int d\bs{r} e^{-\beta V(\bs{r})},
 \end{align}
-where $V(\bs{r})$ is the potential energy of the system and $\Lambda$ the de Broglie wavelength
+where $V(\bs{r})$ is the potential energy of the system, $\beta\equiv k_BT$, and $\Lambda$ the de Broglie wavelength
 \begin{align} \label{eq:debroglie}
 \Lambda = \left(
 \dfrac{h^2}{2\pi mk_BT}
@@ -15,6 +15,36 @@ where $V(\bs{r})$ is the potential energy of the system and $\Lambda$ the de Bro
 \end{align}
 
 All equilibrium statistical mechanics properties can be calculated from the partition function, so the entirety of Classical equilibrium statistical mechanics reduces to the problem of evaluating the 3N-dimensional integral in eq.~(\ref{eq:classical-nvt-part-v}) and its derivatives. Monte Carlo methods are ideally suited to evaluating high-dimensional integrals, because the amount of computation increases as a polynomial of the number of dimensions rather than as an exponential in a brute-force quadrature approach.
+
+To calculate a property in the canonical ensemble, ones takes the trace
+\begin{align}
+\braket{O} = \dfrac{\Tr{Oe^{-\beta H}}}{\Tr{e^{-\beta H}}},
+\end{align}
+where $\braket{}$ denotes ensemble average. Limiting to local observables that can be evaluated on the particle coordinates, e.g., total potential energy $V(\bs{r})$ and pair correlation function $g(r)$
+\begin{align}
+\braket{O} = \int d\bs{r} \dfrac{e^{-\beta V(\bs{r})}}{\int d\bs{r}' e^{-\beta V(\bs{r}')}} O(\bs{r}) = \int d\bs{r} \pi(\bs{r})O(\bs{r}),
+\end{align}
+where $\pi(\bs{r})$ is the Bolzmann distribution
+\begin{align}
+\pi(\bs{r}) \equiv \dfrac{e^{-\beta V(\bs{r})}}{\int d\bs{r}' e^{-\beta V(\bs{r}')}} \propto e^{-\beta V(\bs{r})}.
+\end{align}
+How does one sample a generic probability distribution such as $\pi(\bs{r})$?
+An excellent answer was given in 1953, in a paper authored by N. Metropolis. The Metropolis algorithm was worked out by the Rosenbluths, who were supervised by the Tellers. It works by constructing a Markov chain having $\pi(\bs{r})$ as its stationary state. This is achieved by a rejection method that maintains detailed balance
+\begin{align} \label{eq:detailed-balance}
+\pi(\bs{r})P(\bs{r}\rightarrow\bs{r}')=\pi(\bs{r}')P(\bs{r}'\rightarrow\bs{r}),
+\end{align}
+where $P(\bs{r}\rightarrow\bs{r}')$ is the Markov chain transition probability from state $\bs{r}$ to $\bs{r}'$. The Metropolis algorithm breaks $P$ into two steps: proposal and acceptance
+\begin{align} \label{eq:metropolis-prob}
+P(\bs{r}\rightarrow\bs{r}') = T(\bs{r}\rightarrow\bs{r}')A(\bs{r}\rightarrow\bs{r}'),
+\end{align}
+with the following acceptance/rejection criteria: For any transition probability used to propose the state change $T(\bs{r}\rightarrow\bs{r}')$, accept the change with probability
+\begin{align} \label{eq:metropolis-accept}
+A(\bs{r}\rightarrow\bs{r}') = \min\left(1, \dfrac{\pi(\bs{r})T(\bs{r}\rightarrow\bs{r}')}{\pi(\bs{r}')T(\bs{r}'\rightarrow\bs{r})}\right).
+\end{align}
+Using eq.~(\ref{eq:metropolis-prob}) and (\ref{eq:metropolis-accept}) to prove eq.~(\ref{eq:detailed-balance}) is a good way to appreciate the design of this acceptance probability.
+
+One can prove that $\pi(\bs{r})$ is the unique stationary state of the Markov chain constructed by the Metropolis method so long as $P(\bs{r}\rightarrow\bs{r}')$ is ergodic. That is, there is finite probability of reaching any state $\bs{r}'$ starting from any state $\bs{r}$ using $P$.
+However, in practice, a simulation can be stuck in a meta-stable state for its entire duration, for example, due to a bad initial condition. Careful monitoring and checking of convergence is a must in any serious Monte Carlo simulation.
 
 \section{Quantum Monte Carlo}
 
