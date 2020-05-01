@@ -1,9 +1,9 @@
 \section{Classical Monte Carlo}
-The Monte Carlo methods mentioned in this thesis perform high-dimensional integrals by using random numbers to sample probability distributions. These distributions must be non-negative in the entire domain of ``states'' over which they are defined. In Classical mechanics, a ``state'' of N particles is labeled by the positions $\bs{r}\equiv\{\bs{r}_i\}$ and momenta $\bs{p}\equiv\{\bs{p}_i\}$ of the particles $i=1,\dots,N$. The Classical partition function for the canonical ensemble
+The Monte Carlo methods mentioned in this thesis perform high-dimensional integrals by using random numbers to sample probability distributions. These distributions must be non-negative in the entire domain of ``states'' over which they are defined. In classical mechanics, a ``state'' of N particles is labeled by the positions $\bs{r}\equiv\{\bs{r}_i\}$ and momenta $\bs{p}\equiv\{\bs{p}_i\}$ of the particles $i=1,\dots,N$. The classical partition function for the canonical ensemble
 \begin{align} \label{eq:classical-nvt-part}
 Z \equiv \text{Tr}(e^{-H/k_BT}) = \dfrac{1}{N!h^{3N}} \int d\bs{r} d\bs{p} e^{-H(\bs{r}, \bs{p})/k_BT},
 \end{align}
-where $H(\bs{r}, \bs{p})$ is the hamiltonian, $k_B$ is the Boltzmann constant, $h$ is the Plank constant, and $T$ is temperature. For $N$ distinguishable non-relativistic particles with mass $m$, the kinetic contribution $\dfrac{p^2}{2m}$ to eq.~(\ref{eq:classical-nvt-part}) can be integrated analytically, giving
+where $H(\bs{r}, \bs{p})$ is the hamiltonian, $k_B$ is the Boltzmann constant, $h$ is the Planck constant, and $T$ is temperature. For $N$ distinguishable non-relativistic particles with mass $m$, the kinetic contribution $\dfrac{p^2}{2m}$ to eq.~(\ref{eq:classical-nvt-part}) can be integrated analytically, giving
 \begin{align}\label{eq:classical-nvt-part-v}
 Z = \dfrac{1}{N!\Lambda^{3}} \int d\bs{r} e^{-\beta V(\bs{r})},
 \end{align}
@@ -14,22 +14,26 @@ where $V(\bs{r})$ is the potential energy of the system, $\beta\equiv k_BT$, and
 \right)^{1/2}.
 \end{align}
 
-All equilibrium statistical mechanics properties can be calculated from the partition function, so the entirety of Classical equilibrium statistical mechanics reduces to the problem of evaluating the 3N-dimensional integral in eq.~(\ref{eq:classical-nvt-part-v}) and its derivatives. Monte Carlo methods are ideally suited to evaluating high-dimensional integrals, because the amount of computation does not increase as an exponential in the number of dimensions as in a brute-force quadrature approach.
+All equilibrium statistical mechanics properties can be calculated from the partition function, so the entirety of classical equilibrium statistical mechanics reduces to the problem of evaluating the 3N-dimensional integral in eq.~(\ref{eq:classical-nvt-part-v}) and its derivatives. Monte Carlo methods are ideally suited to evaluating high-dimensional integrals, because the amount of computation does not increase as an exponential in the number of dimensions as in a brute-force quadrature approach.
 
 To calculate a property in the canonical ensemble, ones takes the trace
 \begin{align}
 \braket{O} = \dfrac{\Tr{Oe^{-\beta H}}}{\Tr{e^{-\beta H}}},
 \end{align}
 where $\braket{}$ denotes ensemble average. Limiting to local observables that can be evaluated on the particle coordinates, e.g., total potential energy $V(\bs{r})$ and pair correlation function $g(r)$
-\begin{align}
+\begin{align} \label{eq:int-obs}
 \braket{O} = \int d\bs{r} \dfrac{e^{-\beta V(\bs{r})}}{\int d\bs{r}' e^{-\beta V(\bs{r}')}} O(\bs{r}) = \int d\bs{r} \pi(\bs{r})O(\bs{r}),
 \end{align}
 where $\pi(\bs{r})$ is the Bolzmann distribution
 \begin{align}
 \pi(\bs{r}) \equiv \dfrac{e^{-\beta V(\bs{r})}}{\int d\bs{r}' e^{-\beta V(\bs{r}')}} \propto e^{-\beta V(\bs{r})}.
 \end{align}
+Monte Carlo estimation of $\braket{O}$ works by sampling particle configurations from the Bolzmann distribution $\pi(\bs{r})$ and accumulating the average $O(\bs{r})$
+\begin{align}
+\braket{O} = \lim\limits_{N_s\rightarrow\infty} \frac{1}{N_s} \sum\limits_{i=1}^{N_s} O(\bs{r}_i).
+\end{align}
 How does one sample a generic probability distribution such as $\pi(\bs{r})$?
-An excellent answer was given a 1953 paper authored by Metropolis~\cite{Metropolis1953}. The Metropolis algorithm, worked out by the Rosenbluths supervised by the Tellers, works by constructing a Markov chain having $\pi(\bs{r})$ as its stationary state. This is achieved by a rejection method that maintains detailed balance
+An excellent answer was given a 1953 paper authored by Metropolis \textit{et al.}~\cite{Metropolis1953}. The Metropolis algorithm, worked out by the Rosenbluths supervised by the Tellers, works by constructing a Markov chain having $\pi(\bs{r})$ as its stationary state. This is achieved by a rejection method that maintains detailed balance
 \begin{align} \label{eq:detailed-balance}
 \pi(\bs{r})P(\bs{r}\rightarrow\bs{r}')=\pi(\bs{r}')P(\bs{r}'\rightarrow\bs{r}),
 \end{align}
@@ -39,7 +43,7 @@ P(\bs{r}\rightarrow\bs{r}') = T(\bs{r}\rightarrow\bs{r}')A(\bs{r}\rightarrow\bs{
 \end{align}
 with the following accept/reject criteria: For any transition probability used to propose the state change $T(\bs{r}\rightarrow\bs{r}')$, accept the change with probability
 \begin{align} \label{eq:metropolis-accept}
-A(\bs{r}\rightarrow\bs{r}') = \min\left(1, \dfrac{\pi(\bs{r})T(\bs{r}\rightarrow\bs{r}')}{\pi(\bs{r}')T(\bs{r}'\rightarrow\bs{r})}\right).
+A(\bs{r}\rightarrow\bs{r}') = \min\left(1, \dfrac{\pi(\bs{r}')T(\bs{r}'\rightarrow\bs{r})}{\pi(\bs{r})T(\bs{r}\rightarrow\bs{r}')}\right).
 \end{align}
 Using eq.~(\ref{eq:metropolis-prob}) and (\ref{eq:metropolis-accept}) to prove eq.~(\ref{eq:detailed-balance}) is a good way to appreciate the design of this acceptance probability.
 
@@ -49,7 +53,7 @@ In practice, however, a simulation can be stuck in a meta-stable state for its e
 \section{Quantum Monte Carlo}
 
 %A typical introduction to quantum Monte Carlo (QMC) starts with the oldest and simplest method variation Monte Carlo (VMC), then work its way to diffusion Monte Carlo (DMC) and path integral Monte Carlo.
-I will start with the general, albeit somewhat complicated, path integral Monte Carlo (PIMC) method, because it rigorously takes temperature into account and connects well with Classical Monte Carlo. Then, I will describe ground-state methods as limits and efficiency tricks to specialize the path integral method to the ground state. While contrary to the historic progression of these methods, I find this perspective helpful for relating the methods and visualizing them in their respective niches.
+I will start with the general, albeit somewhat complicated, path integral Monte Carlo (PIMC) method, because it rigorously takes temperature into account and connects well with classical Monte Carlo. Then, I will describe ground-state methods as limits and efficiency tricks to specialize the path integral method to the ground state. While contrary to the historic progression of these methods, I find this perspective helpful for relating the methods and visualizing them in their respective niches.
 
 \subsection{Path Integral Monte Carlo (PIMC)}
 The quantum partition function for the canonical ensemble needs to trace over discrete N-particle eigenstates, rather than 2N 3-dimensional variables as in eq.~(\ref{eq:classical-nvt-part})
@@ -58,7 +62,7 @@ Z\equiv \text{Tr}(e^{-H/k_BT})=\text{Tr}\left(
 \sum\limits_{i=1}^{\infty} e^{-E_i/k_BT}\ket{\Psi_i}\bra{\Psi_i}
 \right),
 \end{align}
-where $E_i$ and $\ket{\Psi_i}$ are the eigenvalues and eigenstates of the hamiltonian $H$. To make contact with Classical mechanics, we put the density matrix (DM) for distinguishable particles in position basis (first quantization)
+where $E_i$ and $\ket{\Psi_i}$ are the eigenvalues and eigenstates of the hamiltonian $H$. To make contact with classical mechanics, we put the density matrix (DM) for distinguishable particles in position basis (first quantization)
 \begin{align}
 \rho_D(\bs{r}, \bs{r}'; \beta) \equiv \braket{r|e^{-\beta H}|r'},
 \end{align}
@@ -71,7 +75,7 @@ which can be exactly factorized into two pieces
 \begin{align}
 Z(\beta) = \int d\bs{r}d\bs{r}' \rho_D(\bs{r},\bs{r};\tau)\rho_D(\bs{r},\bs{r};\beta-\tau).
 \end{align}
-This factorization can be repeated until the temperature becomes high enough ($\tau\rightarrow0$) that a semi-Classical approximation to $\rho_D(\bs{r},\bs{r}';\tau)$ is accurate. Given translation symmetry along imaginary time, $\beta$ is typically broken down into $M$ equal-length pieces, i.e., $\tau=\beta/M$.
+This factorization can be repeated until the temperature becomes high enough ($\tau\rightarrow0$) that a semi-classical approximation to $\rho_D(\bs{r},\bs{r}';\tau)$ is accurate. Given translation symmetry along imaginary time, $\beta$ is typically broken down into $M$ equal-length pieces, i.e., $\tau=\beta/M$.
 For $N$ non-relativistic particles each having mass $m$, $\rho_D$ can be calculated as an integral over a discretized ``path'' of particle coordinates $\{\bs{r}_m\}$
 \begin{align} \label{eq:pimc-rhod}
 \rho_D(\bs{r}_0,\bs{r}_M;\beta) = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_1\dots d\bs{r}_{M-1}
@@ -87,13 +91,13 @@ Z=\lim\limits_{M\rightarrow\infty} \int d\bs{r} d\bs{r}_1\dots d\bs{r}_{M-1}
 \rho_D(\bs{r},\bs{r}_1;\tau)\rho_D(\bs{r}_1,\bs{r}_2;\tau)\dots\rho_D(\bs{r}_{M-1},\bs{r};\tau).
 \end{align}
 Each closed path can be visualized as a collection of ring polymers, one for each particle. The linear extension of a ring polymer is proportional to the particle's de Broglie wavelength $\Lambda=\sqrt{4\pi\lambda\beta}$ eq.~(\ref{eq:debroglie}).
-For distinguishable particles, the integral needed to evaluate the quantum partition function eq.~(\ref{eq:quantum-nvt-zd-pi}) poses no essential difficult to a Monte Carlo method when compared with its Classical counterpart eq.~(\ref{eq:classical-nvt-part-v}). One simply has to integrate $M$ Classical systems, which are coupled by the spring-like kinetic energy term in eq.~(\ref{eq:quantum-nvt-zd}).
+For distinguishable particles, the integral needed to evaluate the quantum partition function eq.~(\ref{eq:quantum-nvt-zd-pi}) poses no essential difficulty to a Monte Carlo method when compared with its classical counterpart eq.~(\ref{eq:classical-nvt-part-v}). One simply has to integrate $M$ classical systems, which are coupled by the spring-like kinetic energy term in eq.~(\ref{eq:quantum-nvt-zd}).
 % a technical difficult for bosons -> permutation moves
 However, if the particles are identical bosons (fermions pose an essential problem, see Sec.~\ref{sec:fermion-sign-problem}), then one has to consider particle permutations along the path
 \begin{align}
 \rho_B(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta),
 \end{align}
-where $\mathcal{P}\bs{r}_M$ contains the same $N$ coordinates as $\bs{r}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and upto $N$-particle exchanges between adjacent time slices along the path. Thus, the state space of bosonic path integral is much larger than that of Boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduced and exact simulations are possible for both Bolzmannons and bosons via the Monte Carlo method.
+where $\mathcal{P}\bs{r}_M$ contains the same $N$ coordinates as $\bs{r}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and up to $N$-particle exchanges between adjacent time slices along the path. Thus, the state space of bosonic path integral is much larger than that of boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduced and exact simulations are possible for both bolzmannons and bosons via the Monte Carlo method.
 
 \subsection{Variation Path Integral a.k.a. Reptation Monte Carlo}
 % ground-state path integral (VPI) -> RMC
@@ -112,7 +116,7 @@ for some $\beta_e$ large enough to be considered ``equilibrated''. Performing pa
 Z_0 = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_{-M}\dots d\bs{r}_0\dots d\bs{r}_{M}
 \Psi_T^*(\bs{r}_{-M})\rho(\bs{r}_{-M},\bs{r}_{-M+1};\tau)\dots\rho(\bs{r}_{M-1},\bs{r}_M;\tau)\Psi_T(\bs{r}_M),
 \end{align}
-where $\tau=\beta_e/M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good approximate to the ground state $\ket{\Psi_0}$. In this sense, $\ket{\Psi_T}\bra{\Psi_T}$ plays the role of a low-temperature density matrix to quickly close a long path, although its temperature is ill-defined. No permutation needs to be sampled because quantum statistics are encoded in the trial wave function. However, translation symmetry along imaginary time is broken. The 2M+1 time slices each sample a different probability distribution. Observables that do not commute with the hamiltonian are unbiased only when evaluated on the middle slice $\bs{r}_0$. The trial wave functions at the ends and the DMs in the middle of eq.~(\ref{eq:pimc-vpi-z0}) must all be non-negative for the integrand to be interpreted as a probability distribution for the path $\{\bs{r}_{-M},\dots,\bs{r}_M\}$. This path is, in general, open ($\bs{r}_{-M}\neq\bs{r}_M$) and can be visualized as a ``reptile''. This method was first mentioned as variational path integral (VPI)~\cite{Ceperley1995}, but later popularized as reptation Monte Carlo (RMC)~\cite{Baroni1999}. While the RMC method can be efficient, it still requires all $M$ Classical systems to be stored in memory at one time and intelligent Monte Carlo moves to change the reptile without ergodicity problems. This makes RMC much more troublesome to implement than Classical Monte Carlo or molecular dynamics.
+where $\tau=\beta_e/M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good approximate to the ground state $\ket{\Psi_0}$. In this sense, $\ket{\Psi_T}\bra{\Psi_T}$ plays the role of a low-temperature density matrix to quickly close a long path, although its temperature is ill-defined. No permutation needs to be sampled because quantum statistics are encoded in the trial wave function. However, translation symmetry along imaginary time is broken. The 2M+1 time slices each sample a different probability distribution. Observables that do not commute with the hamiltonian are unbiased only when evaluated on the middle slice $\bs{r}_0$. The trial wave functions at the ends and the DMs in the middle of eq.~(\ref{eq:pimc-vpi-z0}) must all be non-negative for the integrand to be interpreted as a probability distribution for the path $\{\bs{r}_{-M},\dots,\bs{r}_M\}$. This path is, in general, open ($\bs{r}_{-M}\neq\bs{r}_M$) and can be visualized as a ``reptile''. This method was first mentioned as variational path integral (VPI)~\cite{Ceperley1995}, but later popularized as reptation Monte Carlo (RMC)~\cite{Baroni1999}. While the RMC method can be efficient, it still requires all $M$ classical systems to be stored in memory at one time and intelligent Monte Carlo moves to change the reptile without ergodicity problems. This makes RMC much more troublesome to implement than classical Monte Carlo or molecular dynamics.
 
 \subsection{Diffusion Monte Carlo}
 The diffusion Monte Carlo (DMC) method can be viewed as a simplification of RMC.
@@ -128,7 +132,7 @@ Equation~(\ref{eq:dmc-omixed}) has the advantage that the operator can be immedi
 \begin{align}
 \hat{U}(t) = e^{-t H}.
 \end{align}
-For any $t>\beta_e$, the observable value eq.~(\ref{eq:dmc-omixed}) should be stationary. The algorithm as described so far is similar to Classical molecular dynamics. One starts with a trial wave function at $t=0$ and propagates it along imaginary time. After some initial equilibration period, the mixed estimator fluctuates around some stationary mean. One then runs for ``longer'' and accumulate statistics.
+For any $t>\beta_e$, the observable value eq.~(\ref{eq:dmc-omixed}) should be stationary. The algorithm as described so far is similar to classical molecular dynamics. One starts with a trial wave function at $t=0$ and propagates it along imaginary time. After some initial equilibration period, the mixed estimator fluctuates around some stationary mean. One then runs for ``longer'' and accumulate statistics.
 
 %For non-relativistic particles, $\nabla^2$ in the kinetic energy operator turns into a Green function for diffusion $e^{-t\nabla^2}$.
 For identical non-relativistic particles having mass $m$, $\hat{U}$ in coordinate basis is the Green function for imaginary-time Schr\"odinger equation
@@ -142,29 +146,29 @@ e^{-\tau V(\bs{r})}
 \right). \label{eq:dmc-green}
 \end{align}
 The two terms in eq.~(\ref{eq:dmc-green}) are the Green function for diffusion and weight accumulation.
-The quantumness $\lambda=\frac{\hbar^2}{2m}$ of the particle determines its diffusion constant in imaginary time. Lighter particles diffuse ``faster''. One can, in principle, start with any Classical system $\bs{r}$, apply the Green functions repeatedly to update $\bs{r}$, and eventually end up sampling the mixed distribution $\braket{\Psi_T|\Psi_0}$.
+The quantumness $\lambda=\frac{\hbar^2}{2m}$ of the particle determines its diffusion constant in imaginary time. Lighter particles diffuse ``faster''. One can, in principle, start with any classical system $\bs{r}$, apply the Green functions repeatedly to update $\bs{r}$, and eventually end up sampling the mixed distribution $\braket{\Psi_T|\Psi_0}$.
 
-While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the Classical system due to the potential term goes to zero or infinity exponentially fast as the simulation progresses and whenever two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
+While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the classical system due to the potential term goes to zero or infinity exponentially fast whenever two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
 \begin{align}
 f(\bs{r},t) \equiv \Psi_T^*(\bs{r}) e^{-t(H-E_T)}\Psi_T(\bs{r}) \underset{t\rightarrow\infty}{=} \Psi_T^*(\bs{r})\Psi_0(\bs{r}),
 \end{align}
-where a trial energy $E_T$ is introduced to control the potential term.
+where a trial energy $E_T$ is introduced to stablize the potential term.
 Substitute $\Psi_T^{-1}f$ in place of $\Psi$ into the imaginary-time Schr\"odinger equation $-\partial_t \Psi = H\Psi$, where $H=-\lambda\nabla^2+V$, we obtain
 \begin{align} \label{eq:dmc-dfdt}
 -\partial_t f = \Psi_T H \Psi_T^{-1} f \Rightarrow -\partial_t f=-\lambda\bs{\nabla}\cdot(\bs{\nabla}-\bs{v})f+(E_L-E_T)f,
 \end{align}
 % derivation is tricky! Remember \nabla\cdot(f\nabla\psi/\psi)
 where the local energy $E_L\equiv \dfrac{H\Psi_T}{\Psi_T}$ and the drift vector $\bs{v}\equiv2\Psi_T^{-1}\bs{\nabla}\Psi_T=\bs{\nabla}\ln\Psi_T^2$.
-After this ``importance-sampling transformation'', the Green function eq.~(\ref{eq:dmc-green}) is now modified to have three contributing processes: diffusion, drift, and weighting. The initial diffusion process becomes a drift-diffusion process guided by the trial wave function. Further, the weighting by the bare potential energy becomes weighting by the local energy. Given suitably designed trial wave function, $E_L$ can be made continuous even if the original potential $V$ contains divergences, e.g., the Coulomb interaction.
+After this ``importance-sampling transformation'', the Green function eq.~(\ref{eq:dmc-green}) is now modified to have three contributing processes: diffusion, drift, and weighting. The initial diffusion process becomes a drift-diffusion process guided by the trial wave function. Further, the weighting by the bare potential energy becomes weighting by the local energy. Given suitably designed trial wave function, $E_L$ can be made continuous even if the original potential $V$ contains divergences, e.g., in the Coulomb interaction.
 In practice, the mixed distribution is approximated by an ensemble of walkers
 \begin{align}
 f(\bs{r},t) \approx \sum\limits_{i=1}^{N_w} \delta(\bs{r}-\bs{r}_i),
 \end{align}
-and the trial energy $E_T$ is adjusted every so often to keep the population of walkers $N_w$ from explosion and distinction. Equation~(\ref{eq:dmc-dfdt}) defines the DMC algorithm.
-While not strictly necessary, one typically adds a Metropolis rejection step using the Green function $G$ as transition probability $T$ in eq.~(\ref{eq:metropolis-accept}). This ensures that the algorithm samples some well-defined probability distribution at any finite time step, where the Green function is approximate~\cite{Reynolds1982}.
+and the trial energy $E_T$ is adjusted every so often to keep the population of walkers $N_w$ from explosion and extinction. Equation~(\ref{eq:dmc-dfdt}) defines the DMC algorithm.
+While not strictly necessary, one typically adds a Metropolis rejection step using the Green function $G$ as transition probability $T$ in eq.~(\ref{eq:metropolis-accept}). This ensures that the algorithm samples the desired probability distribution at any finite time step, where the Green function is approximate~\cite{Reynolds1982}.
 %When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
 
-For bosons and Bolzmannons, DMC gives the exact ground-state energy of $H$ in the limit of infinitesimal time step and uncontrolled walker population. Observables that do not commute with the hamiltonian will suffer a mixed-estimator error, which diminishes as the trial wave function is improved to have more overlap with the ground state.
+For bosons and Bolzmannons, DMC gives the exact ground-state energy of $H$ in the limit of infinitesimal time step and uncontrolled walker population. Observables that do not commute with the hamiltonian will suffer a mixed-estimator error, which vanishes as the trial wave function is approaches the ground state.
 
 \subsection{Variational Monte Carlo}
 Variational Monte Carlo (VMC) can be viewed as a limit of DMC at zero projection time. I define VMC as a Monte Carlo algorithm that calculates the expectation value of an operator using a fixed trial wave function $\Psi_T$
@@ -186,7 +190,7 @@ Suppose we wish a drift-diffusion process governed by
 \begin{align} \label{eq:vmc-fokker-planck}
 \dfrac{\partial f}{\partial t} = \sum\limits_{i=1}^N \lambda\dfrac{\partial}{\partial\bs{x}_i}\left(
 \dfrac{\partial}{\partial\bs{x}_i} -\bs{v}_i(\bs{r})
-\right)f,
+\right)f
 \end{align}
 to have $P(\bs{r})$ as its stationary distribution
 \begin{align}
@@ -208,7 +212,7 @@ The Langevin equation needed to solve eq.~(\ref{eq:vmc-fokker-planck}) is
 \begin{align}
 \dfrac{\partial\bs{r}(t)}{\partial t} = \lambda \bs{v}(\bs{r}(t)) + \bs{\eta},
 \end{align}
-where $\bs{\eta}$ is a multidimensional Gaussian with a mean of zero and a variance of $2\lambda$. In this light, the VMC algorithm is more akin to molecular dynamics than Monte Carlo. However, the most efficient algorithm is obtained when the Fokker-Planck formulation is combined with Metropolis Monte Carlo. By introducing a metropolis accept/reject procedure at each step of the Fokker-Planck dynamics, the time step bias is eliminated because detailed balance is enforced to sample $\vert\Psi_T\vert^2$. Another way to view this is that Fokker-Planck dynamics is used to construct efficient drift-diffusion moves for an exact Monte Carlo method.
+where $\bs{\eta}$ is a multidimensional Gaussian with a mean of zero and a variance of $2\lambda$. In this light, the VMC algorithm is more akin to stochastic classical molecular dynamics than Monte Carlo. However, the most efficient algorithm is obtained when the Fokker-Planck formulation is combined with Metropolis Monte Carlo. By introducing a metropolis accept/reject procedure at each step of the Fokker-Planck dynamics, the time step bias is eliminated because detailed balance is enforced to sample $\vert\Psi_T\vert^2$. Another way to view this is that Fokker-Planck dynamics is used to construct efficient drift-diffusion moves for an exact Monte Carlo method.
 
 Equation~(\ref{eq:vmc-fokker-planck}) defines an efficient implementation of the VMC algorithm. Interestingly, the governing equation of DMC eq.~(\ref{eq:dmc-dfdt}) without the branching term is identical to that of VMC eq.~(\ref{eq:vmc-fokker-planck}) given the drift vector eq.~(\ref{eq:vmc-drift}).
 This implies that the drift-diffusion term in the DMC Green function performs sampling of the trial wave function only. The local energy term in eq.~(\ref{eq:dmc-dfdt}) is responsible for imaginary-time projection of the trial wave function.
