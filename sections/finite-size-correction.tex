@@ -1,9 +1,212 @@
 \chapter{Theory and Observation of Finite-size Effects}
+
+In this chapter, I will describe the common types of finite size effects encountered in electronic structure simulations and a few correction schemes. I will begin the discussion from the most general correction that works for quantum and classical systems at zero or finite temperature: the static structure factor correction to the potential energy. From there, we extend the method to consider kinetic energy correction from the momentum distribution, and in the quantum case, the Jastrow pair potential. Then, I will discuss the dominant single-particle kinetic finite size effect in fermion systems, the so-called "shell filling" effects. Many-body corrections beyond pair interactions are beyond the scope of this discussion.
+
+\section{Correction to the potential energy}
+
+\subsection{General Theory}
+Given a simulation using periodic boundary conditions, the accessible momenta are quantized. As the simulation cell is enlarged, the grid of accessible momenta becomes finer until it grants access to the full continuum of momentum space in the thermodynamic limit. By considering the difference between this infinite system and the finite simulation cell, we can understand finite size effects and attempt to correct them.
+Consider an orthorhombic box with side length $L_z$ along the z direction. The momentum along the $z$ direction must take discrete values $k_z=\dfrac{2\pi}{L_z}n_z$, where $n_z\in\mathcal{N}$, similarly for the other directions.
+%For simulations with the Coulomb interaction, one has no access to the $\bs{k}=\bs{0}$ volume element in reciprocal space.
+In a simulation where particles interact via the Coulomb pair potential $v(r)=\frac{1}{r}$, the total potential energy of the system %can be written as an integral over the pair correlation function
+\begin{align}
+V \equiv V_{\text{background}} +
+\frac{1}{2}\sum\limits_{i=1}^N
+\sum\limits_{\bs{L}}\sum\limits_{j=1}^N
+v(\vert\bs{x}_i-\bs{x}_j-\bs{L}\vert),
+%= \frac{1}{\Omega}\int d\bs{x} g(\bs{x}) v(\bs{x}),
+\end{align}
+where $\bs{L}$ loop over the supercell lattice.
+The sums loop over all pairs of particles in the infinite system.
+%\begin{align}
+%g(\bs{r}) \equiv \sum\limits_{i=1}^N\sum\limits_{j>i}^N \delta(\bs{r}-(\bs{r}_i-\bs{r}_j)).
+%\end{align}
+This equation can be equivalently written in reciprocal space as
+\begin{align} \label{eq:fsc-vn-vk}
+V_N \equiv V/N = v_M + \frac{1}{2\Omega} \sum\limits_{\bs{k}\neq\bs{0}} v_{\bs{k}} S(\bs{k}),
+\end{align}
+where $v_{\bs{k}}=\dfrac{2\pi (d-1)}{k^{d-1}}$ is the Fourier transform of the Coulomb pair potential in $d$ spatial dimensions. Equation~(\ref{eq:fsc-vn-vk}) looks different than its original proposal in Ref.~\cite{Chiesa2006} due to difference in Fourier transform convention. Here, I follow the definitions eq.~(6) and (7) in Ref.~\cite{Holzmann2016}.
+For example, in 3D
+\begin{align}
+v_{\bs{k}} \equiv \int d^3\bs{r} e^{-i\bs{k}\cdot\bs{r}}~\frac{1}{r}
+=4\pi \lim\limits_{\epsilon\rightarrow 0^+} \int_0^\infty dr \dfrac{r\sin(kr)}{k}~\frac{1}{r}e^{-\epsilon r} = \lim\limits_{\epsilon\rightarrow 0^+} \dfrac{4\pi}{k^2+\epsilon^2}=\dfrac{4\pi}{k^2}.
+\end{align}
+$\Omega$ is the volume of the supercell. $v_M$ is the Madelung constant, which combines the electrostatic energy of an infinite periodic array of charges on $\bs{L}$ with a neutralizing background.
+
+Suppose $S(\bs{k})$ is converged, i.e., does not change with system size, then the only difference between the infinite-system and the finite-size potential energies is the replacement of the sum in eq.~(\ref{eq:fsc-vn-vk}) by an integral
+\begin{align} \label{eq:fsc-dvn}
+\Delta V_N \equiv V_{\infty} - V_N = \left[
+\int \dfrac{d^d\bs{k}}{(2\pi)^d} - \dfrac{1}{\Omega}\sum\limits_{\bs{k}}
+\right] \frac{v_k}{2} S(\bs{k}).
+\end{align}
+
+Equation~(\ref{eq:fsc-dvn}) is not practical, because $\lim\limits_{k\rightarrow\infty}S(k)=1$ and both the sum and the integral diverge. Fortunately, large $k$ corresponds to short-range interaction, so its contribution to finite-size error vanish rapidly with system size. Thus, we can truncate the large-$k$ part of eq.~(\ref{eq:fsc-dvn}) with little effect on its value. This can be achieved either using an explicit suppression factor $e^{-\epsilon k^2}$ as done in eq.~(24) of Ref.~\cite{Drummond2008} by Drummond \textit{et al.}, or splitting out the long-range part of the Coulomb potential as done in eq.~(30) of Ref.~\cite{Holzmann2016} by Holzmann \textit{et al.}.
+
+While the Madelung term in eq.~(\ref{eq:fsc-vn-vk}) is specific to charged systems, the idea of potential finite-size error as a quadrature error eq.~(\ref{eq:fsc-dvn}) applies to any pair potential $v(\bs{r})$. This error can be accurately corrected given converged pair correlation functions in real $g(\bs{r})$ and reciprocal space $S(\bs{k})$.
+
+\subsection{Homogeneous electron gas}
+In the case of electron gas, more progress can be made by considering the long wavelength behavior of the wave function. The dominant contribution to eq.~(\ref{eq:fsc-dvn}) comes from the volume element around $\bs{k}=\bs{0}$, because $v_k$ diverges there.
+\begin{align} \label{eq:fsc-dvn-missing}
+\Delta V_N \approx \int_{\frac{(2\pi)^d}{\Omega}} \dfrac{d^d\bs{k}}{(2\pi)^d} \frac{v_k}{2}S(\bs{k}).
+\end{align}
+Bohm and Pine~\cite{Bohm1953} discovered that the many-body wave function of the electron gas can be factored into short-range and long-range contributions, where the long-range part describes weakly coupled collective modes (plasmons)~\cite{Chiesa2007,Holzmann2016}
+\begin{align} \label{eq:fsc-rpa-wf}
+\Psi = \Psi_{s.r.} \exp\left(
+-\frac{1}{2\Omega} \sum\limits_{\bs{k}} u_{\bs{k}} \rho_{\bs{k}} \rho_{-\bs{k}} + \frac{1}{\Omega^2}\sum\limits_{\bs{k},\bs{q}} w(\bs{k}, \bs{q}) \rho_{\bs{k}+\bs{q}}\rho_{-\bs{k}}\rho_{-\bs{q}}+\dots
+\right).
+\end{align}
+In the random phase approximation (RPA), we ignore the mode coupling terms, such as $w(\bs{k},\bs{q})$, and find an analytical form for the static structure factor~\cite{Gaskell1961}
+\begin{align} \label{eq:gaskell-rpa-sk}
+S(k) = \left(
+S_0^{-2}(k) + \dfrac{2\rho u(k)}{e(k)}
+\right)^{-1/2},
+\end{align}
+where $S_0(k)$ is the structure factor of the short-range part $\Psi_{s.r.}$ and $e(k)=\frac{\hbar^2}{2m}k^2$ is the dispersion of the plasmon mode.
+Assuming a determinant of plane waves for $\Psi_{s.r.}$, in 3D~\cite{Gori-Giorgi2000}
+\begin{align}
+S_0(k) = \left\{
+\frac{3}{4}\left( \dfrac{k}{k_F} \right) - \frac{1}{16}\left(\dfrac{k}{k_F}\right)^3\right\} \Theta(2k_F-k) + \Theta(k-2k_F).
+\end{align}
+Equation~(\ref{eq:gaskell-rpa-sk}) is exact in the long wavelength $k\rightarrow0$ limit. Taylor expanding eq.~(\ref{eq:gaskell-rpa-sk}) around $k=0$
+\begin{align} \label{eq:fsc-skrpa-taylor}
+S(k) \approx \frac{k^2}{2\omega_p}-\frac{k_F^2k^4}{9 \omega_p ^3}+O\left(k^6\right),
+\end{align}
+where the plasmon frequency $\omega_p=\sqrt{4\pi\rho}$. Using the leading-order approximation of eq.~(\ref{eq:fsc-skrpa-taylor}) in eq.~(\ref{eq:fsc-dvn-missing}), we obtain the leading-order finite-size correction to the potential energy
+\begin{align}
+\Delta V_N^{l.o.} = \frac{\omega_p}{4}.
+\end{align}
+Similarly, in 2D~\cite{Gori-Giorgi2004}
+\begin{align}
+S_0(k) = \left\{
+\dfrac{2}{\pi}\left[
+\arcsin\left(\dfrac{k}{2k_F}+\dfrac{k}{2k_F}\sqrt{1-\left(\dfrac{k}{2k_F}\right)^2}\right)
+\right]\right\} \Theta(2k_F-k) + \Theta(k-2k_F), \\
+S(k) = \dfrac{(k/k_F)^{3/2}}{2^{3/4}r_s^{1/2}} + O(k^2), \label{eq:fsc-skrpa2d}\\
+\Delta V_N^{l.o.} = \dfrac{C_{2D}}{\pi^{5/4} (2r_s)^{3/2}}~\dfrac{1}{N^{5/4}} + O(N^{-3/2}), \label{eq:fsc-dv2d-lo}
+\end{align}
+where $k_F\equiv\sqrt{2}/r_s$, $C_{2D}=3.9852$ and $3.9590$ for square and hexagonal cells, respectively~\cite{Drummond2008}. Equation~(\ref{eq:fsc-dv2d-lo}) differs from eq.~(60) in Ref.~\cite{Drummond2008}, because Ref.~\cite{Drummond2008} erroneously used the dimensionless form of the RPA structure factor rather than its Hartree atomic unit form eq.~(\ref{eq:fsc-skrpa2d}).
+
+\subsection{Inhomogeneous system}
+In a real crystal, valence electrons interact with a periodic arrangement of localized ionic cores rather than a homogeneous neutralizing background of positive charge.
+In this inhomogeneous system, one needs to take care to separate the static and fluctuating contributions to the static structure factor
+\begin{align}
+S(\bs{k}) \equiv \frac{1}{N}\left\langle
+\rho_{\bs{k}}\rho_{-\bs{k}}
+\right\rangle =
+\frac{1}{N}\left\langle
+(\rho_{\bs{k}}-\langle\rho_{\bs{k}}\rangle)(\rho_{\bs{k}}-\langle\rho_{\bs{k}}\rangle)
+\right\rangle + \frac{1}{N}
+\langle\rho_{\bs{k}}\rangle\langle\rho_{-\bs{k}}\rangle.
+\end{align}
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{fsc-sk-dsk-rhok}
+\caption{Fluctuating and static contributions from valence electrons in the conventional cell of bulk silicon.}
+\label{fig:fsc-sk-dsk-rhok}
+\end{figure}
+As shown in Fig.~\ref{fig:fsc-sk-dsk-rhok}, the static part due to charge density $\rho_{\bs{k}}$ is non-zero only at reciprocal lattice of the primitive cell of the underlying crystal structure, whereas the fluctuating part varies smoothly from $0$ to $1$. Its value within the missing $\bs{k}=\bs{0}$ region (red area in Fig.~\ref{fig:fsc-sk-dsk-rhok}) can be used to correct the potential energy to leading order following eq.~(\ref{eq:fsc-dvn-missing}).
+Changes in the charge density with system size is a higher-order effect and is small compared to the total potential energy~\cite{Clay2016}. However, as shown in Ref.~\cite{Yang2020-gap}, this static contribution becomes important when an energy difference is taken, such as in the calculation of the fundamental gap.
+
+Equation~(\ref{eq:gaskell-rpa-sk}) still works well at $k\ll k_F$, but the short-range contribution $S_0(k)$ no longer comes from a simple determinant of plane waves. For insulators, the dielectric screening suppresses long-range fluctuation and changes the leading-order behavior of $S(k)$ from eq.~(\ref{eq:fsc-skrpa-taylor}) to eq.~(7) in Ref.~\cite{Yang2020-gap}
+\begin{align}
+S(k) \approx \dfrac{k^2}{2\omega_p}(1-\epsilon_k^{-1})^{1/2}.
+\end{align}
+
+\section{Correction to the kinetic energy}
+
+\subsection{From momentum distribution}
+The kinetic energy can be calculated as the second moment of the momentum distribution
+\begin{align} \label{eq:fsc-tn-nk}
+T_N \equiv T/N = \frac{1}{\rho}\int \dfrac{d^d\bs{k}}{(2\pi)^d} e(k) n_N(\bs{k}),
+\end{align}
+where the dispersion of non-relativistic particles
+\begin{align}
+e(k) = \dfrac{\hbar^2}{2m} k^2,
+\end{align}
+and $n_N(\bs{k})$ is the momentum distribution of these particles at the given system size $N$. It is crucial to distinguish the finite-size $n_N(\bs{k})$ from its thermodynamic limit $n_{\infty}(\bs{k})$, because it is a nonlocal quantity that converges slowly with system size~\cite{Holzmann2009}.
+Similar to eq.~(\ref{eq:fsc-dvn}), the finite-size correction to the kinetic energy
+\begin{align} \label{eq:fsc-dtn-nk}
+\Delta T_N = \left[
+\dfrac{1}{\rho}\int \dfrac{d^d\bs{k}}{(2\pi)^d} e(k)n_{\infty}(\bs{k})
+\right] - \left[
+\dfrac{1}{N}\sum\limits_{\bs{k}}
+e(k)n_N(\bs{k})
+\right].
+\end{align}
+The key difficulty in using eq.~(\ref{eq:fsc-dtn-nk}) is finding a reasonable approximation to $n_{\infty}(\bs{k})$. Some progress can be made by analyzing the Monte Carlo estimator for the Fourier transform of the momentum distribution, i.e. the off-diagonal one-particle density matrix ~\cite{W.L.McMillan1965}
+\begin{align} \label{eq:fsc-nr}
+n(\bs{r}) = \left\langle \dfrac{\Psi(\bs{R}:\bs{r}_i\rightarrow\bs{r})}{\Psi(\bs{R})} \right\rangle_{\vert\Psi\vert^2},
+\end{align}
+where $\bs{R}$ denotes the positions of all $N$ particles, and the notation $:\bs{r}_i\rightarrow\bs{r}$ means that particle $i$ is moved from $\bs{r}_i$ to $\bs{r}$.
+As noted by W.R. Magro and D.M. Ceperley~\cite{Magro1994}, direct application of eq.~(\ref{eq:fsc-nr}) with periodic boundary condition can result in superfluous contribution, because all periodic images of particle $i$ are moved. The images will contribute to the ratio in eq.~(\ref{eq:fsc-nr}) if $\Psi$ has long-range components, e.g., eq.~(\ref{eq:fsc-rpa-wf}). Chiesa et al.~\cite{Chiesa2007} and Holzmann et al.~\cite{Holzmann2009} later used this observation to design a finite-size correction to the momentum distribution and the kinetic energy. To leading-order~\cite{Holzmann2009}
+\begin{align} \label{eq:fsc-dnk-lo}
+n_{\infty}(\bs{k}) - n_N(\bs{k}) \approx \int_{\frac{(2\pi)^d}{\Omega}}
+\dfrac{d^d\bs{q}}{(2\pi)^d}
+\left[
+u_{\bs{q}}(1-S(\bs{q}))-\rho u(\bs{q})^2S(\bs{q})
+\right]
+\left(
+n_N(\bs{k}+\bs{q})-n_N(\bs{k})
+\right),
+\end{align}
+where $u_{\bs{q}}$ is the Jastrow pair potential in the wave function eq.~(\ref{eq:fsc-rpa-wf}).
+As shown in Fig.~8 of Ref.~\cite{Yang2020-licp}, the leading-order correction to $n(\bs{k})$ works well for lithium. Further, Table~III in the Supplemental materials of Ref.~\cite{Yang2020-licp} shows that the corrected $n_N(\bs{k})$ can be used to accurately correct the finite-size error in the kinetic energy using eq.~(\ref{eq:fsc-dtn-nk}). To achieve this good result for a metal with a sharp Fermi surface such as lithium, it is crucial to densely sample momentum space while preserving the Fermi surface using grand-canonical twist averaging.
+
+\subsection{From wave function}
+Instead of using the relation between kinetic energy and the momentum distribution eq.~(\ref{eq:fsc-tn-nk}), one can directly analyze the QMC estimator for kinetic energy to find its finite-size correction. The VMC estimator for the kinetic energy of a Slater-Jastrow wave function $\Psi=De^{-U}$ is (from eq.~(14) of Ref.~\cite{Holzmann2016})
+\begin{align}
+V_N^{VMC} = \frac{1}{N}\left\langle
+-\sum\limits_{i=1}^N \dfrac{\hbar^2}{2m}\left[
+\dfrac{\nabla_i^2D}{D} - (\bs{\nabla}_i U)^2
+\right]
+\right\rangle.
+\end{align}
+The dominant finite-size correction in the determinant term is due to one-particle ``shell filling'' effects, whereas the dominant correction in the Jastrow term is due to long-range two-particle correlation. Let us look at these two effects in turn.
+\subsection{Single-particle ``shell filling'' effect}
+If the orbitals of the determinant came from some effective one-particle theory such as HF or KS-DFT, then they are solutions of some effective potential $v_{eff}$
+\begin{align}
+\left[
+-\dfrac{\hbar^2\nabla^2}{2m} + v_{eff}
+\right] \phi_n(\bs{r}) = \epsilon_n\phi_n(\bs{r}),
+\end{align}
+and one can work out the determinant contribution to the kinetic energy
+\begin{align}
+-\dfrac{\hbar^2}{2m}\sum\limits_{i=1}^N \dfrac{\nabla_i^2D}{D} = \left[
+\sum\limits_{n=1}^N\epsilon_n - \sum\limits_{i=1}^N v_{eff}(\bs{r}_i)
+\right],
+\end{align}
+see eq.~(19) in Ref.~\cite{Holzmann2016}.
+
+\begin{comment}
 \section{Overview}
+How does finite size error scale with system size?
+
+What are typical methods used to deal with finite-size error?
+1. extrapolation based on Fermi-liquid theory. For bosons?
+2. rely on effective one-particle theory e.g. HF and DFT.
+3. two-body finite-size correction
+
 \section{Periodic boundary condition (PBC)}
+There are two types of finite-size errors in simulations with periodic boundary condition. The first is the artificial correlation between periodic images.
+
+% Fermi liquid
+
+% Chiesa
+
+% MPC
+
+% KZK
+
 \section{Thermodynamic limit}
+The key quantity to consider in QMC is the local energy
+\begin{align}
+E_L = -\sum\limits_i \lambda_i \left[
+\dfrac{\nabla_i^2D}{D} - (\nabla_iU)^2 - \nabla_iU\nabla_i(U_{FN}-U)
+\right] + V.
+\end{align}
+
 \subsection{Shell-filling effect}
 \subsection{Electronic structure factor $S(k)$}
 \subsection{Jastrow pair function $U(k)$}
 \subsection{Electronic momentum distribution $n(k)$}
 \section{Grand-canonical twist-averaged boundary condition (GC-TABC)}
+\end{comment}
