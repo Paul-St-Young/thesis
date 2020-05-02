@@ -1,4 +1,35 @@
 \chapter{Slater-Jastrow wavefunction}
+
+Before looking at the Slater-Jastrow wave function, it is informative to first study the simpler Jastrow wave function to see what we can learn
+\begin{align}
+\Psi_U = \exp(-U).
+\end{align}
+
+Consider two non-relativistic distinguishable particles having masses $m_1$ and $m_2$ interacting via a pair potential $v(r)$. The Schr\"odinger equation in the center-of-mass coordinate is
+\begin{align}
+\left[-\lambda\nabla^2 + v(r)\right] \psi = E\psi,
+\end{align}
+where $\lambda=\frac{\hbar^2}{2\mu}$, and $\mu=(m_1^{-1}+m_2^{-1})^{-1}$. The ground-state wave function
+\begin{align}
+\psi = \exp(-u(r))
+\end{align}
+should have a stationary local energy
+\begin{align} \label{eq:wf-cusp}
+E_L \equiv \dfrac{\ham\psi}{\psi} = v(r) + \lambda\nabla^2u(r) - (\bs{\nabla}u(r))^2 \nonumber \\
+= v(r) + \lambda (u''+\frac{(d-1)u'}{r}) - \lambda {u'}^2,
+\end{align}
+where $d$ is the number of spatial dimensions.
+We see that the laplacian term in the kinetic energy has a divergent term at $r=0$.
+This term can respond to the potential term and keep $E_L$ stationary, even if $v(r)$ as a divergence at $r=0$, e.g., the Coulomb potential. Suppose the two particles have charges $q_1$, $q_2$, and $v(r)=q_1q_2/r$, the condition for stationary $E_L$ requires
+\begin{align}
+\lim\limits_{r\rightarrow 0}\frac{1}{r} (q_1q_2+ \lambda (d-1) u')=0 \Rightarrow u'(0) = \dfrac{q_1q_2}{\lambda (d-1)}
+\end{align}
+For electron-electron interaction in Hartree atomic units $m_1=m_2=1$, so $\lambda=1$ and $u'(0)=\frac{1}{2}$ in 3D. This is the cusp condition for unlike-spin electron pair. For same-spin pair, the two particles are indistinguishable and the laplacian for each particle contributes a copy of the divergent term. Thus, $u'(0)=\frac{1}{4}$. For an electron-ion pair in the clamped-ion approximation ($m_2\rightarrow\infty$)
+\begin{align} \label{eq:wf-ei-cusp}
+u'(0) = -\dfrac{2Z}{d-1},
+\end{align}
+where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a trial wave function greatly reduces the variance of the local energy and improves the efficiency of a QMC calculation. The electron-ion cusp eq.~(\ref{eq:wf-ei-cusp}) is the most important one to maintain, because the wave function amplitude around an ion is high and many samples from the MC algorithm will have some electron close to an ion. In contrast, one rarely samples a configuration with two electrons close together due to strong electron-electron repulsion. Thus, the effect of imposing the electron-electron cusp condition is less visible than its electron-ion counterpart.
+
 \section{Overview}
 
 A Slater determinant is a many-body wavefunction ansatz for the ground state of a collection of fermions (of the same spin). It is essentially the anti-symmetrized version of a product wavefunction ansatz for distinguishable particles.
