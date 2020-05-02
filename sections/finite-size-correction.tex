@@ -153,8 +153,8 @@ As shown in Fig.~8 of Ref.~\cite{Yang2020-licp}, the leading-order correction to
 
 \subsection{From wave function}
 Instead of using the relation between kinetic energy and the momentum distribution eq.~(\ref{eq:fsc-tn-nk}), one can directly analyze the QMC estimator for kinetic energy to find its finite-size correction. The VMC estimator for the kinetic energy of a Slater-Jastrow wave function $\Psi=De^{-U}$ is (from eq.~(14) of Ref.~\cite{Holzmann2016})
-\begin{align}
-V_N^{VMC} = \frac{1}{N}\left\langle
+\begin{align} \label{eq:fsc-tn-vmc}
+T_N^{VMC} = \frac{1}{N}\left\langle
 -\sum\limits_{i=1}^N \dfrac{\hbar^2}{2m}\left[
 \dfrac{\nabla_i^2D}{D} - (\bs{\nabla}_i U)^2
 \right]
@@ -169,12 +169,29 @@ If the orbitals of the determinant came from some effective one-particle theory 
 \right] \phi_n(\bs{r}) = \epsilon_n\phi_n(\bs{r}),
 \end{align}
 and one can work out the determinant contribution to the kinetic energy
-\begin{align}
--\dfrac{\hbar^2}{2m}\sum\limits_{i=1}^N \dfrac{\nabla_i^2D}{D} = \left[
+\begin{align} \label{eq:fsc-tdn}
+T^D_N \equiv -\dfrac{\hbar^2}{2m}\sum\limits_{i=1}^N \dfrac{\nabla_i^2D}{D} = \left[
 \sum\limits_{n=1}^N\epsilon_n - \sum\limits_{i=1}^N v_{eff}(\bs{r}_i)
 \right],
 \end{align}
-see eq.~(19) in Ref.~\cite{Holzmann2016}.
+see eq.~(19) in Ref.~\cite{Holzmann2016}. As the number of electron is increased, the kinetic contribution eq.~(\ref{eq:fsc-tdn}) increases by the single-particle energies of the new orbitals being occupied. Consider the ideal Fermi gas in 2D square box. As the number of same-spin particles increase from $N=2$ to $5$, the first shell of states in reciprocal space become filled. They all have the same single-particle energy, so the total kinetic energy increases linearly with $N$. However, when one adds a 6$^{\text{th}}$ particle, it increases the total energy by twice the amount as one in the first shell. As shown in Fig.~\ref{fig:fsc-lin-tabc}, this shell filling effect causes oscillation in the energy vs. number of particles plot, making size extrapolation difficult. This shell effect can be largely eliminated by adopting twist averaged boundary conditions (TABC) rather than PBC.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{lin-tabc}
+\caption{Relative error of total energy vs. number of particles with PBC (up triangles) and TABC (squares) in 2D and 3D~\cite{Lin2001}}
+\label{fig:fsc-lin-tabc}
+\end{figure}
+
+\subsection{Two-body size effect}
+Using the RPA Jastrow potential eq.~(\ref{eq:fsc-rpa-wf}), the Jastrow contribution to eq.~(\ref{eq:fsc-tn-vmc}) becomes (eq.~(33) in Ref.~\cite{Holzmann2016}
+\begin{align}
+T^U_N \equiv \dfrac{1}{N}\left\langle
+\sum\limits_{i=1}^N \dfrac{\hbar^2}{2m} (\bs{\nabla}_iU)^2
+\right\rangle
+\approx \frac{1}{\Omega} \sum\limits_{\bs{k}\neq\bs{0}}
+ \dfrac{\hbar^2}{2m} \rho u_{\bs{k}}u_{-\bs{k}}S(\bs{k}).
+\end{align}
 
 \begin{comment}
 \section{Overview}
