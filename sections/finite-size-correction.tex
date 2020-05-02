@@ -106,10 +106,11 @@ S(\bs{k}) \equiv \frac{1}{N}\left\langle
 As shown in Fig.~\ref{fig:fsc-sk-dsk-rhok}, the static part due to charge density $\rho_{\bs{k}}$ is non-zero only at reciprocal lattice of the primitive cell of the underlying crystal structure, whereas the fluctuating part varies smoothly from $0$ to $1$. Its value within the missing $\bs{k}=\bs{0}$ region (red area in Fig.~\ref{fig:fsc-sk-dsk-rhok}) can be used to correct the potential energy to leading order following eq.~(\ref{eq:fsc-dvn-missing}).
 Changes in the charge density with system size is a higher-order effect and is small compared to the total potential energy~\cite{Clay2016}. However, as shown in Ref.~\cite{Yang2020-gap}, this static contribution becomes important when an energy difference is taken, such as in the calculation of the fundamental gap.
 
-Equation~(\ref{eq:gaskell-rpa-sk}) still works well at $k\ll k_F$, but the short-range contribution $S_0(k)$ no longer comes from a simple determinant of plane waves. For insulators, the dielectric screening suppresses long-range fluctuation and changes the leading-order behavior of $S(k)$ from eq.~(\ref{eq:fsc-skrpa-taylor}) to eq.~(7) in Ref.~\cite{Yang2020-gap}
+Equation~(\ref{eq:gaskell-rpa-sk}) still works well at $k\ll k_F$, but the short-range contribution $S_0(k)$ no longer comes from a simple determinant of plane waves. For insulators, dielectric screening suppresses long-range fluctuation and changes the leading-order behavior of $S(k)$ from eq.~(\ref{eq:fsc-skrpa-taylor}) to eq.~(7) in Ref.~\cite{Yang2020-gap}
 \begin{align}
-S(k) \approx \dfrac{k^2}{2\omega_p}(1-\epsilon_k^{-1})^{1/2}.
+S(k) \approx \dfrac{k^2}{2\omega_p}(1-\epsilon_k^{-1})^{1/2},
 \end{align}
+so long as plasmons are the dominant excitation in the system.
 
 \section{Correction to the kinetic energy}
 
@@ -132,12 +133,12 @@ Similar to eq.~(\ref{eq:fsc-dvn}), the finite-size correction to the kinetic ene
 e(k)n_N(\bs{k})
 \right].
 \end{align}
-The key difficulty in using eq.~(\ref{eq:fsc-dtn-nk}) is finding a reasonable approximation to $n_{\infty}(\bs{k})$. Some progress can be made by analyzing the Monte Carlo estimator for the Fourier transform of the momentum distribution, i.e. the off-diagonal one-particle density matrix ~\cite{W.L.McMillan1965}
+The key difficulty in using eq.~(\ref{eq:fsc-dtn-nk}) is finding a reasonable approximation to $n_{\infty}(\bs{k})$. Some progress can be made by analyzing the Monte Carlo estimator for the Fourier transform of the momentum distribution, i.e. the off-diagonal one-particle density matrix~\cite{W.L.McMillan1965}
 \begin{align} \label{eq:fsc-nr}
 n(\bs{r}) = \left\langle \dfrac{\Psi(\bs{R}:\bs{r}_i\rightarrow\bs{r})}{\Psi(\bs{R})} \right\rangle_{\vert\Psi\vert^2},
 \end{align}
-where $\bs{R}$ denotes the positions of all $N$ particles, and the notation $:\bs{r}_i\rightarrow\bs{r}$ means that particle $i$ is moved from $\bs{r}_i$ to $\bs{r}$.
-As noted by W.R. Magro and D.M. Ceperley~\cite{Magro1994}, direct application of eq.~(\ref{eq:fsc-nr}) with periodic boundary condition can result in superfluous contribution, because all periodic images of particle $i$ are moved. The images will contribute to the ratio in eq.~(\ref{eq:fsc-nr}) if $\Psi$ has long-range components, e.g., eq.~(\ref{eq:fsc-rpa-wf}). Chiesa et al.~\cite{Chiesa2007} and Holzmann et al.~\cite{Holzmann2009} later used this observation to design a finite-size correction to the momentum distribution and the kinetic energy. To leading-order~\cite{Holzmann2009}
+where $\bs{R}$ denotes the positions of all $N$ particles, and the notation ``$:\bs{r}_i\rightarrow\bs{r}$'' means that particle $i$ is moved from $\bs{r}_i$ to $\bs{r}$.
+As noted by W.R. Magro and D.M. Ceperley~\cite{Magro1994}, direct application of eq.~(\ref{eq:fsc-nr}) with periodic boundary condition can result in superfluous contributions, because all periodic images of particle $i$ are moved. The images will contribute to the ratio in eq.~(\ref{eq:fsc-nr}) if $\Psi$ has long-range components, e.g., eq.~(\ref{eq:fsc-rpa-wf}). Chiesa et al.~\cite{Chiesa2007} and Holzmann et al.~\cite{Holzmann2009} later used this observation to design a finite-size correction to the momentum distribution and the kinetic energy. To leading-order~\cite{Holzmann2009}
 \begin{align} \label{eq:fsc-dnk-lo}
 n_{\infty}(\bs{k}) - n_N(\bs{k}) \approx \int_{\frac{(2\pi)^d}{\Omega}}
 \dfrac{d^d\bs{q}}{(2\pi)^d}
@@ -158,23 +159,23 @@ T_N^{VMC} = \frac{1}{N}\left\langle
 -\sum\limits_{i=1}^N \dfrac{\hbar^2}{2m}\left[
 \dfrac{\nabla_i^2D}{D} - (\bs{\nabla}_i U)^2
 \right]
-\right\rangle.
+\right\rangle\equiv T_N^D + T_N^U.
 \end{align}
 The dominant finite-size correction in the determinant term is due to one-particle ``shell filling'' effects, whereas the dominant correction in the Jastrow term is due to long-range two-particle correlation. Let us look at these two effects in turn.
-\subsection{Single-particle ``shell filling'' effect}
-If the orbitals of the determinant came from some effective one-particle theory such as HF or KS-DFT, then they are solutions of some effective potential $v_{eff}$
+\subsubsection{Single-particle ``shell filling'' effect}
+If the orbitals of the determinant came from some effective one-particle theory such as HF or KS-DFT, then they are solutions of some effective potential $\veff$
 \begin{align}
 \left[
--\dfrac{\hbar^2\nabla^2}{2m} + v_{eff}
-\right] \phi_n(\bs{r}) = \epsilon_n\phi_n(\bs{r}),
+-\dfrac{\hbar^2\nabla^2}{2m} + \veff
+\right] \phi_n(\bs{r}) = \epsilon_n\phi_n(\bs{r}).
 \end{align}
-and one can work out the determinant contribution to the kinetic energy
+Thus, one can work out the determinant contribution to the kinetic energy
 \begin{align} \label{eq:fsc-tdn}
 T^D_N \equiv -\dfrac{\hbar^2}{2m}\sum\limits_{i=1}^N \dfrac{\nabla_i^2D}{D} = \left[
-\sum\limits_{n=1}^N\epsilon_n - \sum\limits_{i=1}^N v_{eff}(\bs{r}_i)
+\sum\limits_{n=1}^N\epsilon_n - \sum\limits_{i=1}^N \veff(\bs{r}_i)
 \right],
 \end{align}
-see eq.~(19) in Ref.~\cite{Holzmann2016}. As the number of electron is increased, the kinetic contribution eq.~(\ref{eq:fsc-tdn}) increases by the single-particle energies of the new orbitals being occupied. Consider the ideal Fermi gas in 2D square box. As the number of same-spin particles increase from $N=2$ to $5$, the first shell of states in reciprocal space become filled. They all have the same single-particle energy, so the total kinetic energy increases linearly with $N$. However, when one adds a 6$^{\text{th}}$ particle, it increases the total energy by twice the amount as one in the first shell. As shown in Fig.~\ref{fig:fsc-lin-tabc}, this shell filling effect causes oscillation in the energy vs. number of particles plot, making size extrapolation difficult. This shell effect can be largely eliminated by adopting twist averaged boundary conditions (TABC) rather than PBC.
+by eq.~(19) in Ref.~\cite{Holzmann2016}. As the number of electrons is increased, the kinetic contribution eq.~(\ref{eq:fsc-tdn}) increases by the single-particle energies of the new orbitals being occupied. Consider the ideal Fermi gas in a 2D square box. As the number of same-spin particles increase from $N=2$ to $5$, the first shell of states in reciprocal space become filled. They all have the same single-particle energy, so the total kinetic energy increases linearly with $N$. However, when one adds a 6$^{\text{th}}$ particle, it increases the total energy by twice the amount as one in the first shell. As shown in Fig.~\ref{fig:fsc-lin-tabc}, this shell filling effect causes oscillation in the energy vs. number of particles plot, making size extrapolation difficult. This shell filling effect can be largely eliminated by adopting canonical twist averaged boundary conditions (TABC), where the number of particles is the same across all twists. Further, grand-canonical twist averaged boundary condition (GC-TABC), where the number of particles change to according to the exact Fermi surface, can exactly remove this single-particle finite-size effect. Finally, there is another ``pocket'' method to exactly remove the shell filling effect. Within a pocket in reciprocal space, the orbitals in the determinant smoothly acquire a phase as the twist is varied. Once these pockets are mapped out, one can perform one calculation per pocket and weight it by the volume of the pocket to exactly remove the one-particle finite-size error~\cite{Holzmann2016}.
 
 \begin{figure}[h]
 \centering
@@ -183,15 +184,32 @@ see eq.~(19) in Ref.~\cite{Holzmann2016}. As the number of electron is increased
 \label{fig:fsc-lin-tabc}
 \end{figure}
 
-\subsection{Two-body size effect}
-Using the RPA Jastrow potential eq.~(\ref{eq:fsc-rpa-wf}), the Jastrow contribution to eq.~(\ref{eq:fsc-tn-vmc}) becomes (eq.~(33) in Ref.~\cite{Holzmann2016}
-\begin{align}
+\subsubsection{Two-body size effect}
+Using the RPA Jastrow pair potential from eq.~(\ref{eq:fsc-rpa-wf}), its contribution to eq.~(\ref{eq:fsc-tn-vmc}) becomes
+\begin{align} \label{eq:fsc-tn-uk-sk}
 T^U_N \equiv \dfrac{1}{N}\left\langle
 \sum\limits_{i=1}^N \dfrac{\hbar^2}{2m} (\bs{\nabla}_iU)^2
 \right\rangle
 \approx \frac{1}{\Omega} \sum\limits_{\bs{k}\neq\bs{0}}
- \dfrac{\hbar^2}{2m} \rho u_{\bs{k}}u_{-\bs{k}}S(\bs{k}).
+ \dfrac{\hbar^2}{2m} \rho u_{\bs{k}}u_{-\bs{k}}S(\bs{k}),
 \end{align}
+by eq.~(33) in Ref.~\cite{Holzmann2016}.
+Using an integral identity, T. Gaskell found a general relation between $S(\bs{k})$ and $u_{\bs{k}}$ shown in eq.~(4) in Ref.~\cite{Gaskell1961}, which in current notations states
+\begin{align}
+2\rho u_{\bs{k}} \approx S^{-1}(\bs{k}) - S^{-1}_0(\bs{k}).
+\end{align}
+Since $S^{-1}(\bs{k})$ diverges faster than $S_0^{-1}(\bs{k})$ as $k\rightarrow0$, eventually $2\rho u_{\bs{k}} \approx S^{-1}(\bs{k})$. Thus, to leading-order eq.~(\ref{eq:fsc-tn-uk-sk}) becomes
+\begin{align} \label{eq:fsc-tn-uk-ek}
+T_N^U \approx \dfrac{1}{2\Omega} \sum\limits_{\bs{k}\neq\bs{0}}
+e(k)u_{\bs{k}},
+\end{align}
+which should be compared with eq.~(\ref{eq:fsc-vn-vk}) for potential energy. Thus, the procedure to correct the two-body finite-size error in the kinetic energy is analogous to the potential correction scheme eq.~(\ref{eq:fsc-dvn})
+\begin{align}
+\Delta T_N \equiv T_{\infty} - T_N = \left[
+\int \dfrac{d^d\bs{k}}{(2\pi)^d} - \dfrac{1}{\Omega}\sum\limits_{\bs{k}}
+\right] \frac{e(k)}{2} u(\bs{k}),
+\end{align}
+where $u(\bs{k})$ is an interpolation of the converged Jastrow pair potential, which can be approximated using the converged static structure factor in the long wavelength limit.
 
 \begin{comment}
 \section{Overview}
