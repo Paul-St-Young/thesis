@@ -1,4 +1,4 @@
-\subsection{Multi-Component RPA Jastrow Pair Potentials}
+\section{Multi-Component RPA Jastrow}
 
 \textit{Based on notes from D. M. Ceperley dated Sep. 1980}
 
@@ -158,57 +158,3 @@ a_{12}=\frac{2\sqrt{\rho_1\rho_2}v_{11}}{\sqrt{\epsilon_1\epsilon_2}} \\
 a_{22}=\frac{2\rho_2v_{22}}{\epsilon_2} \\
 \end{array}\right..
 \end{align}
-
-\subsection{Definition 1: Fourier Transform}
-The Fourier transform of a 3D function in coordinate space is defined as
-\begin{align}
-f(\bs{k}) = \int d^3\bs{r} e^{i\bs{k}\cdot\bs{r}} f(\bs{r}). \label{eq:forward-ft}
-\end{align}
-The above Fourier transform convention eq.~(\ref{eq:forward-ft}) defines its inverse
-\begin{align}
-f(\bs{r}) = \int \frac{d^3\bs{k}}{(2\pi)^3} e^{-i\bs{k}\cdot\bs{r}} f(\bs{k}). \label{eq:inverse-ft}
-\end{align}
-The consistency of eq.~(\ref{eq:forward-ft}) and (\ref{eq:inverse-ft}) can be checked using the Coulomb potential $v(\bs{r})=\frac{1}{r}$ and $v(\bs{k})=\frac{4\pi}{k^2}$. 
-
-In a finite cell of volume $\Omega$, momentum states are discretized. Each state takes up $\frac{(2\pi)^3}{\Omega}$ in reciprocal space. Therefore the inverse Fourier transform (\ref{eq:inverse-ft}) becomes
-\begin{align}
-f(\bs{r}) = \frac{1}{\Omega} \sum\limits_{\bs{k}} e^{-i\bs{k}\cdot\bs{r}} f_{\bs{k}}.
-\end{align}
-
-\subsection{Definition 2: Collective Coordinates}
-The collective coordinates of $N$ particles of species $\alpha$ is the Fourier transform of the instantaneous number density
-\begin{align}
-\rho^\alpha(\bs{k}) = \int d^3\bs{r} e^{i\bs{k}\cdot\bs{r}} \rho^\alpha(\bs{r})
-= \int d^3\bs{r} e^{i\bs{k}\cdot\bs{r}} \sum\limits_{j=1}^{N_\alpha} \delta(\bs{r}-\bs{r}^\alpha_j)=\sum\limits_{j=1}^{N_\alpha} e^{i\bs{k}\cdot\bs{r}_j^\alpha}. \label{eq:rhok}
-\end{align}
-The collective coordinates provide a basis for many-body functions in reciprocal space. Consider $N$ particles in a cell of volume $\Omega$ interacting via an isotropic pair potential $v(r)$. The potential energy
-\begin{align}
-V =& \sum\limits_{i<j} v(r_{ij}) = \frac{1}{2} \sum\limits_{i\neq j} v(r_{ij}) \nonumber \\
-=& \frac{1}{2\Omega} \sum\limits_{\bs{k}}v_{\bs{k}} \sum\limits_{i\neq j}   e^{-i\bs{k}\cdot(\bs{r}_i-\bs{r}_j)} \nonumber \\
-=& \frac{1}{2\Omega} \sum\limits_{\bs{k}}v_{\bs{k}} \left( \rho_{\bs{k}}\rho_{-\bs{k}}-N \right). \label{eq:pot-oc}
-\end{align}
-When generalized to multiple species, eq.~(\ref{eq:pot-oc}) becomes
-\begin{align}
-V =& \frac{1}{2}\sum\limits_{\alpha, \beta} \sum\limits_{i=1}^{N_\alpha} \sum\limits_{j=1}^{N_\beta, (j,\beta)\neq(i,\alpha)} v^{\alpha\beta}(\vert\bs{r}_i^\alpha - \bs{r}_j^\beta \vert) \nonumber \\
-=& \frac{1}{2\Omega} \sum\limits_{\bs{k}}
-v^{\alpha\beta}_{\bs{k}} \left( \rho^\beta_{\bs{k}\alpha\beta}\rho^\alpha_{-\bs{k}}-\delta_{\alpha\beta}N_\alpha \right). \label{eq:pot-mc}
-\end{align}
-For particles interacting via the Coulomb pair potential
-\begin{align}
-v^{\alpha\beta}(\bs{r}) = \frac{Q_\alpha Q_\beta}{r},
-\end{align}
-where $Q_\alpha$ and $Q_\beta$ are the charges of species $\alpha$ and $\beta$, respectively.
-
-\subsection{Definition 3: Jastrow Pair Potential}
-The general form of a Jastrow wavefunction containing two-body terms is
-\begin{align}
-\Psi = \exp\left(-U\right),
-\end{align}
-where
-\begin{align}
-U =& \frac{1}{2}\sum\limits_{\alpha, \beta} \sum\limits_{i=1}^{N_\alpha} \sum\limits_{j=1}^{N_\beta, (j,\beta)\neq(i,\alpha)} 
-u^{\alpha\beta}(\vert\bs{r}_i^\alpha - \bs{r}_j^\beta \vert) \nonumber \\
-=& \frac{1}{2\Omega} \sum\limits_{\bs{k}\alpha\beta}
-u^{\alpha\beta}_{\bs{k}} \left( \rho^\beta_{\bs{k}}\rho^\alpha_{-\bs{k}}-\delta_{\alpha\beta}N_\alpha \right).
-\end{align}
-$u^{\alpha\beta}(\bs{r})$ is the \emph{Jastrow pair potential}. In the high temperature limit, $u^{\alpha\beta}(\bs{r})=\frac{v^{\alpha\beta}(\bs{r})}{2k_BT}$.

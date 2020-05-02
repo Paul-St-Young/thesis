@@ -1,4 +1,4 @@
-\subsection{Slater Determinant in Plane Wave Basis}
+\section{Slater Determinant in Plane Wave Basis}
 
 \textit{Based on notes from D. M. Ceperley dated Aug. 1 2018}
 
@@ -27,11 +27,11 @@ We can verify that the determinant written in eq~(\ref{eq:det}) is normalized
 \end{align}
 The key step in eq~(\ref{eq:det-norm}) is to separate and distribute the many-body integrals into the product.
 
-\subsection{Properties of the Slater Determinant}
+%\subsection{Properties of the Slater Determinant}
 
 Many properties of the slater determinant can be evaluated analytically. Here we focus on reciprocal-space properties accessible by scattering experiments: the momentum distribution $n(\bs{k})$ and the static structure factor $S(\bs{k})$. %They are the Fourier transform of the one-body reduced density matrix (1RDM) and two-body reduced density matrix (2RDM), respectively.
 
-\subsubsection{Momentum Distribution}
+\subsection{Momentum Distribution}
 
 The momentum distribution is the Fourier transform of the 1RDM [IE (5.9)]. The 1RDM can be calculated from the many-body wavefunction
 \begin{align}
@@ -63,7 +63,7 @@ n(\bs{k}) =& \frac{1}{(2\pi)^3N}\int d\bs{r} d\bs{r}'' e^{-i\bs{k}\cdot\bs{r}''}
 \end{align}
 Given the current definitions, $\int d\bs{k} n(\bs{k}) = 1$ for an infinite system. In practice, one bins the Fourier coefficient squared of all occupied orbitals at allowed momenta of the supercell.
 
-\subsubsection{Static Structure Factor}
+\subsection{Static Structure Factor}
 
 The static structure factor is the density-density correlation in reciprocal space
 \begin{align}
