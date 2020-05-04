@@ -1,18 +1,49 @@
-\chapter{Slater-Jastrow wavefunction}
+\chapter{Slater-Jastrow wave function}
+
+What have we learnt from studying wave functions?
+Cusp condition, plasmon modes, back flow quasiparticle excitations
 
 \section{Historic Overview}
 
-In condensed matter, the development of many-body wavefunction took off in the study of homogeneous quantum liquids. Most studies make use of the variational principle, which states that given a Hamiltonian $\ham$, any trial wavefunction will have an energy value no less than that of the true ground state $\braket{\Psi_T|\ham|\Psi_T}\ge\braket{\Psi_0|\ham|\Psi_0}$. This principle allowed the pioneers to make educated guesses, then check the quality of theses guess. Of course, the energy value is only one number. More are needed to truly quantify the accuracy of a wavefunction, but I digress.
-As early as 1934, E. Wigner~\cite{Wigner1934} noted that by introducing a “hole” in the correlation function of opposite-spin elections, one can improve the Slater determinant and lower its energy value in the homogeneous electron gas. Although this hint was not acted on until much later. In 1940, A. Bijl~\cite{Bijl1940} found that the logarithm of the wavefunction of many-interacting particles is size extensive. This logarithm can be expressed as a perturbation expansion involving one- and two-electron terms and is convergent in the thermodynamic limit. Expanding the logarithm of the wavefunction is a general idea that encompasses the popular Jastrow wavefunction (to be introduced). Unfortunately, this work went unnoticed for 30 years while others independently developed similar ideas. In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wavefunction by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle pair product wavefunction to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied the pair product wavefunction by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wavefunction was born.
-Bijl-Dingle-Jastrow
+In condensed matter, the development of many-body wave function took off in the study of homogeneous quantum liquids, e.g., liquid helium and the homogeneous electron gas, a.k.a. jellium. Most studies made use of the variational principle, which states that given a Hamiltonian $\ham$, any trial wave function will have an energy value no less than that of the true ground state $\braket{\Psi_T|\ham|\Psi_T}\ge\braket{\Psi_0|\ham|\Psi_0}$. This principle allowed the pioneers to make educated guesses, then check the quality of theses guess. Of course, the energy value is only one number. More are needed to truly quantify the accuracy of a wave function, but I digress.
 
-The most prominent success of the Slater-Jastrow wavefunction is its application to the homogenous electron gas. In 1961, T. Gaskell~\cite{Gaskell1961} calculated the Jastrow pair function for homogeneous electron gas. He expressed the Jastrow pair function in collective coordinates and explicitly calculated the pair correlation function. By analytically minimizing the total energy in the long wavelength limit, he derived an accurate Jastrow pair function, having correct limits both at long wavelength and at coalescence points (electron-electron cusp). In 1978, D. M. Ceperley extended the Gaskell pair function to Wigner crystal. %Finally, in 1980, D. M. Ceperley and B. J. Alder solved the homogeneous electron gas problem in three spatial dimensions.
+As early as 1934, E. Wigner~\cite{Wigner1934} noted that by introducing a “hole” in the correlation function of opposite-spin elections, one can improve the Slater determinant and lower its energy value in the homogeneous electron gas. Although, this hint was not acted on until much later.
+In 1940, A. Bijl~\cite{Bijl1940} found that the logarithm of the wave function of many-interacting particles is size extensive. This logarithm can be expressed as a perturbation expansion involving one- and two-electron terms and is convergent in the thermodynamic limit.
+Unfortunately, this work went unnoticed for 30 years while others independently developed similar ideas. Expanding the logarithm of the wave function is a general idea that later became known as the Bijl-Dingle-Jastrow-Feenberg expansion~\cite{Carleo2017} for historical reasons, which I will now describe.
 
-Meanwhile, a successful improvement to the Slater-Jastrow wavefunction was made by R. P. Feynman in 1956, while studying rotons in liquid helium. A roton is the quantum analog of a microscopic vortex ring. When an atom moves through the ring, it triggers a returning flow far from the ring. Feynman estimated the energy-momentum curve of liquid helium using a Slater determinant of plane wave orbitals in 1954. His results were in qualitative agreement with the phenomenological theory of Landau. However, the roton energy was severely over-estimated. In 1956, Feynman and Cohen introduced the effect of back flow into the trial wave function and showed that the roton energy can be reduced to a reasonable value.
+In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wave function by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle pair product wave function to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied the pair product wave function by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wave function was born. While this thesis is mostly focused on the Slater-Jastrow wave function for electronic matter, the idea of separating particle-statistics from correlation effects is general for classical and quantum matter %eq.~(\ref{eq:wf-prod-jas})
+\begin{align} \label{eq:wf-prod-jas}
+\Psi = \left\{\begin{array}{ll}
+I \exp(-U) & \text{distinguishabe} \\
+P \exp(-U) & \text{bosons} \\
+D \exp(-U) & \text{fermions}
+\end{array}\right.,
+\end{align}
+where $I$, $P$, $D$ are identity, permanent, and determinant respectively. In fact, some important improvements to eq.~(\ref{eq:wf-prod-jas}) came from the study of bosons rather than fermions.
 
-In 1962, F. Y. Wu and E. Feenberg~\cite{Wu1962} took the symmetric wavefunction for bosonic He$_4$ and applied it to fermionic He$_3$ by multiplying by a determinant.
-In 1977, C. C. Chang and C. E. Campbell~\cite{Chang1977} added a three-body term to the Slater-Jastrow wavefunction and observed better agreement with experiment.
-A common theme of these early successes is guessing and checking of correlation. One guesses that a many-body correlation is important, incorporates said correlation into the wavefunction, then checks if the energy value is lowered and/or correlation functions get closer to experiment. This approach requires one to think long and hard about the physics of a particular problem, to have the mathematical prowess to connect observed correlation with a wavefunction form, and to be lucky enough to have some experimental data to compare with. This set of circumstances is less and less likely today, so instead, recent advances in many-body wavefunction have been driven by numerical optimization of general wavefunction forms with many parameters. Examples include orbital rotation in a single determinant, multi-determinant expansion, iterative back flow, and neural network.
+In 1956, R.P. Feynman and M. Cohen~\cite{Feynman1956} found it crucial to include the effect of back flow to accurately describe rotons in liquid helium. A roton is the quantum analog of a microscopic vortex ring. When an atom moves through the ring, it triggers a returning flow far from the ring, a.k.a. back flow. R.P. Feynman first estimated the energy-momentum curve of liquid helium using a vanilla permanent of plane wave orbitals in 1954, but found the roton energies severely over-estimated~\cite{Feynman1954}. It is only after the introduction of back flow into the trial wave function did the roton energy can be reduced to a reasonable value, in qualitative agreement with the phenomenological theory of Landau and experiment~\cite{Feynman1956}.
+In 1961, F.Y. Wu and E. Feenberg~\cite{Wu1961} introduced a pair approximation to the Jastrow wave function, to be defined by eq.~(\ref{eq:wf-def-jas}) and (\ref{eq:wf-def-j2}), and related the Jastrow pair function to the pair correlation function of liquid helium
+\begin{align}
+u(r) = g(r) - \dfrac{1}{8\pi^3\rho}\int d\bs{k} e^{-i\bs{k}\cdot\bs{r}}
+\dfrac{[S(k)-1]^2}{1+\xi[S(k)-1]},
+\end{align}
+where $\xi\approx0.97$ gave accurate results under the superposition approximation.
+Direct relation between experimentally measurable correlation functions and the wave function is an important avenue to glean understanding from the many-body wave function. Wu and Feenberg also wrote down expectation values of kinetic and potential operators
+\begin{align}
+\braket{T} = \frac{1}{2}\dfrac{N\rho}{2}\dfrac{\hbar^2}{2m} \int d\bs{r} g'(\bs{r}) u'(\bs{r}), \\
+\braket{V} = \frac{1}{2} N\rho\int d\bs{r} g(\bs{r}) v(\bs{r}),
+\end{align}
+for non-relativistic particles having mass $m$ and interacting via a pair potential $v(\bs{r})$. These relations will later prove useful for the study of finite-size effects using the wave function. Similar ideas arose in the study of fermions in the same year.
+
+%The most prominent success of the Slater-Jastrow wave function is its application to the homogeneous electron gas.
+In 1961, T. Gaskell~\cite{Gaskell1961} calculated the Jastrow pair function for homogeneous electron gas. He expressed the Jastrow pair function in collective coordinates and explicitly calculated the pair correlation function using the random phase approximation (RPA). By analytically minimizing the total energy in the long wavelength limit, he derived an accurate Jastrow pair function, having correct limits at long and short wavelengths.
+This Gaskell RPA wave function is crucially important in the study of homogeneous electron gas and will be discussed in Sec.~\ref{sec:gaskell-rpa-jas} and extended in Sec.~\ref{sec:mc-rpa-jas}.
+%In 1978, D. M. Ceperley~\cite{Ceperley1978} extended the Gaskell pair function to Wigner crystal.
+Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley and B. J. Alder~\cite{Ceperley1980} solved the homogeneous electron gas problem in three spatial dimensions.
+
+%In 1977, C. C. Chang and C. E. Campbell~\cite{Chang1977} added a three-body term to the Slater-Jastrow wave function and observed better agreement with experiment.
+
+A common theme of these early successes is guessing and checking of correlation. One guesses that a many-body correlation is important, incorporates said correlation into the wave function, then checks if the energy value is lowered and/or correlation functions get closer to experiment. %This approach requires one to think long and hard about the physics of a particular problem, to have the mathematical prowess to connect observed correlation with a wave function form, and to be lucky enough to have some experimental data to compare with. This set of circumstances is less and less likely today, so instead, recent advances in many-body wave function have been driven by numerical optimization of general wave function forms with many parameters. Examples include orbital rotation in a single determinant, multi-determinant expansion, iterative back flow, and neural network.
 
 \section{Definitions}
 
@@ -58,11 +89,11 @@ where $Q_\alpha$ and $Q_\beta$ are the charges of species $\alpha$ and $\beta$, 
 
 \subsection{Definition 3: Jastrow Pair Potential}
 The general form of a Jastrow wavefunction containing two-body terms is
-\begin{align}
+\begin{align} \label{eq:wf-def-jas}
 \Psi = \exp\left(-U\right),
 \end{align}
 where
-\begin{align}
+\begin{align} \label{eq:wf-def-j2}
 U =& \frac{1}{2}\sum\limits_{\alpha, \beta} \sum\limits_{i=1}^{N_\alpha} \sum\limits_{j=1}^{N_\beta, (j,\beta)\neq(i,\alpha)} 
 u^{\alpha\beta}(\vert\bs{r}_i^\alpha - \bs{r}_j^\beta \vert) \nonumber \\
 =& \frac{1}{2\Omega} \sum\limits_{\bs{k}\alpha\beta}
@@ -110,5 +141,5 @@ where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a tri
 
 % 2018-08-10_slater-det-pw_thesis
 \input{sections/slater-det-pw}
-\section{Back flow transformation}
+%\section{Back flow transformation}
 \section{Beyond Slater-Jastrow}
