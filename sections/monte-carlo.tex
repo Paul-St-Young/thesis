@@ -116,7 +116,7 @@ for some $\beta_e$ large enough to be considered ``equilibrated''. Performing pa
 Z_0 = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_{-M}\dots d\bs{r}_0\dots d\bs{r}_{M}
 \Psi_T^*(\bs{r}_{-M})\rho(\bs{r}_{-M},\bs{r}_{-M+1};\tau)\dots\rho(\bs{r}_{M-1},\bs{r}_M;\tau)\Psi_T(\bs{r}_M),
 \end{align}
-where $\tau=\beta_e/M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good approximate to the ground state $\ket{\Psi_0}$. In this sense, $\ket{\Psi_T}\bra{\Psi_T}$ plays the role of a low-temperature density matrix to quickly close a long path, although its temperature is ill-defined. No permutation needs to be sampled because quantum statistics are encoded in the trial wave function. However, translation symmetry along imaginary time is broken. The 2M+1 time slices each sample a different probability distribution. Observables that do not commute with the hamiltonian are unbiased only when evaluated on the middle slice $\bs{r}_0$. The trial wave functions at the ends and the DMs in the middle of eq.~(\ref{eq:pimc-vpi-z0}) must all be non-negative for the integrand to be interpreted as a probability distribution for the path $\{\bs{r}_{-M},\dots,\bs{r}_M\}$. This path is, in general, open ($\bs{r}_{-M}\neq\bs{r}_M$) and can be visualized as a ``reptile''. This method was first mentioned as variational path integral (VPI)~\cite{Ceperley1995}, but later popularized as reptation Monte Carlo (RMC)~\cite{Baroni1999}. While the RMC method can be efficient, it still requires all $M$ classical systems to be stored in memory at one time and intelligent Monte Carlo moves to change the reptile without ergodicity problems. This makes RMC much more troublesome to implement than classical Monte Carlo or molecular dynamics.
+where $\tau=\beta_e/M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good approximate to the ground state $\ket{\Psi_0}$. In this sense, $\ket{\Psi_T}\bra{\Psi_T}$ plays the role of a low-temperature density matrix to quickly close a long path, although its temperature is ill-defined. No permutation needs to be sampled because quantum statistics are encoded in the trial wave function. However, translation symmetry along imaginary time is broken. The 2M+1 time slices each sample a different probability distribution. Observables that do not commute with the hamiltonian are unbiased only when evaluated on the middle slice $\bs{r}_0$. The trial wave functions at the ends and the DMs in the middle of eq.~(\ref{eq:pimc-vpi-z0}) must all be non-negative for the integrand to be interpreted as a probability distribution for the path $\{\bs{r}_{-M},\dots,\bs{r}_M\}$. This path is, in general, open ($\bs{r}_{-M}\neq\bs{r}_M$) and can be visualized as a ``reptile''. This method was first mentioned as variational path integral (VPI)~\cite{Ceperley1995}, but later popularized as reptation Monte Carlo (RMC)~\cite{Baroni1999}. While the RMC method can be efficient, it still requires all $M$ classical systems to be stored in memory at one time and intelligent Monte Carlo moves to change the reptile without ergodicity problems. This makes RMC more troublesome to implement than classical Monte Carlo or molecular dynamics, because the entire reptile, containing $O(M)$ classical systems have to be updated to generate $O(1)$ new decorrelated sample for the pure estimator eq.~(\ref{eq:dmc-opure}).
 
 \subsection{Diffusion Monte Carlo}
 The diffusion Monte Carlo (DMC) method can be viewed as a simplification of RMC.
@@ -175,8 +175,27 @@ Variational Monte Carlo (VMC) can be viewed as a limit of DMC at zero projection
 \begin{align} \label{eq:vmc}
 \braket{\hat{O}} = \braket{\Psi_T|\hat{O}|\Psi_T}.
 \end{align}
-The optimization of any parameters in the trial wave function will be referred to as variational optimization.
-For a local observable, eq.~(\ref{eq:vmc}) becomes an integral over the $3N$-dimensional particle coordinates
+When VMC is used to calculate the expectation value of the hamiltonian ($\hat{O}=\hat{\ham}$), the resultant energy is an upper bound to the true ground-state energy by the variational principle
+\begin{align} \label{eq:wf-variational}
+E_V\equiv \braket{\Psi_T|\hat{\ham}|\Psi_T} = \braket{\Psi_T|E_L(\bs{R};\Psi_T)|\Psi_T} \ge E_0,
+\end{align}
+where the local energy serves as the estimator for total energy
+\begin{align} \label{eq:wf-eloc}
+E_L(\bs{R};\Psi_T) \equiv \dfrac{\ham\Psi_T}{\Psi_T} (\bs{R}).
+\end{align}
+The variational energy $E_V$ is often taken as a measure of the quality of the trial wave function.
+In variational optimization, one changes parameters in $\Psi_T$ to lower $E_V$.
+However, $E_V$ is only one number and is far from a complete descriptor of the 3N-dimensional many-body wave function.
+Another, arguably more powerful, measure of the quality of $\Psi_T$ is the variance of the local energy eq.~(\ref{eq:wf-eloc})
+\begin{align}
+\sigma^2[\Psi_T] \equiv \braket{\Psi_T|(E_L(\bs{R};\Psi_T)-E_V)^2|\Psi_T}\ge 0.
+\end{align}
+This variance will be zero if $\Psi_T$ is any eigenstate of $\ham$. Further, for systems with a gap $E_g$, $\sigma^2$ and $E_V$ also provide a lower bound for the ground-state energy by eq.~(6.16) in Ref.~\cite{Martin2016}
+\begin{align}
+E_V-\sigma^2/E_g \le E_0 \le E_T.
+\end{align}
+
+The VMC algorithm is particularly simple for a local observable. In this case, eq.~(\ref{eq:vmc}) becomes an integral over the $3N$-dimensional particle coordinates
 \begin{align}
 \braket{O} = \int d\bs{r} \dfrac{O(\bs{r})\vert\Psi_T(\bs{r})\vert^2}{\braket{\Psi_T|\Psi_T}},
 \end{align}
@@ -215,7 +234,7 @@ The Langevin equation needed to solve eq.~(\ref{eq:vmc-fokker-planck}) is
 where $\bs{\eta}$ is a multidimensional Gaussian with a mean of zero and a variance of $2\lambda$. In this light, the VMC algorithm is more akin to stochastic classical molecular dynamics than Monte Carlo. However, the most efficient algorithm is obtained when the Fokker-Planck formulation is combined with Metropolis Monte Carlo. By introducing a metropolis accept/reject procedure at each step of the Fokker-Planck dynamics, the time step bias is eliminated because detailed balance is enforced to sample $\vert\Psi_T\vert^2$. Another way to view this is that Fokker-Planck dynamics is used to construct efficient drift-diffusion moves for an exact Monte Carlo method.
 
 Equation~(\ref{eq:vmc-fokker-planck}) defines an efficient implementation of the VMC algorithm. Interestingly, the governing equation of DMC eq.~(\ref{eq:dmc-dfdt}) without the branching term is identical to that of VMC eq.~(\ref{eq:vmc-fokker-planck}) given the drift vector eq.~(\ref{eq:vmc-drift}).
-This implies that the drift-diffusion term in the DMC Green function performs sampling of the trial wave function only. The local energy term in eq.~(\ref{eq:dmc-dfdt}) is responsible for imaginary-time projection of the trial wave function.
+This implies that the drift-diffusion term in the DMC Green function performs sampling of the trial wave function only. The local energy term in eq.~(\ref{eq:dmc-dfdt}), when accumulated over the drift-diffusion process, is responsible for imaginary-time projection of the trial wave function.
 %Variational Monte Carlo is the bread and butter of QMC methods.
 
 \subsection{Fermion Sign Problem} \label{sec:fermion-sign-problem}

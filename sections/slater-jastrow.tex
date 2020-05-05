@@ -1,15 +1,16 @@
 \chapter{Slater-Jastrow wave function}
 
-One goal of studying the many-body wave function is to understand electron correlation~\cite{Ceperley1999-wf}. As P. Dirac pointed out, knowing the Dirac/Schr\"odinger equation and the hamiltonian of the system is not enough for an understanding, because it ``leads to equations much too complicated to be soluble". Even a simple hamiltonian that contains only pair interactions, e.g., the Coulomb hamiltonian, complex correlation and phases can be present.
+One goal of studying the many-body wave function is to understand electron correlation~\cite{Ceperley1999-wf}. As P. Dirac pointed out, knowing the Dirac/Schr\"odinger equation and the hamiltonian of the system is not enough for an understanding, because it ``leads to equations much too complicated to be soluble". Even a simple hamiltonian that contains only pair interactions, e.g., the Coulomb hamiltonian, can create complex many-body correlations and phase diagrams.
 %Hogenberg-Kohn theorem tells us that the exact density functional encodes everything one needs to know about the ground state. How much physical intuition can be extracted from the exact density functional? Does one need to look at the charge density instead?
 %What have we learnt from studying wave functions?
 %Cusp condition, plasmon modes, back flow quasiparticle excitations
-Thus, direct studies of experimental observables, the many-body wave function, and perhaps properties the exact density functional are crucial.
-In this chapter, I will describe, in depth, the most understood many-body wave function for electronic structure, the Slater-Jastrow wave function and discuss what we have learned from it about the behavior of electrons.
+Thus, direct studies of experimental observables, the many-body wave function, and perhaps properties the exact density functional will be more informative.
+In this chapter, I will describe the most understood many-body wave function for electronic structure, the Slater-Jastrow wave function, and discuss what we have learned from it regarding the behavior of electrons.
 
 \section{Historic Overview}
 
-In condensed matter, the development of many-body wave function took off in the study of homogeneous quantum liquids, e.g., liquid helium and the homogeneous electron gas, a.k.a. jellium. Most studies made use of the variational principle, which states that given a Hamiltonian $\ham$, any trial wave function will have an energy value no less than that of the true ground state $\braket{\Psi_T|\ham|\Psi_T}\ge\braket{\Psi_0|\ham|\Psi_0}$. This principle allowed the pioneers to make educated guesses, then check their quality using the expectation value of $\ham$. Of course, the energy value is only one number. More are needed to truly quantify the accuracy of a wave function, but I digress.
+In condensed matter, the development of many-body wave function took off in the study of homogeneous quantum liquids, e.g., liquid helium and the homogeneous electron gas, a.k.a. jellium. Most studies made use of the variational principle eq.~(\ref{eq:wf-variational}), which states that given a Hamiltonian $\ham$, any trial wave function will have an energy value no less than that of the true ground state $\braket{\Psi_T|\ham|\Psi_T}\ge\braket{\Psi_0|\ham|\Psi_0}$. This principle allowed the pioneers to make educated guesses, then check their quality using the expectation value of $\ham$.
+%Of course, the energy value is only one number. More are needed to truly quantify the accuracy of a wave function, but I digress.
 
 As early as 1934, E. Wigner~\cite{Wigner1934} noted that by introducing a “hole” in the correlation function of opposite-spin elections, one can improve the Slater determinant and lower its energy value in the homogeneous electron gas. Although, this hint was not acted on until much later.
 In 1940, A. Bijl~\cite{Bijl1940} found that the logarithm of the wave function of many-interacting particles is size extensive. This logarithm can be expressed as a perturbation expansion involving one- and two-electron terms and is convergent in the thermodynamic limit.
@@ -25,7 +26,7 @@ D(\{\phi_i\}) \exp(-U) & \text{fermions}
 \end{align}
 where $I$, $P$, $D$ are identity, permanent, and determinant respectively.
 $\{\phi_i\}$ is a set of single-particle wave functions and $U$ consists of pair terms only
-\begin{align}
+\begin{align} \label{eq:wf-pair-jas}
 U = \sum\limits_{i<j} u(r_ij).
 \end{align}
 The minus sign in the definition of eq.~(\ref{eq:wf-prod-jas}) is intentional.
@@ -35,8 +36,8 @@ At high temperature, $\vert\Psi\vert^2$ for distinguishable particles becomes th
 \end{align}
 Some important improvements to eq.~(\ref{eq:wf-prod-jas}) came from the study of bosons rather than fermions.
 
-In 1956, R.P. Feynman and M. Cohen~\cite{Feynman1956} found it crucial to include the effect of back flow to accurately describe rotons in liquid helium. A roton is the quantum analog of a microscopic vortex ring. When an atom moves through the ring, it triggers a returning flow far from the ring, a.k.a. back flow. R.P. Feynman first estimated the energy-momentum curve of liquid helium using a vanilla permanent of plane wave orbitals in 1954, but found the roton energies severely over-estimated~\cite{Feynman1954}. It is only after the introduction of back flow into the trial wave function did the roton energy reduce to a reasonable value, in qualitative agreement with the phenomenological theory of Landau and experiment~\cite{Feynman1956}.
-In 1961, F.Y. Wu and E. Feenberg~\cite{Wu1961} introduced a pair approximation to the Jastrow wave function, to be defined by eq.~(\ref{eq:wf-def-jas}) and (\ref{eq:wf-def-j2}), then related the Jastrow pair function to the pair correlation function of liquid helium
+In 1956, R.P. Feynman and M. Cohen~\cite{Feynman1956} found it crucial to include the effect of back flow to accurately describe rotons in liquid helium. A roton is the quantum analog of a microscopic vortex ring. When an atom moves through the ring, it triggers a returning flow far from the ring, a.k.a. back flow. R.P. Feynman first estimated the energy-momentum curve of liquid helium using a permanent of plane wave orbitals in 1954, but found the roton energies severely over-estimated~\cite{Feynman1954}. It is only after the introduction of back flow into the trial wave function did the roton energy reduce to a reasonable value, in qualitative agreement with the phenomenological theory of Landau and experiment~\cite{Feynman1956}.
+In 1961, F.Y. Wu and E. Feenberg~\cite{Wu1961} related the Jastrow pair function, $u(r)$ in eq.~(\ref{eq:wf-pair-jas}), to the pair correlation function of liquid helium
 \begin{align}
 u(r) = g(r) - \dfrac{1}{8\pi^3\rho}\int d\bs{k} e^{-i\bs{k}\cdot\bs{r}}
 \dfrac{[S(k)-1]^2}{1+\xi[S(k)-1]},
@@ -50,13 +51,12 @@ Direct relation between experimentally measurable correlation functions and the 
 for non-relativistic particles having mass $m$ and interacting via a pair potential $v(\bs{r})$. These relations will later prove useful for the study of finite-size effects using the wave function. Similar ideas arose in the study of fermions in the same year.
 
 %The most prominent success of the Slater-Jastrow wave function is its application to the homogeneous electron gas.
-Also in 1961, T. Gaskell~\cite{Gaskell1961} calculated the Jastrow pair function for homogeneous electron gas. He expressed the Jastrow pair function in collective coordinates and explicitly calculated the pair correlation function using the random phase approximation (RPA). By analytically minimizing the total energy in the long wavelength limit, he derived an accurate Jastrow pair function, having correct limits at long and short wavelengths.
+Also in 1961, T. Gaskell~\cite{Gaskell1961} calculated the Jastrow pair function for homogeneous electron gas from perturbation calculation of its pair correlation function. He expressed the Jastrow pair function in collective coordinates and derived an analytical formula using the random phase approximation (RPA). By minimizing the total energy in the long wavelength limit, Gaskell found an accurate Jastrow pair function, having correct limits at both short and long wavelengths.
 This Gaskell RPA wave function proved particularly useful in the study of the homogeneous electron gas and will be discussed in Sec.~\ref{sec:gaskell-rpa-jas} and extended in Sec.~\ref{sec:mc-rpa-jas}.
 %In 1978, D. M. Ceperley~\cite{Ceperley1978} extended the Gaskell pair function to Wigner crystal.
 Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley and B. J. Alder~\cite{Ceperley1980} solved the homogeneous electron gas problem in three spatial dimensions using exact QMC simulations.
 
 %In 1977, C. C. Chang and C. E. Campbell~\cite{Chang1977} added a three-body term to the Slater-Jastrow wave function and observed better agreement with experiment.
-
 A common theme of these early successes is guessing and checking of correlation. One guesses that a many-body correlation is important, incorporates said correlation into the wave function, then checks if the energy value is lowered and/or correlation functions get closer to experiment. %This approach requires one to think long and hard about the physics of a particular problem, to have the mathematical prowess to connect observed correlation with a wave function form, and to be lucky enough to have some experimental data to compare with. This set of circumstances is less and less likely today
 In contrast, recent improvements to the many-body wave function rely heavily on numerical optimization of general wave function forms with many parameters. Examples include orbital rotation in a single determinant, multi-determinant expansion, iterative back flow, and neural network.
 As we move towards these complicated wave functions, it will likely become increasingly difficult to extract physical understanding directly from the wave function.
@@ -65,6 +65,7 @@ This chapter will serve as a summary of some physical insights we have been able
 \section{Definitions}
 
 \subsection{Definition 1: Fourier Transform}
+\label{sec:def-ft}
 The Fourier transform of a 3D function in coordinate space is defined as
 \begin{align}
 f(\bs{k}) = \int d^3\bs{r} e^{i\bs{k}\cdot\bs{r}} f(\bs{r}). \label{eq:forward-ft}
@@ -126,6 +127,8 @@ A Slater determinant is a many-body wavefunction ansatz for the ground state of 
 where $N$ is the number of fermions, $\bs{r}_1, \bs{r}_2, \dots, \bs{r}_N$ are their spatial coordinates. $\mathcal{P}$ is a permutation of the particle index $1, 2, \dots, N$. $\phi_1, \phi_2, \dots, \phi_N$ are a set of one-body wavefunctions (a.k.a. orbitals).
 
 \section{Cusp Conditions}\label{sec:wf-cusp}
+\emph{Derivation guided by Ex.~6.6 in Ref.~\cite{Martin2016}}
+
 Consider two non-relativistic distinguishable particles having masses $m_1$ and $m_2$ interacting via a pair potential $v(r)$. The Schr\"odinger equation in the center-of-mass coordinate is
 \begin{align}
 \left[-\lambda\nabla^2 + v(r)\right] \psi = E\psi,
@@ -137,21 +140,21 @@ where $\lambda=\frac{\hbar^2}{2\mu}$, and $\mu=(m_1^{-1}+m_2^{-1})^{-1}$. The gr
 should have a stationary local energy
 \begin{align} \label{eq:wf-cusp}
 E_L \equiv \dfrac{\ham\psi}{\psi} = v(r) + \lambda\nabla^2u(r) - (\bs{\nabla}u(r))^2 \nonumber \\
-= v(r) + \lambda (u''+\frac{(d-1)u'}{r}) - \lambda {u'}^2,
+= v(r) + \lambda (u''+\frac{(d-1)u'}{r}) - \lambda {u'}^2 = \text{const.},
 \end{align}
 where $d$ is the number of spatial dimensions.
-We see that the laplacian term in the kinetic energy has a divergent term at $r=0$.
-This term can respond to the potential term and keep $E_L$ stationary, even if $v(r)$ as a divergence at $r=0$, e.g., the Coulomb potential. Suppose the two particles have charges $q_1$, $q_2$, and $v(r)=q_1q_2/r$, the condition for stationary $E_L$ requires
+We see that the laplacian term in the kinetic energy has a potentially divergent term at $r=0$.
+This term can respond to the potential and keep $E_L$ stationary, even if $v(r)$ has a divergence at $r=0$, e.g., the Coulomb potential. Suppose the two particles have charges $q_1$, $q_2$, and $v(r)=q_1q_2/r$, the condition for stationary $E_L$ requires
 \begin{align}
 \lim\limits_{r\rightarrow 0}\frac{1}{r} (q_1q_2+ \lambda (d-1) u')=0 \Rightarrow u'(0) = \dfrac{q_1q_2}{\lambda (d-1)}
 \end{align}
-For electron-electron interaction in Hartree atomic units $m_1=m_2=1$, so $\lambda=1$ and $u'(0)=\frac{1}{2}$ in 3D. This is the cusp condition for unlike-spin electron pair. For same-spin pair, the two particles are indistinguishable and the laplacian for each particle contributes a copy of the divergent term. Thus, $u'(0)=\frac{1}{4}$. For an electron-ion pair in the clamped-ion approximation ($m_2\rightarrow\infty$)
+For electron-electron interaction in Hartree atomic units $m_1=m_2=1$, so $\lambda=1$ and $u'(0)=\frac{1}{2}$ in 3D. This is the cusp condition for unlike-spin electron pair. For same-spin pair, the two particles are indistinguishable and the laplacian for each particle contributes a copy of the divergent term and $u'(0)=\frac{1}{4}$. For an electron-ion pair in the clamped-ion approximation ($m_2\rightarrow\infty$)
 \begin{align} \label{eq:wf-ei-cusp}
 u'(0) = -\dfrac{2Z}{d-1},
 \end{align}
 where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a trial wave function greatly reduces the variance of the local energy and improves the efficiency of a QMC calculation. The electron-ion cusp eq.~(\ref{eq:wf-ei-cusp}) is the most important one to maintain, because the wave function amplitude around an ion is high and many samples from the MC algorithm will have some electron close to an ion. In contrast, one rarely samples a configuration with two electrons close together due to strong electron-electron repulsion. Thus, the effect of imposing the electron-electron cusp condition is less pronounced.
 
-For gravitational interaction $v(r)=Gm_1m_2/r^2$, eq.~(\ref{eq:wf-cusp}) implies
+For the gravitational interaction $v(r)=Gm_1m_2/r^2$, eq.~(\ref{eq:wf-cusp}) implies
 \begin{align}
 \lim\limits_{r\rightarrow 0} u(r) = \alpha\ln r,
 \end{align}

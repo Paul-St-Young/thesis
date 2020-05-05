@@ -1,13 +1,13 @@
 \chapter{Finite-size Effects}
 
-In this chapter, I will describe the common types of finite size effects encountered in electronic structure simulations and a few correction schemes. I will begin the discussion from the most general correction that works for quantum and classical systems at zero or finite temperature: the static structure factor correction to the potential energy. From there, we extend the method to consider kinetic energy correction from the momentum distribution, and in the quantum case, the Jastrow pair potential. %Then, I will discuss the dominant single-particle kinetic finite size effect in fermion systems, the so-called "shell filling" effects.
+In this chapter, I will describe the common types of finite size effects encountered in electronic structure simulations and a few correction schemes. I will begin the discussion from the most general correction that works for quantum and classical systems at zero or finite temperature: the static structure factor correction to the potential energy. From there, the method is extended to correct kinetic energy from the momentum distribution, and in the quantum case, the Jastrow pair function. %Then, I will discuss the dominant single-particle kinetic finite size effect in fermion systems, the so-called "shell filling" effects.
 Many-body corrections beyond pair interactions are beyond the scope of this discussion.
 
 \section{Correction to the potential energy}
 
 \subsection{General Theory}
-Given a simulation using periodic boundary conditions, the accessible momenta are quantized. As the simulation cell is enlarged, the grid of accessible momenta becomes finer until it grants access to the full continuum of momentum space in the thermodynamic limit. By considering the difference between this infinite system and the finite simulation cell, we can understand finite size effects and attempt to correct them.
-Consider an orthorhombic box with side length $L_z$ along the z direction. The momentum along the $z$ direction must take discrete values $k_z=\dfrac{2\pi}{L_z}n_z$, where $n_z\in\mathcal{N}$, similarly for the other directions.
+Given a simulation using periodic boundary conditions, the accessible momenta are quantized. As the simulation cell is enlarged, the grid of accessible momenta becomes finer until it grants access to the full continuum of momentum space in the thermodynamic limit. By considering the difference between this infinite system and the finite simulation cell, we can understand finite-size effects and attempt to correct them.
+Consider an orthorhombic box with side length $L_x$ along the x direction. The momentum along the $x$ direction must take discrete values $k_x=\dfrac{2\pi}{L_x}n_x$, where $n_x\in\mathcal{N}$. Similarly discretization exist along the other directions.
 %For simulations with the Coulomb interaction, one has no access to the $\bs{k}=\bs{0}$ volume element in reciprocal space.
 In a simulation where particles interact via the Coulomb pair potential $v(r)=\frac{1}{r}$, the total potential energy of the system %can be written as an integral over the pair correlation function
 \begin{align}
@@ -26,13 +26,8 @@ This equation can be equivalently written in reciprocal space as
 \begin{align} \label{eq:fsc-vn-vk}
 V_N \equiv V/N = v_M + \frac{1}{2\Omega} \sum\limits_{\bs{k}\neq\bs{0}} v_{\bs{k}} S(\bs{k}),
 \end{align}
-where $v_{\bs{k}}=\dfrac{2\pi (d-1)}{k^{d-1}}$ is the Fourier transform of the Coulomb pair potential in $d$ spatial dimensions. Equation~(\ref{eq:fsc-vn-vk}) looks different than its original proposal in Ref.~\cite{Chiesa2006} due to difference in Fourier transform convention. Here, I follow the definitions eq.~(6) and (7) in Ref.~\cite{Holzmann2016}.
-For example, in 3D
-\begin{align}
-v_{\bs{k}} \equiv \int d^3\bs{r} e^{-i\bs{k}\cdot\bs{r}}~\frac{1}{r}
-=4\pi \lim\limits_{\epsilon\rightarrow 0^+} \int_0^\infty dr \dfrac{r\sin(kr)}{k}~\frac{1}{r}e^{-\epsilon r} = \lim\limits_{\epsilon\rightarrow 0^+} \dfrac{4\pi}{k^2+\epsilon^2}=\dfrac{4\pi}{k^2}.
-\end{align}
-$\Omega$ is the volume of the supercell. $v_M$ is the Madelung constant, which combines the electrostatic energy of an infinite periodic array of charges on $\bs{L}$ with a neutralizing background.
+where $v_{\bs{k}}=\dfrac{2\pi (d-1)}{k^{d-1}}$ is the Fourier transform of the Coulomb pair potential in $d$ spatial dimensions. Equation~(\ref{eq:fsc-vn-vk}) looks different than its original proposal in Ref.~\cite{Chiesa2006} due to a different Fourier transform convention. Here, I follow the definitions eq.~(6) and (7) in Ref.~\cite{Holzmann2016}, which are reiterated in Sec.~\ref{sec:def-ft}.
+$v_M$ is the Madelung constant, which combines the electrostatic energy of an infinite periodic array of charges on $\bs{L}$ with a neutralizing background.
 
 Suppose $S(\bs{k})$ is converged, i.e., does not change with system size, then the only difference between the infinite-system and the finite-size potential energies is the replacement of the sum in eq.~(\ref{eq:fsc-vn-vk}) by an integral
 \begin{align} \label{eq:fsc-dvn}
@@ -56,19 +51,8 @@ Bohm and Pine~\cite{Bohm1953} discovered that the many-body wave function of the
 -\frac{1}{2\Omega} \sum\limits_{\bs{k}} u_{\bs{k}} \rho_{\bs{k}} \rho_{-\bs{k}} + \frac{1}{\Omega^2}\sum\limits_{\bs{k},\bs{q}} w(\bs{k}, \bs{q}) \rho_{\bs{k}+\bs{q}}\rho_{-\bs{k}}\rho_{-\bs{q}}+\dots
 \right).
 \end{align}
-In the random phase approximation (RPA), we ignore the mode coupling terms, such as $w(\bs{k},\bs{q})$, and find an analytical form for the static structure factor~\cite{Gaskell1961}
-\begin{align} \label{eq:gaskell-rpa-sk}
-S(k) = \left(
-S_0^{-2}(k) + \dfrac{2\rho u(k)}{e(k)}
-\right)^{-1/2},
-\end{align}
-where $S_0(k)$ is the structure factor of the short-range part $\Psi_{s.r.}$ and $e(k)=\frac{\hbar^2}{2m}k^2$ is the dispersion of the plasmon mode.
-Assuming a determinant of plane waves for $\Psi_{s.r.}$, in 3D~\cite{Gori-Giorgi2000}
-\begin{align}
-S_0(k) = \left\{
-\frac{3}{4}\left( \dfrac{k}{k_F} \right) - \frac{1}{16}\left(\dfrac{k}{k_F}\right)^3\right\} \Theta(2k_F-k) + \Theta(k-2k_F).
-\end{align}
-Using the leading-order approximation of eq.~(\ref{eq:fsc-skrpa-taylor}) in eq.~(\ref{eq:fsc-dvn-missing}), we obtain the leading-order finite-size correction to the potential energy
+In the random phase approximation (RPA), we ignore the mode coupling terms, such as $w(\bs{k},\bs{q})$, and find the Gaskell RPA static structure factor eq.~(\ref{eq:wf-gaskell-rpa-sk}).
+Using the leading-order approximation of $S(\bs{k})$ eq.~(\ref{eq:wf-gaskell-rpa-sk-taylor}) in the finite-sie correction formula eq.~(\ref{eq:fsc-dvn-missing}), we obtain the main correction to the potential energy
 \begin{align}
 \Delta V_N^{l.o.} = \frac{\omega_p}{4}.
 \end{align}
@@ -85,7 +69,7 @@ where $k_F\equiv\sqrt{2}/r_s$, $C_{2D}=3.9852$ and $3.9590$ for square and hexag
 
 \subsection{Inhomogeneous system}
 In a real crystal, valence electrons interact with a periodic arrangement of localized ionic cores rather than a homogeneous neutralizing background of positive charge.
-In this inhomogeneous system, one needs to take care to separate the static and fluctuating contributions to the static structure factor
+In such inhomogeneous systems, it is instructive to separate the static and fluctuating contributions to the static structure factor
 \begin{align}
 S(\bs{k}) \equiv \frac{1}{N}\left\langle
 \rho_{\bs{k}}\rho_{-\bs{k}}
@@ -103,7 +87,7 @@ S(\bs{k}) \equiv \frac{1}{N}\left\langle
 As shown in Fig.~\ref{fig:fsc-sk-dsk-rhok}, the static part due to charge density $\rho_{\bs{k}}$ is non-zero only at reciprocal lattice of the primitive cell of the underlying crystal structure, whereas the fluctuating part varies smoothly from $0$ to $1$. Its value within the missing $\bs{k}=\bs{0}$ region (red area in Fig.~\ref{fig:fsc-sk-dsk-rhok}) can be used to correct the potential energy to leading order following eq.~(\ref{eq:fsc-dvn-missing}).
 Changes in the charge density with system size is a higher-order effect and is small compared to the total potential energy~\cite{Clay2016}. However, as shown in Ref.~\cite{Yang2020-gap}, this static contribution becomes important when an energy difference is taken, such as in the calculation of the fundamental gap.
 
-Equation~(\ref{eq:gaskell-rpa-sk}) still works well at $k\ll k_F$, but the short-range contribution $S_0(k)$ no longer comes from a simple determinant of plane waves. For insulators, dielectric screening suppresses long-range fluctuation and changes the leading-order behavior of $S(k)$ from eq.~(\ref{eq:fsc-skrpa-taylor}) to eq.~(7) in Ref.~\cite{Yang2020-gap}
+Equation~(\ref{eq:wf-gaskell-rpa-sk}) still works well at $k\ll k_F$, but the short-range contribution $S_0(k)$ no longer comes from a simple determinant of plane waves. For insulators, dielectric screening suppresses long-range fluctuation and changes the leading-order behavior of $S(k)$ from eq.~(\ref{eq:wf-gaskell-rpa-sk-taylor}) to eq.~(7) in Ref.~\cite{Yang2020-gap}
 \begin{align}
 S(k) \approx \dfrac{k^2}{2\omega_p}(1-\epsilon_k^{-1})^{1/2},
 \end{align}
@@ -158,7 +142,7 @@ T_N^{VMC} = \frac{1}{N}\left\langle
 \right]
 \right\rangle\equiv T_N^D + T_N^U.
 \end{align}
-The dominant finite-size correction in the determinant term is due to one-particle ``shell filling'' effects, whereas the dominant correction in the Jastrow term is due to long-range two-particle correlation. Let us look at these two effects in turn.
+The dominant finite-size correction in the determinant term is due to one-particle ``shell filling'' effects, whereas the dominant correction in the Jastrow term is due to long-range two-particle correlation. I will now discuss these two effects in turn.
 \subsubsection{Single-particle ``shell filling'' effect}
 If the orbitals of the determinant came from some effective one-particle theory such as HF or KS-DFT, then they are solutions of some effective potential $\veff$
 \begin{align}

@@ -2,7 +2,7 @@
 \subsection{Hartree-Fock (HF)}
 
 \newcommand{\hcore}{H^{\text{core}}_{\mu\nu}}
-\newcommand{\veff}{V^{\text{eff}}_{\mu\nu}}
+\newcommand{\ksveff}{V^{\text{eff}}_{\mu\nu}}
 
 \subsubsection{The Hartree-Fock Equations}
 The Hartree-Fock equations are a set of linear equations that couple spin orbitals in the determinant wavefunction. They can be obtained by minimizing the energy of a Slater determinant with the constraint that spin orbitals remain orthonormal. Using the method of Lagrangian multipliers, this constraint optimization problem can be converted to a set of linear equations, which take the form of an eigenvalue problem.
@@ -47,7 +47,7 @@ K_{\mu\nu} \equiv (\mu a|\nu a)
 \end{align}
 is the exchange operator and has no classical interaction. The exchange-correlation contribution to the Fock matrix is sometimes called the Hartree-Fock effective potential operator
 \begin{align}
-\veff\equiv 2J_{\mu\nu} - K_{\mu\nu}.
+\ksveff\equiv 2J_{\mu\nu} - K_{\mu\nu}.
 \end{align}
 
 Suppose each molecular orbital $a$ is written as a linear combination of the basis functions
@@ -181,7 +181,7 @@ g(r; \sigma) = \dfrac{1}{\sigma\sqrt{2\pi}} e^{-\dfrac{r^2}{2\sigma^2}}.
 \end{align}
 \end{comment}
 
-\subsection{Density Functional Theory (DFT)}
+\subsection{Kohn-Sham Density Functional Theory (KS-DFT)}
 While the Hartree-Fock method enjoys much success in the study of atoms and molecules, its complete neglect of (Coulomb) electron correlation is woefully inadequate for most solids. The total energy is dominated by inner shell contributions, which overshadow the valence contributions important for bonding and correlated excitations in solids. The HF energy eigenvalues show vanishing density of states at the Fermi level in metals and unphysically large band gaps in insulators~\cite{Perdew1981}.
 
 Density functional theory uses the three-dimensional total electron density $n(\bs{r})$ as the basic variable rather than the 3N-dimensional many-body wave function $\Psi(\bs{r}_1,\dots,\bs{r}_N)$. This is a dramatic simplification that likely lead to its dominance in modern electronic structure theory of solids and material science.
