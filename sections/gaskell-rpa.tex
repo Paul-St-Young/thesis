@@ -1,28 +1,32 @@
 \section{Gaskell RPA Jastrow}
 \label{sec:gaskell-rpa-jas}
 % 2018-04-27 li-nofk-iso
-The RPA Jastrow potential given by Gaskell~\cite{Gaskell1961, Ceperley1978, Holzmann2009, Holzmann2016} is
+The RPA Jastrow potential electron gas in 3D given by T. Gaskell~\cite{Gaskell1961, Ceperley1978, Holzmann2009, Holzmann2016} is
 \begin{align}
-2\rho u^{RPA}_k = \left[ S_0(k) \left( 1 + 2\rho S_0^2(k) \nu_k/\epsilon_k \right)^{-1/2} \right] ^{-1} - S_0(k)^{-1}, \label{eq:rpauk}
+2\rho u^{RPA}_k = \left[\left( S_0(k)^{-2} + 2\rho v_k/\epsilon_k \right)^{-1/2} \right] ^{-1} - S_0(k)^{-1}, \label{eq:wf-gaskell-rpa-uk}
 \end{align}
-where the $\nu_k$ is the Coulomb potential in reciprocal space and $\epsilon_k$ is the energy-momentum dispersion relation. For non-relativistic electrons in 3D, $\nu_k=\frac{4\pi}{k^2}$ and $\epsilon_k=\frac{k^2}{2}$ using Hatree atomic units. $S_0(k)$ is the static structure factor of the free Fermi gas
+where the $\nu_k$ is the Coulomb potential in reciprocal space and $\epsilon_k$ is the energy-momentum dispersion relation. For non-relativistic electrons in 3D, $\nu_k=\frac{4\pi}{k^2}$ and $\epsilon_k=\frac{k^2}{2}$ using Hatree atomic units. $S_0(k)$ is the static structure factor of the free Fermi gas ~\cite{Gori-Giorgi2000}
 \begin{align}
-S_0(k) = \left\{\begin{array}{l}
-\frac{3}{4}\left( \frac{k}{k_F} \right) - \frac{1}{16}\left(\frac{k}{k_F}\right)^3 ~~~, k<2k_F \\
-1.0 ~~~~~~~~~~~~~~~~~~~~~~~~, k \geq 2k_F
-\end{array}\right..
+S_0(k) = \left\{
+\frac{3}{4}\left( \dfrac{k}{k_F} \right) - \frac{1}{16}\left(\dfrac{k}{k_F}\right)^3\right\} \Theta(2k_F-k) + \Theta(k-2k_F).
 \end{align}
-
-Assuming Gaussian statistics for $\rho_{\bs{k}}$, one can obtain a general relation between the Jastrow potential and the static structure factor~\cite{Holzmann2011} %~\cite{Gaskell1961, Holzmann2011, Holzmann2016} [Interacting Electrons (6.22)]
+Gaskell~\cite{Gaskell1961} used an integral identity to obtain a general relation between the Jastrow potential and the static structure factor%~\cite{Holzmann2011} %~\cite{Gaskell1961, Holzmann2011, Holzmann2016} [Interacting Electrons (6.22)]
 \begin{align}
 2\rho u_{\bs{k}} = S^{-1}(\bs{k}) - S^{-1}_0(\bs{k}). \label{eq:uk-sk}
 \end{align}
-Therefore, the RPA structure factor can be read off of $u^{RPA}_k$ in eq.~(\ref{eq:rpauk}) via eq.~(\ref{eq:uk-sk})
+Therefore, the RPA structure factor can be read off of $u^{RPA}_k$ in eq.~(\ref{eq:wf-gaskell-rpa-uk}) via eq.~(\ref{eq:uk-sk})
 \begin{align}
-S^{RPA}(k) = S_0(k)\left( 1 + 2\rho S_0^2(k) \nu_k/\epsilon_k \right)^{-1/2}. \label{eq:rpask}
+S^{RPA}(k) = \left( S_0^{-2}(k) + 2\rho v_k/\epsilon_k \right)^{-1/2}, \label{eq:wf-gaskell-rpa-sk}
 \end{align}
+where $k_F$ is the Fermi k-vector. For unpolarized electrons $k_F=3\pi^2\rho=\left(\frac{9\pi}{4r_s^3}\right)^{1/3}$.
 
-%The static structure factor of the valence electrons in lithium is quite close to that in jellium. In Fig.~\ref{fig:rpask}, the DMC pure-estimator structure factor of b.c.c. lithium is compared with the RPA result eq.~(\ref{eq:rpask}). The agreement as $k\rightarrow0$ is quite good.
+Equation~(\ref{eq:wf-gaskell-rpa-sk}) is exact in the long wavelength $k\rightarrow0$ limit. Taylor expanding eq.~(\ref{eq:wf-gaskell-rpa-sk}) around $k=0$
+\begin{align} \label{eq:wf-gaskell-rpa-sk-taylor}
+S(k) = \frac{k^2}{2\omega_p}-\frac{k_F^2k^4}{9 \omega_p ^3}+O\left(k^6\right),
+\end{align}
+where the plasmon frequency $\omega_p=\sqrt{4\pi\rho}=\sqrt{3/r_s^3}$.
+
+%The static structure factor of the valence electrons in lithium is quite close to that in jellium. In Fig.~\ref{fig:rpask}, the DMC pure-estimator structure factor of b.c.c. lithium is compared with the RPA result eq.~(\ref{eq:wf-gaskell-rpa-sk}). The agreement as $k\rightarrow0$ is quite good.
 
 %\begin{figure}[h]
 %%\includegraphics[scale=1.0]{figures/008b_rpask}
@@ -30,15 +34,4 @@ S^{RPA}(k) = S_0(k)\left( 1 + 2\rho S_0^2(k) \nu_k/\epsilon_k \right)^{-1/2}. \l
 %\end{figure}
 
 % 2018-04-24_gaskell-rpa_thesis
-Given one-component 3D homogeneous electron gas, Gaskell RPA Jastrow reads~\cite{Holzmann2009}
-\begin{align}
-2\rho u(k) = -S_0^{-1}(k) + \left[ S_0^{-2}(k) + \left( \frac{2\rho \nu_k}{\epsilon_k} \right) \right] ^{1/2}, \label{eq:gaskell-rpa-uk}
-\end{align}
-where $\rho = (4\pi r_s^3/3)^{-1}$, $\nu_k = \frac{4\pi e^2}{k^2}$, $\epsilon_k=\frac{\hbar^2 k^2}{2m_e}$, and $S_0(k)$ is the non-interacting structure factor
-\begin{align}
-S_0(k) = \frac{3}{4} \left(\frac{k}{k_F}\right) - \frac{1}{16}\left(\frac{k}{k_F}\right)^3,\text{ for } k\in[0,2k_F]; 1.0 \text{ for } k > 2k_F.
-\end{align}
-$k_F=(3\pi^2\rho)=\left(\frac{9\pi}{4r_s^3}\right)^{1/3}$ is the Fermi k vector. In Hatree atomic units, eq.~(\ref{eq:gaskell-rpa-uk}) simplifies to
-\begin{align}
-2\rho u(k) = -S_0^{-1}(k) + \left[ S_0^{-2}(k) + \left( \frac{12}{r_s^3 k^4} \right) \right]^{1/2}. \label{eq:gaskell-uk-au}
-\end{align}
+While Gaskell originally derived eq.~(\ref{eq:wf-gaskell-rpa-uk}) using perturbation theory, one can derive the same form by minimizing the variance of the local energy in the long wavelength limit, as shown in the next Sec.~\ref{sec:mc-rpa-jas}.

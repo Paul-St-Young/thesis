@@ -75,9 +75,9 @@ k^2u_{\bs{k}}^{\gamma\alpha}u_{\bs{k}}^{\gamma\beta} \rho_{\bs{k}}^\alpha\rho_{-
 
 Finally, the local energy can be assembled
 \begin{align}
-\boxed{E_L = \sum\limits_{\bs{k}}\left[\frac{v^{\alpha\beta}_{\bs{k}}}{2\Omega} - 
+E_L = \sum\limits_{\bs{k}}\left[\frac{v^{\alpha\beta}_{\bs{k}}}{2\Omega} - 
 \frac{\frac{\lambda_\alpha+\lambda_\beta}{2}k^2u_{\bs{k}}^{\alpha\beta}}{\Omega} -
-\sum\limits_\gamma \frac{(N_\gamma/\Omega)\lambda_\gamma k^2u_{\bs{k}}^{\alpha\gamma}u_{\bs{k}}^{\beta\gamma}}{\Omega}\right]\rho_{\bs{k}}^\alpha\rho_{-\bs{k}}^\beta + \frac{N_\alpha^2(\lambda_\alpha+\frac{1}{2})}{\Omega}}.
+\sum\limits_\gamma \frac{(N_\gamma/\Omega)\lambda_\gamma k^2u_{\bs{k}}^{\alpha\gamma}u_{\bs{k}}^{\beta\gamma}}{\Omega}\right]\rho_{\bs{k}}^\alpha\rho_{-\bs{k}}^\beta + \frac{N_\alpha^2(\lambda_\alpha+\frac{1}{2})}{\Omega}.
 \end{align}
 
 \subsection{Equations that define the RPA Jastrow Pair Potentials}
@@ -87,25 +87,35 @@ Variance of $E_L$ can be minimized by setting the $\rho_{\bs{k}}^\alpha\rho_{-\b
 u_{\bs{k}}^{\alpha\beta} -
 \sum\limits_\gamma \frac{N_\gamma}{\Omega} \epsilon^\gamma_{\bs{k}} u_{\bs{k}}^{\alpha\gamma}u_{\bs{k}}^{\beta\gamma} = 0. \label{eq:mineq}
 \end{align}
-Eq.~(\ref{eq:mineq}) can be solved for each $\bs{k}$ independently. We no longer need the collective coordinates or the label $\bs{k}$. It is now safe to recycle the symbol $\rho_\gamma\equiv\frac{N_\gamma}{\Omega}$ to mean the number density of species $\gamma$. Simplify eq.~(\ref{eq:mineq}) to
+Equation~(\ref{eq:mineq}) can be solved for each $\bs{k}$ independently. We no longer need the collective coordinates or the label $\bs{k}$. It is now safe to recycle the symbol $\rho_\gamma\equiv\frac{N_\gamma}{\Omega}$ to mean the number density of species $\gamma$. Simplify eq.~(\ref{eq:mineq}) to
 \begin{align}
-\boxed{\frac{v_{\alpha\beta}}{2} - \frac{1}{2}(\epsilon_\alpha+\epsilon_\beta)
+\frac{v_{\alpha\beta}}{2} - \frac{1}{2}(\epsilon_\alpha+\epsilon_\beta)
 u_{\alpha\beta} -
 \sum\limits_\gamma \rho_\gamma \epsilon_\gamma 
-u_{\alpha\gamma}u_{\beta\gamma} = 0 } . \label{eq:mineq_nok}
+u_{\alpha\gamma}u_{\beta\gamma} = 0 . \label{eq:mineq_nok}
 \end{align}
 
-\subsection{Solving for RPA Jastrow Pair Potentials}
+\subsection{Solving for te RPA Jastrow Pair Function}
 
 \textit{One Component}
 
-Eq.~(\ref{eq:mineq_nok}) becomes a quadratic equation of one variable $u_{11}$
+For a one-component system, eq.~(\ref{eq:mineq_nok}) becomes a quadratic equation of one variable $u_{11}$
 \begin{align}
 \frac{v_{11}}{2} - \epsilon_1 u_{11} - \rho_1\epsilon_1u_{11}^2 = 0.
 \end{align}
 The solution is
 \begin{align}
-2\rho_1 u_{11} = -1 + \sqrt{1+2\rho_1v_{11}/\epsilon_1}. \label{eq:oc-rpa-uk}
+2\rho_1 u_{11} = -1 + \sqrt{1+2\rho_1v_{11}/\epsilon_1}, \label{eq:oc-rpa-uk}
+\end{align}
+which agrees with Gaskell's solution eq.~(\ref{eq:wf-gaskell-rpa-uk}), except $S_0(k)$ is replaced by $1$. Notice, if one uses a different Fourier convention, replacing volume $\Omega$ with number of particles $N$ in eq.~(\ref{eq:Uuk})
+\begin{align}
+U = \frac{1}{2N} \sum\limits_{\bs{k}\alpha\beta}
+\tilde{u}^{\alpha\beta}_{\bs{k}} \left( \rho^\beta_{\bs{k}}\rho^\alpha_{-\bs{k}}-\delta_{\alpha\beta}N_\alpha
+\right),
+\end{align}
+then the density $\rho$ drops from the expression for $\tilde{u}$, e.g., eq.~(8) in Ref.~\cite{Ceperley1978} and eq.~(3) in Ref.~\cite{Ceperley1981}
+\begin{align}
+2\tilde{u} = -1 + (1+2v_k/e_k).
 \end{align}
 
 \textit{Two Components}

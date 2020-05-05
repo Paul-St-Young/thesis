@@ -25,7 +25,7 @@ where $\braket{}$ denotes ensemble average. Limiting to local observables that c
 \braket{O} = \int d\bs{r} \dfrac{e^{-\beta V(\bs{r})}}{\int d\bs{r}' e^{-\beta V(\bs{r}')}} O(\bs{r}) = \int d\bs{r} \pi(\bs{r})O(\bs{r}),
 \end{align}
 where $\pi(\bs{r})$ is the Bolzmann distribution
-\begin{align}
+\begin{align} \label{eq:bolzmann-pi}
 \pi(\bs{r}) \equiv \dfrac{e^{-\beta V(\bs{r})}}{\int d\bs{r}' e^{-\beta V(\bs{r}')}} \propto e^{-\beta V(\bs{r})}.
 \end{align}
 Monte Carlo estimation of $\braket{O}$ works by sampling particle configurations from the Bolzmann distribution $\pi(\bs{r})$ and accumulating the average $O(\bs{r})$

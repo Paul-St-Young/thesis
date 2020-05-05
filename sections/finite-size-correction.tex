@@ -1,6 +1,7 @@
-\chapter{Theory and Observation of Finite-size Effects}
+\chapter{Finite-size Effects}
 
-In this chapter, I will describe the common types of finite size effects encountered in electronic structure simulations and a few correction schemes. I will begin the discussion from the most general correction that works for quantum and classical systems at zero or finite temperature: the static structure factor correction to the potential energy. From there, we extend the method to consider kinetic energy correction from the momentum distribution, and in the quantum case, the Jastrow pair potential. Then, I will discuss the dominant single-particle kinetic finite size effect in fermion systems, the so-called "shell filling" effects. Many-body corrections beyond pair interactions are beyond the scope of this discussion.
+In this chapter, I will describe the common types of finite size effects encountered in electronic structure simulations and a few correction schemes. I will begin the discussion from the most general correction that works for quantum and classical systems at zero or finite temperature: the static structure factor correction to the potential energy. From there, we extend the method to consider kinetic energy correction from the momentum distribution, and in the quantum case, the Jastrow pair potential. %Then, I will discuss the dominant single-particle kinetic finite size effect in fermion systems, the so-called "shell filling" effects.
+Many-body corrections beyond pair interactions are beyond the scope of this discussion.
 
 \section{Correction to the potential energy}
 
@@ -67,11 +68,7 @@ Assuming a determinant of plane waves for $\Psi_{s.r.}$, in 3D~\cite{Gori-Giorgi
 S_0(k) = \left\{
 \frac{3}{4}\left( \dfrac{k}{k_F} \right) - \frac{1}{16}\left(\dfrac{k}{k_F}\right)^3\right\} \Theta(2k_F-k) + \Theta(k-2k_F).
 \end{align}
-Equation~(\ref{eq:gaskell-rpa-sk}) is exact in the long wavelength $k\rightarrow0$ limit. Taylor expanding eq.~(\ref{eq:gaskell-rpa-sk}) around $k=0$
-\begin{align} \label{eq:fsc-skrpa-taylor}
-S(k) \approx \frac{k^2}{2\omega_p}-\frac{k_F^2k^4}{9 \omega_p ^3}+O\left(k^6\right),
-\end{align}
-where the plasmon frequency $\omega_p=\sqrt{4\pi\rho}$. Using the leading-order approximation of eq.~(\ref{eq:fsc-skrpa-taylor}) in eq.~(\ref{eq:fsc-dvn-missing}), we obtain the leading-order finite-size correction to the potential energy
+Using the leading-order approximation of eq.~(\ref{eq:fsc-skrpa-taylor}) in eq.~(\ref{eq:fsc-dvn-missing}), we obtain the leading-order finite-size correction to the potential energy
 \begin{align}
 \Delta V_N^{l.o.} = \frac{\omega_p}{4}.
 \end{align}
@@ -194,7 +191,7 @@ T^U_N \equiv \dfrac{1}{N}\left\langle
  \dfrac{\hbar^2}{2m} \rho u_{\bs{k}}u_{-\bs{k}}S(\bs{k}),
 \end{align}
 by eq.~(33) in Ref.~\cite{Holzmann2016}.
-Using an integral identity, T. Gaskell found a general relation between $S(\bs{k})$ and $u_{\bs{k}}$ shown in eq.~(4) in Ref.~\cite{Gaskell1961}, which in current notations states
+Recall the general relation between $S(\bs{k})$ and $u(\bs{k})$ eq.~(\ref{eq:uk-sk})
 \begin{align}
 2\rho u_{\bs{k}} \approx S^{-1}(\bs{k}) - S^{-1}_0(\bs{k}).
 \end{align}
@@ -204,12 +201,32 @@ T_N^U \approx \dfrac{1}{2\Omega} \sum\limits_{\bs{k}\neq\bs{0}}
 e(k)u_{\bs{k}},
 \end{align}
 which should be compared with eq.~(\ref{eq:fsc-vn-vk}) for potential energy. Thus, the procedure to correct the two-body finite-size error in the kinetic energy is analogous to the potential correction scheme eq.~(\ref{eq:fsc-dvn})
-\begin{align}
+\begin{align} \label{eq:fsc-dtn-uk}
 \Delta T_N \equiv T_{\infty} - T_N = \left[
 \int \dfrac{d^d\bs{k}}{(2\pi)^d} - \dfrac{1}{\Omega}\sum\limits_{\bs{k}}
 \right] \frac{e(k)}{2} u(\bs{k}),
 \end{align}
 where $u(\bs{k})$ is an interpolation of the converged Jastrow pair potential, which can be approximated using the converged static structure factor in the long wavelength limit.
+
+\subsubsection{Finite-temperature correction}
+\textit{Based on notes from D. M. Ceperley}\\
+At finite temperature and under the RPA, one half the long-range part of the action satisfies
+\begin{align} \label{eq:fsc-finitet-uk}
+2\rho u_k = Q(\bs{k}, \beta)^{-1}\tanh\left(
+\dfrac{\beta}{2}\dfrac{e(k)}{Q(\bs{k}, \beta)}
+\right) - S_0(\bs{k},\beta)^{-1},
+\end{align}
+where $\beta$ is inverse temperature, $e(k)=\lambda k^2$ is the dispersion of the particle, $\rho=N/\Omega$ is density, and $S_0(\bs{k}, \beta)$ is the non-interacting structure factors.
+\begin{align}
+Q(\bs{k}, \beta) \equiv \left(S_0(\bs{k}, \beta)^{-2}+\dfrac{2\rho v_{\bs{k}}}{e(k)}\right)^{-1/2}.
+\end{align}
+$Q(\bs{k}, \beta)$ reduces to Gaskell RPA $S(\bs{k})$ as $\beta\rightarrow\infty$. Since $\lim\limits_{x\rightarrow\infty}\tanh(x)=1$, eq.~(\ref{eq:fsc-finitet-uk}) becomes eq.~(\ref{eq:uk-sk}) in this limit. Assuming the relation between $S(\bs{k})$ and $u_{\bs{k}}$ eq.~(\ref{eq:uk-sk}) holds, the finite-temperature RPA structure factor is
+\begin{align} \label{eq:fsc-finitet-sk}
+S(\bs{k},\beta) = Q(\bs{k},\beta)/\tanh\left(
+\dfrac{\beta}{2}\dfrac{e(k)}{Q(\bs{k}, \beta)}
+\right).
+\end{align}
+Equations~(\ref{eq:fsc-finitet-uk}) and (\ref{eq:fsc-finitet-sk}) can be used to derived leading-order finite-size corrections to the kinetic and potential energies using eq.~(\ref{eq:fsc-dtn-uk}) and (\ref{eq:fsc-dvn}), respectively.
 
 \begin{comment}
 \section{Overview}

@@ -1,7 +1,11 @@
 \chapter{Slater-Jastrow wave function}
 
-What have we learnt from studying wave functions?
-Cusp condition, plasmon modes, back flow quasiparticle excitations
+One goal of studying the many-body wave function is to understand electron correlation~\cite{Ceperley1999-wf}. As P. Dirac pointed out, knowing the Dirac/Schr\"odinger equation and the hamiltonian of the system is not enough for an understanding, because it ``leads to equations much too complicated to be soluble". Even a simple hamiltonian that contains only pair interactions, e.g., the Coulomb hamiltonian, complex correlation and phases can be present.
+%Hogenberg-Kohn theorem tells us that the exact density functional encodes everything one needs to know about the ground state. How much physical intuition can be extracted from the exact density functional? Does one need to look at the charge density instead?
+%What have we learnt from studying wave functions?
+%Cusp condition, plasmon modes, back flow quasiparticle excitations
+Thus, direct studies of experimental observables, the many-body wave function, and perhaps properties the exact density functional are crucial.
+In this chapter, I will describe, in depth, the most understood many-body wave function for electronic structure, the Slater-Jastrow wave function and discuss what we have learned from it about the behavior of electrons.
 
 \section{Historic Overview}
 
@@ -11,7 +15,7 @@ As early as 1934, E. Wigner~\cite{Wigner1934} noted that by introducing a “hol
 In 1940, A. Bijl~\cite{Bijl1940} found that the logarithm of the wave function of many-interacting particles is size extensive. This logarithm can be expressed as a perturbation expansion involving one- and two-electron terms and is convergent in the thermodynamic limit.
 Unfortunately, this work went unnoticed for 30 years while others independently developed similar ideas. Expanding the logarithm of the wave function is a general idea that later became known as the Bijl-Dingle-Jastrow-Feenberg expansion~\cite{Carleo2017} for historical reasons, which I will now describe.
 
-In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wave function by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle pair product wave function to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied the pair product wave function by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wave function was born. While this thesis is mostly focused on the Slater-Jastrow wave function for electronic matter, the idea of separating particle-statistics from correlation effects is general for classical and quantum matter %eq.~(\ref{eq:wf-prod-jas})
+In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wave function by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle product of pair wave functions to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wave function was born. While this thesis is mostly focused on the Slater-Jastrow wave function for electronic matter, the idea of separating particle-statistics from correlation effects is general for classical and quantum matter %eq.~(\ref{eq:wf-prod-jas})
 \begin{align} \label{eq:wf-prod-jas}
 \Psi = \left\{\begin{array}{ll}
 I(\{\phi_i\}) \exp(-U) & \text{distinguishabe} \\
@@ -19,7 +23,17 @@ P(\{\phi_i\}) \exp(-U) & \text{bosons} \\
 D(\{\phi_i\}) \exp(-U) & \text{fermions}
 \end{array}\right.,
 \end{align}
-where $I$, $P$, $D$ are identity, permanent, and determinant respectively. $\{\phi_i\}$ is a set of single-particle wave functions. Some important improvements to eq.~(\ref{eq:wf-prod-jas}) came from the study of bosons rather than fermions.
+where $I$, $P$, $D$ are identity, permanent, and determinant respectively.
+$\{\phi_i\}$ is a set of single-particle wave functions and $U$ consists of pair terms only
+\begin{align}
+U = \sum\limits_{i<j} u(r_ij).
+\end{align}
+The minus sign in the definition of eq.~(\ref{eq:wf-prod-jas}) is intentional.
+At high temperature, $\vert\Psi\vert^2$ for distinguishable particles becomes the Bolzmann distribution eq.~(\ref{eq:bolzmann-pi}). When only pair interaction is present, the pair contribution to $U$ has the same sign as the potential (see Chapter 6.6 in Ref.~\cite{Martin2016})
+\begin{align}
+\lim\limits_{\beta\rightarrow 0} u(r_ij) = \frac{1}{2}\beta v(r_ij).
+\end{align}
+Some important improvements to eq.~(\ref{eq:wf-prod-jas}) came from the study of bosons rather than fermions.
 
 In 1956, R.P. Feynman and M. Cohen~\cite{Feynman1956} found it crucial to include the effect of back flow to accurately describe rotons in liquid helium. A roton is the quantum analog of a microscopic vortex ring. When an atom moves through the ring, it triggers a returning flow far from the ring, a.k.a. back flow. R.P. Feynman first estimated the energy-momentum curve of liquid helium using a vanilla permanent of plane wave orbitals in 1954, but found the roton energies severely over-estimated~\cite{Feynman1954}. It is only after the introduction of back flow into the trial wave function did the roton energy reduce to a reasonable value, in qualitative agreement with the phenomenological theory of Landau and experiment~\cite{Feynman1956}.
 In 1961, F.Y. Wu and E. Feenberg~\cite{Wu1961} introduced a pair approximation to the Jastrow wave function, to be defined by eq.~(\ref{eq:wf-def-jas}) and (\ref{eq:wf-def-j2}), then related the Jastrow pair function to the pair correlation function of liquid helium
@@ -39,14 +53,14 @@ for non-relativistic particles having mass $m$ and interacting via a pair potent
 Also in 1961, T. Gaskell~\cite{Gaskell1961} calculated the Jastrow pair function for homogeneous electron gas. He expressed the Jastrow pair function in collective coordinates and explicitly calculated the pair correlation function using the random phase approximation (RPA). By analytically minimizing the total energy in the long wavelength limit, he derived an accurate Jastrow pair function, having correct limits at long and short wavelengths.
 This Gaskell RPA wave function proved particularly useful in the study of the homogeneous electron gas and will be discussed in Sec.~\ref{sec:gaskell-rpa-jas} and extended in Sec.~\ref{sec:mc-rpa-jas}.
 %In 1978, D. M. Ceperley~\cite{Ceperley1978} extended the Gaskell pair function to Wigner crystal.
-Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley and B. J. Alder~\cite{Ceperley1980} solved the homogeneous electron gas problem in three spatial dimensions.
+Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley and B. J. Alder~\cite{Ceperley1980} solved the homogeneous electron gas problem in three spatial dimensions using exact QMC simulations.
 
 %In 1977, C. C. Chang and C. E. Campbell~\cite{Chang1977} added a three-body term to the Slater-Jastrow wave function and observed better agreement with experiment.
 
 A common theme of these early successes is guessing and checking of correlation. One guesses that a many-body correlation is important, incorporates said correlation into the wave function, then checks if the energy value is lowered and/or correlation functions get closer to experiment. %This approach requires one to think long and hard about the physics of a particular problem, to have the mathematical prowess to connect observed correlation with a wave function form, and to be lucky enough to have some experimental data to compare with. This set of circumstances is less and less likely today
-Recent improvements to the many-body wave function rely heavily on numerical optimization of general wave function forms with many parameters. Examples include orbital rotation in a single determinant, multi-determinant expansion, iterative back flow, and neural network.
+In contrast, recent improvements to the many-body wave function rely heavily on numerical optimization of general wave function forms with many parameters. Examples include orbital rotation in a single determinant, multi-determinant expansion, iterative back flow, and neural network.
 As we move towards these complicated wave functions, it will likely become increasingly difficult to extract physical understanding directly from the wave function.
-This chapter will serve as a summary of some physical insights we have been able to grasp from the Slater-Jastrow wave function. I hope these will be useful for more complex wave function forms. After some definitions, I will first discuss the short-range asymptotic behavior of the two-body contribution, i.e., the cusp condition in Sec.~\ref{sec:wf-cusp}. Second, I discuss the two-body long wavelength behavior by studying the Gaskell RPA Jastrow in Sec.~\ref{sec:gaskell-rpa-jas} for one-component system and extend it to multi-component system in Sec.~\ref{sec:mc-rpa-jas}. Third, in Sec.~\ref{sec:wf-pw-sdet}, I show observables that can be calculated from the Slater determinant in plane wave basis, namely the momentum distribution from reduced one-particle density matrix in Sec.~\ref{sec:wf-pw-sdet-nk} and the static structure factor from reduced two-particle density matrix in Sec.~\ref{sec:wf-pw-sdet-sk}.
+This chapter will serve as a summary of some physical insights we have been able to grasp from the Slater-Jastrow wave function. I hope some of these will remain useful for more complex wave function forms. After some definitions, I will first discuss the short-range asymptotic behavior of the two-body contribution, i.e., the cusp condition in Sec.~\ref{sec:wf-cusp}. Second, I discuss the two-body long wavelength behavior by studying the Gaskell RPA Jastrow in Sec.~\ref{sec:gaskell-rpa-jas} for one-component system and extend it to multi-component system in Sec.~\ref{sec:mc-rpa-jas}. Third, in Sec.~\ref{sec:wf-pw-sdet}, I show observables that can be calculated from the Slater determinant in plane wave basis, namely the momentum distribution from  one-particle reduced density matrix (1RDM) in Sec.~\ref{sec:wf-pw-sdet-nk} and the static structure factor from two-particle reduced density matrix (2RDM) in Sec.~\ref{sec:wf-pw-sdet-sk}.
 
 \section{Definitions}
 
@@ -90,7 +104,7 @@ v^{\alpha\beta}(\bs{r}) = \frac{Q_\alpha Q_\beta}{r},
 \end{align}
 where $Q_\alpha$ and $Q_\beta$ are the charges of species $\alpha$ and $\beta$, respectively.
 
-\subsection{Definition 3: Jastrow Pair Potential}
+\subsection{Definition 3: Jastrow Pair Function}
 The general form of a Jastrow wavefunction containing two-body terms is
 \begin{align} \label{eq:wf-def-jas}
 \Psi = \exp\left(-U\right),
@@ -102,10 +116,10 @@ u^{\alpha\beta}(\vert\bs{r}_i^\alpha - \bs{r}_j^\beta \vert) \nonumber \\
 =& \frac{1}{2\Omega} \sum\limits_{\bs{k}\alpha\beta}
 u^{\alpha\beta}_{\bs{k}} \left( \rho^\beta_{\bs{k}}\rho^\alpha_{-\bs{k}}-\delta_{\alpha\beta}N_\alpha \right).
 \end{align}
-$u^{\alpha\beta}(\bs{r})$ is the \emph{Jastrow pair potential}. In the high temperature limit, $u^{\alpha\beta}(\bs{r})=\frac{v^{\alpha\beta}(\bs{r})}{2k_BT}$. $u^{\alpha\beta}_{\bs{k}}$ is the Fourier transform of $u^{\alpha\beta}(\bs{r})$ in the unit cell having volume $\Omega$ as defined by eq.~(\ref{eq:lattice-ift}).
+$u^{\alpha\beta}(\bs{r})$ is the \emph{Jastrow pair function}. In the high temperature limit, $u^{\alpha\beta}(\bs{r})=\frac{v^{\alpha\beta}(\bs{r})}{2k_BT}$. $u^{\alpha\beta}_{\bs{k}}$ is the Fourier transform of $u^{\alpha\beta}(\bs{r})$ in the unit cell having volume $\Omega$ as defined by eq.~(\ref{eq:lattice-ift}).
 
 \subsection{Definition 4: Slater Determinant}
-A Slater determinant is a many-body wavefunction ansatz for the ground state of a collection of fermions (of the same spin). It is essentially the anti-symmetrized version of a product wavefunction ansatz for distinguishable particles.
+A Slater determinant is a many-body wavefunction ansatz for the ground state of a collection of same-spin fermions. It is the anti-symmetrized version of a product wavefunction ansatz for distinguishable particles.
 \begin{align}
 \Psi = \frac{1}{\sqrt{N!}}\sum\limits_{\mathcal{P}} (-1)^{\mathcal{P}} \left( \prod\limits_{i=1}^N \phi_{\mathcal{P}_i}(\bs{r}_i) \right),\label{eq:det}
 \end{align}
@@ -135,7 +149,16 @@ For electron-electron interaction in Hartree atomic units $m_1=m_2=1$, so $\lamb
 \begin{align} \label{eq:wf-ei-cusp}
 u'(0) = -\dfrac{2Z}{d-1},
 \end{align}
-where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a trial wave function greatly reduces the variance of the local energy and improves the efficiency of a QMC calculation. The electron-ion cusp eq.~(\ref{eq:wf-ei-cusp}) is the most important one to maintain, because the wave function amplitude around an ion is high and many samples from the MC algorithm will have some electron close to an ion. In contrast, one rarely samples a configuration with two electrons close together due to strong electron-electron repulsion. Thus, the effect of imposing the electron-electron cusp condition is less visible than its electron-ion counterpart.
+where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a trial wave function greatly reduces the variance of the local energy and improves the efficiency of a QMC calculation. The electron-ion cusp eq.~(\ref{eq:wf-ei-cusp}) is the most important one to maintain, because the wave function amplitude around an ion is high and many samples from the MC algorithm will have some electron close to an ion. In contrast, one rarely samples a configuration with two electrons close together due to strong electron-electron repulsion. Thus, the effect of imposing the electron-electron cusp condition is less pronounced.
+
+For gravitational interaction $v(r)=Gm_1m_2/r^2$, eq.~(\ref{eq:wf-cusp}) implies
+\begin{align}
+\lim\limits_{r\rightarrow 0} u(r) = \alpha\ln r,
+\end{align}
+where $\alpha$ satisfies
+\begin{align}
+\alpha^2 + (2-d)\alpha - G(m_1+m_2) = 0.
+\end{align}
 
 \input{sections/gaskell-rpa}
 
@@ -145,4 +168,29 @@ where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a tri
 % 2018-08-10_slater-det-pw_thesis
 \input{sections/slater-det-pw}
 %\section{Back flow transformation}
+
 \section{Beyond Slater-Jastrow}
+One way to systematically obtain more accurate wave functions than Slater-Jastrow is to expand the many-body wave function in a basis of determinants. This configuration interaction (CI) expansion method is routinely used in quantum chemistry to study molecules. The CI method is especially effective when the correlation in the ground state is mostly static in nature, e.g., in benzene where the ground-state wave function is approximately the equal superposition of many non-interacting determinants. This method is less successful in bulk calculations due to difficulty in performing finite-size extrapolation. Specifically, a fixed-length determinant expansion is more accurate for a small system than a large one. Thus, properties such as the total energy are not size extensive and cannot be extrapolated to the thermodynamic limit using known asymptotic formula.
+
+Another method for systematically improving the many-body wave function is to use the generalized Feynman-Kac formula (eq.~(6.12) in Ref.~\cite{Martin2016}), which is intimately related to the DMC method (eq.~(24.23) in Ref.~\cite{Martin2016})
+\begin{align} \label{eq:wf-fk}
+\Psi_0 = \dfrac{\Psi_T}{\braket{\Psi_T|\Psi_0}}\left\langle
+\exp\left(
+-\int_0^\infty dt [E_L(\bs{R}_t;\Psi_T)-E_0]
+\right)
+\right\rangle_{\Psi_T^2},
+\end{align}
+where $\braket{}_{\Psi_T^2}$ denotes average over drift-diffusion random walks guided by $\Psi_T$ eq.~(\ref{eq:dmc-dfdt}) and $E_L(\bs{R}_t;\Psi_T)$ is the local energy of the trial wave function at walker position $\bs{R}_t$ during the random walk. If $\Psi_T$ is a good approximation for the ground state $\Psi_0$, then the imaginary time propagation can be cut off at a small equilibrium ``time'' $\tau$ and eq.~(\ref{eq:wf-fk}) has a compelling physical interpretation eq.~(6.13) in Ref.~\cite{Martin2016}
+\begin{align}
+\ln\Psi_0(\bs{R}_0) \approx \ln\Psi_T(\bs{R}_0) - \tau [
+\left\langle E_L\right\rangle_{\Psi_T^2}(\bs{R}_0) - E_0
+],
+\end{align}
+which says the correction to the exponent of $\Psi_T$ at $\bs{R}_0$ is proportional to the average of its local energy over a small region around $\bs{R}_0$ having size $O(\sqrt{N d \lambda\tau})$ in 3N-dimensional space. This observation is quite useful for practitioners of the DMC method, because it implies:
+\begin{enumerate}
+\item \textit{longer projections are needed for larger system} because the space over which $E_L$ needs to be averaged increase with $N$.
+\item \textit{longer projections are needed for heavier particles} because they have smaller quantumness $\lambda$, thus smaller diffusion constant.
+\item \textit{long projection time is needed to long-range properties of} $\Psi_T$, because the effect of projection is local and expands somewhat slowly with projection time $\propto \sqrt{\tau}$.
+\end{enumerate}
+
+Finally, the Feynman-Kac formula was shown to be capable of suggesting compact wave function that accurately capture electron correlation starting from a simple initial guess~\cite{Holzmann2003}.
