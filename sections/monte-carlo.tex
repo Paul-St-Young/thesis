@@ -55,7 +55,7 @@ In practice, however, a simulation can be stuck in a meta-stable state for its e
 %A typical introduction to quantum Monte Carlo (QMC) starts with the oldest and simplest method variation Monte Carlo (VMC), then work its way to diffusion Monte Carlo (DMC) and path integral Monte Carlo.
 I will start with the general, albeit somewhat complicated, path integral Monte Carlo (PIMC) method, because it rigorously takes temperature into account and connects well with classical Monte Carlo. Then, I will describe ground-state methods as limits and efficiency tricks to specialize the path integral method to the ground state. While contrary to the historic progression of these methods, I find this perspective helpful for relating the methods and visualizing them in their respective niches.
 
-\subsection{Path Integral Monte Carlo (PIMC)}
+\subsection{Path Integral Monte Carlo}
 The quantum partition function for the canonical ensemble needs to trace over discrete N-particle eigenstates, rather than 2N 3-dimensional variables as in eq.~(\ref{eq:classical-nvt-part})
 \begin{align}
 Z\equiv \text{Tr}(e^{-H/k_BT})=\text{Tr}\left(
@@ -148,7 +148,7 @@ e^{-\tau V(\bs{r})}
 The two terms in eq.~(\ref{eq:dmc-green}) are the Green function for diffusion and weight accumulation.
 The quantumness $\lambda=\frac{\hbar^2}{2m}$ of the particle determines its diffusion constant in imaginary time. Lighter particles diffuse ``faster''. One can, in principle, start with any classical system $\bs{r}$, apply the Green functions repeatedly to update $\bs{r}$, and eventually end up sampling the mixed distribution $\braket{\Psi_T|\Psi_0}$.
 
-While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the classical system due to the potential term goes to zero or infinity exponentially fast whenever two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
+While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the classical system due to the potential term goes to zero or infinity exponentially fast, specially when two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
 \begin{align}
 f(\bs{r},t) \equiv \Psi_T^*(\bs{r}) e^{-t(H-E_T)}\Psi_T(\bs{r}) \underset{t\rightarrow\infty}{=} \Psi_T^*(\bs{r})\Psi_0(\bs{r}),
 \end{align}
@@ -171,7 +171,7 @@ While not strictly necessary, one typically adds a Metropolis rejection step usi
 For bosons and Bolzmannons, DMC gives the exact ground-state energy of $H$ in the limit of infinitesimal time step and uncontrolled walker population. Observables that do not commute with the hamiltonian will suffer a mixed-estimator error, which vanishes as the trial wave function is approaches the ground state.
 
 \subsection{Variational Monte Carlo}
-Variational Monte Carlo (VMC) can be viewed as a limit of DMC at zero projection time. I define VMC as a Monte Carlo algorithm that calculates the expectation value of an operator using a fixed trial wave function $\Psi_T$
+Variational Monte Carlo (VMC) can be viewed as a limit of DMC at zero projection time, i.e., no branching. I define VMC as a Monte Carlo algorithm that calculates the expectation value of an operator using a fixed trial wave function $\Psi_T$
 \begin{align} \label{eq:vmc}
 \braket{\hat{O}} = \braket{\Psi_T|\hat{O}|\Psi_T}.
 \end{align}

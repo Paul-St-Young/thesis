@@ -1,22 +1,22 @@
 \chapter{Slater-Jastrow wave function}
 
-One goal of studying the many-body wave function is to understand electron correlation~\cite{Ceperley1999-wf}. As P. Dirac pointed out, knowing the Dirac/Schr\"odinger equation and the hamiltonian of the system is not enough for an understanding, because it ``leads to equations much too complicated to be soluble". Even a simple hamiltonian that contains only pair interactions, e.g., the Coulomb hamiltonian, can create complex many-body correlations and phase diagrams.
+One goal of studying the many-body wave function is to understand electron correlation~\cite{Ceperley1999-wf}. As P. Dirac pointed out, knowing the Dirac/Schr\"odinger equation and the hamiltonian of the system does not constitute an understanding, because it ``leads to equations much too complicated to be soluble". Even a simple hamiltonian that contains only pair interactions, e.g., the Coulomb hamiltonian, can create complex many-body correlations and phase diagrams.
 %Hogenberg-Kohn theorem tells us that the exact density functional encodes everything one needs to know about the ground state. How much physical intuition can be extracted from the exact density functional? Does one need to look at the charge density instead?
 %What have we learnt from studying wave functions?
 %Cusp condition, plasmon modes, back flow quasiparticle excitations
 Thus, direct studies of experimental observables, the many-body wave function, and perhaps properties the exact density functional will be more informative.
-In this chapter, I will describe the most understood many-body wave function for electronic structure, the Slater-Jastrow wave function, and discuss what we have learned from it regarding the behavior of electrons.
+In this chapter, I will describe the most understood many-body wave function for electronic structure, the Slater-Jastrow wave function, and discuss what behavior of electrons we can learn from it.
 
 \section{Historic Overview}
 
-In condensed matter, the development of many-body wave function took off in the study of homogeneous quantum liquids, e.g., liquid helium and the homogeneous electron gas, a.k.a. jellium. Most studies made use of the variational principle eq.~(\ref{eq:wf-variational}), which states that given a Hamiltonian $\ham$, any trial wave function will have an energy value no less than that of the true ground state $\braket{\Psi_T|\ham|\Psi_T}\ge\braket{\Psi_0|\ham|\Psi_0}$. This principle allowed the pioneers to make educated guesses, then check their quality using the expectation value of $\ham$.
+In condensed matter, the development of many-body wave function took off in the study of homogeneous quantum liquids, e.g., liquid helium and the homogeneous electron gas, a.k.a. jellium. Most studies made use of the variational principle eq.~(\ref{eq:wf-variational}), which states that given a Hamiltonian $\ham$, any normalized trial wave function $\Psi_T$ will have an energy value no less than that of the true ground state $\braket{\Psi_T|\ham|\Psi_T}\ge\braket{\Psi_0|\ham|\Psi_0}$. This principle allowed the pioneers to make educated guesses, then check their quality using the expectation value of $\ham$.
 %Of course, the energy value is only one number. More are needed to truly quantify the accuracy of a wave function, but I digress.
 
 As early as 1934, E. Wigner~\cite{Wigner1934} noted that by introducing a “hole” in the correlation function of opposite-spin elections, one can improve the Slater determinant and lower its energy value in the homogeneous electron gas. Although, this hint was not acted on until much later.
 In 1940, A. Bijl~\cite{Bijl1940} found that the logarithm of the wave function of many-interacting particles is size extensive. This logarithm can be expressed as a perturbation expansion involving one- and two-electron terms and is convergent in the thermodynamic limit.
 Unfortunately, this work went unnoticed for 30 years while others independently developed similar ideas. Expanding the logarithm of the wave function is a general idea that later became known as the Bijl-Dingle-Jastrow-Feenberg expansion~\cite{Carleo2017} for historical reasons, which I will now describe.
 
-In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wave function by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle product of pair wave functions to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wave function was born. While this thesis is mostly focused on the Slater-Jastrow wave function for electronic matter, the idea of separating particle-statistics from correlation effects is general for classical and quantum matter %eq.~(\ref{eq:wf-prod-jas})
+In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wave function by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle pair-product wave functions to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wave function was born. While this thesis is mostly focused on the Slater-Jastrow wave function for electronic matter, the idea of separating particle statistics from correlation is general for classical and quantum matter. The Slater-Jastrow wave function is the fermion variant of eq.~(\ref{eq:wf-prod-jas})
 \begin{align} \label{eq:wf-prod-jas}
 \Psi = \left\{\begin{array}{ll}
 I(\{\phi_i\}) \exp(-U) & \text{distinguishabe} \\
@@ -36,25 +36,30 @@ At high temperature, $\vert\Psi\vert^2$ for distinguishable particles becomes th
 \end{align}
 Some important improvements to eq.~(\ref{eq:wf-prod-jas}) came from the study of bosons rather than fermions.
 
-In 1956, R.P. Feynman and M. Cohen~\cite{Feynman1956} found it crucial to include the effect of back flow to accurately describe rotons in liquid helium. A roton is the quantum analog of a microscopic vortex ring. When an atom moves through the ring, it triggers a returning flow far from the ring, a.k.a. back flow. R.P. Feynman first estimated the energy-momentum curve of liquid helium using a permanent of plane wave orbitals in 1954, but found the roton energies severely over-estimated~\cite{Feynman1954}. It is only after the introduction of back flow into the trial wave function did the roton energy reduce to a reasonable value, in qualitative agreement with the phenomenological theory of Landau and experiment~\cite{Feynman1956}.
+In 1956, R.P. Feynman and M. Cohen~\cite{Feynman1956} found it crucial to include the effect of back flow to accurately describe rotons in liquid helium. A roton is the quantum analog of a microscopic vortex ring. When an atom moves through the ring, it triggers a returning flow far from the ring, a.k.a. back flow. R.P. Feynman first estimated the energy-momentum curve of liquid helium using a permanent of plane wave orbitals in 1954, but found the roton energies severely over-estimated~\cite{Feynman1954}. It is only after the introduction of back flow into the trial wave function did the roton energy reduce to a reasonable value, in qualitative agreement with the phenomenological theory of Landau and with experiment~\cite{Feynman1956}.
 In 1961, F.Y. Wu and E. Feenberg~\cite{Wu1961} related the Jastrow pair function, $u(r)$ in eq.~(\ref{eq:wf-pair-jas}), to the pair correlation function of liquid helium
 \begin{align}
 u(r) = g(r) - \dfrac{1}{8\pi^3\rho}\int d\bs{k} e^{-i\bs{k}\cdot\bs{r}}
 \dfrac{[S(k)-1]^2}{1+\xi[S(k)-1]},
 \end{align}
 where $\xi\approx0.97$ gave accurate results under the superposition approximation.
-Direct relation between experimentally measurable correlation functions and the wave function is an important avenue to glean understanding from the many-body wave function. Wu and Feenberg also wrote down expectation values of kinetic and potential operators
+Direct relation between experimentally measurable correlation functions and the wave function is an important avenue to glean understanding from the many-body wave function.
+\begin{comment}
+Wu and Feenberg also wrote down expectation values of kinetic and potential operators
 \begin{align}
 \braket{T} = \frac{1}{2}\dfrac{N\rho}{2}\dfrac{\hbar^2}{2m} \int d\bs{r} g'(\bs{r}) u'(\bs{r}), \\
 \braket{V} = \frac{1}{2} N\rho\int d\bs{r} g(\bs{r}) v(\bs{r}),
 \end{align}
-for non-relativistic particles having mass $m$ and interacting via a pair potential $v(\bs{r})$. These relations will later prove useful for the study of finite-size effects using the wave function. Similar ideas arose in the study of fermions in the same year.
+for non-relativistic particles having mass $m$ and interacting via a pair potential $v(\bs{r})$. These relations will later prove useful for the study of finite-size effects using the wave function.
+\end{comment}
+Similar ideas arose in the study of fermions in the same year.
 
 %The most prominent success of the Slater-Jastrow wave function is its application to the homogeneous electron gas.
-Also in 1961, T. Gaskell~\cite{Gaskell1961} calculated the Jastrow pair function for homogeneous electron gas from perturbation calculation of its pair correlation function. He expressed the Jastrow pair function in collective coordinates and derived an analytical formula using the random phase approximation (RPA). By minimizing the total energy in the long wavelength limit, Gaskell found an accurate Jastrow pair function, having correct limits at both short and long wavelengths.
+Also in 1961, T. Gaskell~\cite{Gaskell1961} derived a Jastrow pair function for homogeneous electron gas from perturbation calculation of its pair correlation function. He expressed the Jastrow pair function in collective coordinates and derived an analytical formula using the random phase approximation (RPA). By minimizing the total energy in the long wavelength limit, Gaskell found an accurate Jastrow pair function, having correct limits at both short and long wavelengths.
 This Gaskell RPA wave function proved particularly useful in the study of the homogeneous electron gas and will be discussed in Sec.~\ref{sec:gaskell-rpa-jas} and extended in Sec.~\ref{sec:mc-rpa-jas}.
+Remarkably, this wave function is accurate in both 2D and 3D.
 %In 1978, D. M. Ceperley~\cite{Ceperley1978} extended the Gaskell pair function to Wigner crystal.
-Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley and B. J. Alder~\cite{Ceperley1980} solved the homogeneous electron gas problem in three spatial dimensions using exact QMC simulations.
+Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley and B. J. Alder~\cite{Ceperley1980} solved the homogeneous electron gas problem in 3D using exact QMC simulations.
 
 %In 1977, C. C. Chang and C. E. Campbell~\cite{Chang1977} added a three-body term to the Slater-Jastrow wave function and observed better agreement with experiment.
 A common theme of these early successes is guessing and checking of correlation. One guesses that a many-body correlation is important, incorporates said correlation into the wave function, then checks if the energy value is lowered and/or correlation functions get closer to experiment. %This approach requires one to think long and hard about the physics of a particular problem, to have the mathematical prowess to connect observed correlation with a wave function form, and to be lucky enough to have some experimental data to compare with. This set of circumstances is less and less likely today
@@ -173,7 +178,7 @@ where $\alpha$ satisfies
 %\section{Back flow transformation}
 
 \section{Beyond Slater-Jastrow}
-One way to systematically obtain more accurate wave functions than Slater-Jastrow is to expand the many-body wave function in a basis of determinants. This configuration interaction (CI) expansion method is routinely used in quantum chemistry to study molecules. The CI method is especially effective when the correlation in the ground state is mostly static in nature, e.g., in benzene where the ground-state wave function is approximately the equal superposition of many non-interacting determinants. This method is less successful in bulk calculations due to difficulty in performing finite-size extrapolation. Specifically, a fixed-length determinant expansion is more accurate for a small system than a large one. Thus, properties such as the total energy are not size extensive and cannot be extrapolated to the thermodynamic limit using known asymptotic formula.
+One way to systematically obtain more accurate wave functions than Slater-Jastrow is to expand the many-body wave function in a basis of determinants. This configuration interaction (CI) method is routinely used in quantum chemistry to study molecules. The CI method is especially effective when the correlation in the ground state is mostly static in nature, e.g., in benzene molecule where the ground-state wave function is approximately the equal superposition of many non-interacting determinants. This method is less successful in bulk calculations due to difficulty in performing finite-size extrapolation. Specifically, a fixed-length determinant expansion is more accurate for a small system than a large one. Thus, properties such as the total energy are not size extensive and cannot be extrapolated to the thermodynamic limit using known asymptotic formula.
 
 Another method for systematically improving the many-body wave function is to use the generalized Feynman-Kac formula (eq.~(6.12) in Ref.~\cite{Martin2016}), which is intimately related to the DMC method (eq.~(24.23) in Ref.~\cite{Martin2016})
 \begin{align} \label{eq:wf-fk}
@@ -183,17 +188,17 @@ Another method for systematically improving the many-body wave function is to us
 \right)
 \right\rangle_{\Psi_T^2},
 \end{align}
-where $\braket{}_{\Psi_T^2}$ denotes average over drift-diffusion random walks guided by $\Psi_T$ eq.~(\ref{eq:dmc-dfdt}) and $E_L(\bs{R}_t;\Psi_T)$ is the local energy of the trial wave function at walker position $\bs{R}_t$ during the random walk. If $\Psi_T$ is a good approximation for the ground state $\Psi_0$, then the imaginary time propagation can be cut off at a small equilibrium ``time'' $\tau$ and eq.~(\ref{eq:wf-fk}) has a compelling physical interpretation eq.~(6.13) in Ref.~\cite{Martin2016}
-\begin{align}
+where $\braket{}_{\Psi_T^2}$ denotes average over drift-diffusion random walks guided by $\Psi_T$ eq.~(\ref{eq:dmc-dfdt}). $E_L(\bs{R}_t;\Psi_T)$ is the local energy of the trial wave function at walker position $\bs{R}_t$ during the random walk. If $\Psi_T$ is a good approximation for the ground state $\Psi_0$, then the imaginary time propagation can be cutoff at a small equilibrium ``time'' $\tau$ and eq.~(\ref{eq:wf-fk}) has a compelling physical interpretation eq.~(6.13) in Ref.~\cite{Martin2016}
+\begin{align} \label{eq:wf-fk-small-tau}
 \ln\Psi_0(\bs{R}_0) \approx \ln\Psi_T(\bs{R}_0) - \tau [
 \left\langle E_L\right\rangle_{\Psi_T^2}(\bs{R}_0) - E_0
-],
+].
 \end{align}
-which says the correction to the exponent of $\Psi_T$ at $\bs{R}_0$ is proportional to the average of its local energy over a small region around $\bs{R}_0$ having size $O(\sqrt{N d \lambda\tau})$ in 3N-dimensional space. This observation is quite useful for practitioners of the DMC method, because it implies:
+Equation~(\ref{eq:wf-fk-small-tau}) says the correction to the exponent of $\Psi_T$ at $\bs{R}_0$ is proportional to the average of its local energy over a small region around $\bs{R}_0$ having size $O(\sqrt{N d \lambda\tau})$ in dN-dimensional space. This observation is quite useful for practitioners of the DMC method, because it implies longer projection time is needed for:
 \begin{enumerate}
-\item \textit{longer projections are needed for larger system} because the space over which $E_L$ needs to be averaged increase with $N$.
-\item \textit{longer projections are needed for heavier particles} because they have smaller quantumness $\lambda$, thus smaller diffusion constant.
-\item \textit{long projection time is needed to long-range properties of} $\Psi_T$, because the effect of projection is local and expands somewhat slowly with projection time $\propto \sqrt{\tau}$.
+\item \textit{larger system}, because the space over which $E_L$ needs to be averaged increase with $N$.
+\item \textit{heavier particles}, because they have smaller quantumness $\lambda$, thus smaller diffusion constant.
+\item \textit{long-range properties}, because the effect of projection is local and expands slowly with projection time.
 \end{enumerate}
 
 Finally, the Feynman-Kac formula was shown to be capable of suggesting compact wave function that accurately capture electron correlation starting from a simple initial guess~\cite{Holzmann2003}.

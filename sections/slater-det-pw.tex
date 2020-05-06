@@ -4,9 +4,9 @@
 
 When the orbitals are expressed in plane wave basis
 \begin{align}
-\phi_i(\bs{r}) = \sum\limits_{\bs{k}} c_{i\bs{k}} e^{i\bs{k}\cdot\bs{r}}, \label{eq:pw-orb}
+\phi_i(\bs{r}) = \sum\limits_{\bs{k}} c_{i\bs{k}} e^{i\bs{k}\cdot\bs{r}}. \label{eq:pw-orb}
 \end{align}
-and require the orbitals to be orthonormal.
+We require the orbitals to be orthonormal
 \begin{align}
 \int_\Omega d\bs{r} \phi_i(\bs{r})^*\phi_j(\bs{r}) = \delta_{ij} \Rightarrow 
 \Omega \sum\limits_{\bs{k}} c_{i\bs{k}}^*c_{j\bs{k}} = \delta_{ij}. \label{eq:on_orbs}
@@ -67,9 +67,10 @@ Given the current definitions, $\int d\bs{k} n(\bs{k}) = 1$ for an infinite syst
 \label{sec:wf-pw-sdet-sk}
 The static structure factor is the density-density correlation in reciprocal space
 \begin{align}
-S_{\bs{q}} \equiv& \braket{\rho_{\bs{q}}\rho_{-\bs{q}}} \equiv \braket{
-(\frac{1}{\sqrt{N}}\sum\limits_{i=1}^N e^{i\bs{q}\cdot\bs{r}_i})
-(\frac{1}{\sqrt{N}}\sum\limits_{j=1}^N e^{-i\bs{q}\cdot\bs{r}_j})
+S_{\bs{q}} \equiv& \frac{1}{N}\braket{\rho_{\bs{q}}\rho_{-\bs{q}}} \equiv
+\frac{1}{N}\braket{
+(\sum\limits_{i=1}^N e^{i\bs{q}\cdot\bs{r}_i})
+(\sum\limits_{j=1}^N e^{-i\bs{q}\cdot\bs{r}_j})
 } \nonumber \\
 =& \frac{1}{N}\sum_{ij}\braket{e^{i\bs{q}\cdot(\bs{r}_i-\bs{r}_j)}} =
 1 + \frac{1}{N}\sum_{i\neq j}\braket{e^{i\bs{q}\cdot(\bs{r}_i-\bs{r}_j)}} \nonumber \\
