@@ -16,7 +16,7 @@ As early as 1934, E. Wigner~\cite{Wigner1934} noted that by introducing a “hol
 In 1940, A. Bijl~\cite{Bijl1940} found that the logarithm of the wave function of many-interacting particles is size extensive. This logarithm can be expressed as a perturbation expansion involving one- and two-electron terms and is convergent in the thermodynamic limit.
 Unfortunately, this work went unnoticed for 30 years while others independently developed similar ideas. Expanding the logarithm of the wave function is a general idea that later became known as the Bijl-Dingle-Jastrow-Feenberg expansion~\cite{Carleo2017} for historical reasons, which I will now describe.
 
-In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wave function by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle pair-product wave functions to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wave function was born. While this thesis is mostly focused on the Slater-Jastrow wave function for electronic matter, the idea of separating particle statistics from correlation is general for classical and quantum matter. The Slater-Jastrow wave function is the fermion variant of eq.~(\ref{eq:wf-prod-jas})
+In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wave function by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle pair-product wave functions to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wave function was born. While this thesis is mostly focused on the Slater-Jastrow wave function for electronic matter, the idea of separating particle statistics from correlation is more general. The Slater-Jastrow wave function is the fermion variant of eq.~(\ref{eq:wf-prod-jas})
 \begin{align} \label{eq:wf-prod-jas}
 \Psi = \left\{\begin{array}{ll}
 I(\{\phi_i\}) \exp(-U) & \text{distinguishabe} \\
@@ -65,7 +65,7 @@ Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley a
 A common theme of these early successes is guessing and checking of correlation. One guesses that a many-body correlation is important, incorporates said correlation into the wave function, then checks if the energy value is lowered and/or correlation functions get closer to experiment. %This approach requires one to think long and hard about the physics of a particular problem, to have the mathematical prowess to connect observed correlation with a wave function form, and to be lucky enough to have some experimental data to compare with. This set of circumstances is less and less likely today
 In contrast, recent improvements to the many-body wave function rely heavily on numerical optimization of general wave function forms with many parameters. Examples include orbital rotation in a single determinant, multi-determinant expansion, iterative back flow, and neural network.
 As we move towards these complicated wave functions, it will likely become increasingly difficult to extract physical understanding directly from the wave function.
-This chapter will serve as a summary of some physical insights we have been able to grasp from the Slater-Jastrow wave function. I hope some of these will remain useful for more complex wave function forms. After some definitions, I will first discuss the short-range asymptotic behavior of the two-body contribution, i.e., the cusp condition in Sec.~\ref{sec:wf-cusp}. Second, I discuss the two-body long wavelength behavior by studying the Gaskell RPA Jastrow in Sec.~\ref{sec:gaskell-rpa-jas} for one-component system and extend it to multi-component system in Sec.~\ref{sec:mc-rpa-jas}. Third, in Sec.~\ref{sec:wf-pw-sdet}, I show observables that can be calculated from the Slater determinant in plane wave basis, namely the momentum distribution from  one-particle reduced density matrix (1RDM) in Sec.~\ref{sec:wf-pw-sdet-nk} and the static structure factor from two-particle reduced density matrix (2RDM) in Sec.~\ref{sec:wf-pw-sdet-sk}.
+This chapter will serve as a summary of some physical insights we have been able to grasp from the Slater-Jastrow wave function. I hope some of these will remain useful for more complex wave function forms. After some definitions, I will first discuss the short-range asymptotic behavior of the two-body contribution, i.e., the cusp condition in Sec.~\ref{sec:wf-cusp}. Second, I discuss the two-body long wavelength behavior by studying the Gaskell RPA Jastrow in Sec.~\ref{sec:gaskell-rpa-jas} for one-component system, then extend it to multi-component system in Sec.~\ref{sec:mc-rpa-jas}. Third, in Sec.~\ref{sec:wf-pw-sdet}, I show observables that can be calculated from the Slater determinant in plane wave basis, namely the momentum distribution from  one-particle reduced density matrix (1RDM) in Sec.~\ref{sec:wf-pw-sdet-nk} and the static structure factor from two-particle reduced density matrix (2RDM) in Sec.~\ref{sec:wf-pw-sdet-sk}.
 
 \section{Definitions}
 
@@ -151,14 +151,15 @@ where $d$ is the number of spatial dimensions.
 We see that the laplacian term in the kinetic energy has a potentially divergent term at $r=0$.
 This term can respond to the potential and keep $E_L$ stationary, even if $v(r)$ has a divergence at $r=0$, e.g., the Coulomb potential. Suppose the two particles have charges $q_1$, $q_2$, and $v(r)=q_1q_2/r$, the condition for stationary $E_L$ requires
 \begin{align}
-\lim\limits_{r\rightarrow 0}\frac{1}{r} (q_1q_2+ \lambda (d-1) u')=0 \Rightarrow u'(0) = \dfrac{q_1q_2}{\lambda (d-1)}
+\lim\limits_{r\rightarrow 0}\frac{1}{r} (q_1q_2+ \lambda (d-1) u')=0 \Rightarrow u'(0) = -\dfrac{q_1q_2}{\lambda (d-1)}
 \end{align}
-For electron-electron interaction in Hartree atomic units $m_1=m_2=1$, so $\lambda=1$ and $u'(0)=\frac{1}{2}$ in 3D. This is the cusp condition for unlike-spin electron pair. For same-spin pair, the two particles are indistinguishable and the laplacian for each particle contributes a copy of the divergent term and $u'(0)=\frac{1}{4}$. For an electron-ion pair in the clamped-ion approximation ($m_2\rightarrow\infty$)
+For electron-electron interaction in Hartree atomic units $m_1=m_2=1$, so $\lambda=1$ and $u'(0)=-\frac{1}{2}$ in 3D. This is the cusp condition for unlike-spin electron pair. For same-spin pair, the two particles are indistinguishable and the laplacian for each particle contributes a copy of the divergent term and $u'(0)=-\frac{1}{4}$. For an electron-ion pair in the clamped-ion approximation ($m_2\rightarrow\infty$)
 \begin{align} \label{eq:wf-ei-cusp}
-u'(0) = -\dfrac{2Z}{d-1},
+u'(0) = \dfrac{2Z}{d-1},
 \end{align}
-where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a trial wave function greatly reduces the variance of the local energy and improves the efficiency of a QMC calculation. The electron-ion cusp eq.~(\ref{eq:wf-ei-cusp}) is the most important one to maintain, because the wave function amplitude around an ion is high and many samples from the MC algorithm will have some electron close to an ion. In contrast, one rarely samples a configuration with two electrons close together due to strong electron-electron repulsion. Thus, the effect of imposing the electron-electron cusp condition is less pronounced.
+where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a trial wave function greatly reduces the variance of the local energy and improves the efficiency of a QMC calculation. The electron-ion cusp eq.~(\ref{eq:wf-ei-cusp}) is the most important one to maintain, because the wave function amplitude around an ion is high and many samples from the MC algorithm will have some electron close to an ion. In contrast, one rarely samples a configuration with two electrons close together due to strong electron-electron repulsion at density relevant for materials science, e.g., bulk silicon. However, at high density, electron-electron correlation is relatively weak relative to kinetic energy, so the electron-electron cusp condition is important to maintain. Nevertheless, the effect of imposing the electron-electron cusp condition is less typically pronounced than the electron-ion one.
 
+\begin{comment}
 For the gravitational interaction $v(r)=Gm_1m_2/r^2$, eq.~(\ref{eq:wf-cusp}) implies
 \begin{align}
 \lim\limits_{r\rightarrow 0} u(r) = \alpha\ln r,
@@ -167,6 +168,7 @@ where $\alpha$ satisfies
 \begin{align}
 \alpha^2 + (2-d)\alpha - G(m_1+m_2) = 0.
 \end{align}
+\end{comment}
 
 \input{sections/gaskell-rpa}
 

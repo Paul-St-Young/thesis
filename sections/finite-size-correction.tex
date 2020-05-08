@@ -44,7 +44,7 @@ In the case of the electron gas, more progress can be made by considering the lo
 \begin{align} \label{eq:fsc-dvn-missing}
 \Delta V_N \approx \int_{\frac{(2\pi)^d}{\Omega}} \dfrac{d^d\bs{k}}{(2\pi)^d} \frac{v_k}{2}S(\bs{k}).
 \end{align}
-Bohm and Pine~\cite{Bohm1953} discovered that the many-body wave function of the electron gas can be factored into short-range and long-range contributions, where the long-range part describes weakly coupled collective modes (plasmons)~\cite{Chiesa2007,Holzmann2016}
+Bohm and Pines~\cite{Bohm1953} discovered that the many-body wave function of the electron gas can be factored into short-range and long-range contributions, where the long-range part describes weakly coupled collective modes (plasmons)~\cite{Chiesa2007,Holzmann2016}
 \begin{align} \label{eq:fsc-rpa-wf}
 \Psi = \Psi_{s.r.} \exp\left(
 -\frac{1}{2\Omega} \sum\limits_{\bs{k}} u_{\bs{k}} \rho_{\bs{k}} \rho_{-\bs{k}} + \frac{1}{\Omega^2}\sum\limits_{\bs{k},\bs{q}} w(\bs{k}, \bs{q}) \rho_{\bs{k}+\bs{q}}\rho_{-\bs{k}}\rho_{-\bs{q}}+\dots
@@ -84,7 +84,7 @@ S(\bs{k}) \equiv \frac{1}{N}\left\langle
 \label{fig:fsc-sk-dsk-rhok}
 \end{figure}
 As shown in Fig.~\ref{fig:fsc-sk-dsk-rhok}, the static part due to charge density $\rho_{\bs{k}}$ is non-zero only at reciprocal lattice of the primitive cell of the underlying crystal structure, whereas the fluctuating part varies smoothly from $0$ to $1$. Its value within the missing $\bs{k}=\bs{0}$ region (red area in Fig.~\ref{fig:fsc-sk-dsk-rhok}) can be used to correct the potential energy to leading order following eq.~(\ref{eq:fsc-dvn-missing}).
-Changes in the charge density with system size is a higher-order effect and is small compared to the total potential energy~\cite{Clay2016}. However, as shown in Ref.~\cite{Yang2020-gap}, this static contribution becomes important when an energy difference is taken, such as in the calculation of the fundamental gap.
+Changes in the charge density with system size is a higher-order effect and is small compared to the total potential energy~\cite{Clay2016}. However, as shown in Ref.~\cite{Yang2020-gap}, this static contribution becomes important when energy differences are taken, such as in the calculation of the fundamental gap.
 
 Equation~(\ref{eq:wf-gaskell-rpa-sk}) still works well at $k\ll k_F$, but the short-range contribution $S_0(k)$ no longer comes from a simple determinant of plane waves. For insulators, dielectric screening suppresses long-range fluctuation and changes the leading-order behavior of $S(k)$ from eq.~(\ref{eq:wf-gaskell-rpa-sk-taylor}) to eq.~(7) in Ref.~\cite{Yang2020-gap}
 \begin{align}
@@ -155,7 +155,7 @@ T^D_N \equiv -\dfrac{\hbar^2}{2m}\sum\limits_{i=1}^N \dfrac{\nabla_i^2D}{D} = \l
 \sum\limits_{n=1}^N\epsilon_n - \sum\limits_{i=1}^N \veff(\bs{r}_i)
 \right],
 \end{align}
-by eq.~(19) in Ref.~\cite{Holzmann2016}. As the number of electrons is increased, the kinetic contribution eq.~(\ref{eq:fsc-tdn}) increases by the energies of the new orbitals being occupied. Consider the ideal Fermi gas in a 2D square box. As the number of same-spin particles increase from $N=2$ to $5$, the first shell of states in reciprocal space become filled. They all have the same single-particle energy, so the total kinetic energy increases linearly with $N$. However, when one adds a 6$^{\text{th}}$ particle, it increases the total energy by twice the amount as one in the first shell. As shown in Fig.~\ref{fig:fsc-lin-tabc}, this shell filling effect causes oscillation in the kinetic energy as a function of the number of particles, making size extrapolation difficult. This shell filling effect can be drastically reduced by adopting canonical twist averaged boundary conditions (TABC), where the number of particles is the same across all twists. Further, grand-canonical twist averaged boundary condition (GC-TABC), where the number of particles change to according to the exact Fermi surface, can exactly remove this single-particle finite-size effect. Finally, there is another ``pocket'' method to exactly remove the shell filling effect. Within a pocket in reciprocal space, the orbitals in the determinant smoothly acquire a phase as the twist is varied. Once these pockets are mapped out, one can perform one calculation per pocket and weight it by the volume of the pocket to exactly remove the one-particle finite-size error~\cite{Holzmann2016}.
+by eq.~(19) in Ref.~\cite{Holzmann2016}. As the number of electrons is increased, the kinetic contribution eq.~(\ref{eq:fsc-tdn}) increases by the energies of the new orbitals being occupied. Consider the ideal Fermi gas in a 2D square box. As the number of same-spin particles increase from $N=2$ to $5$, the first shell of states in reciprocal space become filled. They all have the same single-particle energy, so the total kinetic energy increases linearly with $N$. However, when one adds a 6$^{\text{th}}$ particle, it increases the total energy by twice the amount as one in the first shell. As shown in Fig.~\ref{fig:fsc-lin-tabc}, this shell filling effect causes oscillation in the kinetic energy as a function of the number of particles, making size extrapolation difficult. This shell filling effect can be drastically reduced by adopting canonical twist averaged boundary conditions (TABC), where the number of particles is the same across all twists. Further, grand-canonical twist averaged boundary condition (GC-TABC), where the number of particles change to according to the exact Fermi surface, can exactly remove this single-particle finite-size effect. Finally, there is another ``pocket'' method which reduces the number of twists needed. Within a pocket in reciprocal space, the orbitals in the determinant smoothly acquire a phase as the twist is varied. Once these pockets are mapped out, one can perform one calculation per pocket and weigh it by the volume of the pocket to exactly remove the one-particle finite-size error~\cite{Holzmann2016}.
 
 \begin{figure}[h]
 \centering
@@ -193,7 +193,7 @@ where $u(\bs{k})$ is an interpolation of the converged Jastrow pair potential, w
 
 \subsubsection{Finite-temperature correction}
 \textit{Based on notes from D. M. Ceperley}\\
-At finite temperature and under the RPA, one half the long-range part of the action satisfies
+At finite temperature and under the RPA, the long-range part of the action can be optimized to minimize the variance of the local energy, resulting in
 \begin{align} \label{eq:fsc-finitet-uk}
 2\rho u_k = Q(\bs{k}, \beta)^{-1}\tanh\left(
 \dfrac{\beta}{2}\dfrac{e(k)}{Q(\bs{k}, \beta)}
