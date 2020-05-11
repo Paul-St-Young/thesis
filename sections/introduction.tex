@@ -1,5 +1,6 @@
 \chapter{Introduction}
 
+\begin{comment}
 %Exact simulation of electron-ion systems is the grand challenge of this century.
 Exact simulation of the homogeneous electron gas was the holy grail of the last century. It has led to quantitative understanding of metals and semiconductors as well as the popular local density approximation of the density functional which opened the flood gates on countless materials simulations. However, the grand challenge of this century is the exact simulation of electron-ion systems.
 While the jellium model mimic many essential features of electrons in real materials, valence electrons in real materials interact with point charges (nuclei) and the surrounding inner electrons that screen them.
@@ -41,25 +42,27 @@ Density matrix
 \begin{align}
 \rho\propto\exp\left(i\dfrac{S}{\hbar}\right)
 \end{align}
+\end{comment}
 
 \section{The Electron-Ion Problem}
 The main goal of this thesis is the quantitatively accurate simulation of a many-body system of charged particles in the non-relativistic limit.
 It will soon become clear that this is more of an aspiration than a practical goal at this time.
 Nevertheless, progress has been made in a few areas.
-For the remainder of this thesis, ground truth is assumed to be established by the exact solution of the Shcr\"odinger equation~(\ref{eq:intro-schro}) for the electron-ion wave function $\Psi$
+For the remainder of this thesis, ground truth is assumed to be established by the exact solution of the Shcr\"odinger equation~(\ref{eq:intro-schro}) for the electron-ion wave function $\Psi(\bs{R},\RI)$ for $N$ electrons and $N_I$ ions
 \begin{align} \label{eq:intro-schro}
-\hat{H} \Psi = i\hbar\frac{d}{dt}\Psi,
+\hat{H} \Psi(\bs{R},\RI) = i\hbar\frac{d}{dt}\Psi(\bs{R},\RI),
 \end{align}
 where the electron-ion hamiltonian consists of non-relativistic kinetic energy and Coulomb interactions
 \begin{align} \label{eq:intro-ei-ham}
 \hat{H} =
--\sum_I \frac{\hbar^2}{2m_I} \nabla^2_I 
--\sum_i \frac{\hbar^2}{2m_i}\nabla^2_i
--\sum_I\sum_i\frac{Z_Ie^2}{\vert\ri-\bs{r}_i\vert}
-+\frac{1}{2}\sum_i\sum_{j\neq i} \frac{e^2}{\vert\bs{r}_i-\bs{r}_j\vert}
-+\frac{1}{2}\sum_I\sum_{J\neq I} \frac{e^2}{\vert\ri-\rj\vert}.
+-\sum\limits_{I=1}^{N_I} \frac{\hbar^2}{2m_I} \nabla^2_I
+-\sum\limits_{i=1}^N \frac{\hbar^2}{2m_i}\nabla^2_i
+-\sum\limits_{I=1}^{N_I}\sum\limits_{i=1}^N
+\frac{Z_Ie^2}{\vert\ri-\bs{r}_i\vert}
++\frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1,j\neq i}^{N} \frac{e^2}{\vert\bs{r}_i-\bs{r}_j\vert}
++\frac{1}{2}\sum\limits_{I=1}^{N_I}\sum\limits_{J=1,J\neq I}^{N_I} \frac{e^2}{\vert\ri-\rj\vert}.
 \end{align}
-The lower-case $i,j$ and upper-case $I,J$ loop over the electrons and ions, respectively. Further, the lower-case $\bs{r}_i$ labels a single electron position, whereas the upper-case $\bs{R}$ denotes the positions of all electrons $\bs{R}\equiv\{\bs{r}_i\}$. $\ri$ and $\RI$ play analogous roles for the ions. $Z_I$ is the atomic number of ion $I$. If any eigenstate of $\hat{H}$ can be constructed to arbitrary precision in a reasonable amount of time that grows as a polynomial as the number of particles, then the many-body problem can be declared solved. Unfortunately, even state-of-the-art methods struggle with just the ground state~\cite{Azadi2014,McMinis2015,Drummond2015}.
+The lower-case $i,j$ and upper-case $I,J$ loop over the electrons and ions, respectively. Further, the lower-case $\bs{r}_i$ labels a single electron position, whereas the upper-case $\bs{R}$ denotes the positions of all electrons $\bs{R}\equiv\{\bs{r}_i\}$. $\ri$ and $\RI$ play analogous roles for the ions. $Z_I$ is the atomic number of ion $I$. If any eigenstate of $\hat{H}$ can be constructed to arbitrary precision in a reasonable amount of time, which grows as a polynomial as the number of particles, then the many-body electron-ion problem can be declared solved. Unfortunately, even state-of-the-art methods struggle with just the ground state~\cite{Azadi2014,McMinis2015,Drummond2015}.
 
 For equilibrium properties at high temperature, progress can be made by considering the Bloch equation~(\ref{eq:intro-bloch}) for the thermal density matrix $\rho\equiv\ket{\Psi}\bra{\Psi}$
 \begin{align} \label{eq:intro-bloch}
@@ -70,10 +73,10 @@ The partition function is a trace of the thermal density matrix and reduces to t
 \begin{align}
 Z=\Tr{\rho} \underset{\beta\rightarrow 0}{\Rightarrow} Z \propto e^{-\beta V}.
 \end{align}
-Further, lower temperature properties of boltzmannons and bosons can be exactly and efficiently calculated using the path integral method (Sec.\ref{sec:method-pimc}). Impressive results have been obtained when only the ground electronic state is considered~\cite{Pierleoni2016b,Celliers2018}.
+Further, low-temperature properties of boltzmannons and bosons can be exactly and efficiently calculated using the path integral method (Sec.\ref{sec:method-pimc}). Impressive results have been obtained when only the ground electronic state is considered~\cite{Pierleoni2016b,Celliers2018}.
 However, a complete treatment of the full electron-ion hamiltonian eq.~(\ref{eq:intro-ei-ham}) is rarely attempted~\cite{Ceperley1981,Natoli1995}.
 
-I consider the solution of the electron-ion problem an important milestone in computational condensed matter, because it is a natural extension of the jellium model to multi-component system and provides a firm foundation upon which relativistic effects can be included perturbatively. Further, the laplacian in the non-relativistic kinetic energy operator can be interpreted as a generator of diffusion in imaginary time. This makes it easy to develop intuitive understanding the behavior of quantum kinetic energy as well as the deployment of powerful computational techniques such as diffusion Monte Carlo (Sec.~\ref{sec:method-dmc}).
+The solution of the electron-ion problem would be an important milestone in computational condensed matter, because it is a natural extension of the jellium model to multi-component system and provides a firm foundation upon which relativistic effects can be included perturbatively. Further, the laplacian in the non-relativistic kinetic energy operator can be interpreted as a generator of diffusion in imaginary time. This makes it easy to develop intuitive understanding the behavior of quantum kinetic energy as well as to deploy powerful computational techniques such as diffusion Monte Carlo (Sec.~\ref{sec:method-dmc}).
 
 %\subsection{Hydrogen Atom}
 %\subsection{H$_2$ Molecule}
@@ -84,12 +87,42 @@ Given the aforementioned difficulties and the physical observation that ions mov
 \hat{H} = -\sum_I \frac{\hbar^2}{2m_I} \nabla^2_I
 + \ham(\bs{R};\RI),
 \end{align}
-where $\ham$ is the electronic hamiltonian. The semicolon in $\ham(\bs{R};\RI)$ indicates the electronic hamiltonian is only parametrically dependent on the ion positions $\RI$. This means $\ham$ has no non-local operator involving the ionic degrees of freedom. M. Born and R. Oppenheimer (BO)~\cite{Born1927} first utilized this separation of time scales to study diatomic molecules in 1927. As explained around eq.~(27) and (28) in Ref.~\cite{Born1927}, BO expressed the electronic hamiltonian as a Taylor expansion around the equilibrium positions of the ions. They discussed results to the first fourth leading orders in the vibration amplitude of the ions, so what we define as ``the'' Born-Oppenheimer approximation (BOA) can be ambiguous. Here, I follow the interpretation by G. A. Worth and L. S. Cederbaum~\cite{Worth2004}, as described below.
+where $\ham$ is the electronic hamiltonian. The semicolon in $\ham(\bs{R};\RI)$ indicates that the electronic hamiltonian is only parametrically dependent on the ion positions $\RI$. This means $\ham$ has no non-local operator involving the ionic degrees of freedom. M. Born and R. Oppenheimer (BO)~\cite{Born1927} first utilized this separation of time scales to study diatomic molecules in 1927. As explained around eq.~(27) and (28) in Ref.~\cite{Born1927}, BO expressed the electronic hamiltonian as a Taylor expansion around the equilibrium positions of the ions. They discussed results to the first four leading orders in the vibration amplitude of the ions. Thus, what we define as ``the'' Born-Oppenheimer approximation (BOA) can be ambiguous. Here, I follow the interpretation by G. A. Worth and L. S. Cederbaum~\cite{Worth2004}, which is eventually equivalent to assuming a product ansatz eq.~(\ref{eq:intro-boa-product}). I will now explain the BOA in more detail.
 
 % Beyond BO/Tutorial/h2_summary
 \input{sections/nad-h2}
 
 \section{Helium and Jellium}
+The quantum liquids helium and jellium are at the forefront of the quantum era ushered in the last century.
+Having stable closed-shells, the helium atoms interact mostly via an isotropic pair potential (Aziz). It consists of weak van der Waals attraction at long range due to correlated dipole fluctuation and a hard-core repulsion upon electron density overlap.
+Thus, the electronic problem is removed and only the ionic problem remains
+\begin{align}
+\hat{H}_{He} = \sum\limits_{I=1}^{N_I} -\dfrac{\hbar^2}{2m_I}\nabla_I^2
++\frac{1}{2}\sum\limits_{I=1}^{N_I}\sum\limits_{J=1}^{N_I} v(\vert\ri-\rj\vert).
+\end{align}
+In the opposite extrame, the jellium model replaces the material-dependent ionic potential in the electronic hamiltonian with a jelly-like rigid homogeneous background of positive background charge
+\begin{align} \label{eq:intro-jellium}
+\ham_{HEG} = \sum\limits_{i=1}^N -\dfrac{\hbar^2}{2m_i}\nabla_i^2 + \frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1}^N
+\dfrac{e^2}{\vert \bs{r}_i-\bs{r}_j \vert}
++E_{e-b}+E_{b-b},
+\end{align}
+where $E_{e-b}$ and $E_{b-b}$ are constants due to electron-background and background-background interactions.
+
+The jellium model eq.~(\ref{eq:intro-jellium}) brings the electronic problem into focus. The isotropic background eliminates potential symmetry breaking interactions that can be introduced by a crystalline arrangement of ions. The rigidity of the background also removes electron-ion coupling effects. This model was studied in great detail in the past century and its ground-state behavior is largely understood. Much progress has even been made regarding its excitations and finite-temperature properties.
+
+There is only one length scale in the jellium model, the average electron-electron separation $r_s=a/a_B$
+\begin{align}
+\dfrac{1}{n} \equiv \dfrac{\Omega}{N} = \left\{\begin{array}{lr}
+2 r_s a_B, & 1D\\
+\pi(r_sa_B)^2, & 2D\\
+\frac{4\pi}{3}(r_sa_B)^3 & 3D
+\end{array}\right.,
+\end{align}
+where $a_B$ is the Bohr radius. The kinetic energy scales $r_s^{-2}$ (due to $\nabla^2$) and potential energies scales as $r_s^{-1}$ (for $1/r$ potential), so $r_s$ is proportional to the ratio between the average potential energy to the average kinetic energy. In this sense, $r_s$ is the zero-temperature analogue of the classical coulomb coupling parameter
+\begin{align}
+\Gamma \equiv \dfrac{e^2n^{1/d}}{k_BT}.
+\end{align}
+The valence electron density in alkaline metals have $r_s\sim2$, where kinetic dominates over potential energy and the electrons form a liquid. At sufficiently large $r_s$ ($\sim 100$ in 3D and $\sim 30$ in 2D), the potential energy dominates and localizes the electron liquid into a Wigner crystal.
 
 \section{Hydrogen}
 Hydrogen is a logical starting point for solving the electron-ion problem.
@@ -97,7 +130,7 @@ It has the simplest atomic structure and no core electrons.
 The non-relativistic Schr\"odinger equation eq.~(\ref{eq:intro-schro}) and (\ref{eq:intro-ei-ham}) should work well for hydrogen. Further, the ground state of its electronic hamiltonian can be compactly and accurately represented~\cite{Holzmann2003}.
 Without core electrons, no essential modification needs to be made to the hamiltonain eq.~(\ref{eq:intro-ei-ham}) for a practical simulation, e.g., pseudopotential.
 
-At sufficiently high temperatures, hydrogen plasma, equal mixture of isotropic positive charge (protons) and negative charge (electrons), is a straightforward generalization of the jellium model to two-component system. However, at low temperatures, the two-component analogue to the Wigner crystal, solid hydrogen, is surprisingly complex.
+At sufficiently high temperatures, the hydrogen plasma, equal mixture of isotropic positive charge (protons) and negative charge (electrons), is a straightforward generalization of the jellium model to two-component system. However, at low temperatures, the two-component analogue to the Wigner crystal, solid hydrogen, is surprisingly complex.
 Since hydrogen is the lightest element, its zero-point motion has large amplitude. The ion wave function explores a sufficiently large space to invalidate the harmonic approximation for lattice vibrations.
 Further complicating matters, one can expect a metal-to-insulator transition as well as an atomic-to-molecular transition that may or may not coincide as temperature or pressure is decreased.
 On top of all that, naturally occurring isotopes, e.g., deuterium, and spin isomers make for an intriguing blend of intricate quantum effects.
@@ -105,8 +138,6 @@ On top of all that, naturally occurring isotopes, e.g., deuterium, and spin isom
 Hydrogen is also interesting due to its practical relevance. Being the most abundant element in the observable universe, hydrogen and its isotopes are crucial for understanding of starts and giant gas planets. Knowing the properties of hydrogen can also help us harness the power of the sun to produce the clean energy source that is fusion.
 At high pressure and low temperature, hydrogen may form a zero temperature liquid. If that were the case, then it may be a superconducting super fluid, the first of its kind. More realistically, solid atomic hydrogen is predicted to be a room temperature superconductor. Hydrogen-rich compounds have been shown to smash all superconducting temperature records held by the so-called ``high-temperature'' superconductors via what is believed to be conventional BCS mechanism.
 
-\section{Lithium}
-
-\section{Silicon}
+\section{Lithium and Silicon}
 
 \section{Thesis Outline}
