@@ -31,7 +31,7 @@ The diagonal terms of $\Lambda_{jk}$ can be added as diagonal Born-Oppenheimer c
 Non-zero off-diagonal elements are responsible for \textit{nonadiabatic effects}.
 
 The ground state in the BOA is a product of an ionic and an electronic component
-\begin{align}
+\begin{align} \label{eq:intro-boa-product}
 \Psi_{j 0}^{BO}(\bs{R},\RI) = \chi_j(\RI) \psi_0(\bs{R};\RI),
 \end{align}
 where the ion wave function for the $j^{\text{th}}$ vibrational state $\chi_j(\RI)$ obeys its own Schr\"odinger equation with an effective potential energy surface provided by the ground-state energy of the electronic hamiltonian $E_0(\RI) = \braket{\psi_0|\ham|\psi_0}$, a.k.a. the Born-Oppenheimer potential energy surface (BO-PES)
@@ -49,7 +49,7 @@ E_0 \equiv \braket{\psi_0|\ham|\psi_0}(\RI),
 which is a function of the positions of the ions $\RI$. First, the electronic energy is averaged over a distribution of ion configurations $\vert\chi_j\vert^2(\RI)$ rather than evaluated at one fixed configuration $\RI$. This quantum delocalization effect raises the total energy from the bottom of the BO-PES $\RI^e=\underset{\RI}{\text{argmin}}~E_0(\RI)$, which would be the electron-ion ground-state energy if the ions were classical. Second, the ions have kinetic energy even at absolute zero, which also contributes a positive term to the total energy.
 The difference between the electron-ion ground-state energy and the electronic one is the zero-point energy (ZPE) of the electron-ion system. In the BOA, ZPE contains only two terms from delocalization and kinetic energy of the ions.
 
-One critical short-fall of the BOA is its lack of pathways for the ions to transfer energy to the electrons. This is critical in the study of radiation damage, where a fast moving ion can transfer energy to both the electrons and the ions in a material. Further, bond breaking cannot occur via an electronic transition from binding to anti-binding state. The BOA can also break down if the electrons interact with a particle much lighter than an atomic nucleus, for example a positron or a muon. Finally, the nonadiabatic coupling terms can diverge when two electronic states cross, e.g., at a conical intersection. Thus, it is sometimes important to go beyond the BOA.
+One short-fall of the BOA is its lack of pathways for the ions to transfer energy to the electrons. This is critical in the study of radiation damage, where a fast moving ion can transfer energy to both the electrons and the ions in a material. Further, bond breaking cannot occur via an electronic transition from binding to anti-binding state. The BOA can also break down if the electrons interact with a particle much lighter than an atomic nucleus, e.g., a positron or a muon. Finally, the nonadiabatic coupling terms can diverge when two electronic states cross, e.g., at a conical intersection. Thus, it is sometimes important to go beyond the BOA.
 
 \subsection{Beyond the BOA}
 

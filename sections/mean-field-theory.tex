@@ -79,6 +79,16 @@ This guess was obtained as early as 1927 by V. W. Heitler and F. London~\cite{He
 
 In modern quantum chemistry, instead of directly approximating the integrals, we analytically evaluate the integrals by approximating each basis function as a sum of Gaussians. This reduces the multi-center integrals to single-center integrals, because a product of Gaussians centered on different atoms is also Gaussian but with a different center. The so-called STO-3g basis expresses a STO as a sum of 3 ``primitive Gaussians'' (see eq. (3.225) of Szabo). Using this basis, the bond length and binding energy become 1.35 bohr and 3.2 eV, having roughly half the discrepancy with experiment when compared to the Heitler-London values.
 
+\begin{comment}
+\begin{align}
+\chi_{nlm}(r, \theta, \phi;\zeta) \equiv \dfrac{(2\zeta)^{n+1/2}}{\sqrt{(2n)!}}
+r^{n-1}e^{-\zeta r} Y_{lm}(\theta, \phi).
+\end{align}
+\begin{align}
+g(r; \sigma) = \dfrac{1}{\sigma\sqrt{2\pi}} e^{-\dfrac{r^2}{2\sigma^2}}.
+\end{align}
+\end{comment}
+
 Figure~\ref{fig:sto-3g} shows the STO-3g basis compared to the exact STO it approximates
 \begin{align}
 \chi(r)\equiv \left(\dfrac{\zeta^3}{\pi}\right)^{1/2} e^{-\zeta r} \approx \phi(\bs{r}) = \sum\limits_{i=1}^3 c_i \left(\dfrac{2\alpha_i}{\pi}\right)^{3/4} e^{-\alpha_ir^2},
@@ -165,7 +175,7 @@ F_{\mu\nu} = \left(\begin{array}{cc}
 \end{align}
 The total energy is $-1.11671432$ ha, while the electronic contribution is $-1.831$ ha, before adding the ion-ion repulsion $V_{ii}=1/1.4$ ha. Interested reader should reproduce the Fock matrix for STO-3G H$_2$ at 1.4 bohr separation, i.e. eq.~(\ref{eq:h2-hf-fock-r14}), to consolidate a practical understanding of RHF.
 
-\subsection{Koopmans Theorem}
+\subsubsection{Koopmans Theorem}
 Consider removing an electron from orbital $\delta\le N$, the wave function for the $(N-1)$-electron system is~\cite{Giuliani2005}
 \begin{align}
 \ket{\Psi_{HF}^{(h,\delta)}} = \hat{a}_\delta\ket{\Psi_{HF}}
@@ -174,39 +184,44 @@ in the frozen orbital approximation, where the orbitals of the remaining electro
 \begin{align}
 E_{HF}^{(h,\delta)} \equiv \braket{\ket{\Psi_{HF}^{(h,\delta)}}|\ham|\ket{\Psi_{HF}^{(h,\delta)}}} = E_{HF} - \epsilon_\delta.
 \end{align}
-Koopmans~\cite{Koopmans1934} first proved this for the highest occupied molecular orbital (HOMO) as an approximation to the ionization energy, although the above derivation is general for any orbital.
+T. Koopmans~\cite{Koopmans1934} first proved this for the highest occupied molecular orbital (HOMO) as an approximation to the ionization energy, although the above derivation is general for any orbital.
 Following Chapter 2.2.3 in Ref.~\cite{Giuliani2005}, one can similarly calculate the energy of an N-electron system that differs from the HF ground state by an electron-hole excitation
 \begin{align}
 \ket{\Psi_{HF}^{(e,\gamma;h,\delta)}} = \hat{a}_\gamma^\dagger \hat{a}_\delta \ket{\Psi_{HF}}, ~\gamma>N,~\delta\le N. \\
-E_{HF}^{(e,\gamma;h,\delta)} = E_{HF}+\epsilon_\gamma-\epsilon_\delta-\Delta_{\gamma\delta}.
+E_{HF}^{(e,\gamma;h,\delta)} = E_{HF}+\epsilon_\gamma-\epsilon_\delta-\Delta_{\gamma\delta},
 \label{eq:hf-eh}
 \end{align}
-For a stable HF solution, eq.~(\ref{eq:hf-eh}) leads to a \textit{coulomb gap} in the density of states in insulators
+where $\Delta_{\gamma\delta}>0$. For a stable HF solution, eq.~(\ref{eq:hf-eh}) leads to a \textit{coulomb gap} in the HF density of states in insulators
 \begin{align}
 N(e) < 2^{d-1}d\left(\dfrac{\epsilon}{e^2}\right)^d(e-e_F)^{d-1},
 \end{align}
 where $d$ is the number of spatial dimensions, and $\epsilon$ is the dielectric constant of the insulator. That is, the HF density of states must vanish at least as fast as $(e-e_F)^{d-1}$ around the Fermi energy $e_F$.
 
-Koopmans theorem assigns physical meanings to the HF eigenvalues, but is only applicable relative to the HF ground state. For example, one cannot repeatedly apply Koopmans theorem to construct the total energy of the system by stripping one electron at a time. The sum of HF eigenvalues double counts the interaction energy, which must be subtracted to calculate the HF total energy
+Koopmans theorem assigns physical meanings to the HF eigenvalues, but is only applicable relative to the HF ground state. For example, one cannot repeatedly apply Koopmans theorem to reconstruct the total energy of the system by stripping one electron at a time. The sum of HF eigenvalues double counts the interaction energy, which must be subtracted to calculate the HF total energy
 \begin{align}
 E_{HF} = \sum\limits_{\alpha} n_\alpha \epsilon_\alpha - \frac{1}{2}n_\alpha (V_{\alpha\alpha}^{HF}-V_{\alpha\alpha}^{ext}).
 \end{align}
 
 \subsubsection{Basis Set Error}
 
-\subsubsection{Static and Dynamic Correlation}
-
 \subsubsection{Beyond Hartree-Fock}
+Even when the complete basis set limit is reached, the HF solution is still not the exact electronic ground state due to its neglect of electron correlation.
+The virtual orbitals can be used to construct N-electron determinants that differ from the HF ground state by changing orbital occupation.
+These determinants form a many-body basis, in which any wave function can be expressed as a linear combination.
+This leads to the configuration interaction (CI) expansion, where the exact electronic ground state is expanded in many-body bases of increasing sizes
+\begin{align} \label{eq:method-hf-ci}
+\psi_0 = \lim\limits_{M\rightarrow\infty}\sum\limits_{i=0}^{M} c_i \ket{D_i}.
+\end{align}
+If all determinants that differs by one particle-hole excitation from reference are considered, then we obtain a CI singles (CIS) expansion. If these, and all determinants with two particle-hole excitations are considered, then the expansion is CI singles and doubles (CISD), etc..
 
-\begin{comment}
-\begin{align}
-\chi_{nlm}(r, \theta, \phi;\zeta) \equiv \dfrac{(2\zeta)^{n+1/2}}{\sqrt{(2n)!}}
-r^{n-1}e^{-\zeta r} Y_{lm}(\theta, \phi).
-\end{align}
-\begin{align}
-g(r; \sigma) = \dfrac{1}{\sigma\sqrt{2\pi}} e^{-\dfrac{r^2}{2\sigma^2}}.
-\end{align}
-\end{comment}
+\subsubsection{Static and Dynamic Correlation}
+The ground state is said to have \textit{static correlation} if one or more determinants in the exact expansion eq.~(\ref{eq:method-hf-ci}) are nearly degenerate with the reference determinant.
+This will happen if there are virtual orbitals nearly degenerate with the highest occupied molecular orbital.
+In contrast, the system has \textit{dynamic correlation} if the $c_i$ coefficients are small but non-zero for many determinants with high levels of excitation.
+Dynamic correlation is often attributed to strong local correlation such as the electron-electron cusp condition.
+The exact definitions of static and dynamic correlations are still murky~\cite{Benavides-Riveros2017}.
+I introduce the above working definitions, because the static correlation can be interpreted as a delocalization error due to fractional electron~\cite{Cohen2008}, and is related to the self-interaction error in density functional theory (DFT).
+This bridges the languages used in quantum chemistry and condensed matter and points to a solution of the infamous ``bandgap problem'' to be introduced in  Sec.~\ref{sec:method-dft-bandgap}.
 
 \subsection{Kohn-Sham Density Functional Theory (KS-DFT)}
 While the Hartree-Fock method enjoys much success in the study of atoms and molecules, its complete neglect of (Coulomb) electron correlation is woefully inadequate for many solids. The total energy is dominated by inner shell contributions, which overshadow the valence contributions important for bonding and correlated excitations in solids. The HF energy eigenvalues show vanishing density of states at the Fermi level in metals and unphysically large band gaps in insulators~\cite{Perdew1981}.
@@ -310,9 +325,25 @@ F_{\mu\nu} = \left(\begin{array}{cc}
 \end{align}
 The LDA electronic contribution is $-1.73929592$ ha.
 
-\subsubsection{The Band Gap Problem}
-The Kohn-Sham eigenvalues do not have the same physical meaning as the Hartree-Fock eigenvalues as given by Koopman's theorem. Thus, a band gap ``problem'' arises when one compares the HOMO-LUMO gap from KS-DFT to experimental measurements of the fundamental gap $E_g$. When extended to handle systems with fractional electron number, the derivative discontinuity of the exact density functional is equal $E_g$. It has contribution from both the non-interacting kinetic functional $T_s[n]$ and the exact exchange-correlation functional $E_{xc}[n]$. The KS HOMO-LUMO gap measures the derivative discontinuity in $T_s[n]$. However, in the LDA, $E_{xc}[n]$ has no derivative discontinuity, so its contribution is missing. As a result, the LDA gap is $\sim 50\%$ that of experiment, showing that the derivative discontinuity in $E_{xc}[n]$ can be of similar magnitude as the gap and cannot be ignored.
+\subsubsection{The Band Gap Problem} \label{sec:method-dft-bandgap}
+The Kohn-Sham eigenvalues do not have the same physical meaning as the Hartree-Fock eigenvalues as given by Koopmans theorem. Thus, a band gap ``problem'' arises when one compares the HOMO-LUMO gap from KS-DFT to experimental measurements of the fundamental gap $E_g$. When extended to handle systems with fractional electron number, the derivative discontinuity of the exact density functional is equal $E_g$. It has contribution from both the non-interacting kinetic functional $T_s[n]$ and the exact exchange-correlation functional $E_{xc}[n]$. The KS HOMO-LUMO gap measures the derivative discontinuity in $T_s[n]$. However, as shown in Fig.~\ref{fig:method-dft-smooth-lda}, in the LDA, $E_{xc}[n]$ is smooth, so its contribution to the gap is missing. As a result, the LDA gap is $\sim 50\%$ that of experiment, showing that the derivative discontinuity in $E_{xc}[n]$ can be of similar magnitude as the gap and cannot be ignored.
 
-% why is HSE so good?
+\begin{figure}[h]
+\includegraphics[width=0.45\linewidth]{cohen2008-fig1}
+\includegraphics[width=0.52\linewidth]{cohen2008-fig2}
+\caption{A. J. Cohen, P. Mori-S\'anchez, and W. Yang~\cite{Cohen2008} explains the self-interaction error in H$_2$ binding curve (left panel C and D) due to the presence of fractional electron (left panel B), which leads to a delocalization error when LDA is used (right panel).}
+\label{fig:method-dft-smooth-lda}
+\end{figure}
+
+% Q/ why is HSE so good?
+% A/ because it has both convex and concave components. See Cohen 2008 Fig. 2
 
 \subsubsection{Beyond Local Density Approximation}
+
+generalized gradient approximation (PBE and BLYP)
+
+van der Waals functionals (vdW-DF)
+
+exact exchange functionals (HSE)
+
+SCAN?
