@@ -42,7 +42,7 @@ Density matrix
 \rho\propto\exp\left(i\dfrac{S}{\hbar}\right)
 \end{align}
 
-\section{The Many-body Problem}
+\section{The Electron-Ion Problem}
 The main goal of this thesis is the quantitatively accurate simulation of a many-body system of charged particles in the non-relativistic limit.
 It will soon become clear that this is more of an aspiration than a practical goal at this time.
 Nevertheless, progress has been made in a few areas.
@@ -89,6 +89,24 @@ where $\ham$ is the electronic hamiltonian. The semicolon in $\ham(\bs{R};\RI)$ 
 % Beyond BO/Tutorial/h2_summary
 \input{sections/nad-h2}
 
-\section{Lithium Compton Profile}
-\section{Insulator Band Gap}
-\section{Outline}
+\section{Helium and Jellium}
+
+\section{Hydrogen}
+Hydrogen is a logical starting point for solving the electron-ion problem.
+It has the simplest atomic structure and no core electrons.
+The non-relativistic Schr\"odinger equation eq.~(\ref{eq:intro-schro}) and (\ref{eq:intro-ei-ham}) should work well for hydrogen. Further, the ground state of its electronic hamiltonian can be compactly and accurately represented~\cite{Holzmann2003}.
+Without core electrons, no essential modification needs to be made to the hamiltonain eq.~(\ref{eq:intro-ei-ham}) for a practical simulation, e.g., pseudopotential.
+
+At sufficiently high temperatures, hydrogen plasma, equal mixture of isotropic positive charge (protons) and negative charge (electrons), is a straightforward generalization of the jellium model to two-component system. However, at low temperatures, the two-component analogue to the Wigner crystal, solid hydrogen, is surprisingly complex.
+Since hydrogen is the lightest element, its zero-point motion has large amplitude. The ion wave function explores a sufficiently large space to invalidate the harmonic approximation for lattice vibrations.
+Further complicating matters, one can expect a metal-to-insulator transition as well as an atomic-to-molecular transition that may or may not coincide as temperature or pressure is decreased.
+On top of all that, naturally occurring isotopes, e.g., deuterium, and spin isomers make for an intriguing blend of intricate quantum effects.
+
+Hydrogen is also interesting due to its practical relevance. Being the most abundant element in the observable universe, hydrogen and its isotopes are crucial for understanding of starts and giant gas planets. Knowing the properties of hydrogen can also help us harness the power of the sun to produce the clean energy source that is fusion.
+At high pressure and low temperature, hydrogen may form a zero temperature liquid. If that were the case, then it may be a superconducting super fluid, the first of its kind. More realistically, solid atomic hydrogen is predicted to be a room temperature superconductor. Hydrogen-rich compounds have been shown to smash all superconducting temperature records held by the so-called ``high-temperature'' superconductors via what is believed to be conventional BCS mechanism.
+
+\section{Lithium}
+
+\section{Silicon}
+
+\section{Thesis Outline}
