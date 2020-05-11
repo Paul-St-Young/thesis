@@ -28,6 +28,7 @@ sorting=none
 \addbibresource{sections/books}
 \addbibresource{sections/wf}
 \addbibresource{sections/fsc}
+\addbibresource{sections/nad-ref.bib}
 \defbibheading{general}{\section{References}}
 \defbibheading{all}{\chapter{References}}
 \addbibresource{papers/licp/licp-ref.bib}
@@ -53,8 +54,14 @@ sorting=none
 \newcommand{\Tr}[1]{\text{Tr}\left(#1\right)}
 \newcommand{\up}{\uparrow}
 \newcommand{\dn}{\downarrow}
-\newcommand{\ham}{\mathcal{H}}
+\newcommand{\ham}{\hat{\mathcal{H}}}
 \newcommand{\veff}{v_{\text{eff}}}
+%\newcommand{\ri}{\bs{x}_I}
+%\newcommand{\rj}{\bs{x}_J}
+%\newcommand{\RI}{\bs{x}}
+\newcommand{\ri}{\bs{r}_I}
+\newcommand{\rj}{\bs{r}_J}
+\newcommand{\RI}{\bs{R}_I}
 
 \begin{document}
 
@@ -75,14 +82,14 @@ sorting=none
 %\include{sections/lists}
 \mainmatter
 
-%\include{sections/introduction}
+\include{sections/introduction}
 
 \chapter{Methods}
-%\input{sections/mean-field-theory}
+\input{sections/mean-field-theory}
 \input{sections/monte-carlo}
 
-\include{sections/slater-jastrow}
-\include{sections/finite-size-correction}
+%\include{sections/slater-jastrow}
+%\include{sections/finite-size-correction}
 
 %\include{papers/nonbo/nonbo-chapter}
 %\include{sections/hsolid-intro}
