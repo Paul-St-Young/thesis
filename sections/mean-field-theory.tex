@@ -1,5 +1,5 @@
 \section{Effective One-Particle Theories}
-\subsection{Hartree-Fock (HF)}
+\subsection{Hartree-Fock}
 
 \newcommand{\hcore}{H^{\text{core}}_{\mu\nu}}
 \newcommand{\ksveff}{V^{\text{eff}}_{\mu\nu}}
@@ -221,9 +221,9 @@ In contrast, the system has \textit{dynamic correlation} if the $c_i$ coefficien
 Dynamic correlation is often attributed to strong local correlation such as the electron-electron cusp condition.
 The exact definitions of static and dynamic correlations are still murky~\cite{Benavides-Riveros2017}.
 I introduce the above working definitions, because the static correlation can be interpreted as a delocalization error due to fractional electron~\cite{Cohen2008}, and is related to the self-interaction error in density functional theory (DFT).
-This bridges the languages used in quantum chemistry and condensed matter and points to a solution of the infamous ``bandgap problem'' to be introduced in  Sec.~\ref{sec:method-dft-bandgap}.
+This bridges the languages used in quantum chemistry and condensed matter as well as points to a solution of the infamous ``bandgap problem'', to be introduced in  Sec.~\ref{sec:method-dft-bandgap}.
 
-\subsection{Kohn-Sham Density Functional Theory (KS-DFT)}
+\subsection{Kohn-Sham Density Functional Theory}
 While the Hartree-Fock method enjoys much success in the study of atoms and molecules, its complete neglect of (Coulomb) electron correlation is woefully inadequate for many solids. The total energy is dominated by inner shell contributions, which overshadow the valence contributions important for bonding and correlated excitations in solids. The HF energy eigenvalues show vanishing density of states at the Fermi level in metals and unphysically large band gaps in insulators~\cite{Perdew1981}.
 
 Density functional theory uses the three-dimensional total electron density $n(\bs{r})$ as the basic variable rather than the 3N-dimensional many-body wave function $\Psi(\bs{r}_1,\dots,\bs{r}_N)$. This is a dramatic simplification that likely lead to its dominance in modern electronic structure theory of solids and material science.
@@ -275,7 +275,7 @@ where $\alpha(\bs{q})$ and $\epsilon(\bs{q})$ are the polarizability and dielect
 
 \subsubsection{The Kohn-Sham equations}
 
-One year after the HK paper, W. Kohn and L. J. Sham (KS)~\cite{Kohn1965} worked out practical guidelines for constructing approximations to the exact density functional. KS first partitioned the total energy to highlight the least-understood ``exchange-correlation" term $E_{xc}[n]$.
+One year after HK, W. Kohn and L. J. Sham (KS)~\cite{Kohn1965} worked out practical guidelines for constructing approximations to the exact density functional. KS first partitioned the total energy to highlight the least-understood ``exchange-correlation" term $E_{xc}[n]$.
 \begin{align} \label{eq:ks-etot}
 E=\int d\bs{r} n(\bs{r}) v(\bs{r}) + \frac{1}{2}\int d\bs{r}d\bs{r}' \dfrac{n(\bs{r})n(\bs{r}')}{\vert\bs{r}-\bs{r}'\vert} + T[n] + E_{\text{xc}}[n],
 \end{align}
@@ -317,16 +317,24 @@ In the PZ formulation of KS-DFT, the only difference between the LDA and the RHF
 K_{\mu\nu}' = \left(\begin{array}{cc}
 0.38980073 & 0.25499926 \\
 0.25499926 & 0.38980073
-\end{array}\right)\\
+\end{array}\right),
+\end{align}
+which now contains an approximation to both exchange and correlation effects rather than exact exchange in the case of HF. The Fock matrix is
+\begin{align}
 F_{\mu\nu} = \left(\begin{array}{cc}
 -0.16477935 & -0.32007715 \\
 -0.32007715 & -0.16477935
-\end{array}\right).\label{eq:h2-lda-fock-r14}
+\end{array}\right),
+\label{eq:h2-lda-fock-r14}
 \end{align}
-The LDA electronic contribution is $-1.73929592$ ha.
+and the LDA electronic contribution is $-1.73929592$ ha.
 
 \subsubsection{The Band Gap Problem} \label{sec:method-dft-bandgap}
-The Kohn-Sham eigenvalues do not have the same physical meaning as the Hartree-Fock eigenvalues as given by Koopmans theorem. Thus, a band gap ``problem'' arises when one compares the HOMO-LUMO gap from KS-DFT to experimental measurements of the fundamental gap $E_g$. When extended to handle systems with fractional electron number, the derivative discontinuity of the exact density functional is equal $E_g$. It has contribution from both the non-interacting kinetic functional $T_s[n]$ and the exact exchange-correlation functional $E_{xc}[n]$. The KS HOMO-LUMO gap measures the derivative discontinuity in $T_s[n]$. However, as shown in Fig.~\ref{fig:method-dft-smooth-lda}, in the LDA, $E_{xc}[n]$ is smooth, so its contribution to the gap is missing. As a result, the LDA gap is $\sim 50\%$ that of experiment, showing that the derivative discontinuity in $E_{xc}[n]$ can be of similar magnitude as the gap and cannot be ignored.
+The Kohn-Sham eigenvalues do not have the same physical meaning as the Hartree-Fock eigenvalues as given by Koopmans theorem. Thus, a band gap ``problem'' arises when one compares the HOMO-LUMO gap from KS-DFT to experimental measurements of the fundamental gap $E_g$.
+
+The eigenvalue of the Kohn-Sham HOMO can be identified with the ionization energy of an isolated molecule if the exchange-correlation potential vanish at infinity and 
+
+When extended to handle systems with fractional electron number, the derivative discontinuity of the exact density functional is equal $E_g$. It has contribution from both the non-interacting kinetic functional $T_s[n]$ and the exact exchange-correlation functional $E_{xc}[n]$. The KS HOMO-LUMO gap measures the derivative discontinuity in $T_s[n]$. However, as shown in Fig.~\ref{fig:method-dft-smooth-lda}, in the LDA, $E_{xc}[n]$ is smooth, so its contribution to the gap is missing. As a result, the LDA gap is $\sim 50\%$ that of experiment, showing that the derivative discontinuity in $E_{xc}[n]$ can be of similar magnitude as the gap and cannot be ignored.
 
 \begin{figure}[h]
 \includegraphics[width=0.45\linewidth]{cohen2008-fig1}
@@ -340,7 +348,23 @@ The Kohn-Sham eigenvalues do not have the same physical meaning as the Hartree-F
 
 \subsubsection{Beyond Local Density Approximation}
 
-generalized gradient approximation (PBE and BLYP)
+While extremely successful, the LDA has well-documented deficiencies. LDA underestimates the band gap due to a lack of derivative discontinuity as discussed in the previous Sec.~\ref{sec:method-dft-bandgap}. LDA tends to overestimate the binding energy of molecular systems. This is attributed to the logarithmic divergence of the LDA correlation functional as density tends to infinity (see eq.~(7.55) in Ref.~\cite{Giuliani2005}).
+%For an isolated atom, the LDA xc potential approaches zero exponentially fast at large distances rather than the correct asymptotic limit $-e^2/r$.
+
+The logarithmic divergence of the LDA is largely corrected by the generalized gradient approximation (GGA). This modification is as straight-forward as adding an extra term that depends on the gradient of the electron density $\bs{\nabla}n$ to the exchange-correlation function. An arbitrary choice of the gradient term can distort the xc hole and break the sum rule that controls its global strength
+\begin{align}
+\int\bs{r}' n(\bs{r}')[g(\bs{r},\bs{r}')-1] = -1.
+\end{align}
+J. Perdew and co-workers overcame this difficulty by introducing a real-space cutoff to the exchange hole. While the details are technical, the final form of the GGA exchange functional is elegant
+\begin{align} \label{eq:method-dft-pbe-x}
+E_x^{GGA}[n] = \int d\bs{r} n(\bs{r})\epsilon_x(n(\bs{r}))F_x(\bs{s}(\bs{r})),
+\end{align}
+where $\epsilon_x$ is the LDA exchange function and the scaled gradient
+\begin{align}
+\bs{s}(\bs{r}) = \dfrac{\bs{\nabla}n(\bs{r})}{2k_F(\bs{r})n(\bs{r})}.
+\end{align}
+A simple form for the exchange enhancement factor $F_x$ was given by J. Perdew, K. Burke, and E. Ernzerhof in 1996. After another careful cutoff on the correlation functional, the immensely popular PBE functional was constructed. The PBE xc functional takes the same form as eq.~(\ref{eq:method-dft-pbe-x}), but with a different enhancement factor $F_{xc}$ instead of $F_x$.
+PBE softens molecular bonds relative to the LDA and predict an order of magnitude more accurate dissociation energies of many molecules~\cite{Perdew1996}.
 
 van der Waals functionals (vdW-DF)
 

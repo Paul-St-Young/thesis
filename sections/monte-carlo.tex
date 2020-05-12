@@ -58,7 +58,7 @@ I will start with the general, albeit somewhat complicated, path integral Monte 
 \subsection{Path Integral Monte Carlo} \label{sec:method-pimc}
 The quantum partition function for the canonical ensemble needs to trace over discrete N-particle eigenstates, rather than 2N 3-dimensional variables as in eq.~(\ref{eq:classical-nvt-part})
 \begin{align}
-Z\equiv \text{Tr}(e^{-H/k_BT})=\text{Tr}\left(
+Z\equiv \text{Tr}(e^{-\hat{H}/k_BT})=\text{Tr}\left(
 \sum\limits_{i=1}^{\infty} e^{-E_i/k_BT}\ket{\Psi_i}\bra{\Psi_i}
 \right),
 \end{align}
@@ -231,10 +231,10 @@ The Langevin equation needed to solve eq.~(\ref{eq:vmc-fokker-planck}) is
 \begin{align}
 \dfrac{\partial\bs{r}(t)}{\partial t} = \lambda \bs{v}(\bs{r}(t)) + \bs{\eta},
 \end{align}
-where $\bs{\eta}$ is a multidimensional Gaussian with a mean of zero and a variance of $2\lambda$. In this light, the VMC algorithm is more akin to stochastic classical molecular dynamics than Monte Carlo. However, the most efficient algorithm is obtained when the Fokker-Planck formulation is combined with Metropolis Monte Carlo. By introducing a metropolis accept/reject procedure at each step of the Fokker-Planck dynamics, the time step bias is eliminated because detailed balance is enforced to sample $\vert\Psi_T\vert^2$. Another way to view this is that Fokker-Planck dynamics is used to construct efficient drift-diffusion moves for an exact Monte Carlo method.
+where $\bs{\eta}$ is a multidimensional Gaussian with a mean of zero and a variance of $2\lambda$. In this light, the VMC algorithm is more akin to stochastic classical molecular dynamics than Monte Carlo. However, the most efficient algorithm is obtained when the Fokker-Planck formulation is combined with Metropolis Monte Carlo. By introducing a metropolis accept/reject procedure at each step of the Fokker-Planck dynamics, we eliminate the time step bias because detailed balance is enforced to sample $\vert\Psi_T\vert^2$. Another way to view this is that Fokker-Planck dynamics is used to construct efficient drift-diffusion moves for an exact Monte Carlo method.
 
-Equation~(\ref{eq:vmc-fokker-planck}) defines an efficient implementation of the VMC algorithm. Interestingly, the governing equation of DMC eq.~(\ref{eq:dmc-dfdt}) without the branching term is identical to that of VMC eq.~(\ref{eq:vmc-fokker-planck}) given the drift vector eq.~(\ref{eq:vmc-drift}).
-This implies that the drift-diffusion term in the DMC Green function performs sampling of the trial wave function only. The local energy term in eq.~(\ref{eq:dmc-dfdt}), when accumulated over the drift-diffusion process, is responsible for imaginary-time projection of the trial wave function.
+Equation~(\ref{eq:vmc-fokker-planck}) defines an efficient implementation of the VMC algorithm. Interestingly, the governing equation of DMC eq.~(\ref{eq:dmc-dfdt}) without the branching term is identical to that of VMC eq.~(\ref{eq:vmc-fokker-planck}) when the same trial wave function is used for drift eq.~(\ref{eq:vmc-drift}).
+This implies that the drift-diffusion term in the DMC Green function performs sampling of the trial wave function only. The local energy term in eq.~(\ref{eq:dmc-dfdt}), when accumulated over the drift-diffusion process, is responsible for imaginary-time projection.
 %Variational Monte Carlo is the bread and butter of QMC methods.
 
 \subsection{Fermion Sign Problem} \label{sec:fermion-sign-problem}

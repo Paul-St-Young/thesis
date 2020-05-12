@@ -26,7 +26,7 @@ The matrix elements that couple different electronic states in eq.~(\ref{eq:coup
 \end{align}
 Every term in $\Lambda_{jk}$ has an inverse ion mass prefactor $\frac{\hbar^2}{2M_I}$, so they are expected to be small in most cases. There are two common approximations of $\Lambda_{kj}$, the first is to set the entire matrix to zero, the second is to set only the off-diagonal terms to zero. Both approximations decouple (\ref{eq:coupled}), which allows the complete separation of electronic and ionic motions.
 %Therefore both approximations fall under the umbrella of adiabatic approximation, where the ion positions are considered to be slowly changing parameters of the electronic hamiltonian. 
-Many different and sometimes conflicting names have been given to these two approximations including Born-Huang, Born-Oppenheimer and adiabatic approximation. To avoid confusion, I will call the all-zero approximation $\Lambda_{jk}=0,~\forall j, k$ the Born-Oppenheimer approximation (BOA).
+Many different and sometimes conflicting names have been given to these two approximations including Born-Huang, Born-Oppenheimer and adiabatic approximation. To avoid confusion, I will call the all-zero approximation, $\Lambda_{jk}=0,~\forall j, k$, the Born-Oppenheimer approximation (BOA).
 The diagonal terms of $\Lambda_{jk}$ can be added as diagonal Born-Oppenheimer correction (DBOC).
 Non-zero off-diagonal elements are responsible for \textit{nonadiabatic effects}.
 
@@ -34,7 +34,7 @@ The ground state in the BOA is a product of an ionic and an electronic component
 \begin{align} \label{eq:intro-boa-product}
 \Psi_{j 0}^{BO}(\bs{R},\RI) = \chi_j(\RI) \psi_0(\bs{R};\RI),
 \end{align}
-where the ion wave function for the $j^{\text{th}}$ vibrational state $\chi_j(\RI)$ obeys its own Schr\"odinger equation with an effective potential energy surface provided by the ground-state energy of the electronic hamiltonian $E_0(\RI) = \braket{\psi_0|\ham|\psi_0}$, a.k.a. the Born-Oppenheimer potential energy surface (BO-PES)
+where the ion wave function for the $j^{\text{th}}$ vibrational state $\chi_j(\RI)$ obeys its own Schr\"odinger equation on an effective potential energy surface provided by the ground-state energy of the electronic hamiltonian $E_0(\RI) = \braket{\psi_0|\ham|\psi_0}$, a.k.a. the Born-Oppenheimer potential energy surface (BO-PES)
 \begin{align} \label{eq:boa-ion}
 \left(-\sum_I\frac{\hbar^2}{2M_I}\nabla^2_I+E_0\right)\chi_j = i\hbar\dot{\chi}_j.
 \end{align}
@@ -46,8 +46,8 @@ $E_{j0}^{BO}$ differs in two ways from the electronic ground-state energy
 \begin{align}
 E_0 \equiv \braket{\psi_0|\ham|\psi_0}(\RI),
 \end{align}
-which is a function of the positions of the ions $\RI$. First, the electronic energy is averaged over a distribution of ion configurations $\vert\chi_j\vert^2(\RI)$ rather than evaluated at one fixed configuration $\RI$. This quantum delocalization effect raises the total energy from the bottom of the BO-PES $\RI^e=\underset{\RI}{\text{argmin}}~E_0(\RI)$, which would be the electron-ion ground-state energy if the ions were classical. Second, the ions have kinetic energy even at absolute zero, which also contributes a positive term to the total energy.
-The difference between the electron-ion ground-state energy and the electronic one is the zero-point energy (ZPE) of the electron-ion system. In the BOA, ZPE contains only two terms from delocalization and kinetic energy of the ions.
+which is a function of the positions of the ions $\RI$. First, in $E_{j0}^{BO}$ the electronic energy is averaged over a distribution of ion configurations $\vert\chi_j\vert^2(\RI)$ rather than evaluated at one fixed configuration $\RI$. This quantum delocalization effect raises the total energy from the bottom of the BO-PES $\RI^e=\underset{\RI}{\text{argmin}}~E_0(\RI)$, which would have been the electron-ion ground-state energy if the ions were classical. Second, the ions have kinetic energy even at absolute zero, which also contributes a positive term to the total energy.
+The difference between the electron-ion ground-state energy and the electronic one is the zero-point energy (ZPE). In the BOA, ZPE contains only two terms from delocalization and kinetic energy of the ions.
 
 One short-fall of the BOA is its lack of pathways for the ions to transfer energy to the electrons. This is critical in the study of radiation damage, where a fast moving ion can transfer energy to both the electrons and the ions in a material. Further, bond breaking cannot occur via an electronic transition from binding to anti-binding state. The BOA can also break down if the electrons interact with a particle much lighter than an atomic nucleus, e.g., a positron or a muon. Finally, the nonadiabatic coupling terms can diverge when two electronic states cross, e.g., at a conical intersection. Thus, it is sometimes important to go beyond the BOA.
 
@@ -56,8 +56,8 @@ One short-fall of the BOA is its lack of pathways for the ions to transfer energ
 \subsubsection{Small Parameters in Nonadiabatic Operator}
 There are two small parameters that control the scale of nonadiabatic operator. One is clearly $\frac{1}{M_I}$, the other is $\epsilon_j-\epsilon_k$, which can only be seen from an explicit form of $\bs{F}_I^{jk}$. Take a $\bs{\nabla}_I$ of the time-independent electronic Schr\"odinger equation
 \begin{align}
-&\bs{\nabla}_I(H_{\text{el}}\psi_k) = \bs{\nabla}_I(\epsilon_k\psi_k ) \Rightarrow \psi_k\bs{\nabla}_IH_{\text{el}} + H_{\text{el}}\bs{\nabla}_I\psi_k = \psi_k\bs{\nabla}_I\epsilon_k + \epsilon_k\bs{\nabla}_I\psi_k \Rightarrow \nonumber \text{apply }\int\psi_j^* \\ &\left(\int \psi_j^*\psi_k\bs{\nabla}_IH_{\text{el}}\right) + \epsilon_j \bs{F}_{jk} = \bs{\nabla}_I\epsilon_k \delta_{jk}+\epsilon_k\bs{F}_I^{jk} \Rightarrow \nonumber \text{solve for }\bs{F}_I^{jk} \\
-&\bs{F}_I^{jk} = \dfrac{\braket{\psi_j|\bs{\nabla}_IH_{\text{el}}|\psi_k}+\bs{\nabla}_I\epsilon_k\delta_{jk}}{\epsilon_k-\epsilon_j}.
+&\bs{\nabla}_I(\ham\psi_k) = \bs{\nabla}_I(\epsilon_k\psi_k ) \Rightarrow \psi_k\bs{\nabla}_I\ham + \ham\bs{\nabla}_I\psi_k = \psi_k\bs{\nabla}_I\epsilon_k + \epsilon_k\bs{\nabla}_I\psi_k \Rightarrow \nonumber \text{apply }\int\psi_j^* \\ &\left(\int \psi_j^*\psi_k\bs{\nabla}_I\ham\right) + \epsilon_j \bs{F}_{jk} = \bs{\nabla}_I\epsilon_k \delta_{jk}+\epsilon_k\bs{F}_I^{jk} \Rightarrow \nonumber \text{solve for }\bs{F}_I^{jk} \\
+&\bs{F}_I^{jk} = \dfrac{\braket{\psi_j|\bs{\nabla}_I\ham|\psi_k}+\bs{\nabla}_I\epsilon_k\delta_{jk}}{\epsilon_k-\epsilon_j}.
 \end{align}
 If the electronic eigenstates are defined to be orthonormal, then $(\bs{F}_I^{kj})^*+\bs{F}_I^{jk}=\bs{0} \Rightarrow \text{Re}[\bs{F}_I^{jk}]=0$. 
 \begin{align}
@@ -73,5 +73,5 @@ In addition, if the wave function is real then $\bs{F}_I^{jj}=\braket{\psi_j|\bs
 \end{align}
 where $\hat{T}$ is the ion kinetic operator and $\braket{}_j$ denotes expectation in the $j^{\text{th}}$ electronic eigenstate.
 
-\subsubsection{Diagonal Correction to H$_2$}
-The diagonal correction for the hydrogen molecule was studied extensively by Kolos and Wolniewicz~\cite{Koos1964,Kolos1968,Wolniewicz1983}. They did not explicitly calculate the diagonal correction for HD and D$_2$ because ``The corrections for HD and D$_2$ are readily obtained from those for H$_2$ by multiplications by the mass ratios''. I think the assumption here is that the geometry of the isotopes of H$_2$ are sufficiently close to that of H$_2$ that the electronic ground-state is unperturbed.
+\subsubsection{Diagonal Born-Oppenheimer Correction to H$_2$}
+%The diagonal correction for the hydrogen molecule was studied extensively by Kolos and Wolniewicz~\cite{Koos1964,Kolos1968,Wolniewicz1983}. They did not explicitly calculate the diagonal correction for HD and D$_2$ because ``The corrections for HD and D$_2$ are readily obtained from those for H$_2$ by multiplications by the mass ratios''. I think the assumption here is that the geometry of the isotopes of H$_2$ are sufficiently close to that of H$_2$ that the electronic ground-state is unperturbed.

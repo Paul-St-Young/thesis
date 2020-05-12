@@ -196,7 +196,7 @@ where $\braket{}_{\Psi_T^2}$ denotes average over drift-diffusion random walks g
 \left\langle E_L\right\rangle_{\Psi_T^2}(\bs{R}_0) - E_0
 ].
 \end{align}
-Equation~(\ref{eq:wf-fk-small-tau}) says the correction to the exponent of $\Psi_T$ at $\bs{R}_0$ is proportional to the average of its local energy over a small region around $\bs{R}_0$ having size $O(\sqrt{N d \lambda\tau})$ in dN-dimensional space. This observation is quite useful for practitioners of the DMC method, because it implies longer projection time is needed for:
+Equation~(\ref{eq:wf-fk-small-tau}) says the correction to the exponent of $\Psi_T$ at $\bs{R}_0$ is proportional to the average of its local energy over a small region around $\bs{R}_0$ having size $O(\sqrt{d \lambda\tau})$ in dN-dimensional space. This observation is quite useful for practitioners of the DMC method, because it implies longer projection time is needed for:
 \begin{enumerate}
 \item \textit{larger system}, because the space over which $E_L$ needs to be averaged increase with $N$.
 \item \textit{heavier particles}, because they have smaller quantumness $\lambda$, thus smaller diffusion constant.
