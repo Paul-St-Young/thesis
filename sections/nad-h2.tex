@@ -1,4 +1,4 @@
-If one has obtained the eigenstates of the electronic hamiltonian $\{\psi_k\}$
+If one can obtain the eigenstates of the electronic hamiltonian $\{\psi_k\}$ at any ion configuration $\bs{R}_I$
 \begin{align}
 \ham (\bs{R};\RI) \psi_k(\bs{R};\RI) = E_k(\RI) \psi_k(\bs{R};\RI),
 \end{align}
@@ -6,7 +6,7 @@ then one can expand an eigenstate of the full hamiltonian $\hat{H}$ in the basis
 \begin{align} \label{eq:bo expansion}
 \Psi_l(\bs{R},\RI) = \sum_{k=0}^\infty \chi_{lk}(\RI)\psi_k(\bs{R};\RI), 
 \end{align}
-where the expansion coefficients $\chi_{lk}(\RI)$ will later be identified with the ionic wave function in the Born-Oppenheimer approximation. $l$ runs over the full electron-ion hamiltonian's eigenstates, which can have both ionic/vibrational and electronic characters. According to the Schr\"odinger equation, the coefficient for one of these \textit{vibronic} states cannot be determined separately for each electronic level $k$ in general. To see this, substitute the $l=0$ expansion eq.~(\ref{eq:bo expansion}) into the time-dependent Schr\"odinger equation for the full electron-ion hamiltonian (drop $l$ for simplicity)
+where the expansion coefficients $\chi_{lk}(\RI)$ will later be identified with the ionic wave function in the Born-Oppenheimer approximation. $l$ runs over the full electron-ion hamiltonian's eigenstates, which can have both ionic (vibrational) and electronic characters. The coefficient for one of these \textit{vibronic} states cannot be determined separately for each electronic level $k$ in general. To see this, substitute the $l=0$ expansion eq.~(\ref{eq:bo expansion}) into the time-dependent Schr\"odinger equation for the full electron-ion hamiltonian (drop $l$ for simplicity)
 \begin{align}
 \left(\ham - \sum_I\frac{\hbar^2}{2M_I}\nabla_I^2\right)\left(\sum_k\chi_k\psi_k\right) = i\hbar\frac{d}{dt}\left(\sum_k\chi_k\psi_k\right) \nonumber \Rightarrow \text{apply operators} \\
 \sum_k E_k\chi_k\psi_k-\sum_I\frac{\hbar^2}{2M_I}\left(\nabla^2_I\chi_k\psi_k+2\bs{\nabla}_I\chi_k\cdot\bs{\nabla}_I\psi_k+\chi_k\nabla_I^2\psi_k\right) = \sum_k i\hbar\dot{\chi_k}\psi_k \nonumber \Rightarrow \text{apply }\int\psi_j^* \\
@@ -24,7 +24,7 @@ The matrix elements that couple different electronic states in eq.~(\ref{eq:intr
 \begin{align} \label{eq:intro-boa-nona}
 \Lambda_{jk} = \sum_I \frac{\hbar^2}{2M_I}\left(2\bs{F}_I^{jk}\cdot\bs{\nabla}_I+G_I^{jk}\right).
 \end{align}
-Every term in $\Lambda_{jk}$ has an inverse ion mass prefactor $\frac{\hbar^2}{2M_I}$, so they are expected to be small in most cases. There are two common approximations of $\Lambda_{kj}$, the first is to set the entire matrix to zero, the second is to set only the off-diagonal terms to zero. Both approximations decouple (\ref{eq:intro-boa-coupled}), which allows the complete separation of electronic and ionic motions.
+Every term in $\Lambda_{jk}$ has an inverse ion mass prefactor $\frac{\hbar^2}{2M_I}$, so they are expected to be small in most cases. There are two common approximations of $\Lambda_{kj}$, the first is to set the entire matrix to zero, the second is to set only the off-diagonal terms to zero. Both approximations decouple (\ref{eq:intro-boa-coupled}), allowing the complete separation of electronic and ionic motions.
 %Therefore both approximations fall under the umbrella of adiabatic approximation, where the ion positions are considered to be slowly changing parameters of the electronic hamiltonian. 
 Many different and sometimes conflicting names have been given to these two approximations including Born-Huang, Born-Oppenheimer and adiabatic approximation.
 To fix nomenclature, I will call the all-zero approximation, $\Lambda_{jk}=0,~\forall j, k$, the Born-Oppenheimer approximation (BOA).
@@ -51,7 +51,13 @@ E_0 \equiv \braket{\psi_0|\ham|\psi_0}(\RI),
 which is a function of the positions of the ions $\RI$. First, in $E_{00}^{BO}$ the electronic energy is averaged over a distribution of ion configurations $\vert\chi_0\vert^2(\RI)$ rather than evaluated at one fixed configuration $\RI$. This quantum delocalization effect raises the total energy from the bottom of the BO-PES $\RI^e=\underset{\RI}{\text{argmin}}~E_0(\RI)$, which would have been the electron-ion ground state if the ions were classical. Second, the ions have kinetic energy even at absolute zero, which also contributes a positive term to the total energy.
 The difference between the electron-ion ground-state energy and the electronic one is the zero-point energy (ZPE). In the BOA, ZPE contains only two terms from delocalization and kinetic energy of the ions.
 
-The main short-fall of the BOA is its lack of pathways for the ions to transfer energy to the electrons. This is critical in the study of radiation damage, where a fast moving ion can transfer energy to both the electrons and the ions in a material. Further, bond breaking cannot occur via an electronic transition from binding to anti-binding state. The BOA can also break down if the electrons interact with a particle much lighter than an atomic nucleus, e.g., a positron or a muon. Finally, the nonadiabatic coupling terms can diverge when two electronic states cross, e.g., at a conical intersection. Thus, it is sometimes important to go beyond the BOA.
+Within the BOA framework, solving the electron-ion problem for a particular combination of vibrational $l$ and electronic state $k$ involves finding the $k^{th}$ eigenvalue of the clamped-ion electronic problem $\mathcal{H}(\bs{R}; \bs{R}_I)$ for many ion configuration $\bs{R}_I$. There are established first-principle molecular dynamics and Monte Carlo methods for achieving this, but they are not practical for even moderately large system, e.g., O(1000) atoms, because the computational cost of electronic structure methods generally scale as $N^3$ or worse.
+
+The main short-fall of the BOA is its lack of pathways for the ions to transfer energy to the electrons. This is critical in the study of radiation damage, where a fast moving ion can transfer energy to both the electrons and the ions in a material.
+Further, for chemical reactions involving vibration-assisted bond breaking, the BOA reduces the number of pathways dissociation can happen, thereby resulting in an incomplete description.
+The BOA can also break down if the electrons interact with a particle much lighter than an atomic nucleus such as a positron or a muon.
+Finally, the nonadiabatic coupling terms can diverge when two electronic states cross, e.g., at a conical intersection.
+Thus, it is sometimes important to go beyond the BOA.
 
 \subsection{Beyond the Born-Oppenheimer Approximation}
 

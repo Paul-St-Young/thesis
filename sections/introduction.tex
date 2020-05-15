@@ -45,15 +45,13 @@ Density matrix
 \end{comment}
 
 \section{The Electron-Ion Problem}
-The main goal of this thesis is the quantitatively accurate simulation of a many-body system of charged particles in the non-relativistic limit.
-%It will soon become clear that this is more an aspiration than a practical goal at this time.
-%Nevertheless, progress has been made in a few areas.
+The ultimate goal of this thesis works towards is the quantitatively accurate simulation of a many-body system of charged particles in the non-relativistic limit.
 This goal was not achieved, but some progress has been made.
 For the remainder of this thesis, ground truth is assumed to be established by the exact solution of the Shcr\"odinger equation~(\ref{eq:intro-schro}) for the electron-ion wave function $\Psi(\bs{R},\RI)$ for $N$ electrons and $N_I$ ions
 \begin{align} \label{eq:intro-schro}
 \hat{H} \Psi(\bs{R},\RI) = i\hbar\frac{d}{dt}\Psi(\bs{R},\RI),
 \end{align}
-where the electron-ion hamiltonian consists of non-relativistic kinetic energy and Coulomb interactions
+where the electron-ion hamiltonian consists of non-relativistic kinetic energies and Coulomb interactions
 \begin{align} \label{eq:intro-ei-ham}
 \hat{H} =
 -\sum\limits_{I=1}^{N_I} \frac{\hbar^2}{2m_I} \nabla^2_I
@@ -74,19 +72,19 @@ The partition function is a trace of the thermal density matrix and reduces to t
 \begin{align}
 Z=\Tr{\rho} \underset{\beta\rightarrow 0}{\Rightarrow} Z \propto e^{-\beta V}.
 \end{align}
-Further, low-temperature properties of boltzmannons and bosons can be exactly and efficiently calculated using the path integral method (Sec.\ref{sec:method-pimc}). The exact method is no longer practical when fermions, e.g., electrons are involved. Nevertheless, impressive results have been obtained for hydrogen when only the ground electronic state is considered~\cite{Pierleoni2016b,Celliers2018}.
+Further, low-temperature properties of boltzmannons and bosons can be exactly and efficiently calculated using the path integral method (Sec.\ref{sec:method-pimc}). The exact method is no longer practical when fermions, e.g., electrons, are involved. Nevertheless, impressive results have been obtained for hydrogen when only the ground electronic state is considered~\cite{Pierleoni2016b,Celliers2018}.
 A complete treatment of the full electron-ion hamiltonian eq.~(\ref{eq:intro-ei-ham}) is rarely attempted~\cite{Ceperley1981,Natoli1995}.
 
 The solution of the electron-ion problem would be an important milestone in computational condensed matter, because it is considered a quantitatively accurate model for the vast majority of solids and liquids in condensed matter experiments. Further, theoretically, it is a natural extension of the jellium model to multi-component system and provides a firm foundation upon which relativistic effects can be included, for example via perturbation. Finally, the laplacian in the non-relativistic kinetic energy operator can be interpreted as a generator of diffusion in imaginary time. This makes it more straightforward to develop intuitive understanding of quantum kinetic energy as well as to deploy powerful computational techniques such as diffusion Monte Carlo (Sec.~\ref{sec:method-dmc}).
 
 \subsection{Exact Schr\"odinger equations towards Born-Oppenheimer}
-The electron-ion problem can become much more tractable at the cost of a physically motivated Born-Oppenheimer approximation (BOA). I define the BOA at the end of this section, but first lay out the exact formulation in eq.~(\ref{eq:intro-boa-coupled}) so that the content of the approximation is clear.
+The electron-ion problem can be made more tractable at the cost of a physically motivated Born-Oppenheimer approximation (BOA). I define the BOA at the end of this section, but first lay out the exact formulation in eq.~(\ref{eq:intro-boa-coupled}) so that the content of the approximation is clear.
 Ions move much slower than electrons due to their heavy mass ($m_I\approx 10^3\sim 10^5 m_i$), so it is sensible to isolate the ionic degrees of freedom and consider the electronic part separately. The coupling between the ionic and electronic problems is presumably weak because of the separation of timescales.
 \begin{align} \label{eq:intro-ei-to-e-ham}
 \hat{H} = -\sum_I \frac{\hbar^2}{2m_I} \nabla^2_I
 + \ham(\bs{R};\RI),
 \end{align}
-where $\ham$ is the clamped-ion or electronic hamiltonian, which typically defines the ultimate goal of an electronic structure method. The semicolon in $\ham(\bs{R};\RI)$ indicates that the electronic hamiltonian is only parametrically dependent on the ion positions $\RI$. This means $\ham$ has no non-local operator involving the ionic degrees of freedom. M. Born and R. Oppenheimer (BO)~\cite{Born1927} first utilized this separation of timescales to study diatomic molecules in 1927. As explained around eq.~(27) and (28) in Ref.~\cite{Born1927}, BO expressed the electronic hamiltonian as a Taylor expansion around the equilibrium positions of the ions. They discussed results using the first four leading order terms in the vibration amplitude of the ions. Thus, what we define as ``the'' BOA can be ambiguous. Here, I follow the interpretation by G. A. Worth and L. S. Cederbaum~\cite{Worth2004}, which is equivalent to assuming a product ansatz eq.~(\ref{eq:intro-boa-product}).
+where $\ham$ is the clamped-ion or electronic hamiltonian, which typically defines the ultimate goal of an electronic structure method. The semicolon in $\ham(\bs{R};\RI)$ indicates that the electronic hamiltonian is only parametrically dependent on the ion positions $\RI$. This means $\ham$ has no non-local operator involving the ionic degrees of freedom. M. Born and R. Oppenheimer (BO)~\cite{Born1927} first utilized this separation of timescales to study diatomic molecules in 1927. As explained around eq.~(27) and (28) in Ref.~\cite{Born1927}, BO expressed the electronic hamiltonian as a Taylor expansion around the equilibrium positions of the ions. They discussed results using the first four leading order terms in the vibration amplitude of the ions. Thus, what we define as ``the'' BOA can be ambiguous. Here, I follow the interpretation by G. A. Worth and L. S. Cederbaum~\cite{Worth2004}, which is equivalent to assuming a product ansatz eq.~(\ref{eq:intro-boa-product}), but without a ``diagonal correction".
 %I will now explain the BOA in more detail.
 
 % Beyond BO/Tutorial/h2_summary
