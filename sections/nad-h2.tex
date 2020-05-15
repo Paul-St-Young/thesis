@@ -77,11 +77,12 @@ If the electronic eigenstates are defined to be orthonormal, then the real part 
 \end{align}
 $\bs{F}_I^{kj}$ can be interpreted as follows: the motion of the ions apply an imaginary ``force'' $\braket{\psi_j|\bs{\nabla}_I|\psi_k}$ that drives an electronic transition from state $k$ to state $j$. This interpretation has led to surface hopping methods for classical and quantum ions~\cite{Hammes-Schiffer1995,Sholl1998}, which have been applied successfully to describe proton transfer and proton-coupled electron transfer reactions~\cite{Hammes-Schiffer2015}. Further, this ``force'' is inversely proportional to the energy separation between the two eigenstates. The derivative-coupling term is considered more interesting than the scalar-coupling term due to its potential divergence as $\epsilon_k\rightarrow\epsilon_j$.
 
-Further, if the wave function is real then there is no derivative coupling within the same electronic state $\bs{F}_I^{jj}=\braket{\psi_j|\bs{\nabla}_I\psi_j} = \braket{\bs{\nabla}_I\psi_j|\psi_j} = (\bs{F}_I^{jj})^* \Rightarrow \bs{F}_I^{jj}=\bs{0}$. In this case, the DBOC is simply the expectation value of the ion kinetic operator in the electronic state
+If the wave function is real, then there is no derivative coupling within the same electronic state $\bs{F}_I^{jj}=\braket{\psi_j|\bs{\nabla}_I\psi_j} = \braket{\bs{\nabla}_I\psi_j|\psi_j} = (\bs{F}_I^{jj})^* \Rightarrow \bs{F}_I^{jj}=\bs{0}$. In this case, the DBOC is simply the expectation value of the ion kinetic operator in the electronic state
 \begin{align}
 \Lambda_{jj} = \sum_I \frac{\hbar^2}{2M_I}G_I^{jj} = \int \psi_j^* \sum_I \frac{\hbar^2}{2M_I} \nabla^2_I\psi_j = \braket{\hat{T}_I}_j.
 \end{align}
 
 The diagonal correction for the hydrogen molecule was studied extensively by Kolos and Wolniewicz~\cite{Kolos1964,Kolos1968,Wolniewicz1983}.
 For the atomization energy of $H_2$, the DBOC was found to be $4.947$ cm$^{-1}$, which is only a $0.0129$\% correction of its clamped-ion value of $38292.7$ cm$^{-1}$.
+The nonadiabatic contribution to ionization and atomization energies of a few atoms and small molecules are explored in Ref.~\cite{Yang2015} and references therein.
 %They did not explicitly calculate the diagonal correction for HD and D$_2$ because ``The corrections for HD and D$_2$ are readily obtained from those for H$_2$ by multiplications by the mass ratios''. I think the assumption here is that the geometry of the isotopes of H$_2$ are sufficiently close to that of H$_2$ that the electronic ground-state is unperturbed.

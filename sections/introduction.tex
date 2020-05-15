@@ -92,7 +92,7 @@ where $\ham$ is the clamped-ion or electronic hamiltonian, which typically defin
 
 \section{Helium and Jellium}
 The quantum liquids helium and jellium are at the forefront of the quantum era ushered in the last century.
-Having stable closed-shells, helium atoms interact mostly via an isotropic pair potential (Aziz). It consists of a $r^{-6}$ van der Waals attraction at long range due to correlated dipole fluctuation and a hard-core repulsion upon electron density overlap.
+Having stable closed-shells, helium atoms interact mostly via an isotropic pair potential. It consists of a $r^{-6}$ van der Waals attraction at long range due to correlated dipole fluctuation and a hard-core repulsion upon electron density overlap~\cite{Aziz1979}.
 Thus, the electronic problem is removed and only the ionic problem remains
 \begin{align}
 \hat{H}_{He} = \sum\limits_{I=1}^{N_I} -\dfrac{\hbar^2}{2m_I}\nabla_I^2
@@ -106,7 +106,7 @@ In the opposite extreme, the jellium model replaces the material-dependent ionic
 \end{align}
 where $E_{e-b}$ and $E_{b-b}$ are constants due to electron-background and background-background interactions.
 
-The jellium model eq.~(\ref{eq:intro-jellium}) brings the electronic problem into focus. The isotropic background eliminates potential symmetry breaking interactions that can be introduced by a crystalline arrangement of the ions. The rigidity of the background also removes electron-ion coupling effects. This model was studied in great detail in the past century and its ground-state behavior is largely understood. Much progress has even been made regarding its excitations and finite-temperature properties.
+The jellium model eq.~(\ref{eq:intro-jellium}) brings the electronic problem into focus. The isotropic background eliminates potential symmetry breaking interactions that can be introduced by a crystalline arrangement of the ions. The rigidity of the background also removes electron-ion coupling effects. This model was studied in great detail in the past century and its ground-state behavior was largely understood. Much progress has even been made regarding its excitations and finite-temperature properties.
 
 There is only one length scale in the jellium model: the average electron-electron separation $r_s=a/a_B$
 \begin{align}
@@ -116,7 +116,7 @@ There is only one length scale in the jellium model: the average electron-electr
 \frac{4\pi}{3}(r_sa_B)^3 & 3D
 \end{array}\right.,
 \end{align}
-where $a_B$ is the Bohr radius. The kinetic energy scales $r_s^{-2}$ (due to $\nabla^2$) while the potential energies scales as $r_s^{-1}$ (for $1/r$ potential), so $r_s$ measures the relative strength of potential to kinetic energy. In this sense, $r_s$ is the zero-temperature analogue of the classical coulomb coupling parameter
+where $a_B$ is the Bohr radius. The kinetic energy scales as $r_s^{-2}$ (due to $\nabla^2$) while the potential energies scales as $r_s^{-1}$ (for $1/r$ potential), so $r_s$ measures the relative strength of potential to kinetic energy. In this sense, $r_s$ is the zero-temperature analogue of the classical coulomb coupling parameter
 \begin{align}
 \Gamma \equiv \dfrac{e^2n^{1/d}}{k_BT}.
 \end{align}
@@ -134,26 +134,27 @@ Further complicating matters, one can expect a metal-to-insulator transition as 
 On top of all that, naturally occurring isotopes, e.g., deuterium, and spin isomers, e.g., para- and ortho-H$_2$, allow the possibility of an intriguing blend quantum effects at low temperatures.
 
 Hydrogen is also interesting due to its practical relevance. Being the most abundant element in the observable universe, hydrogen and its isotopes are crucial for the understanding of stars and giant gas planets.
-Consider Jupiter, which consists of liquid metallic hydrogen deep inside and insulator gaseous H$_2$ in the outer envelope. If there was a first-order liquid-liquid transition between the two phases, then there would be an interface across which density changes discontinuously.
+Consider Jupiter, which consists of liquid metallic hydrogen deep inside and insulating gaseous H$_2$ in the outer envelope. If there was a first-order liquid-liquid transition between the two phases, then there would be an interface across which density changes discontinuously.
 Depending on the solubility of helium in the two phases, there is the possibility of helium rain across the interface and extra heat radiation due to this condensation~\cite{Militzer_thesis}.
 Further, interior models of stars and gas giants rely on numerically accurate equation-of-state (EOS) of various chemical species involving hydrogen (H$^+$, H, H$_2$).
 A few percent change to the hydrogen EOS is enough to eliminate/create a rocky core for Jupiter~\cite{Hubbard2016}.
 
 In addition to its relevance in astrophysics, hydrogen is also important in energy applications. Accurate understanding of hydrogen EOS at high temperatures and pressures has obvious benefits to fusion experimental design.
 Even at low temperatures, hydrogen-rich compounds, at sufficiently high pressures, have recently smashed the superconducting transition temperature records held by the so-called ``high-temperature'' superconductors~\cite{Drozdov2015,Errea2020}.
+
 Finally, the 85-year-old prediction for a low-temperature insulating-to-metallic transition of solid hydrogen, the Wigner-Huntington transition, is close to being established~\cite{Wigner1935,Dias2016,Loubeyre2020}.
-Experimental observations~\cite{Dias2016,Loubeyre2020} and theoretical calculations~\cite{McMinis2015,Gorelov2019} are close to agreement, although more experimental characterizations and theoretical corrections are needed to settle current debates.
+Experimental observations~\cite{Dias2016,Loubeyre2020} and theoretical calculations~\cite{McMinis2015,Gorelov2019} are converging, although more experimental characterizations and theoretical corrections are needed to settle current debates.
 
 %At high pressure and low temperature, hydrogen may form a zero temperature liquid. If that were the case, then it may be a superconducting super fluid, the first of its kind.
 
 \section{Lithium, Diamond, and Silicon}
 Despite complications introduced by core electrons, the jellium model is arguably better realized in the valence of alkaline metals, e.g., lithium and sodium, than it is in hydrogen.
-The heavier nuclei are less quantum than protons and the core electrons screen their interaction with the valence electrons.
+The heavier nuclei are less quantum and the core electrons screen their interaction with the valence electrons.
 This makes the BOA better for these materials and allows the harmonic approximation to be more widely applicable.
 More importantly, they are easier to handle in experiments than hydrogen and scatter X-rays more strongly, which facilitates precise experimental determination of lattice structure along with other properties.
 These advantages allowed us to obtain excellent agreement with experiment using an electron-ion QMC simulation performed within the BOA in chapter~\ref{chap:licp}.
 
-In addition to alkaline metals, elemental insulators, e.g., diamond carbon and silicon, remain important testing grounds for electronic QMC methods. Accurate and practical prediction of excitation energies using QMC is still an active area of research. We make some progress in chapter~\ref{chap:fsc} by reducing finite-size error in bandgap calculations.
+In addition to alkaline metals, elemental insulators, e.g., diamond carbon and silicon, remain important testing grounds for electronic QMC methods. Accurate and practical prediction of excitation energies using QMC is still an active area of research. We make some progress in chapter~\ref{chap:gap} by reducing finite-size error in bandgap calculations.
 
 \section{Thesis Outline}
 The remainder of this thesis is organized as follows. In the Method chapter~\ref{chap:method}, I start by introducing the effective one-particle electronic structure methods used to generate trial wave function for QMC methods.

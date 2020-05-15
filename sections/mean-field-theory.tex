@@ -314,7 +314,7 @@ Minimizing eq.~(\ref{eq:ks-etot}) with the constraint that the spin orbitals rem
 \dfrac{\delta}{\delta\psi_{a\sigma}} \left[
 T[n] + \int d\bs{r}v(\bs{r}) + \int d\bs{r}\int d\bs{r}' \dfrac{n(\bs{r}')}{\vert\bs{r}-\bs{r}'\vert} +
 \dfrac{\delta}{\delta n_{\sigma}} E_{xc}(n_{\up},n_{\dn})
-\right]
+\right].
 \end{align}
 
 \subsubsection{Minimum Basis H$_2$}
@@ -338,7 +338,8 @@ and the LDA electronic contribution is $-1.73929592$ ha.
 \subsubsection{The Band Gap Problem} \label{sec:method-dft-bandgap}
 The Kohn-Sham eigenvalues do not have the same physical meaning as the Hartree-Fock eigenvalues as given by Koopmans theorem. Thus, a band gap ``problem'' arises when one compares the HOMO-LUMO gap from KS-DFT to experimental measurements of the fundamental gap $E_g$.
 
-The eigenvalue of the Kohn-Sham HOMO can be identified with the ionization energy of an isolated molecule if the exchange-correlation potential vanish at infinity and 
+The eigenvalue of the Kohn-Sham HOMO can be identified with the ionization energy of an isolated molecule if the exchange-correlation potential vanish at infinity.
+In this case, the ionization energy is dominated by the long-range asymptotic behavior of the 1RDM, which is determined by the long-range tail of the electronic density with no contribution from the short-sighted exchange correlation potential.
 
 When extended to handle systems with fractional electron number, the derivative discontinuity of the exact density functional is equal $E_g$. It has contribution from both the non-interacting kinetic functional $T_s[n]$ and the exact exchange-correlation functional $E_{xc}[n]$. The KS HOMO-LUMO gap measures the derivative discontinuity in $T_s[n]$. However, as shown in Fig.~\ref{fig:method-dft-smooth-lda}, in the LDA, $E_{xc}[n]$ is smooth, so its contribution to the gap is missing. As a result, the LDA gap is $\sim 50\%$ that of experiment, showing that the derivative discontinuity in $E_{xc}[n]$ can be of similar magnitude as the gap and cannot be ignored.
 
