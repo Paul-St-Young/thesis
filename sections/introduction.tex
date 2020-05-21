@@ -45,9 +45,9 @@ Density matrix
 \end{comment}
 
 \section{The Electron-Ion Problem}
-The ultimate goal of this thesis works towards is the quantitatively accurate simulation of a many-body system of charged particles in the non-relativistic limit.
+The ultimate goal of this thesis is the accurate simulation of a many-body system of charged particles in the non-relativistic limit.
 This goal was not achieved, but some progress has been made.
-For the remainder of this thesis, ground truth is assumed to be established by the exact solution of the Shcr\"odinger equation~(\ref{eq:intro-schro}) for the electron-ion wave function $\Psi(\bs{R},\RI)$ for $N$ electrons and $N_I$ ions
+For the remainder of this thesis, the ground truth is assumed to be established by the exact solution of the Schr\"odinger equation~(\ref{eq:intro-schro}) for the electron-ion wave function $\Psi(\bs{R},\RI)$ for $N$ electrons and $N_I$ ions
 \begin{align} \label{eq:intro-schro}
 \hat{H} \Psi(\bs{R},\RI) = i\hbar\frac{d}{dt}\Psi(\bs{R},\RI),
 \end{align}
@@ -61,13 +61,13 @@ where the electron-ion hamiltonian consists of non-relativistic kinetic energies
 +\frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1,j\neq i}^{N} \frac{k_ee^2}{\vert\bs{r}_i-\bs{r}_j\vert}
 +\frac{1}{2}\sum\limits_{I=1}^{N_I}\sum\limits_{J=1,J\neq I}^{N_I} \frac{k_ee^2}{\vert\ri-\rj\vert}.
 \end{align}
-The lower-case $i,j$ and upper-case $I,J$ loop over the electrons and ions, respectively. The lower-case $\bs{r}_i$ labels a single electron position, whereas the upper-case $\bs{R}$ denotes the positions of all electrons $\bs{R}\equiv\{\bs{r}_i\}$. $\ri$ and $\RI$ play analogous roles for the ions. $Z_I$ is the atomic number of ion $I$. If any eigenstate of $\hat{H}$ can be constructed to arbitrary precision in a reasonable amount of time, which grows as a polynomial as the number of particles, then the many-body electron-ion problem can be declared solved. Unfortunately, even state-of-the-art methods struggle with just the ground state~\cite{Azadi2014,McMinis2015,Drummond2015}.
+The lower-case $i,j$ and upper-case $I,J$ refer to the electrons and ions, respectively. The lower-case $\bs{r}_i$ labels a single electron position, whereas the upper-case $\bs{R}$ denotes the positions of all electrons $\bs{R}\equiv\{\bs{r}_i\}$. $\ri$ and $\RI$ play analogous roles for the ions. $Z_I$ is the atomic number of ion $I$. If any eigenstate of $\hat{H}$ can be constructed to arbitrary precision in a reasonable amount of time, which grows as a polynomial as the number of particles, then the many-body electron-ion problem can be declared solved. Unfortunately, even state-of-the-art methods struggle with just the ground state~\cite{Azadi2014,McMinis2015,Drummond2015}.
 
 For equilibrium properties at high temperature, progress can be made by considering the Bloch equation~(\ref{eq:intro-bloch}) for the thermal density matrix $\rho\equiv\sum\limits_i e^{-\beta E_i} \ket{\Psi_i}\bra{\Psi_i}$
 \begin{align} \label{eq:intro-bloch}
 \hat{H} \rho = -\hbar\dfrac{d}{d\beta}\rho,
 \end{align}
-which results from the Schr\"odinger eq.~(\ref{eq:intro-schro}) after a rotation from real to imaginary time $t\rightarrow it$, a.k.a. inverse temperature $\beta=1/(k_BT)$.
+which results from the Schr\"odinger eq.~(\ref{eq:intro-schro}) after a rotation from real to imaginary time $t\rightarrow it$, which is also the inverse temperature $\beta=1/(k_BT)$.
 The partition function is a trace of the thermal density matrix and reduces to the classical Boltzmann distribution at high temperature
 \begin{align}
 Z=\Tr{\rho} \underset{\beta\rightarrow 0}{\Rightarrow} Z \propto e^{-\beta V}.
@@ -89,7 +89,7 @@ where $\ham$ is the clamped-ion or electronic hamiltonian, which typically defin
 
 % Beyond BO/Tutorial/h2_summary
 \input{sections/nad-h2}
-
+\begin{comment}
 \section{Helium and Jellium}
 The quantum liquids helium and jellium are at the forefront of the quantum era ushered in the last century.
 Having stable closed-shells, helium atoms interact mostly via an isotropic pair potential. It consists of a $r^{-6}$ van der Waals attraction at long range due to correlated dipole fluctuation and a hard-core repulsion upon electron density overlap~\cite{Aziz1979}.
@@ -121,7 +121,9 @@ where $a_B$ is the Bohr radius. The kinetic energy scales as $r_s^{-2}$ (due to 
 \Gamma \equiv \dfrac{e^2n^{1/d}}{k_BT}.
 \end{align}
 The valence electron density in alkaline metals is $r_s\sim2$, meaning the kinetic energy is important, so the electrons delocalize and form a liquid to minimize kinetic energy. At sufficiently large $r_s$ ($\sim 100$ in 3D and $\sim 30$ in 2D), the potential energy dominates, so the electrons localize to form a Wigner crystal.
+\end{comment}
 
+\begin{comment}
 \section{Hydrogen}
 Hydrogen is a logical starting point for solving the electron-ion problem.
 It has the simplest atomic structure and no core electrons.
@@ -166,3 +168,4 @@ Chapter~\ref{chap:na-mol} benchmarks the QMC method as a complete solver for the
 Chapter~\ref{chap:hsolid} applies this dynamic-ion QMC method to solve for the ground state of solid hydrogen.
 Chapter~\ref{chap:licp} considers the effect of the ions on the momentum distribution of the valence electrons in lithium within the BOA.
 Finally, chapter~\ref{chap:gap} presents an improved finite-size correction to the (purely electronic) bandgap calculated in QMC.
+\end{comment}
