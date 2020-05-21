@@ -22,13 +22,26 @@ C2/c-24 & 1.307 & 1.287 & 1.269 & 1.253 & 1.239 & 1.225 \\
 \end{table}
 In contrast, the atomic structure is optimized using DMC at constant volume.
 
-All three molecular structures are monoclinic having $a=b\neq c$, $\alpha=\beta=90^\circ+\eta$, and $\gamma=120^\circ+\delta$. The slight distortions differ for each structure: $\eta=0$, $\delta\approx -0.5^\circ$ for Cmca-4, $\eta=0$, $\delta\approx+3.5^\circ$ for Cmca-12, and $\eta\approx0.1^\circ$, $\delta\approx-0.1^\circ$. The evolution of the lattice parameters as a function of pressure are shown in Fig.~\ref{fig:hsolid-vdw-ca}(a). Besides having slightly different unit cells, the Cmca-4 structure has only one type of H$_2$ molecule, whereas Cmca-12 and C2/c have two. The vdW-DF optimized H$_2$ bond lengths of all three molecular structures are shown in Fig.~\ref{fig:hsolid-vdw-ca}(b).
+All three molecular structures are monoclinic having $a=b\neq c$, $\alpha=\beta=90^\circ+\eta$, and $\gamma=120^\circ+\delta$. The slight distortions differ for each structure: $\eta=0$, $\delta\approx -0.5^\circ$ for Cmca-4, $\eta=0$, $\delta\approx+3.5^\circ$ for Cmca-12, and $\eta\approx0.1^\circ$, $\delta\approx-0.1^\circ$ for C2/c-24.
+The evolution of the lattice parameters as a function of pressure are shown in Fig.~\ref{fig:hsolid-vdw-ca}(a).
+Both $a$ and $c$ decrease with increasing pressure.
+However, the $c/a$ ratio remains roughly constant at $1.062\pm0.003$ and $1.771\pm0.003$ for Cmca-12 and C2c-24, respectively.
+In contrast, the $c/a$ ratio of the Cmca-4 structure decreases from $1.562$ at $350$ GPa to $1.530$ at $560$ GPa linearly with pressure.
+Besides having slightly different unit cells, the Cmca-4 structure has only one type of H$_2$ molecule, whereas Cmca-12 and C2/c have two.
+
+The vdW-DF optimized H$_2$ bond lengths of all three molecular structures are shown in Fig.~\ref{fig:hsolid-vdw-ca}(b).
+The bond length in Cmca-4 is comparable to its isolated value of $1.4$ Bohr, whereas in C2/c-24 it is 3 to 4\% compressed.
+One type of the H$_2$ molecules in Cmca-12 has pressure-sensitive bond length, increasing from $\sim 1.38$ Bohr at 360 GPa to $\sim 1.4$ Bohr at 560 GPa, while the other type has 3\% compressed bond length irrespective of pressure.
+
 \begin{figure}[h]
+\centering
 \begin{minipage}{0.49\textwidth}
+\centering
 \includegraphics[width=\linewidth]{h11_mol-ca}
 (a) $a$ and $c$ lattice parameters
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
+\centering
 \includegraphics[width=\linewidth]{h11_mol-rb}
 (a) H$_2$ bond length
 \end{minipage}
@@ -36,48 +49,87 @@ All three molecular structures are monoclinic having $a=b\neq c$, $\alpha=\beta=
 \label{fig:hsolid-vdw-ca}
 \end{figure}
 
-Figure~\ref{fig:dft-opt-geo} shows the enthalpies of the candidate structures relative to C2/c at static-lattice minimum. The results agree well with those from McMinis et al.~\cite{McMinis2015} where available. Our C2/c structure is slightly more stable and Cmca-4 slightly less stable than predictions by Drummond \textit{et al.}~\cite{Drummond2015}. They used BLYP rather than vdW-DF functional, so differences are expected. In fact, it is encouraging to see two different functionals give similar results (within a few meV/p).
+While the vdW-DF optimized structures in Ref.~\cite{McMinis2015} are not published, we can infer from the enthalpy-pressure relations that the same structures have been reproduced in this study. Figure~\ref{fig:dft-opt-geo} shows the enthalpy of each candidate structure relative to C2/c-24 at the vdW-DF static-lattice minimum. The results agree well with those from McMinis et al.~\cite{McMinis2015} where available.
+In comparison to predictions by Drummond \textit{et al.}~\cite{Drummond2015}, our C2/c structure is slightly more stable and Cmca-4 slightly less stable.
+They used BLYP rather than vdW-DF functional, so differences are expected. In fact, it is encouraging to see two different functionals give similar results (within a few meV/p).
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\columnwidth]{010a_dh-vs-p}
-\caption{DFT(vdW-DF) static-lattice enthalpy of optimized structures relative to C2/c-24. Thin solid lines are enthalpies of the Cmca-4, Cmca-12 and I4$_1$/amd using our optimized structures. Dashed lines are DFT(BLYP) enthalpies of Cmca-4 and Cmca-12 from Drummond \textit{et al.}~\cite{Drummond2015}. Dash-dot lines are DFT(vdW) enthalpies from McMinis \textit{et al.}~\cite{McMinis2015}.\label{fig:dft-opt-geo}}
+\includegraphics[width=0.6\columnwidth]{010a_dh-vs-p}
+\caption{DFT(vdW-DF) static-lattice enthalpy of optimized structures relative to C2/c-24. Thin solid lines are enthalpies of the Cmca-4, Cmca-12 and I4$_1$/amd using our optimized structures. Dashed lines are DFT(BLYP) enthalpies of Cmca-4 and Cmca-12 from Drummond \textit{et al.}~\cite{Drummond2015}. Dash-dot lines are DFT(vdW-DF) enthalpies from McMinis \textit{et al.}~\cite{McMinis2015}.}
+\label{fig:dft-opt-geo}
 \end{figure}
 
 \subsection{Supercell Construction}
 % modified from supp2-static-qmc.tex
-All quantum Monte Carlo (QMC) calculations are performed using 72-atom simulation cells. Each simulation cell is tiled from the optimized unit cell using a supercell matrix.
+To reliably obtain QMC energy values in the thermodynamic limit, we need to tile the optimized primitive cells to sufficiently large supercells so that pair correlation functions are converged.
+The remaining finite-size error can be removed using methods to be discussed in Chap.~\ref{chap:fsc}.
+The supercells also need to be small enough for dynamic-ion QMC to be practical.
+In the end, we chose to perform all QMC calculations using 72-atom simulation cells. Each simulation cell is tiled from the optimized unit cell using a non-diagonal supercell matrix~\cite{Lloyd-Williams2015}, which is optimized to have large distances between minimum images.
+A supercell matrix in 3D is a $3\times 3$ matrix of integers that map primitive lattice vectors $\bs{a}, \bs{b}, \bs{c}$ to supercell lattice vectors  $\bs{a}_s, \bs{b}_s, \bs{c}_s$
 \begin{align}
-A_s = S A \Rightarrow \left(\begin{array}{c}
+\left(\begin{array}{c}
 \bs{a}_s \\
 \bs{b}_s \\
 \bs{c}_s
-\end{array}\right) = S\left(\begin{array}{c}
+\end{array}\right) =
+\left(\begin{array}{ccc}
+S_{11} & S_{12} & S_{13} \\
+S_{21} & S_{22} & S_{23} \\
+S_{31} & S_{32} & S_{33}
+\end{array}\right)
+\left(\begin{array}{c}
 \bs{a} \\
 \bs{b} \\
 \bs{c}
-\end{array}\right),
+\end{array}\right).
 \end{align}
-where $\bs{a}$, $\bs{b}$, $\bs{c}$ are the lattice vectors of the unit cell. $\bs{a}_s$, $\bs{b}_s$, $\bs{c}_s$ are the lattice vectors of the simulation cell. $S$ is the supercell matrix. The supercell matrices are chosen to maximize the simulation cell radius. %Ideally, one should maximize the image radius $R_{WS}$ instead.
+Once a supercell is chosen, the crystal structure can be created using the following cropping method. One first tiles the atoms in the primitive cell a large number of times along each dimension, then crop out only the atoms that fall inside the supercell.
+The total number of atoms in the supercell should be $\det S$ times larger than that in the primitive cell.
+
+Non-diagonal supercell matrices can be useful for maximizing the minimum image radius, a.k.a. radius of the real-space Wigner-Seitz cell, $R_{WS}$.
+As shown in Fig.~\ref{fig:hsolid-square-vs-rhombus}, a rhombus supercell provides a larger $R_{WS}$ than a square having the same area.
+This is because the images form a closed-packed lattice with a rhombus supercell.
+If the primitive cell is square, then all diagonal supercell matrices result in square supercells. In contract, one can construct a supercell close to a rhombus using a non-diagonal matrix.
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=0.66666\linewidth]{supercell-square}\\
+(a) square $a=2$ \AA
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{supercell-rhombus}\\
+(b) rhombus $a=2.149$ \AA
+\end{minipage}
+\caption{Cubic vs. rhombus supercells. The black cell is the supercell. The gray cells are periodic images. The blue line points between nearest-neighbor images, while the red line between second-nearest neighbors. The yellow circle is the inscribed circle in the Wigner-Seitz cell (not shown) of the supercell.}
+\label{fig:hsolid-square-vs-rhombus}
+\end{figure}
+
+The chosen supercell matrices and their resulting image radii are shown in Table~\ref{tab:hsolid-tmat72} and Fig.~\ref{fig:cell-radius}, respectively.
+The inscribing radius of each supercell $R_{sc}$ are also shown in Fig.~\ref{fig:cell-radius} to give a sense of how far each supercell is from being orthorhombic. An orthorhombic cell has $R_{WS} = R_{sc}$.
 \begin{table}[h]
-\caption{Supercell matrices.}
+\centering
+\caption{Optimized 72-atom non-diagonal supercell matrices.}
+\label{tab:hsolid-tmat72}
 \begin{tabular}{cccc}
 \hline\hline
 Cmca-4 & Cmca-12 & C2/c-24 & I4$_1$/amd \\
 \hline
-$\left(\begin{array}{ccc}
- 3 &  3 &  0 \\
+$\left(\begin{array}{rrr}
 -1 &  2 &  1 \\
- 2 & -1 &  1
-\end{array}\right)$ & $\left(\begin{array}{ccc}
+ 2 & -1 &  1 \\
+ 3 &  3 &  0 \\
+\end{array}\right)$ & $\left(\begin{array}{rrr}
  2 &  1 &  -1 \\
--1 &  1 &  0 \\
- 2 &  1 &  1
-\end{array}\right)$ & $\left(\begin{array}{ccc}
+ 2 &  1 &   1 \\
+ -1 &  1 &  0 \\
+\end{array}\right)$ & $\left(\begin{array}{rrr}
  2 &  1 &  0 \\
  1 &  2 &  0 \\
  0 &  0 &  1
-\end{array}\right)$ & $\left(\begin{array}{ccc}
+\end{array}\right)$ & $\left(\begin{array}{rrr}
  2 & -2 &  1 \\
  2 &  3 &  0 \\
 -2 &  1 &  1
@@ -86,15 +138,17 @@ $\left(\begin{array}{ccc}
 \end{tabular}
 \end{table}
 
-In Fig.~\ref{fig:cell-radius}, the image radius (a.k.a. radius of the real-space Wigner-Seitz cell) $R_{WS}$ and simulation cell radius $R_{sc}$ are shown as a function of density.
-
 \begin{figure}[h]
-\includegraphics[width=0.8\columnwidth]{101a1_cell-radius}
+\centering
+\includegraphics[width=0.6\columnwidth]{101a1_cell-radius}
 \caption{Supercell radius as a function of density. $r_s$ is the Wigner-Seitz radius, which is determined by the average electron density $\frac{4\pi}{3}r_s=\rho$, where $\rho=N_e/\Omega$, with $\Omega$ the supercell volume. $R_{WS}$ is the radius of the real-space Wigner-Seitz cell of the supercell. $2R_{WS}$ is the minimum distance between periodic images. \label{fig:cell-radius}}
 \end{figure}
 
 %\input{papers/hsolid/supp1-geo}
 %\input{papers/hsolid/supp2-static-qmc}
+
+\subsection{Electronic Wavefunction Optimization}
+
 
 \section{Results}
 \label{sec:hsolid-results}
