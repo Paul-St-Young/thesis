@@ -90,7 +90,7 @@ The total number of atoms in the supercell should be $\det S$ times larger than 
 Non-diagonal supercell matrices can be useful for maximizing the minimum image radius, a.k.a. radius of the real-space Wigner-Seitz cell, $R_{WS}$.
 As shown in Fig.~\ref{fig:hsolid-square-vs-rhombus}, a rhombus supercell provides a larger $R_{WS}$ than a square having the same area.
 This is because the images form a closed-packed lattice with a rhombus supercell.
-If the primitive cell is square, then all diagonal supercell matrices result in square supercells. In contract, one can construct a supercell close to a rhombus using a non-diagonal matrix.
+If the primitive cell is square, then all diagonal supercell matrices result in square supercells. In contract, one can construct a rhombus-like supercell using a non-diagonal matrix. Arguably the more useful application of non-diagonal supercell matrix is for accessing a particular momentum to address a certain excitation~\cite{Lloyd-Williams2015}, which is beyond the scope of this study.
 \begin{figure}[h]
 \centering
 \begin{minipage}{0.49\textwidth}
@@ -148,7 +148,49 @@ $\left(\begin{array}{rrr}
 %\input{papers/hsolid/supp2-static-qmc}
 
 \subsection{Electronic Wavefunction Optimization}
+For the electronic wave function, we use the standard Slater-Backflow-Jastrow form
+\begin{align}
+\Psi(\bs{R};\bs{R}_I) = \det e^{-U} \\
+U = \sum_{\alpha,\beta} u_{\alpha\beta}(r).
+\end{align}
+The Jastrow and back flow functions are variationally using the electronic hamiltonian at vdW-DF optimized lattice geometries. The optimized functions at 480 GPa ($r_s\approx 1.25$) are shown in Fig.~\ref{fig:hsolid-static-jas-bf}.
+These functions remain roughly identical across all densities explored.
+The electronic components of the Jastrow and back flow functions are nearly identical for all three molecular candidates.
+The largest contribution is the ``u-d'' term, which introduces correlation between unlike-spin electrons to keep them apart.
 
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_mol-jas-rs125}\\
+(a) Jastrow pair functions
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_mol-bf-rs125}\\
+(b) Back flow pair functions
+\end{minipage}
+\caption{Jastrow and back flow pair functions optimized at static-lattice minimum at 480 GPa. Color denotes the crystal structure. The solid line is the pair function for electron-proton, the dashed line for same-spin electrons, and the dotted lines for unlike-spin electrons.}
+\label{fig:hsolid-static-jas-bf}
+\end{figure}
+
+Before back flow transformation, the static structure factor of the Slater determinant is quite similar to that of the unpolarized homogeneous electron gas, as shown in Fig.~\ref{fig:hsolid-det-sk-nk}(a). However, the its momentum distribution is quite different, because the molecular structures are insulating.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_mol-detsk-rs125}\\
+(a) structure factor
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_mol-detnk-rs125}\\
+(b) momentum distribution
+\end{minipage}
+\caption{Static structure factor $S_0(k)$ and momentum distribution $n_0(k)$ calculated using the Kohn-Sham determinant wave function.}
+\label{fig:hsolid-det-sk-nk}
+\end{figure}
 
 \section{Results}
 \label{sec:hsolid-results}
