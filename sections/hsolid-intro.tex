@@ -1,5 +1,3 @@
-\chapter{QMC Study of Solid Hydrogen at Megabar Pressures}
-
 \section{Introduction}
 
 % why is hydrogen under pressure interesting?
@@ -99,13 +97,13 @@ In addition to the hcp structures, H. Nagara and T. Nakamura~\cite{Nagara1992} p
 This Cmca crystal structure also appeared spontaneously in path integral simulation~\cite{Cui2002}.
 These theoretical calculations drove much debate about the fate of phase III at pressures over 300 GPa. Does it become a metallic molecular solid or does it dissociate into an atomic solid without the band gap closing?
 
-In 2007, the advent of random structure searching produced new candidate crystal structures that have lower enthalpy than previous proposals~\cite{Pickard2007}. The insulating layered structure having C2/c symmetries became the main candidates for phase III.
+In 2007, the advent of random structure searching produced new candidate crystal structures that have lower enthalpy than previous proposals~\cite{Pickard2007}. The insulating layered structure having C2/c symmetry became the main candidates for phase III.
 Three diffusion Monte Carlo studies followed to characterize the candidate structures by Azadi \textit{et al.}~\cite{Azadi2014}, McMinis \textit{et al.}~\cite{McMinis2015}, and Drummond \textit{et al.}~\cite{Drummond2015}.
-Azadi used PBE-optimized geometries and included anharmonic phonon zero-point energy and predicted molecular dissociation at 374 GPa, from Cmca-12 to I4$_1$/amd. In contrast, McMinis used vdW-DF-optimized geometries and harmonic phonon zero-point energy and predicted a dissociation pressure of 447(3) GPa.
-In hind sight, the McMinis prediction is in better agreement with subsequent experiments.
+Azadi \textit{et al.} used PBE-optimized geometries and included anharmonic phonon zero-point energy and predicted molecular dissociation at 374 GPa, from Cmca-12 to I4$_1$/amd. In contrast, McMinis \textit{et al.} used vdW-DF-optimized geometries and harmonic phonon zero-point energy and predicted a dissociation pressure of 447(3) GPa.
+In hind sight, the prediction by McMinis \textit{et al.} is in better agreement with subsequent experiments.
 
 On the low pressure side, a new hexagonal candidate structure for phase III was proposed by Monserrat \textit{et al.}~\cite{Monserrat2016}, then calculated to be more stable than C2/c below 210 GPa~\cite{Azadi2019}.
-Bandgap of the C2/c structure shows closure around 460 GPa, when extrapolated from  was IR measurements up to 420 GPa~\cite{Loubeyre2020}. Most recent DMC calculation of the bandgap are in agreement with experiment~\cite{Gorelov2019}. This new calculation is at variance with the previous prediction by Azadi \textit{et al.}~\cite{Azadi2019}, presumably due to different treatments of the finite-size effect.
+Bandgap of the C2/c structure shows closure around 460 GPa, when extrapolated from  was IR measurements up to 420 GPa~\cite{Loubeyre2020}. Most recent DMC calculation of the bandgap is in agreement with experiment~\cite{Gorelov2019}. This new calculation is at variance with the previous prediction by Azadi \textit{et al.}~\cite{Azadi2019}, presumably due to different treatments of the finite-size effect.
 Finally, a recent coupled cluster calculation of the molecular candidate structures show good agreement with DMC results~\cite{Liao2019} at the static lattice level, although lattice zero-point energy has yet to be included.
 
 %\subsection{The melting transition and critical point}
@@ -117,33 +115,3 @@ Finally, a recent coupled cluster calculation of the molecular candidate structu
 %Due to these difficulties, the precise melting temperatures above 100 GPa are debate. Although, there is broad consensus that the melting line increases from 200 K at ambient pressure to $\sim$ 1000 K at 90 GPa, then decreases with increasing pressure.
 %
 %Melting of $H_2$ solid around 150 GPa is particularly interesting. Shock wave compression data indicate a molecular liquid to atomic liquid transition $\sim$ 1000 K at 150 GPa. Thus, $H_2$ molecules should dissociate almost immediately after the solid melts. Eremets and Trojan observed a shark drop in measured resistivity as the $H_2$ solid melts at 146 GPa~\cite{Eremets2009}. This observation is consistent with the current liquid-liquid transition (LLT) line.
-
-%\subsection{Liquid phases and the liquid-liquid transition}
-
-\section{Methods}
-\label{sec:hsolid-methods}
-\input{papers/hsolid/supp1-geo}
-\input{papers/hsolid/supp2-static-qmc}
-
-\section{Results}
-\label{sec:hsolid-results}
-\subsection{Energy vs. Volume}
-\begin{figure}[h]
-\begin{minipage}{0.48\textwidth}
-\includegraphics[width=0.8\columnwidth]{101sd_ev-s3}
-%\caption{Energy v.s. volume.\label{fig:si-static-ev}}
-\end{minipage}
-\begin{minipage}{0.48\textwidth}
-\includegraphics[width=0.8\columnwidth]{101se_hp}
-%\caption{Enthalpy v.s. pressure.\label{fig:si-static-hp}}
-\end{minipage}
-\caption{Static-lattice DMC equation-of-state (EOS) relative to Drummond reference $E(\nu) = \frac{2.14020118}{\nu^2} + \frac{0.60521235}{\nu} - 0.6073132$, where $\nu$ is volume per proton in bohr$^3$ and $E(\nu)$ is in Hartree atomic unit. Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-volume EOS. The EOS is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of inverse volume. The markers are finite-size corrected simulation data without performing a fit. \label{fig:static-qmc-vs-drummond}}
-\end{figure}
-
-\subsection{Enthalpy vs. Pressure}
-In Fig.~\ref{fig:static-enthalpy-vs-pressure}, enthalpies of the candidate structures are plotted relative the my C2/c reference EOS (Yang SJB N72 dskcorr). The EOSs are obtained by fitting the total energy to a quadratic function of inverse volume. The solid lines with symbols are my results. The dot-dashed lines are McMinis' relative enthalpies extracted from Fig. 1 of ref.~\cite{McMinis2015}. The dashed line is McMinis' atomic structure enthalpy shifted by 48 meV/p (1.8 mha/p) to match my energies. The dotted line is Azadi's atomic structure enthalpy.
-
-\begin{figure}[h]
-\includegraphics[width=0.8\textwidth]{87b_refit}
-\caption{Enthalpy v.s. pressure using Yang SJB N72 dskcorr C2/c as reference.\label{fig:static-enthalpy-vs-pressure}}
-\end{figure}
