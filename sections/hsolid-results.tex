@@ -221,7 +221,6 @@ As shown as the red dashed lines in Fig.~\ref{fig:prot-cp-opt}, we chose isotrop
 \label{fig:prot-cp-opt}
 \end{figure}
 
-
 \begin{figure}[h]
 \centering
 \begin{minipage}{0.49\textwidth}
@@ -240,18 +239,67 @@ As shown as the red dashed lines in Fig.~\ref{fig:prot-cp-opt}, we chose isotrop
 
 \section{Results}
 \label{sec:hsolid-results}
-\subsection{Energy vs. Volume}
+
+\subsection{Energy, pressure, and variance}
+
+The dominant variation of the total energy as pressure increases is due to compression of the electron liquid. This variation is on the order of $1 eV/p$ over the density range considered and is roughly the same for all candidate structures.
+To better observe the differences among candidate structure, we plot energies and pressure relative to a reference equation of state (EOS).
+We chose the DMC EOS for the C2/c-24 molecular crystal structure obtained by Drummond \textit{et al.}~\cite{Drummond2015}, because it is freely accessible online and well approximated by a quadratic polynomial in density
+\begin{align}
+E_0(\rho) = 2.14020118\rho^2 + 0.60521235\rho - 0.6073132,
+\end{align}
+where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$, and $E_0$ is in hartree.
+
+The static-lattice DMC energy and enthalpy are plotted relative to $E_0$ in Fig.~\ref{fig:static-qmc-vs-drummond}. At the same density, we obtain lower total energy than Drummond \textit{et al.} partly due to our use of vdW-DF, rather than  PBE, to optimize the crystal structure; and partly due to in the inclusion of back flow transformations. We tested that for the same geometry, DMC energy is unchanged to within 3 meV/p whether PBE or vdW-DF is used to generate the orbitals in the determinant wave function.
+
 \begin{figure}[h]
-\begin{minipage}{0.48\textwidth}
-\includegraphics[width=0.8\columnwidth]{101sd_ev-s3}
+\begin{minipage}{0.49\textwidth}
+\includegraphics[width=\linewidth]{101sd_ev-s3}
 %\caption{Energy v.s. volume.\label{fig:si-static-ev}}
 \end{minipage}
-\begin{minipage}{0.48\textwidth}
-\includegraphics[width=0.8\columnwidth]{101se_hp}
+\begin{minipage}{0.49\textwidth}
+\includegraphics[width=\linewidth]{101se_hp}
 %\caption{Enthalpy v.s. pressure.\label{fig:si-static-hp}}
 \end{minipage}
-\caption{Static-lattice DMC equation-of-state (EOS) relative to Drummond reference $E(\nu) = \frac{2.14020118}{\nu^2} + \frac{0.60521235}{\nu} - 0.6073132$, where $\nu$ is volume per proton in bohr$^3$ and $E(\nu)$ is in Hartree atomic unit. Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-volume EOS. The EOS is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of inverse volume. The markers are finite-size corrected simulation data without performing a fit. \label{fig:static-qmc-vs-drummond}}
+\caption{Static-lattice DMC energy and enthalpy relative to Drummond \textit{et al.}~\cite{Drummond2015} reference $E_0(\rho) = 2.14020118\rho^2 + 0.60521235\rho - 0.6073132$ ha, where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$. Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-volume EOS, which is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of $\rho$. The markers are finite-size corrected simulation data without performing a fit. \label{fig:static-qmc-vs-drummond}}
 \end{figure}
+
+The QMC virial pressure is shown as a function of density in Fig.~\ref{fig:hsolid-p-vs-n}(a).
+We first note that the QMC pressure is consistently lower than vdW-DF pressure at the same density.
+Plotting the same data on a relative scale in Fig.~\ref{fig:hsolid-p-vs-n}(b),
+we see that the QMC virial pressure is 4.2\% and 3.2\% lower than vdW-DF pressure at 340 GPa ($r_s\approx 1.21$) and 460 GPa ($r_s\approx 1.25$), which agree well with the findings of R. C. Clay \textit{et al.}, i.e. Fig.~4 in Ref.~\cite{Clay2016}.
+In this plot, we also see that the mixed estimator error is 1 to 5 GPa, so after linear extrapolation, the DMC pressure should be accurate to 1 GPa.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_evp-static-fsc1-rel0-rm121}\\
+(a) absolute scale
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_evp-static-fsc1-rel1-rm121}\\
+(b) relative to Drummond C2/c-24 SJDMC
+\end{minipage}
+\caption{Pressure vs. density. The solid lines are vdW-DF pressures, whereas the symbols are QMC pressures. Color denotes different candidate structures. The open and filled symbols represent VMC and linearly extrapolated DMC estimator results. They overlap on the absolute scale in (a) but can be seen to differ by 1 to 5 GPa on a relative scale in (b).}
+\label{fig:hsolid-p-vs-n}
+\end{figure}
+
+Finally, the variance of the optimized static-lattice wave functions are shown in Fig.~\ref{fig:hsolid-v-vs-p} as a function of pressure.
+The variance of the molecular structures are $7.5\sim8.5$ eV$^2$/p below $400$ GPa and increases to $8.5\sim9.5$ eV$^2$/p at $550$ GPa.
+The increase in variance may be due to the closing band gaps of the molecular structures around $400$ GPa.
+If true, then it may be better to generate orbitals above $400$ using the PBE functional, because it prefers metallic rather than insulating states when compared to vdW-DF.
+For comparison, variance of the best analytical wave function for bcc hydrogen is $13.2(1)$ eV$^2$/p at $r_s=1.31$ (Table III in Ref.~\cite{Holzmann2003}) and $7.40(3)$ eV$^2$/p at $r_s=1.40$ (Table~2 in Ref.~\cite{Pierleoni2008}).
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{h117_evp-static-rm121_var-vs-p}
+\caption{QMC variance vs. pressure.}
+\label{fig:hsolid-v-vs-p}
+\end{figure}
+
+Small mixed-estimator error and low energy variance are hallmarks of a well-optimized wave function. We have demonstrated both in Fig.~\ref{fig:hsolid-p-vs-n} and Fig.~\ref{fig:hsolid-v-vs-p}.
 
 \subsection{Enthalpy vs. Pressure}
 In Fig.~\ref{fig:static-enthalpy-vs-pressure}, enthalpies of the candidate structures are plotted relative the my C2/c reference EOS (Yang SJB N72 dskcorr). The EOSs are obtained by fitting the total energy to a quadratic function of inverse volume. The solid lines with symbols are my results. The dot-dashed lines are McMinis' relative enthalpies extracted from Fig. 1 of ref.~\cite{McMinis2015}. The dashed line is McMinis' atomic structure enthalpy shifted by 48 meV/p (1.8 mha/p) to match my energies. The dotted line is Azadi's atomic structure enthalpy.
