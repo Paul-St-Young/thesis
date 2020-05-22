@@ -192,6 +192,52 @@ Before back flow transformation, the static structure factor of the Slater deter
 \label{fig:hsolid-det-sk-nk}
 \end{figure}
 
+\subsection{Electron-ion Wavefunction Optimization}
+
+The Slater-Jastrow wavefunction has an additional product for the ions and an ion-ion Jastrow when generalized to an electron-ion system with distinguishable ions.
+After optimizing using dynamic-ion VMC, the electronic Jastrow and back flow pair functions of all three molecular structures converge to the same set of functions.
+As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, the only noticeable difference among the three structures come from the proton-proton Jastrow.
+
+We use a product of isotropic gaussians as the wave function for the protons in the molecular structures.
+The width of the gaussians are optimized using maximum overlap.
+In this method, we measure the root-mean-squared deviation (RMSD) of each proton from its ideal site, as determined by vdW-DF, and adjust the gaussian exponent in the proton wave function $C_p$ until the VMC and DMC estimates of the RMSD agree.
+This method works by maximizing the overlap between the trial and ground-state wave function along the dimension controlled by $C_p$.
+Since proton RMSD is a rather direct measure of the shape of the wave function and DMC pushes the VMC RMSD towards its ground-state value, the optimal $C_p$ is obtained when DMC and VMC sample the same distribution.
+
+If $C_p$ is too large, the proton wave function will be too localized.
+This results in undersampling of the ground-state wave function and is a dangerous scenario.
+During the DMC run, the kinetic energy of the protons will likely have mostly small fluctuation in this case.
+However, occasional spikes, which are important for an unbiased mean will occur infrequently.
+If one misses or discards these spikes, then the results will be biased.
+In contrast, undersampling will increase the variance of the wave function without biasing the mean.
+The resultant calculation will require more time to reach a certain accuracy target, so a balance needs to be sought.
+
+As shown as the red dashed lines in Fig.~\ref{fig:prot-cp-opt}, we chose isotropic gaussian exponent that are close to optimal but error slightly on the side of undersampling.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{h45_xyz-copt}
+\caption{Maximum overlap of the proton wave function.}
+\label{fig:prot-cp-opt}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_mol-nbjas-rs125}\\
+(a) Jastrow pair functions
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_mol-nbbf-rs125}\\
+(b) Back flow pair functions
+\end{minipage}
+\caption{Jastrow and back flow pair functions optimized using dynamic-lattice VMC. The dash-dotted line is the pair function for proton-proton correlation. All other notations are identical to those in Fig.~\ref{fig:hsolid-static-jas-bf}.}
+\label{fig:hsolid-dynamic-jas-bf}
+\end{figure}
+
 \section{Results}
 \label{sec:hsolid-results}
 \subsection{Energy vs. Volume}
