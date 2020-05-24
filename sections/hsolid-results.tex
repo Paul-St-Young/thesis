@@ -89,8 +89,8 @@ The total number of atoms in the supercell should be $\det S$ times larger than 
 
 Non-diagonal supercell matrices can be useful for maximizing the minimum image radius, a.k.a. radius of the real-space Wigner-Seitz cell, $R_{WS}$.
 As shown in Fig.~\ref{fig:hsolid-square-vs-rhombus}, a rhombus supercell provides a larger $R_{WS}$ than a square having the same area.
-This is because the images form a closed-packed lattice with a rhombus supercell.
-If the primitive cell is square, then all diagonal supercell matrices result in square supercells. In contract, one can construct a rhombus-like supercell using a non-diagonal matrix. Arguably the more useful application of non-diagonal supercell matrix is for accessing a particular momentum to address a certain excitation~\cite{Lloyd-Williams2015}, which is beyond the scope of this study.
+This is because the periodic images form a closed-packed lattice with a rhombus supercell.
+If the primitive cell is square, then all diagonal supercell matrices result in square supercells. In contract, one can construct a rhombus-like supercell using a non-diagonal matrix. Arguably the more useful application of non-diagonal supercell matrix is for accessing a particular momentum to address a certain excitation~\cite{Lloyd-Williams2015}, but that is beyond the scope of this study.
 \begin{figure}[h]
 \centering
 \begin{minipage}{0.49\textwidth}
@@ -147,7 +147,9 @@ $\left(\begin{array}{rrr}
 %\input{papers/hsolid/supp1-geo}
 %\input{papers/hsolid/supp2-static-qmc}
 
-\subsection{Electronic Wavefunction Optimization}
+\subsection{Wavefunction Optimization}
+
+\subsubsection{Electronic Components}
 For the electronic wave function, we use the standard Slater-Backflow-Jastrow form
 \begin{align}
 \Psi(\bs{R};\bs{R}_I) = \det e^{-U} \\
@@ -192,8 +194,7 @@ Before back flow transformation, the static structure factor of the Slater deter
 \label{fig:hsolid-det-sk-nk}
 \end{figure}
 
-\subsection{Electron-ion Wavefunction Optimization}
-
+\subsubsection{Ionic Components}
 The Slater-Jastrow wavefunction has an additional product for the ions and an ion-ion Jastrow when generalized to an electron-ion system with distinguishable ions.
 After optimizing using dynamic-ion VMC, the electronic Jastrow and back flow pair functions of all three molecular structures converge to the same set of functions.
 As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, the only noticeable difference among the three structures come from the proton-proton Jastrow.
@@ -221,6 +222,8 @@ As shown as the red dashed lines in Fig.~\ref{fig:prot-cp-opt}, we chose isotrop
 \label{fig:prot-cp-opt}
 \end{figure}
 
+The electron-ion Jastrow of the Cmca-4 Jastrow and back flow functions fall into good agreement with those from other candidate structures. As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, the only noticeable difference among candidate structures is the change of the proton-proton Jastrow function.
+
 \begin{figure}[h]
 \centering
 \begin{minipage}{0.49\textwidth}
@@ -237,10 +240,12 @@ As shown as the red dashed lines in Fig.~\ref{fig:prot-cp-opt}, we chose isotrop
 \label{fig:hsolid-dynamic-jas-bf}
 \end{figure}
 
+\subsection{Time Step and Population Control Biases}
+
 \section{Results}
 \label{sec:hsolid-results}
 
-\subsection{Energy, pressure, and variance}
+\subsection{Energy, Pressure, and Local Energy Variance}
 
 The dominant variation of the total energy as pressure increases is due to compression of the electron liquid. This variation is on the order of $1 eV/p$ over the density range considered and is roughly the same for all candidate structures.
 To better observe the differences among candidate structure, we plot energies and pressure relative to a reference equation of state (EOS).
@@ -261,7 +266,7 @@ The static-lattice DMC energy and enthalpy are plotted relative to $E_0$ in Fig.
 \includegraphics[width=\linewidth]{101se_hp}
 %\caption{Enthalpy v.s. pressure.\label{fig:si-static-hp}}
 \end{minipage}
-\caption{Static-lattice DMC energy and enthalpy relative to Drummond \textit{et al.}~\cite{Drummond2015} reference $E_0(\rho) = 2.14020118\rho^2 + 0.60521235\rho - 0.6073132$ ha, where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$. Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-volume EOS, which is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of $\rho$. The markers are finite-size corrected simulation data without performing a fit. \label{fig:static-qmc-vs-drummond}}
+\caption{Static-lattice DMC energy and enthalpy relative to Drummond \textit{et al.}~\cite{Drummond2015} reference $E_0(\rho) = 2.14020118\rho^2 + 0.60521235\rho - 0.6073132$ ha, where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$. Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-volume EOS, which is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of $\rho$. The markers are finite-size corrected simulation data without performing a fit. $P_0$ is the pressure calculated from the reference EOS $P_0=-dE_0/d\Omega$. \label{fig:static-qmc-vs-drummond}}
 \end{figure}
 
 The QMC virial pressure is shown as a function of density in Fig.~\ref{fig:hsolid-p-vs-n}(a).
@@ -299,12 +304,61 @@ For comparison, variance of the best analytical wave function for bcc hydrogen i
 \label{fig:hsolid-v-vs-p}
 \end{figure}
 
-Small mixed-estimator error and low energy variance are hallmarks of a well-optimized wave function. We have demonstrated both in Fig.~\ref{fig:hsolid-p-vs-n} and Fig.~\ref{fig:hsolid-v-vs-p}.
+Small mixed-estimator error and low energy variance are hallmarks of a well-optimized wave function. We have demonstrated both in Fig.~\ref{fig:hsolid-p-vs-n} and Fig.~\ref{fig:hsolid-v-vs-p} for the static-lattice electronic wave function.
 
-\subsection{Enthalpy vs. Pressure}
-In Fig.~\ref{fig:static-enthalpy-vs-pressure}, enthalpies of the candidate structures are plotted relative the my C2/c reference EOS (Yang SJB N72 dskcorr). The EOSs are obtained by fitting the total energy to a quadratic function of inverse volume. The solid lines with symbols are my results. The dot-dashed lines are McMinis' relative enthalpies extracted from Fig. 1 of ref.~\cite{McMinis2015}. The dashed line is McMinis' atomic structure enthalpy shifted by 48 meV/p (1.8 mha/p) to match my energies. The dotted line is Azadi's atomic structure enthalpy.
+%\subsection{Enthalpy vs. Pressure}
+%
+%In Fig.~\ref{fig:static-enthalpy-vs-pressure}, enthalpies of the candidate structures are plotted relative the my C2/c reference EOS (Yang SJB N72 dskcorr). The EOSs are obtained by fitting the total energy to a quadratic function of inverse volume. The solid lines with symbols are my results. The dot-dashed lines are McMinis' relative enthalpies extracted from Fig. 1 of ref.~\cite{McMinis2015}. The dashed line is McMinis' atomic structure enthalpy shifted by 48 meV/p (1.8 mha/p) to match my energies. The dotted line is Azadi's atomic structure enthalpy.
+%
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.7\textwidth]{87b_refit}
+%\caption{Enthalpy v.s. pressure using Yang SJB N72 dskcorr C2/c as reference.\label{fig:static-enthalpy-vs-pressure}}
+%\end{figure}
+
+\subsection{Effect of dynamic ions on energy and pressure}
+
+When clamped protons are allowed to move, the energy of the electron-ion system changes in two ways.
+First, proton kinetic energy contributes a sizable positive term to the total kinetic energy of the system. As shown in Fig.~\ref{fig:hsolid-ion-energy}(d), the kinetic energy of the protons increases from $\sim 230$ meV/p at $360$ GPa ($r_s\approx 1.31$) to $\sim 265$ meV/p at $600$ GPa ($r_s\approx 1.20$), increasing by roughly $7.3$ meV/p every $50$ GPa.
+Second, the electronic wavefunction changes as the protons move. Thus, the electronic potential and kinetic energies change as well.
+As shown in Fig.~\ref{fig:hsolid-ion-energy}(b) and (c), the increase of the total potential energy is roughly twice that of the electron kinetic energy, which is around $80\pm20$ meV/p for all candidate structures.
+In contrast to the proton kinetic energy, the increase of electron kinetic and total potential energies is insensitive to the electron density.
+The increase of electron kinetic energy for C2/c-24 and i4$_1$/amd is $\sim 20$ meV/p higher, while the increase in their potential energies is $\sim 40$ meV/p lower.
+The sum of all three contributions make up the total energy change from static- to dynamic-lattice, i.e. the zero-point energy (ZPE).
+As shown in Fig.~\ref{fig:hsolid-ion-energy}(a), the ZPE increases from $\sim 470$ meV/p at $360$ GPa to $\sim 510$ meV/p at $600$ GPa, i.e. $8.3$ meV/p every $50$ GPa.
+Most of the density dependence of the ZPE comes from the proton kinetic energy.
 
 \begin{figure}[h]
-\includegraphics[width=0.8\textwidth]{87b_refit}
-\caption{Enthalpy v.s. pressure using Yang SJB N72 dskcorr C2/c as reference.\label{fig:static-enthalpy-vs-pressure}}
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_evp-comp_LocalEnergy}\\
+(a) total energy change (zero-point energy)
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_evp-comp_LocalPotential}\\
+(b) potential energy change
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_evp-comp_skinetic_e}\\
+(c) electronic kinetic energy change
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_evp-comp_skinetic_p}\\
+(d) proton kinetic energy
+\end{minipage}
+\caption{Energy changes from static-lattice to dynamic-lattice simulations as functions of electron density $\rho=N/\Omega$. (a) zero-point energies of the candidate structures. (b) total potential energy change due to dynamic protons. (c) electronic kinetic energy change due to dynamic protons. (d) proton kinetic energy. Color and marker label candidate structures. The solid lines are guides to the eyes.}
+\label{fig:hsolid-ion-energy}
 \end{figure}
+
+A direct consequence of the higher kinetic and potentials energies of the dynamic-lattice simulation is that the virial pressure is $\sim 20$ GPa higher than its static-lattice counterpart.
+Interestingly, this brings the dynamic-lattice QMC pressures in good agreement with static-lattice vdW-DF pressures, as we saw in Fig.~\ref{fig:hsolid-p-vs-n} that the static-lattice QMC pressures are systematically lower by $\sim 20$ GPa.
+
+%\subsection{Dielectric Constants from S(k)}
+
+%\subsection{Proton-proton g(r)}
+
+%$g(r)$, $S(k)$, $T_e$, $V_{eI}$, $V_{II}$
