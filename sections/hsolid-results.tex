@@ -45,7 +45,7 @@ One type of the H$_2$ molecules in Cmca-12 has pressure-sensitive bond length, i
 \includegraphics[width=\linewidth]{h11_mol-rb}
 (a) H$_2$ bond length
 \end{minipage}
-\caption{vdW-DF optimized molecular candidate structures.}
+\caption{vdW-DF optimized molecular candidate structures. C2/c and Cmca-12 have two types of H$_2$ molecules, whereas Cmca-4 has one.}
 \label{fig:hsolid-vdw-ca}
 \end{figure}
 
@@ -85,9 +85,9 @@ S_{31} & S_{32} & S_{33}
 \end{array}\right).
 \end{align}
 Once a supercell is chosen, the crystal structure can be created using the following cropping method. One first tiles the atoms in the primitive cell a large number of times along each dimension, then crop out only the atoms that fall inside the supercell.
-The total number of atoms in the supercell should be $\det S$ times larger than that in the primitive cell.
+The total number of atoms in the supercell should be $\det S$ times that in the primitive cell.
 
-Non-diagonal supercell matrices can be useful for maximizing the minimum image radius, a.k.a. radius of the real-space Wigner-Seitz cell, $R_{WS}$.
+Non-diagonal supercell matrices can be used to maximize the minimum image radius, a.k.a. radius of the real-space Wigner-Seitz cell, $R_{WS}$.
 As shown in Fig.~\ref{fig:hsolid-square-vs-rhombus}, a rhombus supercell provides a larger $R_{WS}$ than a square having the same area.
 This is because the periodic images form a closed-packed lattice with a rhombus supercell.
 If the primitive cell is square, then all diagonal supercell matrices result in square supercells. In contract, one can construct a rhombus-like supercell using a non-diagonal matrix. Arguably the more useful application of non-diagonal supercell matrix is for accessing a particular momentum to address a certain excitation~\cite{Lloyd-Williams2015}, but that is beyond the scope of this study.
@@ -155,8 +155,8 @@ For the electronic wave function, we use the standard Slater-Backflow-Jastrow fo
 \Psi(\bs{R};\bs{R}_I) = \det e^{-U} \\
 U = \sum_{\alpha,\beta} u_{\alpha\beta}(r).
 \end{align}
-The Jastrow and back flow functions are variationally using the electronic hamiltonian at vdW-DF optimized lattice geometries. The optimized functions at 480 GPa ($r_s\approx 1.25$) are shown in Fig.~\ref{fig:hsolid-static-jas-bf}.
-These functions remain roughly identical across all densities explored.
+The Jastrow and back flow functions are variationally optimized using the electronic hamiltonian at vdW-DF optimized clamped-ion geometries. The optimized functions at 480 GPa ($r_s\approx 1.25$) are shown in Fig.~\ref{fig:hsolid-static-jas-bf}.
+These functions remain roughly quantitatively similar across all densities explored.
 The electronic components of the Jastrow and back flow functions are nearly identical for all three molecular candidates.
 The largest contribution is the ``u-d'' term, which introduces correlation between unlike-spin electrons to keep them apart.
 
@@ -199,28 +199,47 @@ The Slater-Jastrow wavefunction has an additional product for the ions and an io
 After optimizing using dynamic-ion VMC, the electronic Jastrow and back flow pair functions of all three molecular structures converge to the same set of functions.
 As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, the only noticeable difference among the three structures come from the proton-proton Jastrow.
 
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{f117_copt-c2c-rs1.27-ca1.75}\\
+(a) Lattice deviations as functions of proton wave function exponent $C_p$.
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h45_xyz-copt}\\
+(b) optimized exponents as a function of the Wigner-Seitz radius $r_s$
+\end{minipage}
+\caption{Maximum overlap optimization of the proton wave function.}
+\label{fig:prot-cp-opt}
+\end{figure}
+
 We use a product of isotropic gaussians as the wave function for the protons in the molecular structures.
 The width of the gaussians are optimized using maximum overlap.
 In this method, we measure the root-mean-squared deviation (RMSD) of each proton from its ideal site, as determined by vdW-DF, and adjust the gaussian exponent in the proton wave function $C_p$ until the VMC and DMC estimates of the RMSD agree.
 This method works by maximizing the overlap between the trial and ground-state wave function along the dimension controlled by $C_p$.
 Since proton RMSD is a rather direct measure of the shape of the wave function and DMC pushes the VMC RMSD towards its ground-state value, the optimal $C_p$ is obtained when DMC and VMC sample the same distribution.
+Consider an isolated proton having a normalized Gaussian wave function
+\begin{align}
+\chi(x, y, z) = \left(\dfrac{2C_p}{\pi}\right)^{3/4} \exp\left(
+-C_p(x^2+y^2+z^2)
+\right).
+\end{align}
+The mean squared deviation of this wave function
+\begin{align} \label{eq:hsolid-x2-cp}
+\braket{x^2}=\braket{y^2}=\braket{z^2}=\dfrac{1}{4C_p}.
+\end{align}
+We expect some deviation from eq.~(\ref{eq:hsolid-x2-cp}) due to electron-proton and proton-proton correlations. As shown in Fig.~\ref{fig:prot-cp-opt}(a), the VMC MSDs are accurately approximated by eq.~(\ref{eq:hsolid-x2-cp}), whereas the DMC MSDs differ from the VMC ones in general.
 
 If $C_p$ is too large, the proton wave function will be too localized.
 This results in undersampling of the ground-state wave function and is a dangerous scenario.
 During the DMC run, the kinetic energy of the protons will likely have mostly small fluctuation in this case.
 However, occasional spikes, which are important for an unbiased mean will occur infrequently.
 If one misses or discards these spikes, then the results will be biased.
-In contrast, undersampling will increase the variance of the wave function without biasing the mean.
+In contrast, oversampling will increase the variance of the wave function without biasing the mean.
 The resultant calculation will require more time to reach a certain accuracy target, so a balance needs to be sought.
-
-As shown as the red dashed lines in Fig.~\ref{fig:prot-cp-opt}, we chose isotropic gaussian exponent that are close to optimal but error slightly on the side of undersampling.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.6]{h45_xyz-copt}
-\caption{Maximum overlap of the proton wave function.}
-\label{fig:prot-cp-opt}
-\end{figure}
+As shown as the red dashed lines in Fig.~\ref{fig:prot-cp-opt}, we chose isotropic gaussian exponent that are close to optimal but error slightly on the side of oversampling.
 
 The electron-ion Jastrow of the Cmca-4 Jastrow and back flow functions fall into good agreement with those from other candidate structures. As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, the only noticeable difference among candidate structures is the change of the proton-proton Jastrow function.
 
@@ -239,8 +258,6 @@ The electron-ion Jastrow of the Cmca-4 Jastrow and back flow functions fall into
 \caption{Jastrow and back flow pair functions optimized using dynamic-lattice VMC. The dash-dotted line is the pair function for proton-proton correlation. All other notations are identical to those in Fig.~\ref{fig:hsolid-static-jas-bf}.}
 \label{fig:hsolid-dynamic-jas-bf}
 \end{figure}
-
-\subsection{Time Step and Population Control Biases}
 
 \section{Results}
 \label{sec:hsolid-results}
@@ -354,11 +371,31 @@ Most of the density dependence of the ZPE comes from the proton kinetic energy.
 \label{fig:hsolid-ion-energy}
 \end{figure}
 
-A direct consequence of the higher kinetic and potentials energies of the dynamic-lattice simulation is that the virial pressure is $\sim 20$ GPa higher than its static-lattice counterpart.
-Interestingly, this brings the dynamic-lattice QMC pressures in good agreement with static-lattice vdW-DF pressures, as we saw in Fig.~\ref{fig:hsolid-p-vs-n} that the static-lattice QMC pressures are systematically lower by $\sim 20$ GPa.
+An immediate consequence of the higher kinetic and potentials energies of the dynamic-lattice simulation is that the virial pressure is $\sim 20$ GPa higher than its static-lattice counterpart.
+Interestingly, this brings the dynamic-lattice QMC pressures into good agreement with static-lattice vdW-DF pressures, as we saw in Fig.~\ref{fig:hsolid-p-vs-n} that the static-lattice QMC pressures are systematically lower by $\sim 20$ GPa.
 
-%\subsection{Dielectric Constants from S(k)}
+\subsection{Effect of dynamic ions on electronic correlation functions}
 
-%\subsection{Proton-proton g(r)}
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_grsk-static-sk}\\
+(a) static
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_grsk-dynamic-esk}\\
+(b) dynamic
+\end{minipage}
+\caption{Electron-electron static structure factor $S(k)$.}
+\label{fig:hsolid-esk}
+\end{figure}
+
+\subsection{Dielectric Constants from S(k)}
+
+\subsection{Proton-proton g(r)}
 
 %$g(r)$, $S(k)$, $T_e$, $V_{eI}$, $V_{II}$
+
+%\subsection{Time Step and Population Control Biases}
