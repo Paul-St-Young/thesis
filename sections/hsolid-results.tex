@@ -203,8 +203,8 @@ As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, the only noticeable difference
 \centering
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{f117_copt-c2c-rs1.27-ca1.75}\\
-(a) Lattice deviations as functions of proton wave function exponent $C_p$.
+\includegraphics[width=\linewidth]{h117_copt-c2c-rs1.27-ca1.75}\\
+(a) Lattice deviations vs. prediction from isolated gaussian wave function exponent $C_p$.
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
@@ -230,7 +230,7 @@ The mean squared deviation of this wave function
 \begin{align} \label{eq:hsolid-x2-cp}
 \braket{x^2}=\braket{y^2}=\braket{z^2}=\dfrac{1}{4C_p}.
 \end{align}
-We expect some deviation from eq.~(\ref{eq:hsolid-x2-cp}) due to electron-proton and proton-proton correlations. As shown in Fig.~\ref{fig:prot-cp-opt}(a), the VMC MSDs are accurately approximated by eq.~(\ref{eq:hsolid-x2-cp}), whereas the DMC MSDs differ from the VMC ones in general.
+We expect some deviation from eq.~(\ref{eq:hsolid-x2-cp}) due to electron-proton and proton-proton correlations. As shown in Fig.~\ref{fig:prot-cp-opt}(a), at large values of $C_p$ (localized protons) VMC MSDs are accurately approximated by eq.~(\ref{eq:hsolid-x2-cp}), whereas the DMC MSDs and VMC ones at small $C_p$ differ from this independent-particle approximation.
 
 If $C_p$ is too large, the proton wave function will be too localized.
 This results in undersampling of the ground-state wave function and is a dangerous scenario.
