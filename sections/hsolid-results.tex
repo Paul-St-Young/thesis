@@ -4,7 +4,7 @@
 \subsection{Candidate Structure Optimization}
 % modified from supp1-geo.tex
 We considered three candidates C2/c-24, Cmca-4, Cmca-12 for the molecular phase and one candidate I4$_1$/amd for the atomic phase at $T=0K$ over the pressure range 350 GPa to 700 GPa. The static-lattice structures in the molecular phase are optimized by vdW-DF at constant pressure.
-As shown in Table~\ref{tab:hsolid-mol-press-rs}, all three molecular structures optimize to roughly the same density at each pressure.
+As shown in Table~\ref{tab:hsolid-mol-press-rs}, all three molecular structures optimize to similar density at each pressure.
 \begin{table}[h]
 % 2020/05/18 notes, extracted from h11/analysis/11a_axes_pos.json
 \centering
@@ -26,8 +26,9 @@ All three molecular structures are monoclinic having $a=b\neq c$, $\alpha=\beta=
 The evolution of the lattice parameters as a function of pressure are shown in Fig.~\ref{fig:hsolid-vdw-ca}(a).
 Both $a$ and $c$ decrease with increasing pressure.
 However, the $c/a$ ratio remains roughly constant at $1.062\pm0.003$ and $1.771\pm0.003$ for Cmca-12 and C2c-24, respectively.
-In contrast, the $c/a$ ratio of the Cmca-4 structure decreases from $1.562$ at $350$ GPa to $1.530$ at $560$ GPa linearly with pressure.
-Besides having slightly different unit cells, the Cmca-4 structure has only one type of H$_2$ molecule, whereas Cmca-12 and C2/c have two.
+In contrast, the $c/a$ ratio of the Cmca-4 structure decreases from $1.562$ at $350$ GPa to $1.530$ at $560$ GPa linearly with increasing pressure.
+Besides having slightly different unit cell, the Cmca-4 structure has only one type of H$_2$ molecule, whereas Cmca-12 and C2/c each have two.
+The bond length of the H$_2$ molecules in the optimized geometry is shown as a function of pressure in Fig.~\ref{fig:hsolid-vdw-ca}(b).
 
 The vdW-DF optimized H$_2$ bond lengths of all three molecular structures are shown in Fig.~\ref{fig:hsolid-vdw-ca}(b).
 The bond length in Cmca-4 is comparable to its isolated value of $1.4$ Bohr, whereas in C2/c-24 it is 3 to 4\% compressed.
@@ -45,7 +46,7 @@ One type of the H$_2$ molecules in Cmca-12 has pressure-sensitive bond length, i
 \includegraphics[width=\linewidth]{h11_mol-rb}
 (a) H$_2$ bond length
 \end{minipage}
-\caption{vdW-DF optimized molecular candidate structures. C2/c and Cmca-12 have two types of H$_2$ molecules, whereas Cmca-4 has one.}
+\caption{vdW-DF optimized molecular candidate structures at target pressures. (a) lattice parameters (b) molecular bond length. C2/c and Cmca-12 each have two types of H$_2$ molecules, whereas Cmca-4 has only one.}
 \label{fig:hsolid-vdw-ca}
 \end{figure}
 
@@ -65,7 +66,9 @@ They used BLYP rather than vdW-DF functional, so differences are expected. In fa
 To reliably obtain QMC energy values in the thermodynamic limit, we need to tile the optimized primitive cells to sufficiently large supercells so that pair correlation functions are converged.
 The remaining finite-size error can be removed using methods to be discussed in Chap.~\ref{chap:fsc}.
 The supercells also need to be small enough for dynamic-ion QMC to be practical.
-In the end, we chose to perform all QMC calculations using 72-atom simulation cells. Each simulation cell is tiled from the optimized unit cell using a non-diagonal supercell matrix~\cite{Lloyd-Williams2015}, which is optimized to have large distances between minimum images.
+In the end, we chose to perform all QMC calculations using 72-atom simulation cells.
+
+Each simulation cell is tiled from the optimized unit cell using a non-diagonal supercell matrix~\cite{Lloyd-Williams2015}, which is optimized to have large distance between minimum images.
 A supercell matrix in 3D is a $3\times 3$ matrix of integers that map primitive lattice vectors $\bs{a}, \bs{b}, \bs{c}$ to supercell lattice vectors  $\bs{a}_s, \bs{b}_s, \bs{c}_s$
 \begin{align}
 \left(\begin{array}{c}
@@ -84,18 +87,14 @@ S_{31} & S_{32} & S_{33}
 \bs{c}
 \end{array}\right).
 \end{align}
-Once a supercell is chosen, the crystal structure can be created using the following cropping method. One first tiles the atoms in the primitive cell a large number of times along each dimension, then crop out only the atoms that fall inside the supercell.
-The total number of atoms in the supercell should be $\det S$ times that in the primitive cell.
+Once a supercell is chosen, the crystal structure can be created using the following cropping method: first, tile the atoms from the primitive cell a large number of times along each lattice vector, then crop out only the atoms that fall inside the supercell.
+The total number of atoms in the supercell should be $\det(S)$ times that in the primitive cell.
 
-Non-diagonal supercell matrices can be used to maximize the minimum image radius, a.k.a. radius of the real-space Wigner-Seitz cell, $R_{WS}$.
-As shown in Fig.~\ref{fig:hsolid-square-vs-rhombus}, a rhombus supercell provides a larger $R_{WS}$ than a square having the same area.
-This is because the periodic images form a closed-packed lattice with a rhombus supercell.
-If the primitive cell is square, then all diagonal supercell matrices result in square supercells. In contract, one can construct a rhombus-like supercell using a non-diagonal matrix. Arguably the more useful application of non-diagonal supercell matrix is for accessing a particular momentum to address a certain excitation~\cite{Lloyd-Williams2015}, but that is beyond the scope of this study.
 \begin{figure}[h]
 \centering
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=0.66666\linewidth]{supercell-square}\\
+\includegraphics[width=0.6\linewidth]{supercell-square}\\
 (a) square $a=2$ \AA
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
@@ -106,6 +105,12 @@ If the primitive cell is square, then all diagonal supercell matrices result in 
 \caption{Cubic vs. rhombus supercells. The black cell is the supercell. The gray cells are periodic images. The blue line points between nearest-neighbor images, while the red line between second-nearest neighbors. The yellow circle is the inscribed circle in the Wigner-Seitz cell (not shown) of the supercell.}
 \label{fig:hsolid-square-vs-rhombus}
 \end{figure}
+
+Non-diagonal supercell matrices can be used to maximize the minimum image radius, a.k.a. radius of the real-space Wigner-Seitz cell, $R_{WS}$.
+As shown in Fig.~\ref{fig:hsolid-square-vs-rhombus}, a rhombus supercell provides a larger $R_{WS}$ than a square having the same area.
+This is because the periodic images form a closed-packed lattice with a rhombus supercell.
+If the primitive cell is square, then all diagonal supercell matrices result in square supercells. In contract, one can construct a rhombus-like supercell using a non-diagonal matrix.
+Arguably the more useful application of non-diagonal supercell matrix is for accessing a particular momentum to address a certain excitation~\cite{Lloyd-Williams2015}, but that is beyond the scope of this study.
 
 The chosen supercell matrices and their resulting image radii are shown in Table~\ref{tab:hsolid-tmat72} and Fig.~\ref{fig:cell-radius}, respectively.
 The inscribing radius of each supercell $R_{sc}$ are also shown in Fig.~\ref{fig:cell-radius} to give a sense of how far each supercell is from being orthorhombic. An orthorhombic cell has $R_{WS} = R_{sc}$.
@@ -155,28 +160,8 @@ For the electronic wave function, we use the standard Slater-Backflow-Jastrow fo
 \Psi(\bs{R};\bs{R}_I) = \det e^{-U} \\
 U = \sum_{\alpha,\beta} u_{\alpha\beta}(r).
 \end{align}
-The Jastrow and back flow functions are variationally optimized using the electronic hamiltonian at vdW-DF optimized clamped-ion geometries. The optimized functions at 480 GPa ($r_s\approx 1.25$) are shown in Fig.~\ref{fig:hsolid-static-jas-bf}.
-These functions remain roughly quantitatively similar across all densities explored.
-The electronic components of the Jastrow and back flow functions are nearly identical for all three molecular candidates.
-The largest contribution is the ``u-d'' term, which introduces correlation between unlike-spin electrons to keep them apart.
 
-\begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_mol-jas-rs125}\\
-(a) Jastrow pair functions
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_mol-bf-rs125}\\
-(b) Back flow pair functions
-\end{minipage}
-\caption{Jastrow and back flow pair functions optimized at static-lattice minimum at 480 GPa. Color denotes the crystal structure. The solid line is the pair function for electron-proton, the dashed line for same-spin electrons, and the dotted lines for unlike-spin electrons.}
-\label{fig:hsolid-static-jas-bf}
-\end{figure}
-
-Before back flow transformation, the static structure factor of the Slater determinant is quite similar to that of the unpolarized homogeneous electron gas, as shown in Fig.~\ref{fig:hsolid-det-sk-nk}(a). However, the its momentum distribution is quite different, because the molecular structures are insulating.
+Before back flow transformation, the static structure factor of the Slater determinant is quite similar to that of the unpolarized homogeneous electron gas, as shown in Fig.~\ref{fig:hsolid-det-sk-nk}(a). However, as shown in  Fig.~\ref{fig:hsolid-det-sk-nk}(a), the momentum distribution of the metallic atomic structure is different from the rest, because the molecular structures are insulating.
 
 \begin{figure}[h]
 \centering
@@ -192,6 +177,29 @@ Before back flow transformation, the static structure factor of the Slater deter
 \end{minipage}
 \caption{Static structure factor $S_0(k)$ and momentum distribution $n_0(k)$ calculated using the Kohn-Sham determinant wave function.}
 \label{fig:hsolid-det-sk-nk}
+\end{figure}
+
+The Jastrow and back flow functions are variationally optimized using the electronic hamiltonian at vdW-DF optimized clamped-ion geometries. The optimized functions at 480 GPa ($r_s\approx 1.25$) are shown in Fig.~\ref{fig:hsolid-static-jas-bf}.
+These functions remain quantitatively similar across all densities explored.
+The electronic components of the Jastrow and back flow functions are nearly identical for all three molecular candidates.
+The largest contribution is the ``u-d'' term, which introduces correlation between unlike-spin electrons to keep them apart.
+However, the electron-ion components show some variation among candidate structures, with Cmca-4 being the standout among molecular candidates.
+This is likely an artifact of either the clamped-ion approximation or under-converged optimization, because once these functions are reoptimized with dynamic ions, all Jastrow and back flow components involving the electrons become identical across all candidate structures, as shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_mol-jas-rs125}\\
+(a) Jastrow pair functions
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_mol-bf-rs125}\\
+(b) Back flow pair functions
+\end{minipage}
+\caption{Jastrow and back flow pair functions optimized at static-lattice minimum at 480 GPa. Color denotes the crystal structure. The solid line is the pair function for electron-proton, the dashed line for same-spin electrons, and the dotted lines for unlike-spin electrons.}
+\label{fig:hsolid-static-jas-bf}
 \end{figure}
 
 \subsubsection{Ionic Components}
@@ -230,9 +238,15 @@ The mean squared deviation of this wave function
 \begin{align} \label{eq:hsolid-x2-cp}
 \braket{x^2}=\braket{y^2}=\braket{z^2}=\dfrac{1}{4C_p}.
 \end{align}
-We expect some deviation from eq.~(\ref{eq:hsolid-x2-cp}) due to electron-proton and proton-proton correlations. As shown in Fig.~\ref{fig:prot-cp-opt}(a), at large values of $C_p$ (localized protons) VMC MSDs are accurately approximated by eq.~(\ref{eq:hsolid-x2-cp}), whereas the DMC MSDs and VMC ones at small $C_p$ differ from this independent-particle approximation.
+We expect some deviation from eq.~(\ref{eq:hsolid-x2-cp}) due to electron-proton and proton-proton correlations. When $C_p$ is large, the confining effect of the gaussian wave function dominates over correlation due to Jastrow and back flow components, making each proton approximately independent of all other particles. However, as $C_p$ decreases, the effects of correlation become more important. As shown in Fig.~\ref{fig:prot-cp-opt}(a), at large values of $C_p$ (localized protons) VMC MSDs are accurately approximated by eq.~(\ref{eq:hsolid-x2-cp}), whereas the DMC MSDs and VMC ones at small $C_p$ differ from this independent-particle approximation.
+Note that the DMC runs here are short and likely under-converged.
+Fortunately, they are sufficient for determining the point of maximum overlap between the VMC and DMC wave functions.
+As such, the computational cost of maximum overlap optimization is more similar to VMC optimization than to a converged DMC run.
+Finally, the exact value of $C_p$ will not bias the DMC result if sufficiently converged, because the protons are treated as distinguishable particles and DMC is exact at infinite projection time.
 
-If $C_p$ is too large, the proton wave function will be too localized.
+In practice, the choice of $C_p$ is important.
+The protons diffuses $\sim 43$ times ``slower'' than electrons in imaginary time, so it takes more simulation time to fix errors in the proton wave function than the electron wave function.
+Further, if $C_p$ is too large, the proton wave function will be too localized.
 This results in undersampling of the ground-state wave function and is a dangerous scenario.
 During the DMC run, the kinetic energy of the protons will likely have mostly small fluctuation in this case.
 However, occasional spikes, which are important for an unbiased mean will occur infrequently.
@@ -264,26 +278,37 @@ The electron-ion Jastrow of the Cmca-4 Jastrow and back flow functions fall into
 
 \subsection{Energy, Pressure, and Local Energy Variance}
 
-The dominant variation of the total energy as pressure increases is due to compression of the electron liquid. This variation is on the order of $1 eV/p$ over the density range considered and is roughly the same for all candidate structures.
-To better observe the differences among candidate structure, we plot energies and pressure relative to a reference equation of state (EOS).
+The dominant variation of the total energy as pressure increases is due to the isotropic compression of the electron liquid. This variation is on the order of $1 eV/p$ over the density range considered and is roughly the same for all candidate structures.
+To better observe the differences among candidate structures, we plot energy and pressure relative to a reference equation of state (EOS).
 We chose the DMC EOS for the C2/c-24 molecular crystal structure obtained by Drummond \textit{et al.}~\cite{Drummond2015}, because it is freely accessible online and well approximated by a quadratic polynomial in density
 \begin{align}
-E_0(\rho) = 2.14020118\rho^2 + 0.60521235\rho - 0.6073132,
+E_0(\rho) = E_0(\rho) = 1.6092042\rho^2 + 0.69857475\rho - 0.61084005,
 \end{align}
 where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$, and $E_0$ is in hartree.
+We fit to the data obtained using a Slater-Jastrow wave function, named SJDMC by Drummond \textit{et al.}~\cite{Drummond2015}, because the results are easier to reproduce than its back flow counterpart.
 
 The static-lattice DMC energy and enthalpy are plotted relative to $E_0$ in Fig.~\ref{fig:static-qmc-vs-drummond}. At the same density, we obtain lower total energy than Drummond \textit{et al.} partly due to our use of vdW-DF, rather than  PBE, to optimize the crystal structure; and partly due to in the inclusion of back flow transformations. We tested that for the same geometry, DMC energy is unchanged to within 3 meV/p whether PBE or vdW-DF is used to generate the orbitals in the determinant wave function.
 
 \begin{figure}[h]
 \begin{minipage}{0.49\textwidth}
-\includegraphics[width=\linewidth]{101sd_ev-s3}
-%\caption{Energy v.s. volume.\label{fig:si-static-ev}}
+%\includegraphics[width=\linewidth]{101sd_ev-s3}
+\includegraphics[width=\linewidth]{h117_evp-static-fsc1_e-vs-rho}
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
-\includegraphics[width=\linewidth]{101se_hp}
-%\caption{Enthalpy v.s. pressure.\label{fig:si-static-hp}}
+%\includegraphics[width=\linewidth]{101se_hp}
+\includegraphics[width=\linewidth]{h117_evp-static-fsc1_h-vs-p}
 \end{minipage}
-\caption{Static-lattice DMC energy and enthalpy relative to Drummond \textit{et al.}~\cite{Drummond2015} reference $E_0(\rho) = 2.14020118\rho^2 + 0.60521235\rho - 0.6073132$ ha, where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$. Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-volume EOS, which is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of $\rho$. The markers are finite-size corrected simulation data without performing a fit. $P_0$ is the pressure calculated from the reference EOS $P_0=-dE_0/d\Omega$. \label{fig:static-qmc-vs-drummond}}
+\caption{Static-lattice DMC energy and enthalpy relative to Drummond \textit{et al.}~\cite{Drummond2015} reference $E_0(\rho) = 1.6092042\rho^2 + 0.69857475\rho - 0.61084005$ ha, where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$. Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-volume EOS, which is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of $\rho$. The markers are finite-size corrected simulation data without performing a fit. $P_0$ is the pressure calculated from the reference EOS $P_0=-dE_0/d\Omega$. \label{fig:static-qmc-vs-drummond}}
+\end{figure}
+
+\begin{figure}[h]
+\begin{minipage}{0.49\textwidth}
+\includegraphics[width=\linewidth]{h117_evp-dynamic-e-vs-rho}
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\includegraphics[width=\linewidth]{h117_evp-dynamic-h-vs-p}
+\end{minipage}
+\caption{Dynamic-lattice \label{fig:dynamic-qmc-vs-drummond}}
 \end{figure}
 
 The QMC virial pressure is shown as a function of density in Fig.~\ref{fig:hsolid-p-vs-n}(a).
@@ -297,14 +322,24 @@ In this plot, we also see that the mixed estimator error is 1 to 5 GPa, so after
 \begin{minipage}{0.49\textwidth}
 \centering
 \includegraphics[width=\linewidth]{h117_evp-static-fsc1-rel0-rm121}\\
-(a) absolute scale
+(a) static-lattice absolute scale
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_evp-dynamic-fsc1-rel0-rm121_p-rs}\\
+(b) dynamic-lattice absolute scale
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
 \includegraphics[width=\linewidth]{h117_evp-static-fsc1-rel1-rm121}\\
-(b) relative to Drummond C2/c-24 SJDMC
+(c) static-lattice relative to $P_0$
 \end{minipage}
-\caption{Pressure vs. density. The solid lines are vdW-DF pressures, whereas the symbols are QMC pressures. Color denotes different candidate structures. The open and filled symbols represent VMC and linearly extrapolated DMC estimator results. They overlap on the absolute scale in (a) but can be seen to differ by 1 to 5 GPa on a relative scale in (b).}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_evp-dynamic-fsc1-rel1-rm121_p-rs}\\
+(d) dynamic-lattice relative to $P_0$
+\end{minipage}
+\caption{Pressure-density relation. The solid lines are clamped-ion vdW-DF pressures, whereas the symbols are QMC pressures. (a) (c) show static-lattice results, while (b) (d) show dynamic lattice results. Color denotes different candidate structures. The open and filled symbols represent VMC and linearly extrapolated DMC estimator results. They overlap on the absolute scale in (a) but can be seen to differ by 1 to 5 GPa on a relative scale in (b). The reference pressure-density relation $P_0=-dE_0/dv$ is calculated from the reference EOS $E_0(1/v)$. The same clamped-ion reference is used for both static-lattice and dynamic-lattice results.}
 \label{fig:hsolid-p-vs-n}
 \end{figure}
 
