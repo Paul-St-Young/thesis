@@ -298,12 +298,12 @@ E_0(\rho) = 1.605872\rho^2 + 0.699501\rho - 0.610902,
 \end{align}
 where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$, and $E_0$ is in hartree.
 We fit to the 96-proton size-corrected (KZK) data obtained using a Slater-Jastrow wave function (termed SJDMC in Ref.~\cite{Drummond2015}), because the results are easier to reproduce than its large-cell and back-flow counterparts.
-The fitted EOS reproduces the QMC data to well within $1$ meV/p while interpolating between $212$ and $413$ GPa, and incurs an error of $1.5$ meV/p when extrapolated by $50$ GPa to $163$ GPa.
+The fitted EOS reproduces the QMC data to well within $1$ meV/p while interpolating between $212$ and $413$ GPa and deviates by $1.5$ meV/p when extrapolated by $50$ GPa to $163$ GPa.
 Thus, we can expect the reference EOS to be accurate over the pressure range $150$ ($r_s=1.48$) to $460$ GPa ($r_s=1.26$), but fail when extrapolated much beyond these limits.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.6]{h117ds_drum-eos}
+\includegraphics[scale=0.6]{h117ds_c2c-drum-eps}
 \caption{Fitting of reference equation of state.}
 \label{fig:hsolid-drum-eos}
 \end{figure}
@@ -336,10 +336,14 @@ The reason for this disagreement is unknown.
 
 \begin{figure}[h]
 \begin{minipage}{0.49\textwidth}
+\centering
 \includegraphics[width=\linewidth]{h117_evp-dynamic-e-vs-rho}
+(a) energy-density relation
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
+\centering
 \includegraphics[width=\linewidth]{h117_evp-dynamic-h-vs-p}
+(a) enthalpy-pressure relation
 \end{minipage}
 \caption{Dynamic-lattice \label{fig:dynamic-qmc-vs-drummond}}
 \end{figure}
@@ -454,6 +458,23 @@ Interestingly, this brings the dynamic-lattice QMC pressures into better agreeme
 \centering
 \begin{minipage}{0.49\textwidth}
 \centering
+\includegraphics[width=\linewidth]{h117gs_eps-vs-rho}\\
+(a) static lattice
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117gd_eps-vs-rho}\\
+(b) dynamic lattice
+\end{minipage}
+\caption{Upper bound on inverse dielectric constant.}
+\label{fig:hsolid-epsinv}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
 \includegraphics[width=\linewidth]{h117ga_static-rs125-s2-gr}\\
 (a) static lattice
 \end{minipage}
@@ -476,9 +497,63 @@ Interestingly, this brings the dynamic-lattice QMC pressures into better agreeme
 \label{fig:hsolid-eegr}
 \end{figure}
 
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117ga_dynamic-c2c-s2-ep}\\
+(a) C2/c-24
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117ga_dynamic-cmca12-s2-ep}\\
+(b) Cmca-12
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117ga_dynamic-cmca4-s2-ep}\\
+(c) Cmca-4
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117ga_dynamic-i41amd-s2-ep}\\
+(d) I4$_1$/amd
+\end{minipage}
+\caption{Dynamic-lattice electron-proton pair correlation function ep $g(r)$.}
+\label{fig:hsolid-epgr}
+\end{figure}
+
 \subsection{Dielectric Constants from S(k)}
 
 \subsection{Proton-proton g(r)}
+
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117ga_dynamic-c2c-s2-pp}\\
+(a) C2/c-24
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117ga_dynamic-cmca12-s2-pp}\\
+(b) Cmca-12
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117ga_dynamic-cmca4-s2-pp}\\
+(c) Cmca-4
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117ga_dynamic-i41amd-s2-pp}\\
+(d) I4$_1$/amd
+\end{minipage}
+\caption{Proton-proton pair correlation function pp $g(r)$.}
+\label{fig:hsolid-ppgr}
+\end{figure}
 
 %$g(r)$, $S(k)$, $T_e$, $V_{eI}$, $V_{II}$
 
