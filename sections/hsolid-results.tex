@@ -331,13 +331,13 @@ Even with improved geometry and wave function, we get back the same pressure as 
 \begin{minipage}{0.49\textwidth}
 \centering
 %\includegraphics[width=\linewidth]{101sd_ev-s3}
-\includegraphics[width=\linewidth]{h117_evp-static-fsc1_e-vs-rho}
+\includegraphics[width=\linewidth]{h117ds_fsc1_e-vs-rho}
 (a) energy-density relation
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
 %\includegraphics[width=\linewidth]{101se_hp}
-\includegraphics[width=\linewidth]{h117_evp-static-fsc1_h-vs-p}
+\includegraphics[width=\linewidth]{h117ds_fsc1_h-vs-p}
 (b) enthalpy-pressure relation
 \end{minipage}
 \caption{Static-lattice DMC energy and enthalpy relative to Drummond \textit{et al.}~\cite{Drummond2015} reference eq.~(\ref{eq:hsolid-drum-ref}). Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-density EOS, which is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of $\rho$. The markers are finite-size corrected simulation data without performing a fit. $P_0$ is the pressure calculated from the reference EOS $P_0=-dE_0/d\Omega$. \label{fig:static-qmc-vs-drummond}}
@@ -350,15 +350,15 @@ The reason for this disagreement is unknown.
 \begin{figure}[h]
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_evp-dynamic-e-vs-rho}
+\includegraphics[width=\linewidth]{h117dd_e-vs-rho}
 (a) energy-density relation
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_evp-dynamic-h-vs-p}
+\includegraphics[width=\linewidth]{h117dd_h-vs-p}
 (a) enthalpy-pressure relation
 \end{minipage}
-\caption{Dynamic-lattice energy and enthalpy relative to reference }
+\caption{Dynamic-lattice energy and enthalpy relative to reference.}
 \label{fig:dynamic-qmc-vs-drummond}
 \end{figure}
 
@@ -411,7 +411,7 @@ If true, then it may be better to generate orbitals above $400$ GPa using the PB
 For comparison, the variance of the best analytical wave function for bcc hydrogen is $13.2(1)$ eV$^2$/p at $r_s=1.31$ (Table III in Ref.~\cite{Holzmann2003}) and $7.40(3)$ eV$^2$/p at $r_s=1.40$ (Table~2 in Ref.~\cite{Pierleoni2008}).
 Small mixed-estimator error and low energy variance are hallmarks of a well-optimized wave function. We have demonstrated both in Fig.~\ref{fig:hsolid-p-vs-n} and Fig.~\ref{fig:hsolid-v-vs-p} for the static-lattice electronic wave function.
 
-\subsection{Effect of dynamic ions on energy and pressure}
+\subsection{Effect of Dynamic Ions on Energy and Pressure}
 
 When clamped protons are allowed to move, the energy of the electron-ion system changes in two ways.
 First, proton kinetic energy contributes a sizable positive term to the total kinetic energy of the system. As shown in Fig.~\ref{fig:hsolid-ion-energy}(d), the kinetic energy of the protons increases from $\sim 230$ meV/p at $360$ GPa ($r_s\approx 1.31$) to $\sim 265$ meV/p at $600$ GPa ($r_s\approx 1.20$), increasing by roughly $7.3$ meV/p every $50$ GPa.
@@ -452,7 +452,10 @@ Most of the density dependence of the ZPE comes from the proton kinetic energy.
 An immediate consequence of the higher kinetic and potentials energies of the dynamic-lattice simulation is that the virial pressure is $\sim 20$ GPa higher than its static-lattice counterpart.
 Interestingly, this brings the dynamic-lattice QMC pressures into better agreement with static-lattice vdW-DF pressures, as we saw in Fig.~\ref{fig:hsolid-p-vs-n} that the static-lattice QMC pressures are systematically lower by $\sim 15$ GPa.
 
-\subsection{Effect of dynamic ions on electronic correlation functions}
+The energy-density and enthalpy-pressure relations from the dynamic-lattice simulations are shown relative to the same reference EOS eq.~\ref{eq:hsolid-drum-ref} in Fig.\ref{fig:dynamic-qmc-vs-drummond}.
+
+
+\subsection{Effect of Dynamic Ions on Electronic Correlation Functions}
 
 The electron-electron pair correlation function are shown in real space $g(r)$ in Fig.~\ref{fig:hsolid-eegr}.
 The correlation functions of the 3D unpolarized homogeneous electron gas are also shown as reference.
@@ -493,7 +496,8 @@ In contrast, the atomic structure shows no enhancement of unlike-spin correlatio
 
 The electron-ion pair correlation functions are shown in Fig.~\ref{fig:hsolid-epgr}.
 They are shown separately for each candidate structure with pressure encoded in color.
-
+For all candidate structures, the small-distance electron-proton correlation decrease as pressure increases.
+As the kinetic energy becomes more important, the electrons delocalize more to lower kinetic energy, thus localize less around the protons.
 
 \begin{figure}[h]
 \centering
@@ -521,6 +525,10 @@ They are shown separately for each candidate structure with pressure encoded in 
 \label{fig:hsolid-epgr}
 \end{figure}
 
+The electron-electron static structure factor is shown in Fig.~\ref{fig:hsolid-esk}.
+At all densities and for all structures, both static-lattice and dynamic-lattice results show excellent agreement with RPA $S(k)$ for the electron gas.
+However, small increase in correlation can be seen at intermediate range $k/k_F\approx 1.5$.
+Further, subtle differences at long-range ($k\rightarrow0$) can make the electronic properties of the candidate structures qualitatively different from those of the electron gas and from each other.
 
 \begin{figure}[h]
 \centering
@@ -538,7 +546,21 @@ They are shown separately for each candidate structure with pressure encoded in 
 \label{fig:hsolid-esk}
 \end{figure}
 
-\subsection{Dielectric Constants from S(k)}
+%\subsection{Dielectric Constants from S(k)}
+The inverse dielectric function is bounded from above by $\epsilon^{-1}(k) \le 1-\Gamma_k^2$, where
+\begin{align}
+\Gamma(k) = \dfrac{2m S(k)}{\hbar^2 k^2}.
+\end{align}
+The limit $\lim\limits_{k\rightarrow0} 1-\Gamma_k^2$ can be a good approximation to the inverse dielectric constant if plasmons are the dominant excitations in the system.
+Importantly, if this limit reaches zero, then the material is metallic.
+In Fig.~\ref{fig:hsolid-epsinv}, this limit is shown as a function of density.
+There are sizable systematic errors in these results due to a lack of data at small $k$ and the choice of fitting range.
+These systematic errors are not estimated, but its size should be comparable to the oscillation of the data points.
+The inaccessible region around $\bs{k}=\bs{0}$ increases with density, so the high-density results are less reliable than the low-density ones.
+In the static-lattice results Fig.~\ref{fig:hsolid-epsinv}(a), the atomic structure is metallic at all densities as expected.
+The Cmca-4 and C2/c-24 structures become metallic at roughly $r_s=1.22$ and $rs=1.17$, respectively. These densities correspond to $550$ GPa and $800$ GPa, which are much too high compared to experiment.
+
+The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures as metallic at densities higher than $r_s=1.26$ ($460$ GPa), except for C2/c-24, which remains borderline insulating.
 
 \begin{figure}[h]
 \centering
