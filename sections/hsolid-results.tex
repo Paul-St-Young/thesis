@@ -158,14 +158,16 @@ $\left(\begin{array}{rrr}
 For the electronic wave function, we use the standard Slater-Backflow-Jastrow form
 \begin{align}
 \Psi(\bs{R};\bs{R}_I) = \det\left( \{ \phi_i(\bs{r}_j+\Delta\bs{r}_j;\bs{R}_I)\} \right) e^{-U(\bs{R},\bs{R}_I)}, \\
-U = \frac{1}{2}\sum\limits_{\alpha, \beta} \sum\limits_{i=1}^{N_\alpha} \sum\limits_{j=1}^{N_\beta, (j,\beta)\neq(i,\alpha)} u_{\alpha\beta}(r, \bs{R}_I),
+U = \frac{1}{2}\sum\limits_{\alpha, \beta} \sum\limits_{i=1}^{N_\alpha} \sum\limits_{j=1}^{N_\beta, (j,\beta)\neq(i,\alpha)} u_{\alpha\beta}(\bs{r}_i, \bs{r}_j), \label{eq:hsolid-ujas}
 \end{align}
-where $\alpha, \beta$ denote electron spin species and $\bs{r}_j+\Delta\bs{r}_j$ is the quasi-particle coordinate of particle $j$ as determined by the back flow function as follows
+where $\alpha, \beta$ denote unique particle species, including up-electron, down-electron, and proton, although the proton-proton contribution is always set to zero in static-lattice calculations. $\bs{r}_j+\Delta\bs{r}_j$ is the quasi-particle coordinate of particle $j$ as determined by the back flow function as follows
 \begin{align}
-\Delta \bs{r}_j = \sum\limits_{j\neq i} \eta(r_{ij}) (\bs{r}_i-\bs{r}_j).
+\Delta \bs{r}_j = \frac{1}{2}\sum\limits_{\alpha, \beta} \sum\limits_{i=1}^{N_\alpha} \sum\limits_{j=1}^{N_\beta, (j,\beta)\neq(i,\alpha)} \eta_{\alpha\beta}(\bs{r}_i^\alpha, \bs{r}_j^\beta)(\bs{r}_i-\bs{r}_j).
+\label{eq:hsolid-bf}
 \end{align}
-The Jastrow $u(r)$ and back flow $\eta(r)$ functions are optimized in VMC to lower the variational energy.
-The single-particle orbitals in the determinant are taken as the vdW-DF Kohn-Sham orbitals with the lowest eigenvalues.
+Isotropic Jastrow $u(r)$ and back flow $\eta(r)$ functions are optimized in VMC to lower the variational energy.
+The single-particle orbitals in the determinant are taken as the Kohn-Sham orbitals with the lowest eigenvalues.
+These orbitals are generated using the vdW-DF functional for the molecular candidates and PBE for the atomic structure.
 
 Before back flow transformation, the static structure factor of the Slater determinant is quite similar to that of the unpolarized homogeneous electron gas, as shown in Fig.~\ref{fig:hsolid-det-sk-nk}(a). However, as shown in  Fig.~\ref{fig:hsolid-det-sk-nk}(a), the momentum distribution of the metallic atomic structure is different from the rest, because the molecular structures are insulating.
 
@@ -181,7 +183,7 @@ Before back flow transformation, the static structure factor of the Slater deter
 \includegraphics[width=\linewidth]{h117_mol-detnk-rs125}\\
 (b) momentum distribution
 \end{minipage}
-\caption{Static structure factor $S_0(k)$ and momentum distribution $n_0(k)$ calculated using the Kohn-Sham determinant wave function.}
+\caption{Static structure factor $S_0(k)$ and momentum distribution $n_0(k)$ calculated using the Kohn-Sham determinant wave function at $r_s=1.25$. The black lines show the same functions for the free Fermi (FF) gas as reference.}
 \label{fig:hsolid-det-sk-nk}
 \end{figure}
 
@@ -209,63 +211,24 @@ This is likely an artifact of either the clamped-ion approximation or under-conv
 \end{figure}
 
 \subsubsection{Ionic Components}
-For an electron-ion simulation, the Slater-Jastrow wavefunction has an additional product for distinguishable ions ions and an ion-ion Jastrow.
-
+For an electron-ion simulation, the Slater-Jastrow wavefunction has an additional product for distinguishable ions as well as an ion-ion Jastrow
 \begin{align}
-\Psi_{ei}(\bs{R}, \bs{R}_I) = \det\left( \{ \phi_i(\bs{r}_j+\Delta\bs{r}_j, \bs{r}_J+\Delta\bs{R}_J)\} \right) e^{-U(\bs{R},\bs{R}_I)}. \\
+\Psi_{ei}(\bs{R}, \bs{R}_I) = \det\left( \{ \phi_i(\bs{r}_j+\Delta\bs{r}_j; \bs{R}_I^0)\} \right) e^{-U(\bs{R},\bs{R}_I)} \prod\limits_{I=1}^{N_p} \chi(\bs{r}_I, \bs{r}_I^0),
 \end{align}
-
-\begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_copt-c2c-rs1.27-ca1.75}\\
-(a) Lattice deviations vs. prediction from isolated gaussian wave function exponent $C_p$.
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h45_xyz-copt}\\
-(b) optimized exponents as a function of the Wigner-Seitz radius $r_s$
-\end{minipage}
-\caption{Maximum overlap optimization of the proton wave function.}
-\label{fig:prot-cp-opt}
-\end{figure}
-
-%After optimizing using dynamic-ion VMC, the electronic Jastrow and back flow pair functions of all three molecular structures converge to the same set of functions.
-As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, the only noticeable difference among the three structures come from the proton-proton Jastrow.
-We use a product of isotropic gaussians as the wave function for the protons in the molecular structures.
-The width of the gaussians are optimized using maximum overlap.
-In this method, we measure the root-mean-squared deviation (RMSD) of each proton from its ideal site, as determined by vdW-DF, and adjust the gaussian exponent in the proton wave function $C_p$ until the VMC and DMC estimates of the RMSD agree.
-This method works by maximizing the overlap between the trial and ground-state wave function along the dimension controlled by $C_p$.
-Since proton RMSD is a rather direct measure of the shape of the wave function and DMC pushes the VMC RMSD towards its ground-state value, the optimal $C_p$ is obtained when DMC and VMC RMSDs agree.
-Consider an isolated proton having a normalized Gaussian wave function
+where the proton orbital is an isotropic gaussian centered around its optimized geometry
 \begin{align}
-\chi(x, y, z) = \left(\dfrac{2C_p}{\pi}\right)^{3/4} \exp\left(
--C_p(x^2+y^2+z^2)
+\chi(\bs{r}_i, \bs{r}_I^0) = \left(\dfrac{2C_p}{\pi}\right)^{3/4} \exp\left(
+-C_p\vert\bs{r}_I-\bs{r}_I^0\vert
 \right).
 \end{align}
-The mean squared deviation of this wave function
-\begin{align} \label{eq:hsolid-x2-cp}
-\braket{x^2}=\braket{y^2}=\braket{z^2}=\dfrac{1}{4C_p}.
-\end{align}
-We expect some deviation from eq.~(\ref{eq:hsolid-x2-cp}) due to electron-proton and proton-proton correlations. When $C_p$ is large, the confining effect of the gaussian wave function dominates over correlation due to Jastrow and back flow components, making each proton approximately independent of all other particles. However, as $C_p$ decreases, the effects of correlation become more important. As shown in Fig.~\ref{fig:prot-cp-opt}(a), at large values of $C_p$ (localized protons) VMC MSDs are accurately approximated by eq.~(\ref{eq:hsolid-x2-cp}), whereas the DMC MSDs and VMC ones at small $C_p$ differ from this independent-particle approximation.
-Note that the DMC runs here are short and likely under-converged.
-Fortunately, they are sufficient for determining the point of maximum overlap between the VMC and DMC wave functions.
-As such, the computational cost of maximum overlap optimization is more similar to VMC optimization than to a converged DMC run.
-Finally, the exact value of $C_p$ will not bias the DMC result so long as the projection time is sufficiently converged. This is because the protons are treated as distinguishable particles and DMC is exact at infinite projection time.
+The expressions for the Jastrow and back flow terms remain unchanged, i.e. eq.~(\ref{eq:hsolid-ujas}) and (\ref{eq:hsolid-bf}), although the proton coordinates are now dynamic variables rather than parameters.
+We take the electronic orbitals $\phi_i$ from the equilibrium DFT calculation for practical purposes.
+This is a severe approximation as the ideal orbitals for a system with small nonadiabatic effects should come from a Born-Oppenheimer calculation, i.e. rerun DFT at every ion position update.
+Fortunately, the back flow transformation effectively changes the electronic orbitals, because the quasi-particle position of an electron is influenced by the protons around it.
 
-In practice, the choice of $C_p$ is important.
-The protons diffuses $\sim 43$ times ``slower'' than electrons in imaginary time, so it takes more simulation time to fix errors in the proton wave function than the electron wave function.
-Further, if $C_p$ is too large, then the proton wave function will be too localized.
-This results in undersampling of the ground-state wave function and is a dangerous scenario.
-During the DMC run, the kinetic energy of the protons will likely have mostly small fluctuation in this case.
-However, occasional spikes, which are important for an unbiased mean will occur infrequently.
-If one misses or discards these spikes, then the results will be biased.
-In contrast, oversampling will increase the variance of the wave function without biasing the mean.
-The resultant calculation will require more time to reach a certain accuracy target, so a balance needs to be sought.
-As shown as the red dashed lines in Fig.~\ref{fig:prot-cp-opt}, we chose isotropic gaussian exponent that are close to optimal but error slightly on the side of oversampling.
-
-The electron-ion Jastrow of the Cmca-4 Jastrow and back flow functions fall into good agreement with those from other candidate structures. As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, the only noticeable difference among candidate structures is the change of the proton-proton Jastrow function.
+We re-optimize the Jastrow and back flow functions in dynamic-lattice VMC, using the optimized functions from static-lattice calculations as starting points.
+The electron-ion Jastrow of the Cmca-4 Jastrow and back flow functions fall into good agreement with those from other candidate structures.
+As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, after re-optimization, the only noticeable difference among the three structures lie in the proton-proton Jastrow.
 
 \begin{figure}[h]
 \centering
@@ -283,14 +246,64 @@ The electron-ion Jastrow of the Cmca-4 Jastrow and back flow functions fall into
 \label{fig:hsolid-dynamic-jas-bf}
 \end{figure}
 
+In contrast, the width of the gaussians in the proton orbital $C_p$ are optimized using \emph{maximum overlap}.
+In this method, we measure the mean-squared deviation (MSD) of each proton from its ideal site, as determined by vdW-DF, and adjust the gaussian exponent in the proton wave function $C_p$ until the VMC and DMC estimates of the MSD agree.
+This method works by maximizing the overlap between the trial and ground-state wave function along the dimension controlled by $C_p$.
+Since proton MSD is a rather direct measure of the shape of the wave function and DMC pushes the VMC MSD towards its ground-state value, the optimal $C_p$ is obtained when DMC and VMC MSDs agree.
+Consider an isolated proton having a normalized gaussian wave function
+\begin{align}
+\chi(x, y, z) = \left(\dfrac{2C_p}{\pi}\right)^{3/4} \exp\left(
+-C_p(x^2+y^2+z^2)
+\right).
+\end{align}
+The mean squared deviation of this wave function
+\begin{align} \label{eq:hsolid-x2-cp}
+\braket{x^2}=\braket{y^2}=\braket{z^2}=\dfrac{1}{4C_p}.
+\end{align}
+We expect some deviation from eq.~(\ref{eq:hsolid-x2-cp}) due to electron-proton and proton-proton correlations. When $C_p$ is large, the confining effect of the gaussian wave function dominates over correlation due to Jastrow and back flow components, making each proton approximately independent of all other particles.
+However, as $C_p$ decreases, the effects of correlation become more important. As shown in Fig.~\ref{fig:prot-cp-opt}(a), at large values of $C_p$ (localized protons) VMC MSDs are accurately approximated by eq.~(\ref{eq:hsolid-x2-cp}), whereas the DMC MSDs and VMC ones at small $C_p$ differ from this independent-particle approximation.
+Note that the DMC runs here are short and likely under-converged.
+Fortunately, they are sufficient for determining the point of maximum overlap between the VMC and DMC wave functions.
+As such, the computational cost of maximum overlap optimization is more similar to VMC optimization than to a converged DMC run.
+We further note that optimal $C_p$ is the same along $x$, $y$, and $z$ directions, so an isotropic Gaussian wave function is flexible enough to optimally sample the proton wave function.
+Finally, the exact value of $C_p$ will not bias the DMC result so long as the projection time is sufficiently converged. This is because the protons are treated as distinguishable particles and DMC is exact at infinite projection time.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_copt-c2c-rs1.27-ca1.75}\\
+(a) Lattice deviations vs. prediction from isolated gaussian wave function with exponent $C_p$
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117c_all-copt}\\
+(b) optimized exponents as a function of density
+\end{minipage}
+\caption{Maximum overlap optimization of the proton wave function. (a) Optimization of the C2/c-24 proton wave function at $r_s=1.269$. (b) Optimized proton wave function exponent $C_p$ of all candidate structures. The markers show the $C_p$ value at the intercept of VMC and DMC. The lines are linear fits, but shifted down slightly to error on the side of oversampling. These fits are used to determine the $C_p$ value used in the dynamic-lattice calculations.}
+\label{fig:prot-cp-opt}
+\end{figure}
+
+In practice, the choice of $C_p$ is important.
+The protons diffuses $\sim 43$ times ``slower'' than electrons in imaginary time, so it takes more simulation time to fix errors in the proton wave function than the electron wave function.
+Further, if $C_p$ is too large, then the proton wave function will be too localized.
+This results in undersampling of the ground-state wave function and is a dangerous scenario.
+During the DMC run, the kinetic energy of the protons will likely have mostly small fluctuation in this case.
+However, occasional spikes, which are important for an unbiased mean will occur infrequently.
+If one misses or discards these spikes, then the results will be biased.
+In contrast, oversampling will increase the variance of the wave function without biasing the mean.
+The resultant calculation will require more time to reach a certain accuracy target, so a balance needs to be sought.
+As shown by the lines in Fig.~\ref{fig:prot-cp-opt}(b), we chose isotropic gaussian exponent that are close to optimal but error slightly on the side of oversampling.
+
 \section{Results}
 \label{sec:hsolid-results}
 
 \subsection{Energy, Pressure, and Local Energy Variance}
 
-The dominant variation of the total energy as pressure increases is due to the isotropic compression of the electron liquid. This variation is on the order of $1$ eV/p over the density range considered and is roughly the same for all candidate structures.
-To better observe the differences among candidate structures, we plot energy and pressure relative to a reference equation of state (EOS).
-For this purpose, we chose the DMC data for the C2/c-24 molecular crystal structure obtained by Drummond \textit{et al.}~\cite{Drummond2015}, because they are freely accessible online [REF] and are well approximated by a quadratic polynomial in density.
+The dominant variation of the total energy as pressure increases is due to the isotropic compression of the electron liquid and the crystal lattice. This variation is on the order of $1$ eV/p over the density range considered and is roughly 50 times the energy difference among the candidate structures.
+To better observe these differences, we plot energy and pressure relative to a reference equation of state (EOS).
+As a definition of zero energy at each density, this reference EOS need not be overly precise.
+We use a fit to the DMC data for the C2/c-24 molecular crystal structure obtained by Drummond \textit{et al.}~\cite{Drummond2015}, because they are freely accessible online [REF] and are well approximated by a quadratic polynomial in density.
 As shown in Fig.~\ref{fig:hsolid-drum-eos}, we fit the high-density region of the reference data to obtain:
 \begin{align}
 E_0(\rho) = 1.605872\rho^2 + 0.699501\rho - 0.610902,
@@ -304,7 +317,7 @@ Thus, we can expect the reference EOS to be accurate over the pressure range $15
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.6]{h117ds_c2c-drum-eps}
-\caption{Fitting of reference equation of state.}
+\caption{Fitting of reference equation of state. The solid symbols are DMC data from Ref.~\cite{Drummond2015}, while the line is a quadratic fit to the circled points. The bottom panels shows the difference between data and fit.}
 \label{fig:hsolid-drum-eos}
 \end{figure}
 
@@ -345,13 +358,14 @@ The reason for this disagreement is unknown.
 \includegraphics[width=\linewidth]{h117_evp-dynamic-h-vs-p}
 (a) enthalpy-pressure relation
 \end{minipage}
-\caption{Dynamic-lattice \label{fig:dynamic-qmc-vs-drummond}}
+\caption{Dynamic-lattice energy and enthalpy relative to reference }
+\label{fig:dynamic-qmc-vs-drummond}
 \end{figure}
 
 The QMC virial pressure is shown as a function of density in Fig.~\ref{fig:hsolid-p-vs-n}(a).
 We first note that the QMC pressure is consistently lower than vdW-DF pressure at the same density.
 Plotting the same data on a relative scale in Fig.~\ref{fig:hsolid-p-vs-n}(c),
-we see that the QMC virial pressure is 4.2\% and 3.2\% lower than vdW-DF pressure at 340 GPa ($r_s\approx 1.21$) and 460 GPa ($r_s\approx 1.25$), which agree well with the findings of R. C. Clay \textit{et al.}, i.e. Fig.~4 in Ref.~\cite{Clay2016}.
+we see that the QMC virial pressure is 4.2\% and 3.2\% lower than vdW-DF pressure at 340 GPa ($r_s\approx 1.21$) and 460 GPa ($r_s\approx 1.25$), which agree well with the findings of R. C. Clay III \textit{et al.}, i.e. Fig.~4 in Ref.~\cite{Clay2016}.
 In this plot, we also see that the mixed estimator error is 1 to 5 GPa, so the linearly-extrapolated static-lattice DMC pressure should be accurate to 1 GPa.
 
 \begin{figure}[h]
@@ -382,7 +396,10 @@ In this plot, we also see that the mixed estimator error is 1 to 5 GPa, so the l
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.6]{h117_evp-static-rm121_var-vs-p}
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\textwidth]{h117ds_rm121_var-vs-p}
+\end{minipage}
 \caption{QMC variance vs. pressure.}
 \label{fig:hsolid-v-vs-p}
 \end{figure}
@@ -390,7 +407,7 @@ In this plot, we also see that the mixed estimator error is 1 to 5 GPa, so the l
 Finally, the variance of the optimized static-lattice wave functions are shown in Fig.~\ref{fig:hsolid-v-vs-p} as a function of pressure.
 The variance of the molecular structures are $7.5\sim8.5$ eV$^2$/p below $400$ GPa and increases to $8.5\sim9.5$ eV$^2$/p at $550$ GPa.
 The increase in variance may be due to the closing band gaps of the molecular structures around $400$ GPa.
-If true, then it may be better to generate orbitals above $400$ using the PBE functional, because it prefers metallic rather than insulating states when compared to vdW-DF.
+If true, then it may be better to generate orbitals above $400$ GPa using the PBE functional, because it prefers metallic rather than insulating states when compared to vdW-DF.
 For comparison, the variance of the best analytical wave function for bcc hydrogen is $13.2(1)$ eV$^2$/p at $r_s=1.31$ (Table III in Ref.~\cite{Holzmann2003}) and $7.40(3)$ eV$^2$/p at $r_s=1.40$ (Table~2 in Ref.~\cite{Pierleoni2008}).
 Small mixed-estimator error and low energy variance are hallmarks of a well-optimized wave function. We have demonstrated both in Fig.~\ref{fig:hsolid-p-vs-n} and Fig.~\ref{fig:hsolid-v-vs-p} for the static-lattice electronic wave function.
 
@@ -398,10 +415,10 @@ Small mixed-estimator error and low energy variance are hallmarks of a well-opti
 
 When clamped protons are allowed to move, the energy of the electron-ion system changes in two ways.
 First, proton kinetic energy contributes a sizable positive term to the total kinetic energy of the system. As shown in Fig.~\ref{fig:hsolid-ion-energy}(d), the kinetic energy of the protons increases from $\sim 230$ meV/p at $360$ GPa ($r_s\approx 1.31$) to $\sim 265$ meV/p at $600$ GPa ($r_s\approx 1.20$), increasing by roughly $7.3$ meV/p every $50$ GPa.
-Second, the electronic wavefunction changes as the protons move. Thus, the electronic potential and kinetic energies change as well.
+Second, the electronic wave function changes as the protons move. Thus, the electronic potential and kinetic energies change as well.
 As shown in Fig.~\ref{fig:hsolid-ion-energy}(b) and (c), the increase of the total potential energy is roughly twice that of the electron kinetic energy, which is around $80\pm20$ meV/p for all candidate structures.
 Unlike the increase of proton kinetic energy, the electron kinetic and total potential increases are insensitive to the electron density.
-The increase of electron kinetic energy for C2/c-24 and i4$_1$/amd is $\sim 20$ meV/p higher, while the increase in their potential energies is $\sim 40$ meV/p lower.
+The increase of electron kinetic energy for C2/c-24 and i4$_1$/amd is $\sim 20$ meV/p higher than that of the Cmca structures, while the increase in their potential energies is $\sim 40$ meV/p lower.
 The sum of all three contributions make up the total energy change from static- to dynamic-lattice, i.e. the zero-point energy (ZPE).
 As shown in Fig.~\ref{fig:hsolid-ion-energy}(a), the ZPE increases from $\sim 470$ meV/p at $360$ GPa to $\sim 510$ meV/p at $600$ GPa, i.e. $8.3$ meV/p every $50$ GPa.
 Most of the density dependence of the ZPE comes from the proton kinetic energy.
@@ -410,22 +427,22 @@ Most of the density dependence of the ZPE comes from the proton kinetic energy.
 \centering
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_evp-comp_LocalEnergy}\\
+\includegraphics[width=\linewidth]{h117dc_LocalEnergy}\\
 (a) total energy change (zero-point energy)
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_evp-comp_LocalPotential}\\
+\includegraphics[width=\linewidth]{h117dc_LocalPotential}\\
 (b) potential energy change
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_evp-comp_skinetic_e}\\
+\includegraphics[width=\linewidth]{h117dc_skinetic_e}\\
 (c) electronic kinetic energy change
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_evp-comp_skinetic_p}\\
+\includegraphics[width=\linewidth]{h117dc_skinetic_p}\\
 (d) proton kinetic energy
 \end{minipage}
 \caption{Energy changes from static-lattice to dynamic-lattice simulations as functions of electron density $\rho=N/\Omega$. (a) zero-point energies of the candidate structures. (b) total potential energy change due to dynamic protons. (c) electronic kinetic energy change due to dynamic protons. (d) proton kinetic energy. Color and marker label candidate structures. The solid lines are guides to the eyes.}
@@ -433,43 +450,20 @@ Most of the density dependence of the ZPE comes from the proton kinetic energy.
 \end{figure}
 
 An immediate consequence of the higher kinetic and potentials energies of the dynamic-lattice simulation is that the virial pressure is $\sim 20$ GPa higher than its static-lattice counterpart.
-Interestingly, this brings the dynamic-lattice QMC pressures into better agreement with static-lattice vdW-DF pressures, as we saw in Fig.~\ref{fig:hsolid-p-vs-n} that the static-lattice QMC pressures are systematically lower by $\sim 5$ GPa.
+Interestingly, this brings the dynamic-lattice QMC pressures into better agreement with static-lattice vdW-DF pressures, as we saw in Fig.~\ref{fig:hsolid-p-vs-n} that the static-lattice QMC pressures are systematically lower by $\sim 15$ GPa.
 
 \subsection{Effect of dynamic ions on electronic correlation functions}
 
-\begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_grsk-static-sk}\\
-(a) static
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_grsk-dynamic-esk}\\
-(b) dynamic
-\end{minipage}
-\caption{Electron-electron static structure factor $S(k)$.}
-\label{fig:hsolid-esk}
-\end{figure}
-
-
-\begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117gs_eps-vs-rho}\\
-(a) static lattice
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117gd_eps-vs-rho}\\
-(b) dynamic lattice
-\end{minipage}
-\caption{Upper bound on inverse dielectric constant.}
-\label{fig:hsolid-epsinv}
-\end{figure}
-
+The electron-electron pair correlation function are shown in real space $g(r)$ in Fig.~\ref{fig:hsolid-eegr}.
+The correlation functions of the 3D unpolarized homogeneous electron gas are also shown as reference.
+The bottom panel of each plot shows the difference between the hydrogen $g(r)$s from those of the electron gas.
+This difference highlights the modification of the electron liquid due to the ionic lattice.
+The dynamic-lattice electronic $g(r)$s are identical to those from the static-lattice calculations on the scale of the difference panel $0.1$.
+For the molecular structures, both the same-spin (uu) and unlike-spin (ud) $g(r)$s are the same over the entire range from zero ($r=0$) to the supercell image distance ($r=R_{WS}$).
+The most notable deviation from the electron gas is an enhanced correlation between unlike-spin electrons at small separation.
+This is likely due to the presence of covalent bonds, formed by a pair of unlike-spin electrons, at the center of each H$_2$ molecules.
+A more subtle difference is the presence of small periodic modulations of the electronic $g(r)$ that seem to persist to long distances.
+In contrast, the atomic structure shows no enhancement of unlike-spin correlation function at $r=0$, whereas it shows the same periodic modulations as the molecular structures at long range.
 
 \begin{figure}[h]
 \centering
@@ -478,24 +472,27 @@ Interestingly, this brings the dynamic-lattice QMC pressures into better agreeme
 \includegraphics[width=\linewidth]{h117ga_static-rs125-s2-gr}\\
 (a) static lattice
 \end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s0-gr}\\
-(b) dynamic lattice VMC
-\end{minipage}
+%\begin{minipage}{0.49\textwidth}
+%\centering
+%\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s0-gr}\\
+%(b) dynamic lattice VMC
+%\end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
 \includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s2-gr}\\
-(c) dynamic lattice DMC ts=2
+(b) dynamic lattice %DMC ts=3.0
 \end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s3-gr}\\
-(d) dynamic lattice DMC ts=1
-\end{minipage}
-\caption{Electronic pair correlation functions.}
+%\begin{minipage}{0.49\textwidth}
+%\centering
+%\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s3-gr}\\
+%(d) dynamic lattice DMC ts=1.5
+%\end{minipage}
+\caption{DMC electronic pair correlation functions at $r_s=1.25$. Color denotes candidate structure, while the black lines are $g(r)$ of the unpolarized homogeneous electron gas at the same density as parametrized by P. Gori-Giorgi, F. Sacchetti and G. B. Bachelet (GSB)~\cite{Gori-Giorgi2000}.}
 \label{fig:hsolid-eegr}
 \end{figure}
+
+The electron-ion pair correlation functions are shown in Fig.~\ref{fig:hsolid-epgr}.
+They are shown separately for each candidate structure with pressure encoded in color.
 
 
 \begin{figure}[h]
@@ -524,10 +521,42 @@ Interestingly, this brings the dynamic-lattice QMC pressures into better agreeme
 \label{fig:hsolid-epgr}
 \end{figure}
 
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_grsk-static-sk}\\
+(a) static
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117_grsk-dynamic-esk}\\
+(b) dynamic
+\end{minipage}
+\caption{Electron-electron static structure factor $S(k)$.}
+\label{fig:hsolid-esk}
+\end{figure}
+
 \subsection{Dielectric Constants from S(k)}
 
-\subsection{Proton-proton g(r)}
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117gs_eps-vs-rho}\\
+(a) static lattice
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117gd_eps-vs-rho}\\
+(b) dynamic lattice
+\end{minipage}
+\caption{Upper bound on inverse dielectric constant.}
+\label{fig:hsolid-epsinv}
+\end{figure}
 
+\subsection{Proton-proton g(r) and S(k)}
 
 \begin{figure}[h]
 \centering
@@ -554,7 +583,5 @@ Interestingly, this brings the dynamic-lattice QMC pressures into better agreeme
 \caption{Proton-proton pair correlation function pp $g(r)$.}
 \label{fig:hsolid-ppgr}
 \end{figure}
-
-%$g(r)$, $S(k)$, $T_e$, $V_{eI}$, $V_{II}$
 
 %\subsection{Time Step and Population Control Biases}
