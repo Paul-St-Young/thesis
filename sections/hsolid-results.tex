@@ -224,7 +224,7 @@ where the proton orbital is an isotropic gaussian centered around its optimized 
 The expressions for the Jastrow and back flow terms remain unchanged, i.e. eq.~(\ref{eq:hsolid-ujas}) and (\ref{eq:hsolid-bf}), although the proton coordinates are now dynamic variables rather than parameters.
 We take the electronic orbitals $\phi_i$ from the equilibrium DFT calculation for practical purposes.
 This is a severe approximation as the ideal orbitals for a system with small nonadiabatic effects should come from a Born-Oppenheimer calculation, i.e. rerun DFT at every ion position update.
-Fortunately, the back flow transformation effectively changes the electronic orbitals, because the quasi-particle position of an electron is influenced by the protons around it.
+Fortunately, the back flow transformation effectively changes the electronic orbitals as the ions move, because the quasi-particle position of an electron is influenced by the protons around it.
 
 We re-optimize the Jastrow and back flow functions in dynamic-lattice VMC, using the optimized functions from static-lattice calculations as starting points.
 The electron-ion Jastrow of the Cmca-4 Jastrow and back flow functions fall into good agreement with those from other candidate structures.
@@ -322,7 +322,7 @@ Thus, we can expect the reference EOS to be accurate over the pressure range $15
 \end{figure}
 
 The static-lattice DMC energy is plotted relative to reference in Fig.~\ref{fig:static-qmc-vs-drummond}(a). At the same density, we obtain lower total energy than Drummond \textit{et al.} partly due to our use of vdW-DF, rather than  PBE, to optimize the crystal structure; and partly due to in the inclusion of back flow transformations. We tested that for the same geometry, DMC energy is unchanged to within 3 meV/p whether PBE or vdW-DF is used to generate the orbitals in the determinant wave function.
-Our C2/c curve is relative flat at densities lower than $r_s=1.25$ and starts to bend downwards as density increases.
+Our C2/c curve is relatively flat at densities lower than $r_s=1.25$ and starts to bend downwards as density increases.
 Thus, our C2/c pressure-density relations will be roughly identical to that of the reference EOS in the low-density region.
 This is encouraging, because it implies that the fixed-node error on the pressure is small.
 Even with improved geometry and wave function, we get back the same pressure as PBE geometry and Slater-Jastrow wave function at the same density.
@@ -631,6 +631,11 @@ The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures 
 \end{minipage}
 \caption{Proton-proton static structure factor pp $S(k)$.}
 \label{fig:hsolid-ppsk}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{h117gd_ppsk-peaks-vs-pgpa}
 \end{figure}
 
 %\subsection{Time Step and Population Control Biases}
