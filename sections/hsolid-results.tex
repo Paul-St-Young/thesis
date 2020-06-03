@@ -7,23 +7,25 @@ We considered three candidates C2/c-24, Cmca-4, Cmca-12 for the molecular phase 
 As shown in Table~\ref{tab:hsolid-mol-press-rs}, all three molecular structures optimize to similar density at each pressure.
 \begin{table}[h]
 % 2020/05/18 notes, extracted from h11/analysis/11a_axes_pos.json
+% 2020/06/03 updated using h117a/data/h117a_dft-geo.json
 \centering
-\begin{tabular}{ccccccc}
+\begin{tabular}{cccccccccc}
 \toprule
-vdW-DF P(GPa) & 360 & 400 & 440 & 480 & 520 & 560 \\
+vdW-DF P(GPa) & 360 & 400 & 440 & 480 & 520 & 560 & 650 & 700 & 780 \\
 \midrule
-Cmca-4  & 1.303 & 1.283 & 1.265 & 1.250 & 1.235 & 1.222 \\
-Cmca-12 & 1.306 & 1.286 & 1.268 & 1.252 & 1.237 & 1.224 \\
-C2/c-24 & 1.307 & 1.287 & 1.269 & 1.253 & 1.239 & 1.225 \\
+Cmca-4  & 1.303 & 1.283 & 1.265 & 1.250 & 1.235 & 1.222 & 1.196 & 1.183 & 1.164 \\
+Cmca-12 & 1.306 & 1.286 & 1.268 & 1.252 & 1.237 & 1.224 & & & \\
+C2/c-24 & 1.307 & 1.287 & 1.269 & 1.253 & 1.239 & 1.225 & 1.198 & 1.185 & \\
 \bottomrule
 \end{tabular}
 \caption{vdW-DF pressure-density (expressed in $r_s$) relation of relaxed molecular candidate structures.}
 \label{tab:hsolid-mol-press-rs}
 \end{table}
 In contrast, the atomic structure is optimized using DMC at constant volume.
-The DMC optimizations have been carried out at evenly spaced $r_s$ values: $1.31$, $1.29$, $1.27$, $\dots$, $1.17$.
+While both constant-volume and constant-pressure optimizations are valid ways to find the minimum energy structure, the final density and pressure differ in general.
+The DMC optimizations for the atomic structure have been carried out at evenly spaced $r_s$ values: $1.31$, $1.29$, $1.27$, $\dots$, $1.17$.
 The density difference between the atomic and a molecular structure at a given pressure range is appreciably larger than the density difference among candidate structures.
-Thus, when calculating energy and enthalpy differences, interpolation must occur further from data for the atomic structure than the molecular structures.
+Thus, when calculating energy and enthalpy differences, interpolation is needed further from data for the atomic structure than the molecular structures.
 
 All three molecular structures are monoclinic having $a=b\neq c$, $\alpha=\beta=90^\circ+\eta$, and $\gamma=120^\circ+\delta$. The slight distortions differ for each structure: $\eta=0$, $\delta\approx -0.5^\circ$ for Cmca-4, $\eta=0$, $\delta\approx+3.5^\circ$ for Cmca-12, and $\eta\approx0.1^\circ$, $\delta\approx-0.1^\circ$ for C2/c-24.
 The evolution of the lattice parameters as a function of pressure are shown in Fig.~\ref{fig:hsolid-vdw-ca}(a).
@@ -249,7 +251,7 @@ As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, after re-optimization, the onl
 \label{fig:hsolid-dynamic-jas-bf}
 \end{figure}
 
-In contrast, the width of the gaussians in the proton orbital $C_p$ are optimized using \emph{maximum overlap}.
+In contrast, the width of the gaussians in the proton orbital $C_p$ are optimized using \emph{maximum overlap}~\cite{Reatto1982}.
 In this method, we measure the mean-squared deviation (MSD) of each proton from its ideal site, as determined by vdW-DF, and adjust the gaussian exponent in the proton wave function $C_p$ until the VMC and DMC estimates of the MSD agree.
 This method works by maximizing the overlap between the trial and ground-state wave function along the dimension controlled by $C_p$.
 Since proton MSD is a rather direct measure of the shape of the wave function and DMC pushes the VMC MSD towards its ground-state value, the optimal $C_p$ is obtained when DMC and VMC MSDs agree.
@@ -264,7 +266,7 @@ The mean squared deviation of this wave function
 \braket{x^2}=\braket{y^2}=\braket{z^2}=\dfrac{1}{4C_p}.
 \end{align}
 We expect some deviation from eq.~(\ref{eq:hsolid-x2-cp}) due to electron-proton and proton-proton correlations. When $C_p$ is large, the confining effect of the gaussian wave function dominates over correlation due to Jastrow and back flow components, making each proton approximately independent of all other particles.
-However, as $C_p$ decreases, the effects of correlation become more important. As shown in Fig.~\ref{fig:prot-cp-opt}(a), at large values of $C_p$ (localized protons) VMC MSDs are accurately approximated by eq.~(\ref{eq:hsolid-x2-cp}), whereas the DMC MSDs and VMC ones at small $C_p$ differ from this independent-particle approximation.
+However, as $C_p$ decreases, the effects of correlation become more important. As shown in Fig.~\ref{fig:hsolid-cp-opt}(a), at large values of $C_p$ (localized protons) VMC MSDs are accurately approximated by eq.~(\ref{eq:hsolid-x2-cp}), whereas the DMC MSDs and VMC ones at small $C_p$ differ from this independent-particle approximation.
 Note that the DMC runs here are short and likely under-converged.
 Fortunately, they are sufficient for determining the point of maximum overlap between the VMC and DMC wave functions.
 As such, the computational cost of maximum overlap optimization is more similar to VMC optimization than to a converged DMC run.
@@ -283,38 +285,45 @@ Finally, the exact value of $C_p$ will not bias the DMC result so long as the pr
 \includegraphics[width=\linewidth]{h117c_all-copt}\\
 (b) optimized exponents as a function of density
 \end{minipage}
-\caption{Maximum overlap optimization of the proton wave function. (a) Optimization of the C2/c-24 proton wave function at $r_s=1.269$. (b) Optimized proton wave function exponent $C_p$ of all candidate structures. The markers show the $C_p$ value at the intercept of VMC and DMC. The lines are linear fits, but shifted down slightly to error on the side of oversampling. These fits are used to determine the $C_p$ value used in the dynamic-lattice calculations.}
-\label{fig:prot-cp-opt}
+\caption{Maximum overlap optimization of the proton wave function. (a) Optimization of the C2/c-24 proton wave function at $r_s=1.269$. (b) Optimized proton wave function exponent $C_p$ of all candidate structures. The markers show the $C_p$ value at the intercept of VMC and DMC. The lines are linear fits, but shifted down slightly to error on the side of oversampling. These fits are used to determine the $C_p$ value in the dynamic-lattice calculations.}
+\label{fig:hsolid-cp-opt}
 \end{figure}
 
 In practice, the choice of $C_p$ is important.
-The protons diffuses $\sim 43$ times ``slower'' than electrons in imaginary time, so it takes more simulation time to fix errors in the proton wave function than the electron wave function.
-Further, if $C_p$ is too large, then the proton wave function will be too localized.
+Since the proton-electron mass ratio is $1836$, the RMSD of a proton during the diffusion process is $\sim 1/43$ that of an electron in the same amount of imaginary time.
+Thus, it takes more simulation time to fix errors in the proton wave function than the electron wave function.
+Fortunately, the proton wave function is highly localized and alleviates the problem to some extend.
+As shown in Fig.~\ref{fig:hsolid-cp-opt}(a), the standard deviation of the proton orbital of C2/c-24 is $<0.5$ bohr at $r_s=1.27$.
+Nevertheless, it pays to choose an optimal value for $C_p$.
+If $C_p$ is too large, then the proton wave function will be too localized.
 This results in undersampling of the ground-state wave function and is a dangerous scenario.
 During the DMC run, the kinetic energy of the protons will likely have mostly small fluctuation in this case.
 However, occasional spikes, which are important for an unbiased mean will occur infrequently.
 If one misses or discards these spikes, then the results will be biased.
 In contrast, oversampling will increase the variance of the wave function without biasing the mean.
 The resultant calculation will require more time to reach a certain accuracy target, so a balance needs to be sought.
-As shown by the lines in Fig.~\ref{fig:prot-cp-opt}(b), we chose isotropic gaussian exponent that are close to optimal but error slightly on the side of oversampling.
+As shown by the lines in Fig.~\ref{fig:hsolid-cp-opt}(b), we chose isotropic gaussian exponent that are close to optimal but error slightly on the side of oversampling.
 
-\section{Results}
+\section{Results and Discussion}
 \label{sec:hsolid-results}
 
 \subsection{Energy, Pressure, and Local Energy Variance}
 
 The dominant variation of the total energy as pressure increases is due to the isotropic compression of the electron liquid and the crystal lattice. This variation is on the order of $1$ eV/p over the density range considered and is roughly 50 times the energy difference among the candidate structures.
-To better observe these differences, we plot energy and pressure relative to a reference equation of state (EOS).
+To better observe these small differences, we plot energy and pressure relative to a reference equation of state (EOS).
 As a definition of zero energy at each density, this reference EOS need not be overly precise.
-We use a fit to the DMC data for the C2/c-24 molecular crystal structure obtained by Drummond \textit{et al.}~\cite{Drummond2015}, because they are freely accessible online [REF] and are well approximated by a quadratic polynomial in density.
+We use a fit to the DMC data for the C2/c-24 molecular crystal structure obtained by Drummond \textit{et al.}~\cite{Drummond2015}, because they are freely accessible online~\cite{drum-eos} and are well approximated by a quadratic polynomial in density.
+The data file \verb|E_SJDMC_dt0_KZKcorr_v_V.dat| in \verb|DMC/N096/C2c-24/| contains the size-corrected DMC energy-density relation needed to fit an EOS.
 As shown in Fig.~\ref{fig:hsolid-drum-eos}, we fit the high-density region of the reference data to obtain:
 \begin{align}
 E_0(\rho) = 1.605872\rho^2 + 0.699501\rho - 0.610902,
 \label{eq:hsolid-drum-ref}
 \end{align}
 where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$, and $E_0$ is in hartree.
-We fit to the 96-proton size-corrected (KZK) data obtained using a Slater-Jastrow wave function (termed SJDMC in Ref.~\cite{Drummond2015}), because the results are easier to reproduce than its large-cell and back-flow counterparts.
-The fitted EOS reproduces the QMC data to well within $1$ meV/p while interpolating between $212$ and $413$ GPa and deviates by $1.5$ meV/p when extrapolated by $50$ GPa to $163$ GPa.
+We fit to the size-corrected 96-proton data obtained using a Slater-Jastrow wave function, because the results are easier to reproduce than its large-cell and back-flow counterparts.
+The LDA-based finite-size correction scheme designed by H. Kwee, S. Zhang, and H. Krakauer (KZK)~\cite{Kwee2008} is not general in principle.
+However, it was shown to work well for solid hydrogen comparing 768-proton and 96-proton results~\cite{Drummond2015}.
+Equation~(\ref{eq:hsolid-drum-ref}) reproduces the QMC data to well within $1$ meV/p while interpolating between $212$ and $413$ GPa and deviates by $1.5$ meV/p when extrapolated by $50$ GPa to $163$ GPa.
 Thus, we can expect the reference EOS to be accurate over the pressure range $150$ ($r_s=1.48$) to $460$ GPa ($r_s=1.26$), but fail when extrapolated much beyond these limits.
 
 \begin{figure}[h]
@@ -324,7 +333,7 @@ Thus, we can expect the reference EOS to be accurate over the pressure range $15
 \label{fig:hsolid-drum-eos}
 \end{figure}
 
-The static-lattice DMC energy is plotted relative to reference in Fig.~\ref{fig:static-qmc-vs-drummond}(a). At the same density, we obtain lower total energy than Drummond \textit{et al.} partly due to our use of vdW-DF, rather than  PBE, to optimize the crystal structure; and partly due to in the inclusion of back flow transformations. We tested that for the same geometry, DMC energy is unchanged to within 3 meV/p whether PBE or vdW-DF is used to generate the orbitals in the determinant wave function.
+The static-lattice DMC energy is plotted relative to reference in Fig.~\ref{fig:static-qmc-vs-drummond}(a). At the same density, we obtain lower total energy than Drummond \textit{et al.} partly due to our use of vdW-DF, rather than  PBE, to optimize the crystal structure; and partly due to in the inclusion of back flow transformations. At the same geometry, DMC energy is unchanged to within 3 meV/p whether PBE or vdW-DF is used to generate the orbitals in the determinant wave function.
 Our C2/c curve is relatively flat at densities lower than $r_s=1.25$ and starts to bend downwards as density increases.
 Thus, our C2/c pressure-density relations will be roughly identical to that of the reference EOS in the low-density region.
 This is encouraging, because it implies that the fixed-node error on the pressure is small.
@@ -350,6 +359,7 @@ We fit the energy-density relation to a quadratic function in density to obtain 
 This disagrees with the previous QMC study~\cite{McMinis2015}, which found a $450$ GPa transition from C2/c-24 to Cmca-4, which then transitions to the atomic structure around $700$ GPa.
 The reason for this disagreement is unknown.
 
+% exclude Cmca-4 rs=1.22
 \begin{figure}[h]
 \begin{minipage}{0.49\textwidth}
 \centering
@@ -403,7 +413,7 @@ In this plot, we also see that the mixed estimator error is 1 to 5 GPa, so the l
 \centering
 \includegraphics[width=\textwidth]{h117ds_rm121_var-vs-p}
 \end{minipage}
-\caption{QMC variance vs. pressure.}
+\caption{QMC variance vs. pressure. The lines are guides to the eye.}
 \label{fig:hsolid-v-vs-p}
 \end{figure}
 
@@ -561,8 +571,9 @@ There are sizable systematic errors in these results due to a lack of data at sm
 These systematic errors are not estimated, but its size should be comparable to the oscillation of the data points.
 The inaccessible region around $\bs{k}=\bs{0}$ increases with density, so the high-density results are less reliable than the low-density ones.
 In the static-lattice results Fig.~\ref{fig:hsolid-epsinv}(a), the atomic structure is metallic at all densities as expected.
-The Cmca-4 and C2/c-24 structures become metallic at roughly $r_s=1.22$ and $rs=1.17$, respectively. These densities correspond to $550$ GPa and $800$ GPa, which are much too high compared to experiment.
-
+The Cmca-4 and C2/c-24 structures become metallic at roughly $r_s=1.22$ and $rs=1.17$, respectively. These densities correspond to $550$ GPa and $800$ GPa, which are much too high compared to experiment~\cite{Loubeyre2020} and calculation~\cite{Gorelov2019}.
+It is possible that the molecular structures first start to conduct in-plane while being insulating across the planes.
+In this case, the dielectric bound derived from spherically averaged $S(k)$ will overestimate the metalization pressure.
 The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures as metallic at densities higher than $r_s=1.26$ ($460$ GPa), except for C2/c-24, which remains borderline insulating.
 
 \begin{figure}[h]
@@ -608,7 +619,6 @@ The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures 
 \caption{Proton-proton pair correlation function pp $g(r)$.}
 \label{fig:hsolid-ppgr}
 \end{figure}
-
 
 \begin{figure}[h]
 \centering
