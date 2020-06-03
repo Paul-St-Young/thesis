@@ -251,7 +251,7 @@ As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, after re-optimization, the onl
 \label{fig:hsolid-dynamic-jas-bf}
 \end{figure}
 
-In contrast, the width of the gaussians in the proton orbital $C_p$ are optimized using \emph{maximum overlap}~\cite{Reatto1982}.
+In contrast, the width of the gaussians in the proton orbital $C_p$ are optimized using \emph{maximum overlap}~\cite{Reatto1982,Natoli1993,Natoli1995}.
 In this method, we measure the mean-squared deviation (MSD) of each proton from its ideal site, as determined by vdW-DF, and adjust the gaussian exponent in the proton wave function $C_p$ until the VMC and DMC estimates of the MSD agree.
 This method works by maximizing the overlap between the trial and ground-state wave function along the dimension controlled by $C_p$.
 Since proton MSD is a rather direct measure of the shape of the wave function and DMC pushes the VMC MSD towards its ground-state value, the optimal $C_p$ is obtained when DMC and VMC MSDs agree.
@@ -565,13 +565,14 @@ The inverse dielectric function is bounded from above by $\epsilon^{-1}(k) \le 1
 \Gamma(k) = \dfrac{2m S(k)}{\hbar^2 k^2}.
 \end{align}
 The limit $\lim\limits_{k\rightarrow0} 1-\Gamma_k^2$ can be a good approximation to the inverse dielectric constant if plasmons are the dominant excitations in the system.
+The inequality becomes equality if there is only a single excitation energy such as a plasmon at long wavelength.
 Importantly, if this limit reaches zero, then the material is metallic.
 In Fig.~\ref{fig:hsolid-epsinv}, this limit is shown as a function of density.
 There are sizable systematic errors in these results due to a lack of data at small $k$ and the choice of fitting range.
 These systematic errors are not estimated, but its size should be comparable to the oscillation of the data points.
 The inaccessible region around $\bs{k}=\bs{0}$ increases with density, so the high-density results are less reliable than the low-density ones.
 In the static-lattice results Fig.~\ref{fig:hsolid-epsinv}(a), the atomic structure is metallic at all densities as expected.
-The Cmca-4 and C2/c-24 structures become metallic at roughly $r_s=1.22$ and $rs=1.17$, respectively. These densities correspond to $550$ GPa and $800$ GPa, which are much too high compared to experiment~\cite{Loubeyre2020} and calculation~\cite{Gorelov2019}.
+The Cmca-4 and C2/c-24 structures become metallic at roughly $r_s=1.22$ and $r_s=1.17$, respectively. These densities correspond to $550$ GPa and $800$ GPa, which are higher than experiment~\cite{Loubeyre2020} and calculation~\cite{Gorelov2019}.
 It is possible that the molecular structures first start to conduct in-plane while being insulating across the planes.
 In this case, the dielectric bound derived from spherically averaged $S(k)$ will overestimate the metalization pressure.
 The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures as metallic at densities higher than $r_s=1.26$ ($460$ GPa), except for C2/c-24, which remains borderline insulating.
