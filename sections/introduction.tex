@@ -40,7 +40,7 @@ Z=\Tr{\rho} \underset{\beta\rightarrow 0}{\Rightarrow} Z \propto e^{-\beta V}.
 Further, low-temperature properties of boltzmannons and bosons can be exactly and efficiently calculated using the path integral method (Sec.\ref{sec:method-pimc}). The exact method is no longer practical when fermions, e.g., electrons, are involved. Nevertheless, impressive results have been obtained for hydrogen when only the ground electronic state is considered~\cite{Pierleoni2016b,Celliers2018}.
 A complete treatment of the full electron-ion hamiltonian eq.~(\ref{eq:intro-ei-ham}) is rarely attempted~\cite{Ceperley1981,Natoli1995}.
 
-The solution of the electron-ion problem would be an important milestone in computational condensed matter, because it is considered a quantitatively accurate model for the vast majority of solids and liquids in condensed matter experiments. Further, theoretically, it is a natural extension of the jellium model to multi-component system and provides a firm foundation upon which relativistic effects can be included, for example via perturbation. Finally, the laplacian in the non-relativistic kinetic energy operator can be interpreted as a generator of diffusion in imaginary time. This makes it more straightforward to develop intuitive understanding of quantum kinetic energy as well as to deploy powerful computational techniques such as diffusion Monte Carlo (Sec.~\ref{sec:method-dmc}).
+The solution of the electron-ion problem would be an important milestone in computational condensed matter, because it is considered a quantitatively accurate model for the vast majority of solids and liquids in condensed matter experiments. Further, theoretically, it is a natural extension of the jellium model to multi-component system and provides a firm foundation upon which relativistic effects can be included, for example via perturbation. Finally, the laplacian in the non-relativistic kinetic energy operator can be interpreted as a generator of diffusion in imaginary time. This makes it more straightforward to develop intuitive understanding of the quantum kinetic energy as well as to deploy powerful computational techniques such as diffusion Monte Carlo (Sec.~\ref{sec:method-dmc}).
 
 \subsection{The Born-Oppenheimer Approximation}
 
@@ -53,15 +53,17 @@ Then, one can attempt to separate the electron and ion problems by expanding an 
 \Psi_l(\bs{R},\RI) = \sum_{k=0}^\infty \chi_{lk}(\RI)\psi_k(\bs{R};\RI),
 \end{align}
 where $\chi_{lk}(\RI)$ are expansion coefficients with no dependence on electron positions. This expansion results in a system of Schr\"odinger-like equations each describing the ions moving on an electronic energy surface $E_j$
-\begin{align}
+\begin{align} \label{eq:intro-ei-schro}
 \left(-\sum_I\frac{\hbar^2}{2M_I}\nabla^2_I+E_j\right)\chi_j - \Lambda_{kj} = i\hbar\dot{\chi}_j,
 \end{align}
 and coupled by the so-called nonadiabatic operator $\Lambda_{jk}$~\cite{Worth2004}.
 Derivation and behavior of $\Lambda_{jk}$ are discussed in Appendix~\ref{app:nad}.
+While exact, eq.~(\ref{eq:intro-ei-schro}) is difficult to solve because all electronic states are coupled via $\Lambda_{kj}$.
+To fully separate the electron and ion problems, one must approximate $\Lambda_{kj}$.
 
-There are two common approximations to $\Lambda_{kj}$, the first is to set the entire matrix to zero, the second is to set only the off-diagonal terms to zero. Both approximations decouple (\ref{eq:intro-boa-coupled}), allowing the complete separation of electronic and ionic motions.
+There are two common approximations to $\Lambda_{kj}$, the first is to set the entire matrix to zero, the second is to set only the off-diagonal terms to zero. Both approximations decouple (\ref{eq:intro-ei-schro}), allowing the complete separation of electronic and ionic motions.
 %Therefore both approximations fall under the umbrella of adiabatic approximation, where the ion positions are considered to be slowly changing parameters of the electronic hamiltonian.
-Many different and sometimes conflicting names have been given to these two approximations including Born-Huang, Born-Oppenheimer and adiabatic approximation.
+Many different and sometimes conflicting names have been given to these two approximations, including Born-Huang, Born-Oppenheimer and adiabatic approximation.
 To fix nomenclature, I will call the all-zero approximation, $\Lambda_{jk}=0,~\forall j, k$, the Born-Oppenheimer approximation (BOA).
 The diagonal terms $\Lambda_{jj}$ are considered diagonal Born-Oppenheimer correction (DBOC).
 Non-zero off-diagonal elements are responsible for \textit{nonadiabatic effects}.
@@ -75,10 +77,10 @@ At sufficiently high temperatures, the hydrogen plasma, equal mixture of isotrop
 
 Since hydrogen is the lightest element, its zero-point motion has large amplitude. The ion wave function explores a sufficiently large space to invalidate the harmonic approximation for lattice vibrations.
 Further complicating matters, one can expect a metal-to-insulator transition as well as an atomic-to-molecular transition that may or may not coincide as temperature or pressure is decreased.
-On top of all that, naturally occurring isotopes, e.g., deuterium, and spin isomers, e.g., para- and ortho-H$_2$, allow the possibility of an intriguing blend quantum effects at low temperatures.
+On top of all that, naturally occurring isotopes, e.g., deuterium, and spin isomers, e.g., para- and ortho-H$_2$, allow the possibility of an intriguing blend of quantum effects at low temperatures.
 
-Hydrogen is also interesting due to its practical relevance. Being the most abundant element in the observable universe, hydrogen and its isotopes are crucial for the understanding of stars and giant gas planets.
-Consider Jupiter, which consists of liquid metallic hydrogen deep inside and insulating gaseous H$_2$ in the outer envelope. If there was a first-order liquid-liquid transition between the two phases, then there would be an interface across which density changes discontinuously.
+Hydrogen is also interesting due to its practical relevance. Being the most abundant element in the observable universe, hydrogen and its isotopes are crucial for the understanding of stars and gas giants.
+Consider Jupiter, which contains liquid metallic hydrogen deep inside and insulating gaseous H$_2$ in the outer envelope. If there was a first-order liquid-liquid transition between the two phases, then there would be an interface across which density changes discontinuously.
 Depending on the solubility of helium in the two phases, there is the possibility of helium rain across the interface and extra heat radiation due to this condensation~\cite{Militzer_thesis}.
 Further, interior models of stars and gas giants rely on numerically accurate equation-of-state (EOS) of various chemical species involving hydrogen (H$^+$, H, H$_2$).
 A few percent change to the hydrogen EOS is enough to eliminate/create a rocky core for Jupiter~\cite{Hubbard2016}.
@@ -94,7 +96,7 @@ Experimental observations~\cite{Dias2016,Loubeyre2020} and theoretical calculati
 \section{Lithium, Diamond, and Silicon}
 Despite complications introduced by core electrons, the jellium model is arguably better realized in the valence of alkaline metals, e.g., lithium and sodium, than it is in hydrogen.
 The heavier nuclei are less quantum and the core electrons screen their interaction with the valence electrons.
-This makes the BOA better for these materials and allows the harmonic approximation to be more widely applicable.
+This allows the harmonic approximation to be more widely applicable.
 More importantly, they are easier to handle in experiments than hydrogen and scatter X-rays more strongly, which facilitates precise experimental determination of lattice structure along with other properties.
 These advantages allowed us to obtain excellent agreement with experiment using an electron-ion QMC simulation performed within the BOA in chapter~\ref{chap:licp}.
 
@@ -102,7 +104,7 @@ In addition to alkaline metals, elemental insulators, e.g., diamond carbon and s
 
 \section{Thesis Outline}
 The remainder of this thesis is organized as follows. In the Method chapter~\ref{chap:method}, I start by introducing the effective one-particle electronic structure methods used to generate trial wave function for QMC methods.
-I then introduce the Monte Carlo methods that we use to accurately treat electron correlation in the electronic problem as well as to solve the full electron-ion problems at times.
+I then introduce the Monte Carlo methods that we use to accurately treat electron correlation in the electronic problem as well as to solve the full electron-ion problem at times.
 Chapter~\ref{chap:sj-wf} introduces the Slater-Jastrow wave function while chapter~\ref{chap:fsc} discusses many-body finite-size correction.
 Both are crucial for accurate and practical QMC simulations.
 The next four chapters display accurate QMC results for a few simple electron-ion systems.
