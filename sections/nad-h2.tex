@@ -1,3 +1,14 @@
+\chapter{Nonadiabatic Coupling} \label{app:nad}
+
+The electron-ion problem can be made more tractable at the cost of a physically motivated Born-Oppenheimer approximation (BOA). I define the BOA at the end of this section, but first lay out the exact formulation in eq.~(\ref{eq:intro-boa-coupled}) so that the content of the approximation is clear.
+Ions move much slower than electrons due to their heavy mass ($m_I\approx 10^3\sim 10^5 m_i$), so it is sensible to isolate the ionic degrees of freedom and consider the electronic part separately. The coupling between the ionic and electronic problems is presumably weak because of the separation of timescales.
+\begin{align} \label{eq:intro-ei-to-e-ham}
+\hat{H} = -\sum_I \frac{\hbar^2}{2m_I} \nabla^2_I
++ \ham(\bs{R};\RI),
+\end{align}
+where $\ham$ is the clamped-ion or electronic hamiltonian, which typically defines the ultimate goal of an electronic structure method. The semicolon in $\ham(\bs{R};\RI)$ indicates that the electronic hamiltonian is only parametrically dependent on the ion positions $\RI$. This means $\ham$ has no non-local operator involving the ionic degrees of freedom. M. Born and R. Oppenheimer (BO)~\cite{Born1927} first utilized this separation of timescales to study diatomic molecules in 1927. As explained around eq.~(27) and (28) in Ref.~\cite{Born1927}, BO expressed the electronic hamiltonian as a Taylor expansion around the equilibrium positions of the ions. They discussed results using the first four leading order terms in the vibration amplitude of the ions. Thus, what we define as ``the'' BOA can be ambiguous. Here, I follow the interpretation by G. A. Worth and L. S. Cederbaum~\cite{Worth2004}, which is equivalent to assuming a product ansatz eq.~(\ref{eq:intro-boa-product}), but without a ``diagonal correction".
+%I will now explain the BOA in more detail.
+
 If one can obtain the eigenstates of the electronic hamiltonian $\{\psi_k\}$ at any ion configuration $\bs{R}_I$
 \begin{align}
 \ham (\bs{R};\RI) \psi_k(\bs{R};\RI) = E_k(\RI) \psi_k(\bs{R};\RI),
@@ -31,7 +42,7 @@ To fix nomenclature, I will call the all-zero approximation, $\Lambda_{jk}=0,~\f
 The diagonal terms $\Lambda_{jj}$ are considered diagonal Born-Oppenheimer correction (DBOC).
 Non-zero off-diagonal elements are responsible for \textit{nonadiabatic effects}.
 
-\subsection{The Born-Oppenheimer Approximation}
+%\subsection{The Born-Oppenheimer Approximation}
 The ground state in the BOA is a product of an ionic and an electronic component
 \begin{align} \label{eq:intro-boa-product}
 \Psi_{lk}^{BO}(\bs{R},\RI) = \chi_{lk}(\RI) \psi_k(\bs{R};\RI),
@@ -59,7 +70,7 @@ The BOA can also break down if the electrons interact with a particle much light
 Finally, the nonadiabatic coupling terms can diverge when two electronic states cross, e.g., at a conical intersection.
 Thus, it is sometimes important to go beyond the BOA.
 
-\subsection{Beyond the Born-Oppenheimer Approximation}
+%\subsection{Beyond the Born-Oppenheimer Approximation}
 
 There are two small parameters that control the scale of nonadiabatic coupling eq.~(\ref{eq:intro-boa-nona}). One is clearly the inverse ionic mass $\frac{1}{M_I}$, while the other is the difference between electronic energy levels $\epsilon_j-\epsilon_k$. This can be seen from an explicit form of $\bs{F}_I^{jk}\equiv\braket{\psi_j|\bs{\nabla}_I|\psi_k}$ in the derivative-coupling term. Consider the effect of ion motion on the electronic problem, i.e., take $\bs{\nabla}_I$ of the time-independent electronic Schr\"odinger equation
 \begin{align}
