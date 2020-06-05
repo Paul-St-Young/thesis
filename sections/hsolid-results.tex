@@ -3,7 +3,7 @@
 
 \subsection{Candidate Structure Optimization}
 % modified from supp1-geo.tex
-We considered three candidates C2/c-24, Cmca-4, Cmca-12 for the molecular phase and one candidate I4$_1$/amd for the atomic phase at $T=0K$ over the pressure range 350 GPa to 700 GPa. The static-lattice structures in the molecular phase are optimized using the vdW-DF functional at constant pressure.
+We consider three candidates C2/c-24, Cmca-4, Cmca-12 for the molecular phase and one candidate I4$_1$/amd for the atomic phase at $T=0K$ over the pressure range 350 GPa to 700 GPa. The static-lattice structures in the molecular phase are optimized using the vdW-DF functional at constant pressure.
 As shown in Table~\ref{tab:hsolid-mol-press-rs}, all three molecular structures optimize to similar density at each pressure.
 \begin{table}[h]
 % 2020/05/18 notes, extracted from h11/analysis/11a_axes_pos.json
@@ -25,7 +25,7 @@ In contrast, the atomic structure is optimized using DMC at constant volume.
 While both constant-volume and constant-pressure optimizations are valid ways to find the minimum energy structure, the final density and pressure differ in general.
 The DMC optimizations for the atomic structure have been carried out at evenly spaced $r_s$ values: $1.31$, $1.29$, $1.27$, $\dots$, $1.17$.
 The density difference between the atomic and a molecular structure at a given pressure range is appreciably larger than the density difference among candidate structures.
-Thus, when calculating energy and enthalpy differences, interpolation is needed further from data for the atomic structure than the molecular structures.
+Thus, when calculating energy and enthalpy differences, interpolation is needed further from data for the atomic structure than for the molecular structures.
 
 All three molecular structures are monoclinic having $a=b\neq c$, $\alpha=\beta=90^\circ+\eta$, and $\gamma=120^\circ+\delta$. The slight distortions differ for each structure: $\eta=0$, $\delta\approx -0.5^\circ$ for Cmca-4, $\eta=0$, $\delta\approx+3.5^\circ$ for Cmca-12, and $\eta\approx0.1^\circ$, $\delta\approx-0.1^\circ$ for C2/c-24.
 The evolution of the lattice parameters as a function of pressure are shown in Fig.~\ref{fig:hsolid-vdw-ca}(a).
@@ -55,7 +55,7 @@ One type of the H$_2$ molecules in Cmca-12 has pressure-sensitive bond length, i
 \label{fig:hsolid-vdw-ca}
 \end{figure}
 
-While the vdW-DF optimized structures in Ref.~\cite{McMinis2015} are not published, we can infer from the enthalpy-pressure relations that the same structures as in Ref.~\cite{McMinis2015} have been reproduced in this study. Figure~\ref{fig:dft-opt-geo} shows the enthalpy of each candidate structure relative to C2/c-24 at the vdW-DF static-lattice minimum. The results agree well with those from McMinis et al.~\cite{McMinis2015} where available.
+While the vdW-DF optimized structures in Ref.~\cite{McMinis2015} are not published, we can infer from the enthalpy-pressure relations that the same structures as in Ref.~\cite{McMinis2015} have been reproduced in this study. Figure~\ref{fig:dft-opt-geo} shows the enthalpy of each candidate structure relative to C2/c-24 at the vdW-DF static-lattice minimum. The results agree well with those from McMinis \textit{et al.}~\cite{McMinis2015} where available.
 In comparison to predictions by Drummond \textit{et al.}~\cite{Drummond2015}, our C2/c structure is slightly more stable and Cmca-4 slightly less stable.
 They used BLYP rather than vdW-DF functional, so differences are expected. In fact, it is encouraging to see two different functionals give similar results (within a few meV/p).
 
@@ -172,7 +172,8 @@ where $\alpha, \beta$ denote unique particle species, including up-electron, dow
 \end{align}
 Isotropic Jastrow $u(r)$ and back flow $\eta(r)$ functions are optimized in VMC to lower the variational energy.
 The single-particle orbitals in the determinant are taken as the Kohn-Sham orbitals with the lowest eigenvalues.
-These orbitals are generated using the vdW-DF functional for the molecular candidates and PBE for the atomic structure.
+These orbitals are generated using the vdW-DF functional for the molecular candidates and PBE for the atomic structure. We remove the approximate cusp of each orbital by diving it by the RPA ep Jastrow as done in Refs.~\cite{Ceperley1987,Natoli1993,Natoli1995}.
+This allows the exact ep Jastrow to be re-introduced in the ep Jastrow and is always maintained as the protons move.
 
 Before back flow transformation, the static structure factor of the Slater determinant is quite similar to that of the unpolarized homogeneous electron gas, as shown in Fig.~\ref{fig:hsolid-det-sk-nk}(a). However, as shown in  Fig.~\ref{fig:hsolid-det-sk-nk}(a), the momentum distribution of the metallic atomic structure is different from the rest, because the molecular structures are insulating.
 
@@ -290,8 +291,8 @@ Finally, the exact value of $C_p$ will not bias the DMC result so long as the pr
 \end{figure}
 
 In practice, the choice of $C_p$ is important.
-Since the proton-electron mass ratio is $1836$, the RMSD of a proton during the diffusion process is $\sim 1/43$ that of an electron in the same amount of imaginary time.
-Thus, it takes more simulation time to fix errors in the proton wave function than the electron wave function.
+Since the proton-electron mass ratio is more than $1836$, the RMSD of a proton during the diffusion process is $\sim 1/43$ that of an electron in the same amount of imaginary time.
+Thus, it takes more simulation time to fix errors in the proton wave function than those in the electron wave function.
 Fortunately, the proton wave function is highly localized and alleviates the problem to some extend.
 As shown in Fig.~\ref{fig:hsolid-cp-opt}(a), the standard deviation of the proton orbital of C2/c-24 is $<0.5$ bohr at $r_s=1.27$.
 Nevertheless, it pays to choose an optimal value for $C_p$.
@@ -312,15 +313,15 @@ As shown by the lines in Fig.~\ref{fig:hsolid-cp-opt}(b), we chose isotropic gau
 The dominant variation of the total energy as pressure increases is due to the isotropic compression of the electron liquid and the crystal lattice. This variation is on the order of $1$ eV/p over the density range considered and is roughly 50 times the energy difference among the candidate structures.
 To better observe these small differences, we plot energy and pressure relative to a reference equation of state (EOS).
 As a definition of zero energy at each density, this reference EOS need not be overly precise.
-We use a fit to the DMC data for the C2/c-24 molecular crystal structure obtained by Drummond \textit{et al.}~\cite{Drummond2015}, because they are freely accessible online~\cite{drum-eos} and are well approximated by a quadratic polynomial in density.
-The data file \verb|E_SJDMC_dt0_KZKcorr_v_V.dat| in \verb|DMC/N096/C2c-24/| contains the size-corrected DMC energy-density relation needed to fit an EOS.
+Nevertheless, we use a fit to high-quality DMC data for the C2/c-24 molecular crystal structure obtained by Drummond \textit{et al.}~\cite{Drummond2015}, because they are freely accessible online~\cite{drum-eos} and are well approximated by a quadratic polynomial in density.
+The data file \verb|E_SJDMC_dt0_KZKcorr_v_V.dat| in directory \verb|DMC/N096/C2c-24/| contains the size-corrected DMC energy-density relation needed to fit an EOS.
 As shown in Fig.~\ref{fig:hsolid-drum-eos}, we fit the high-density region of the reference data to obtain:
 \begin{align}
 E_0(\rho) = 1.605872\rho^2 + 0.699501\rho - 0.610902,
 \label{eq:hsolid-drum-ref}
 \end{align}
 where $\rho=N/\Omega$ is the electron density in bohr$^{-3}$, and $E_0$ is in hartree.
-We fit to the size-corrected 96-proton data obtained using a Slater-Jastrow wave function, because the results are easier to reproduce than its large-cell and back-flow counterparts.
+We chose to fit the size-corrected 96-proton data obtained using a Slater-Jastrow wave function, because the results are easier to reproduce than its large-cell and back-flow counterparts.
 The LDA-based finite-size correction scheme designed by H. Kwee, S. Zhang, and H. Krakauer (KZK)~\cite{Kwee2008} is not general in principle.
 However, it was shown to work well for solid hydrogen comparing 768-proton and 96-proton results~\cite{Drummond2015}.
 Equation~(\ref{eq:hsolid-drum-ref}) reproduces the QMC data to well within $1$ meV/p while interpolating between $212$ and $413$ GPa and deviates by $1.5$ meV/p when extrapolated by $50$ GPa to $163$ GPa.
@@ -329,11 +330,11 @@ Thus, we can expect the reference EOS to be accurate over the pressure range $15
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.6]{h117ds_c2c-drum-eps}
-\caption{Fitting of reference equation of state. The solid symbols are DMC data from Ref.~\cite{Drummond2015}, while the line is a quadratic fit to the circled points. The bottom panels shows the difference between data and fit.}
+\caption{Fitting of reference equation of state. The solid symbols are DMC data from Ref.~\cite{Drummond2015}, while the line is a quadratic fit to the circled points. The bottom panels shows the error in the fit.}
 \label{fig:hsolid-drum-eos}
 \end{figure}
 
-The static-lattice DMC energy is plotted relative to reference in Fig.~\ref{fig:static-qmc-vs-drummond}(a). At the same density, we obtain lower total energy than Drummond \textit{et al.} partly due to our use of vdW-DF, rather than  PBE, to optimize the crystal structure; and partly due to in the inclusion of back flow transformations. At the same geometry, DMC energy is unchanged to within 3 meV/p whether PBE or vdW-DF is used to generate the orbitals in the determinant wave function.
+The static-lattice DMC energy is plotted relative to reference in Fig.~\ref{fig:static-qmc-vs-drummond}(a). At the same density, we obtain lower total energy than Drummond \textit{et al.}~\cite{Drummond2015} partly due to our use of vdW-DF, rather than  PBE, to optimize the crystal structure; and partly due to in the inclusion of back flow transformations. At the same geometry, DMC energy is unchanged to within 3 meV/p whether PBE or vdW-DF is used to generate the orbitals in the determinant wave function.
 Our C2/c curve is relatively flat at densities lower than $r_s=1.25$ and starts to bend downwards as density increases.
 Thus, our C2/c pressure-density relations will be roughly identical to that of the reference EOS in the low-density region.
 This is encouraging, because it implies that the fixed-node error on the pressure is small.
@@ -356,7 +357,7 @@ Even with improved geometry and wave function, we get back the same pressure as 
 \end{figure}
 
 We fit the energy-density relation to a quadratic function in density to obtain the enthalpy-pressure relation shown in Fig.~\ref{fig:static-qmc-vs-drummond}(b). We observe a transition from C2/c-24 to Cmca-4 around $640$ GPa and no transition to the atomic structure up to $800$ GPa.
-This disagrees with the previous QMC study~\cite{McMinis2015}, which found a $450$ GPa transition from C2/c-24 to Cmca-4, which then transitions to the atomic structure around $700$ GPa.
+This disagrees with the previous QMC study~\cite{McMinis2015}, showing a $450$ GPa transition from C2/c-24 to Cmca-4, which then transitions to the atomic structure around $700$ GPa.
 The reason for this disagreement is unknown.
 
 % exclude Cmca-4 rs=1.22
@@ -375,7 +376,11 @@ The reason for this disagreement is unknown.
 \label{fig:dynamic-qmc-vs-drummond}
 \end{figure}
 
-The QMC virial pressure is shown as a function of density in Fig.~\ref{fig:hsolid-p-vs-n}(a).
+The QMC \emph{virial pressure}, calculated from kinetic energy $T$, potential energy $V$, and volume $\Omega$
+\begin{align}
+P = \dfrac{2T-V}{3\Omega},
+\end{align}
+is shown as a function of density in Fig.~\ref{fig:hsolid-p-vs-n}(a).
 We first note that the QMC pressure is consistently lower than vdW-DF pressure at the same density.
 Plotting the same data on a relative scale in Fig.~\ref{fig:hsolid-p-vs-n}(c),
 we see that the QMC virial pressure is 4.2\% and 3.2\% lower than vdW-DF pressure at 340 GPa ($r_s\approx 1.21$) and 460 GPa ($r_s\approx 1.25$), which agree well with the findings of R. C. Clay III \textit{et al.}, i.e. Fig.~4 in Ref.~\cite{Clay2016}.
@@ -477,7 +482,7 @@ This difference highlights the modification of the electron liquid due to the io
 The dynamic-lattice electronic $g(r)$s are identical to those from the static-lattice calculations on the scale of the difference panel $0.1$.
 For the molecular structures, both the same-spin (uu) and unlike-spin (ud) $g(r)$s are the same over the entire range from zero ($r=0$) to the supercell image distance ($r=R_{WS}$).
 The most notable deviation from the electron gas is an enhanced correlation between unlike-spin electrons at small separation.
-This is likely due to the presence of covalent bonds, formed by a pair of unlike-spin electrons, at the center of each H$_2$ molecules.
+This is likely due to the presence of covalent bonds, formed by a pair of unlike-spin electrons at the center of each H$_2$ molecules.
 A more subtle difference is the presence of small periodic modulations of the electronic $g(r)$ that seem to persist to long distances.
 In contrast, the atomic structure shows no enhancement of unlike-spin correlation function at $r=0$, whereas it shows the same periodic modulations as the molecular structures at long range.
 
@@ -560,21 +565,21 @@ Further, subtle differences at long-range ($k\rightarrow0$) can make the electro
 \end{figure}
 
 %\subsection{Dielectric Constants from S(k)}
-The inverse dielectric function is bounded from above by $\epsilon^{-1}(k) \le 1-\Gamma_k^2$, where
+The inverse dielectric function is bounded from above by $\epsilon^{-1}(\bs{k}) \le 1-\Gamma_{\bs{k}}^2$, where
 \begin{align}
-\Gamma(k) = \dfrac{2m S(k)}{\hbar^2 k^2}.
+\Gamma_{\bs{k}} = \dfrac{2m S(\bs{k})}{\hbar^2 \bs{k}^2}.
 \end{align}
-The limit $\lim\limits_{k\rightarrow0} 1-\Gamma_k^2$ can be a good approximation to the inverse dielectric constant if plasmons are the dominant excitations in the system.
+The limit $\lim\limits_{k\rightarrow0} 1-\Gamma_k^2$ can be a good approximation to the inverse dielectric constant of an isotropic system if plasmons are the dominant excitations in the system.
 The inequality becomes equality if there is only a single excitation energy such as a plasmon at long wavelength.
 Importantly, if this limit reaches zero, then the material is metallic.
-In Fig.~\ref{fig:hsolid-epsinv}, this limit is shown as a function of density.
+In Fig.~\ref{fig:hsolid-epsinv}, the isotropic limit is shown as a function of density.
 There are sizable systematic errors in these results due to a lack of data at small $k$ and the choice of fitting range.
-These systematic errors are not estimated, but its size should be comparable to the oscillation of the data points.
+These systematic errors are not precisely estimated, but its size should be comparable to the oscillation of the data points.
 The inaccessible region around $\bs{k}=\bs{0}$ increases with density, so the high-density results are less reliable than the low-density ones.
 In the static-lattice results Fig.~\ref{fig:hsolid-epsinv}(a), the atomic structure is metallic at all densities as expected.
 The Cmca-4 and C2/c-24 structures become metallic at roughly $r_s=1.22$ and $r_s=1.17$, respectively. These densities correspond to $550$ GPa and $800$ GPa, which are higher than experiment~\cite{Loubeyre2020} and calculation~\cite{Gorelov2019}.
 It is possible that the molecular structures first start to conduct in-plane while being insulating across the planes.
-In this case, the dielectric bound derived from spherically averaged $S(k)$ will overestimate the metalization pressure.
+In this case, the isotropic dielectric bound derived from spherically averaged $S(k)$ will overestimate the metalization pressure.
 The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures as metallic at densities higher than $r_s=1.26$ ($460$ GPa), except for C2/c-24, which remains borderline insulating.
 
 \begin{figure}[h]
