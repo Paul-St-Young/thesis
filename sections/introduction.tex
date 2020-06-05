@@ -30,9 +30,9 @@ The lower-case $i,j$ and upper-case $I,J$ refer to the electrons and ions, respe
 
 For equilibrium properties at high temperature, progress can be made by considering the Bloch equation~(\ref{eq:intro-bloch}) for the thermal density matrix $\rho\equiv\sum\limits_i e^{-\beta E_i} \ket{\Psi_i}\bra{\Psi_i}$
 \begin{align} \label{eq:intro-bloch}
-\hat{H} \rho = -\hbar\dfrac{d}{d\beta}\rho,
+\hat{H} \rho = -\dfrac{d}{d\beta}\rho,
 \end{align}
-which results from the Schr\"odinger eq.~(\ref{eq:intro-schro}) after a rotation from real to imaginary time $t\rightarrow it$, which is also the inverse temperature $\beta=1/(k_BT)$.
+which results from the Schr\"odinger eq.~(\ref{eq:intro-schro}) after a rotation from real to imaginary time $\tau = it$, which is also the inverse temperature $\tau/\hbar=\beta\equiv1/(k_BT)$.
 The partition function is a trace of the thermal density matrix and reduces to the classical Boltzmann distribution at high temperature
 \begin{align}
 Z=\Tr{\rho} \underset{\beta\rightarrow 0}{\Rightarrow} Z \propto e^{-\beta V}.
