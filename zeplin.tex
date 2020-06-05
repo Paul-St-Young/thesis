@@ -29,7 +29,6 @@ then the Hamiltonian operator
 \hat{\mathcal{H}} = \frac{\hat{p^2}}{2m} + V(x) = -\frac{\hbar^2}{2m}\nabla^2 + V(x).
 \end{align}
 
-\section{Helium and Jellium}
 The quantum liquids helium and jellium are at the forefront of the quantum era ushered in the last century.
 Having stable closed-shells, helium atoms interact mostly via an isotropic pair potential. It consists of a $r^{-6}$ van der Waals attraction at long range due to correlated dipole fluctuation and a hard-core repulsion upon electron density overlap~\cite{Aziz1979}.
 Thus, the electronic problem is removed and only the ionic problem remains
@@ -37,17 +36,7 @@ Thus, the electronic problem is removed and only the ionic problem remains
 \hat{H}_{He} = \sum\limits_{I=1}^{N_I} -\dfrac{\hbar^2}{2m_I}\nabla_I^2
 +\frac{1}{2}\sum\limits_{I=1}^{N_I}\sum\limits_{J=1,J\neq I}^{N_I} v(\vert\ri-\rj\vert).
 \end{align}
-In the opposite extreme, the jellium model replaces the material-dependent ionic potential in the electronic hamiltonian with a rigid homogeneous background of positive charge. In Hartree atomic units
-\begin{align} \label{eq:intro-jellium}
-\ham_{HEG} = \sum\limits_{i=1}^N -\dfrac{1}{2}\nabla_i^2 + \frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1,j\neq i}^N
-\dfrac{1}{\vert \bs{r}_i-\bs{r}_j \vert}
-+E_{e-b}+E_{b-b},
-\end{align}
-where $E_{e-b}$ and $E_{b-b}$ are constants due to electron-background and background-background interactions.
-
-The jellium model eq.~(\ref{eq:intro-jellium}) brings the electronic problem into focus. The isotropic background eliminates potential symmetry breaking interactions that can be introduced by a crystalline arrangement of the ions. The rigidity of the background also removes electron-ion coupling effects. This model was studied in great detail in the past century and its ground-state behavior was largely understood. Much progress has even been made regarding its excitations and finite-temperature properties.
-
-There is only one length scale in the jellium model: the average electron-electron separation $r_s=a/a_B$
+In the opposite extreme, 
 \begin{align}
 \dfrac{1}{n} \equiv \dfrac{\Omega}{N} = \left\{\begin{array}{lr}
 2 r_s a_B & 1D\\
@@ -55,11 +44,6 @@ There is only one length scale in the jellium model: the average electron-electr
 \frac{4\pi}{3}(r_sa_B)^3 & 3D
 \end{array}\right.,
 \end{align}
-where $a_B$ is the Bohr radius. The kinetic energy scales as $r_s^{-2}$ (due to $\nabla^2$) while the potential energies scales as $r_s^{-1}$ (for $1/r$ potential), so $r_s$ measures the relative strength of potential to kinetic energy. In this sense, $r_s$ is the zero-temperature analogue of the classical coulomb coupling parameter
-\begin{align}
-\Gamma \equiv \dfrac{e^2n^{1/d}}{k_BT}.
-\end{align}
-The valence electron density in alkaline metals is $r_s\sim2$, meaning the kinetic energy is important, so the electrons delocalize and form a liquid to minimize kinetic energy. At sufficiently large $r_s$ ($\sim 100$ in 3D and $\sim 30$ in 2D), the potential energy dominates, so the electrons localize to form a Wigner crystal.
 
 %\subsection{Exact Electron-Ion Schr\"odinger equations towards Born-Oppenheimer}
 

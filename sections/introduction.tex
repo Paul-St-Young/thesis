@@ -68,6 +68,25 @@ To fix nomenclature, I will call the all-zero approximation, $\Lambda_{jk}=0,~\f
 The diagonal terms $\Lambda_{jj}$ are considered diagonal Born-Oppenheimer correction (DBOC).
 Non-zero off-diagonal elements are responsible for \textit{nonadiabatic effects}.
 
+\section{Jellium}
+The jellium model eq.~(\ref{eq:intro-jellium}) brings the electronic problem into focus. It replaces the material-dependent ionic potential in the electronic hamiltonian with a rigid homogeneous background of positive charge and is an important stepping stone to the electron-ion problem. In Hartree atomic units
+\begin{align} \label{eq:intro-jellium}
+\ham_{HEG} = \sum\limits_{i=1}^N -\dfrac{1}{2}\nabla_i^2 + \frac{1}{2}\sum\limits_{i=1}^N\sum\limits_{j=1,j\neq i}^N
+\dfrac{1}{\vert \bs{r}_i-\bs{r}_j \vert}
++E_{e-b}+E_{b-b},
+\end{align}
+where $E_{e-b}$ and $E_{b-b}$ are constants due to electron-background and background-background interactions. The isotropic background eliminates potential symmetry breaking interactions that can be introduced by a crystalline arrangement of the ions. The rigidity of the background also removes electron-ion coupling effects. This model was studied in great detail in the past century and its ground-state behavior was largely understood. Much progress has even been made regarding its excitations and finite-temperature properties.
+
+There is only one length scale in the jellium model: the average electron-electron separation $r_s=a/a_B$
+\begin{align}
+\dfrac{1}{n} \equiv \dfrac{\Omega}{N} = \frac{4\pi}{3}(r_sa_B)^3
+\end{align}
+in 3D, where $a_B$ is the Bohr radius. The kinetic energy scales as $r_s^{-2}$ (due to $\nabla^2$) while the potential energies scales as $r_s^{-1}$ (for $1/r$ potential), so $r_s$ measures the relative strength of potential to kinetic energy. In this sense, $r_s$ is the zero-temperature analogue of the classical coulomb coupling parameter
+\begin{align}
+\Gamma \equiv \dfrac{e^2n^{1/d}}{k_BT}.
+\end{align}
+The valence electron density in alkaline metals is $r_s\sim2$, meaning the kinetic energy is important, so the electrons delocalize and form a liquid to minimize kinetic energy. At sufficiently large $r_s$ ($\sim 100$ in 3D and $\sim 30$ in 2D), the potential energy dominates, so the electrons localize to form a Wigner crystal.
+
 \section{Hydrogen}
 Hydrogen is a logical starting point for solving the electron-ion problem.
 It has the simplest atomic structure and no core electrons.
@@ -103,12 +122,12 @@ These advantages allowed us to obtain excellent agreement with experiment using 
 In addition to alkaline metals, elemental insulators, e.g., diamond carbon and silicon, remain important testing grounds for electronic QMC methods. Accurate and practical prediction of excitation energies using QMC is still an active area of research. We make some progress in chapter~\ref{chap:gap} by reducing finite-size error in bandgap calculations.
 
 \section{Thesis Outline}
-The remainder of this thesis is organized as follows. In the Method chapter~\ref{chap:method}, I start by introducing the effective one-particle electronic structure methods used to generate trial wave function for QMC methods.
+The remainder of this thesis is organized as follows. In chapter~\ref{chap:method}, I start by introducing the effective one-particle electronic structure methods used to generate trial wave function for QMC methods.
 I then introduce the Monte Carlo methods that we use to accurately treat electron correlation in the electronic problem as well as to solve the full electron-ion problem at times.
-Chapter~\ref{chap:sj-wf} introduces the Slater-Jastrow wave function while chapter~\ref{chap:fsc} discusses many-body finite-size correction.
+chapter~\ref{chap:sj-wf} introduces the Slater-Jastrow wave function while chapter~\ref{chap:fsc} discusses many-body finite-size correction.
 Both are crucial for accurate and practical QMC simulations.
 The next four chapters display accurate QMC results for a few simple electron-ion systems.
-Chapter~\ref{chap:na-mol} benchmarks the QMC method as a complete solver for the electron-ion problem without invoking the BOA.
-Chapter~\ref{chap:hsolid} applies this dynamic-ion QMC method to solve for the ground state of solid hydrogen.
-Chapter~\ref{chap:licp} considers the effect of the ions on the momentum distribution of the valence electrons in lithium within the BOA.
+chapter~\ref{chap:na-mol} benchmarks the QMC method as a complete solver for the electron-ion problem without invoking the BOA.
+chapter~\ref{chap:hsolid} applies this dynamic-ion QMC method to solve for the ground state of solid hydrogen.
+chapter~\ref{chap:licp} considers the effect of the ions on the momentum distribution of the valence electrons in lithium within the BOA.
 Finally, chapter~\ref{chap:gap} presents an improved finite-size correction to the (purely electronic) bandgap calculated in QMC.

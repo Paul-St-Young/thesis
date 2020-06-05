@@ -2,11 +2,14 @@
 \subsection{Hartree-Fock}
 
 \subsubsection{The Hartree-Fock Equations}
-The Hartree-Fock (HF) equations are a set of linear equations that couple spin orbitals in a determinant wavefunction. They can be obtained by minimizing the energy of a Slater determinant with the constraint that spin orbitals remain orthonormal. If each molecular orbital $a$ is written as a linear combination of a set of basis functions $\{\phi_\mu\}$
+The Hartree-Fock (HF) equations are a set of equations that couple spin orbitals in a determinant wavefunction. They can be obtained by minimizing the energy of a Slater determinant with the constraint that spin orbitals remain orthonormal. If each molecular orbital $a$ is written as a linear combination of a set of basis functions $\{\phi_\mu\}$
 \begin{align} \label{eq:hf-psia}
 \psi_a = \sum\limits_{\mu=1}^K C_{\mu a} \phi_\mu,
 \end{align}
 then the constraint optimization problem can be converted to a set of linear equations, resulting in an eigenvalue problem.
+However, the eigenvectors of this linear problem are needed to construct the problem to be solved.
+This self-consistency requirement makes the HF equations non-linear, thus requiring an iterative solver.
+Once an initial guess for the eigenvectors $C_{\mu a}$ have been chosen, one can construct the linear problem to solve via a \emph{Fock matrix}.
 For a spin-unpolarized system $N_{\up}=N_{\dn}=N/2$, the restricted Hartree-Fock (RHF) solution is defined by the first $N/2$ eigenvectors of the Fock matrix
 \begin{align}
 F_{\mu\nu} = \hcore + \sum\limits_{\lambda\sigma} P_{\lambda\sigma} \left[
@@ -25,7 +28,7 @@ $\hcore$ is the one-electron part of the Hamiltonian expressed in the given basi
 -\frac{1}{2}\nabla_1^2-\sum\limits_A \dfrac{Z_A}{\vert\bs{r}_1-\bs{R}_A\vert}
 \right)  \phi_\nu(\bs{r}_1).
 \end{align}
-where the \textit{exchange integral} notation
+where the \textit{exchange integral} is defined as
 \begin{align}
 \braket{ab||ab} \equiv \int d\bs{r}_1d\bs{r}_2 \psi_a^*(\bs{r}_1)\psi_b^*(\bs{r}_2)r_{12}^{-1}(1-\mathcal{P}_{12})\psi_c(\bs{r}_1)\psi_d(\bs{r}_2).
 \end{align}
@@ -39,12 +42,12 @@ Importantly, $E^{RHF}_0$ is not the sum of the eigenvalues of the Fock operator
 2\sum\limits_{a=1}^{N/2} \epsilon_a = 2\sum\limits\braket{\psi_a|\hcore|\psi_a} + 2\sum\limits_{a=1}^{N/2}\sum\limits_{b=1}^{N/2} \braket{ab||ab} \neq E^{RHF}_0,
 \end{align}
 which double counts Coulomb interaction. This is because both $\epsilon_a$ and $\epsilon_b$ include the Coulomb interaction energy between orbitals $a$ and $b$.
-Not being able to sum the eigenvalues to obtain the total energy is a minor inconvenience for the fact that these eigenvalues have the physical meanings of electron/hole excitation energies.
-Since the HF method effectively constructs a determinant trial wave function for the exact electronic hamiltonian, the HF energy is variational $E^{RHF}_0 \ge E_0$.
+Not being able to sum the eigenvalues to obtain the total energy is a minor inconvenience for the fact that these eigenvalues have the physical meaning of electron/hole excitation energies.
+Since the HF method constructs a determinant as trial wave function for the exact electronic hamiltonian, the HF energy is variational $E^{RHF}_0 \ge E_0$.
 
 The RHF equations can be generalized to treat open-shell systems.
-If $N_{\up} \neq N_{\dn}$, but the spatial part of each occupied orbital is required to be identical for the $\up$ and $\dn$ electrons. Then, the method is known as resitrcted open-shell HF (ROHF).
-If the occupied orbitals are further allowed to differ, then the method is unreistricted (UHF).
+If $N_{\up} \neq N_{\dn}$, but the spatial part of each occupied orbital is required to be identical for the $\up$ and $\dn$ electrons. Then, the method is known as restricted open-shell HF (ROHF).
+If the occupied orbitals are further allowed to differ, then the method is unrestricted (UHF).
 An application of RHF to the isolated H$_2$ molecule is detailed in Appendix~\ref{app:mbh2}.
 
 \subsubsection{Koopmans Theorem}
@@ -76,18 +79,18 @@ Koopmans theorem  is only applicable relative to the HF ground state. For exampl
 
 \subsubsection{Basis Set Error}
 
-To obtain ``the'' HF solution, all eigenvectors of the Fock matrix must be included in the span of the basis set used to represent the spin orbitals, i.e. $\{\phi_\mu\}$ in eq.~(\ref{eq:hf-psia}).
+To obtain the HF solution the basis set used to represent the spin orbitals, i.e. $\{\phi_\mu\}$ in eq.~(\ref{eq:hf-psia}), must be complete.
 In practice, one can approach this \textit{complete basis set limit} by using a sequence of basis sets increasing in size.
 The correlation-consistent (cc) basis sets are a widely used standard for this purpose.
 The convergence of the total energy of H$_2$ molecule is shown in Fig.~\ref{fig:hf-h2} and compared to an exact references obtained by Kolos and Wolniewicz (KW)~\cite{Kolos1964}.
 The total energy is converged on the scale of the plot using a triple-zeta (TZ) basis, which contains three basis functions per atom, and above.
-All RHF energy curves are at least $40$ mha above the exact answer, in accordance with the variational principle.
+All RHF energy curves are at least $40$ mha above the exact solution of the Schr\"odinger equation including electron-electron correlation, in accordance with the variational principle.
 Further, even after basis-set convergence, the RHF energy is still quite different from the exact values.
 Remarkably, besides an overall shift, the HF curve agrees well with the KW curve at equilibrium bond length $1.4$ bohr and below.
-However, at larger bond lengths the HF energy increases faster than the KW curve and overshoots the exact total energy at infinite separation.
-This is partly because the two electrons are forced into the same orbital, when they should each reside close to a different proton.
+However, at larger bond lengths the HF energy increases faster than the KW curve and is above the exact total energy at infinite separation.
+This is because the two electrons are forced into the same orbital, when they should each reside close to a different proton.
 This correlation between unlike-spin electrons is completely absent from the HF method.
-The difference between the exact and the RHF energies define the \textit{correlation energy}.
+The difference between the exact and the RHF energies defines the \textit{correlation energy}.
 %, because the determinant wave function lacks explicit terms that correlate the electrons.
 
 \begin{figure}[h]
@@ -113,7 +116,7 @@ The ground state is said to have \textit{static correlation} if one or more dete
 This will happen if there are virtual orbitals nearly degenerate with the highest occupied molecular orbital.
 In contrast, the system has \textit{dynamic correlation} if the $c_i$ coefficients are small but non-zero for many determinants with high levels of excitation.
 Dynamic correlation is often attributed to strong local correlation such as the electron-electron cusp condition.
-The exact definitions of static and dynamic correlations are still murky~\cite{Benavides-Riveros2017}.
+The current definition of static and dynamic correlations is not precision~\cite{Benavides-Riveros2017}.
 I introduce the above working definitions, because static correlation can be interpreted as a delocalization error due to fractional electron~\cite{Cohen2008}, and is related to the self-interaction error in density functional theory (DFT).
 This bridges the languages used in quantum chemistry and condensed matter as well as points to a solution of the infamous ``bandgap problem'', to be introduced in  Sec.~\ref{sec:method-dft-bandgap}.
 
@@ -122,8 +125,8 @@ The HF energy eigenvalues show vanishing density of states at the Fermi level in
 
 \subsection{Kohn-Sham Density Functional Theory}
 
-Using a mapping from electron density to total energy, a density functional, Density functional theory (DFT) is a method that can, in principle, exactly include electron correlation effects.
-The exact density functional is thus far out-of-reach, but even approximate functionals can lead to useful results.
+Using a mapping from electron density to total energy, density functional theory (DFT) is a method that can, in principle, exactly include electron correlation effects.
+Even though the exact density functional is unknown, even approximate functionals can lead to useful results.
 DFT uses the three-dimensional total electron density $n(\bs{r})$ as the basic variable rather than the 3N-dimensional many-body wave function $\Psi(\bs{r}_1,\dots,\bs{r}_N)$. This is a dramatic simplification that likely lead to its dominance in modern electronic structure theory of solids and material science.
 
 \subsubsection{The Hohenberg-Kohn theorems}
