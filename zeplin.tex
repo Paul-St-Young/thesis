@@ -62,3 +62,21 @@ where $a_B$ is the Bohr radius. The kinetic energy scales as $r_s^{-2}$ (due to 
 The valence electron density in alkaline metals is $r_s\sim2$, meaning the kinetic energy is important, so the electrons delocalize and form a liquid to minimize kinetic energy. At sufficiently large $r_s$ ($\sim 100$ in 3D and $\sim 30$ in 2D), the potential energy dominates, so the electrons localize to form a Wigner crystal.
 
 %\subsection{Exact Electron-Ion Schr\"odinger equations towards Born-Oppenheimer}
+
+
+\begin{comment}
+\begin{table}[h]
+\centering
+\begin{tabular}{cccccc}
+\toprule
+     & Temperature & Classical & Quantum & Quantization & Sign Problem \\
+\midrule
+PIMC &     any     &   yes     &   yes   & first & $\braket{\sigma}\propto \exp\left[ -\beta N (F_f-F_b) \right]$ \\
+DMC  &    zero     &    no     &   yes   & first & $\braket{\sigma}\propto \exp\left[ -\beta N (F_f-F_T) \right]$ \\
+FP-DMC & zero & no & yes & first & no \\
+VMC & low & no & yes & first & no \\
+AFQMC & low & no & yes & second & ? \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{comment}

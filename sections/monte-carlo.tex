@@ -1,13 +1,14 @@
+\chapter{Methods} \label{chap:method}
 \section{Classical Monte Carlo}
-The Monte Carlo methods mentioned in this thesis perform high-dimensional integrals by using random numbers to sample probability distributions. These distributions must be non-negative in the entire domain of ``states'' over which they are defined. In classical mechanics, a ``state'' of N particles is labeled by the positions $\bs{r}\equiv\{\bs{r}_i\}$ and momenta $\bs{p}\equiv\{\bs{p}_i\}$ of the particles $i=1,\dots,N$. The classical partition function for the canonical ensemble
+The Monte Carlo methods mentioned in this thesis perform high-dimensional integrals by using random numbers to sample probability distributions. These distributions must be non-negative in the entire domain of ``states'' over which they are defined. In classical mechanics, a ``state'' of N particles in $3$ dimensions is labeled by the positions $\bs{r}\equiv\{\bs{r}_i\}$ and momenta $\bs{p}\equiv\{\bs{p}_i\}$ of the particles $i=1,\dots,N$. The classical partition function for the canonical ensemble
 \begin{align} \label{eq:classical-nvt-part}
-Z \equiv \text{Tr}(e^{-H/k_BT}) = \dfrac{1}{N!h^{3N}} \int d\bs{r} d\bs{p} e^{-H(\bs{r}, \bs{p})/k_BT},
+Z \equiv \text{Tr}(e^{-H/k_BT}) = \dfrac{1}{N!h^{3N}} \int d^{3N}\bs{R} d^{3N}\bs{p}~e^{-H(\bs{R}, \bs{P})/k_BT},
 \end{align}
-where $H(\bs{r}, \bs{p})$ is the hamiltonian, $k_B$ is the Boltzmann constant, $h$ is the Planck constant, and $T$ is temperature. For $N$ distinguishable non-relativistic particles with mass $m$, the kinetic contribution $\dfrac{p^2}{2m}$ to eq.~(\ref{eq:classical-nvt-part}) can be integrated analytically, giving
+where $H(\bs{R}, \bs{P})$ is the hamiltonian, $k_B$ is the Boltzmann constant, $h$ is the Planck constant, and $T$ is temperature. For $N$ distinguishable non-relativistic particles with mass $m$, the kinetic contribution $\dfrac{p^2}{2m}$ to eq.~(\ref{eq:classical-nvt-part}) can be integrated analytically, giving
 \begin{align}\label{eq:classical-nvt-part-v}
-Z = \dfrac{1}{N!\Lambda^{3}} \int d\bs{r} e^{-\beta V(\bs{r})},
+Z = \dfrac{1}{N!\Lambda^{3}} \int d^{3N}\bs{R} e^{-\beta V(\bs{R})},
 \end{align}
-where $V(\bs{r})$ is the potential energy of the system, $\beta\equiv k_BT$, and $\Lambda$ the de Broglie wavelength
+where $V(\bs{R})$ is the potential energy of the $N$-particle system, $\beta\equiv k_BT$, and $\Lambda$ the de Broglie wavelength
 \begin{align} \label{eq:debroglie}
 \Lambda = \left(
 \dfrac{h^2}{2\pi mk_BT}
@@ -22,32 +23,32 @@ To calculate a property in the canonical ensemble, ones takes the trace
 \end{align}
 where $\braket{}$ denotes ensemble average. Limiting to local observables that can be evaluated on the particle coordinates, e.g., total potential energy $V(\bs{r})$ and pair correlation function $g(r)$
 \begin{align} \label{eq:int-obs}
-\braket{O} = \int d\bs{r} \dfrac{e^{-\beta V(\bs{r})}}{\int d\bs{r}' e^{-\beta V(\bs{r}')}} O(\bs{r}) = \int d\bs{r} \pi(\bs{r})O(\bs{r}),
+\braket{O} = \int d^{3N}\bs{R} \dfrac{e^{-\beta V(\bs{R})}}{\int d^{3N}\bs{R}' e^{-\beta V(\bs{R}')}} O(\bs{R}) = \int d^{3N}\bs{R} \pi(\bs{R})O(\bs{R}),
 \end{align}
-where $\pi(\bs{r})$ is the Bolzmann distribution
+where $\pi(\bs{R})$ is the Bolzmann distribution
 \begin{align} \label{eq:bolzmann-pi}
-\pi(\bs{r}) \equiv \dfrac{e^{-\beta V(\bs{r})}}{\int d\bs{r}' e^{-\beta V(\bs{r}')}} \propto e^{-\beta V(\bs{r})}.
+\pi(\bs{R}) \equiv \dfrac{e^{-\beta V(\bs{r})}}{\int d^{3N}\bs{R}' e^{-\beta V(\bs{R}')}} \propto e^{-\beta V(\bs{R})}.
 \end{align}
-Monte Carlo estimation of $\braket{O}$ works by sampling particle configurations from the Bolzmann distribution $\pi(\bs{r})$ and accumulating the average $O(\bs{r})$
+Monte Carlo estimation of $\braket{O}$ works by sampling particle configurations from the Bolzmann distribution $\pi(\bs{R})$ and accumulating the average $O(\bs{R})$
 \begin{align}
-\braket{O} = \lim\limits_{N_s\rightarrow\infty} \frac{1}{N_s} \sum\limits_{i=1}^{N_s} O(\bs{r}_i).
+\braket{O} = \lim\limits_{N_s\rightarrow\infty} \frac{1}{N_s} \sum\limits_{i=1}^{N_s} O(\bs{R}_i).
 \end{align}
-How does one sample a generic probability distribution such as $\pi(\bs{r})$?
-An excellent answer was given a 1953 paper authored by Metropolis \textit{et al.}~\cite{Metropolis1953}. The Metropolis algorithm, worked out by the Rosenbluths supervised by the Tellers, works by constructing a Markov chain having $\pi(\bs{r})$ as its stationary state. This is achieved by a rejection method that maintains detailed balance
+How does one sample a generic multi-dimensional probability distribution such as $\pi(\bs{R})$?
+An excellent answer was given a 1953 paper authored by Metropolis \textit{et al.}~\cite{Metropolis1953}. The Metropolis algorithm, designed by the Rosenbluths supervised by the Tellers, works by constructing a Markov chain having $\pi(\bs{R})$ as its stationary state. This is achieved by a rejection method that maintains detailed balance
 \begin{align} \label{eq:detailed-balance}
-\pi(\bs{r})P(\bs{r}\rightarrow\bs{r}')=\pi(\bs{r}')P(\bs{r}'\rightarrow\bs{r}),
+\pi(\bs{R})P(\bs{R}\rightarrow\bs{R}')=\pi(\bs{R}')P(\bs{R}'\rightarrow\bs{R}),
 \end{align}
-where $P(\bs{r}\rightarrow\bs{r}')$ is the Markov chain transition probability from state $\bs{r}$ to $\bs{r}'$. The Metropolis algorithm breaks $P$ into two steps: proposal and acceptance
+where $P(\bs{R}\rightarrow\bs{R}')$ is the Markov chain transition probability from state $\bs{R}$ to $\bs{R}'$. The Metropolis algorithm breaks $P$ into two steps: proposal and acceptance
 \begin{align} \label{eq:metropolis-prob}
-P(\bs{r}\rightarrow\bs{r}') = T(\bs{r}\rightarrow\bs{r}')A(\bs{r}\rightarrow\bs{r}'),
+P(\bs{R}\rightarrow\bs{R}') = T(\bs{R}\rightarrow\bs{R}')A(\bs{R}\rightarrow\bs{R}'),
 \end{align}
-with the following accept/reject criteria: For any transition probability used to propose the state change $T(\bs{r}\rightarrow\bs{r}')$, accept the change with probability
+with the following accept/reject criteria: For any transition probability used to propose the state change $T(\bs{R}\rightarrow\bs{R}')$, accept the change with probability
 \begin{align} \label{eq:metropolis-accept}
-A(\bs{r}\rightarrow\bs{r}') = \min\left(1, \dfrac{\pi(\bs{r}')T(\bs{r}'\rightarrow\bs{r})}{\pi(\bs{r})T(\bs{r}\rightarrow\bs{r}')}\right).
+A(\bs{R}\rightarrow\bs{R}') = \min\left(1, \dfrac{\pi(\bs{R}')T(\bs{R}'\rightarrow\bs{R})}{\pi(\bs{R})T(\bs{R}\rightarrow\bs{R}')}\right).
 \end{align}
 Using eq.~(\ref{eq:metropolis-prob}) and (\ref{eq:metropolis-accept}) to prove eq.~(\ref{eq:detailed-balance}) is a good way to appreciate the design of this acceptance probability.
 
-Mathematically, $\pi(\bs{r})$ is the unique stationary state of the Markov chain constructed by the Metropolis method so long as $P(\bs{r}\rightarrow\bs{r}')$ is ergodic. That is, there is finite probability of reaching any state $\bs{r}'$ starting from any state $\bs{r}$ using $P$.
+Mathematically, $\pi(\bs{R})$ is the unique stationary state of the Markov chain constructed by the Metropolis method so long as $P(\bs{R}\rightarrow\bs{R}')$ is ergodic. That is, there is finite probability of reaching any state $\bs{R}'$ starting from any state $\bs{R}$ using the transition rule $P$.
 In practice, however, a simulation can be stuck in a meta-stable state for its entire duration, for example, due to a bad initial condition. Careful monitoring and checking of convergence is a must in any serious Monte Carlo simulation.
 
 \section{Quantum Monte Carlo}
@@ -64,45 +65,52 @@ Z\equiv \text{Tr}(e^{-\hat{H}/k_BT})=\text{Tr}\left(
 \end{align}
 where $E_i$ and $\ket{\Psi_i}$ are the eigenvalues and eigenstates of the hamiltonian $H$. To make contact with classical mechanics, we put the density matrix (DM) for distinguishable particles in position basis (first quantization)
 \begin{align}
-\rho_D(\bs{r}, \bs{r}'; \beta) \equiv \braket{r|e^{-\beta H}|r'},
+\rho_D(\bs{R}, \bs{R}'; \beta) \equiv \braket{\bs{R}|e^{-\beta H}|\bs{R}'},
 \end{align}
 where $\beta\equiv \frac{1}{k_B T}$. 
 Then the partition function becomes
 \begin{align} \label{eq:quantum-nvt-zd}
-Z(\beta) = \int d\bs{r} \rho_D(\bs{r},\bs{r};\beta),
+Z(\beta) = \int d^{3N}\bs{R} \rho_D(\bs{R},\bs{R};\beta),
 \end{align}
 which can be exactly factorized into two pieces
 \begin{align}
-Z(\beta) = \int d\bs{r}d\bs{r}' \rho_D(\bs{r},\bs{r};\tau)\rho_D(\bs{r},\bs{r};\beta-\tau).
+Z(\beta) = \int d^{3N}\bs{R}d^{3N}\bs{R}' \rho_D(\bs{R},\bs{R}';\tau)\rho_D(\bs{R}',\bs{R};\beta-\tau).
 \end{align}
-This factorization can be repeated until the temperature becomes high enough ($\tau\rightarrow0$) that a semi-classical approximation to $\rho_D(\bs{r},\bs{r}';\tau)$ is accurate. Given translation symmetry along imaginary time, $\beta$ is typically broken down into $M$ equal-length pieces, i.e., $\tau=\beta/M$.
-For $N$ non-relativistic particles each having mass $m$, $\rho_D$ can be calculated as an integral over a discretized ``path'' of particle coordinates $\{\bs{r}_m\}$
+This factorization can be repeated until the temperature becomes high enough ($\tau\rightarrow0$) that a semi-classical approximation to $\rho_D(\bs{R},\bs{R}';\tau)$ is accurate. Given translation symmetry along imaginary time, $\beta$ is typically broken down into $M$ equal-length pieces, i.e., $\tau=\beta/M$.
+For $N$ non-relativistic particles each having mass $m$, $\rho_D$ can be calculated as an integral over a discretized \textit{path} of particle coordinates $\{\bs{R}_m\}$
 \begin{align} \label{eq:pimc-rhod}
-\rho_D(\bs{r}_0,\bs{r}_M;\beta) = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_1\dots d\bs{r}_{M-1}
+\rho_D(\bs{R}_0,\bs{R}_M;\beta) = \lim\limits_{M\rightarrow\infty} \int d\bs{R}_1\dots d\bs{R}_{M-1}
 (4\pi\lambda\tau)^{-dNM/2}\exp\left(
 -\sum\limits_{m=1}^M \left[
-\dfrac{(\bs{r}_{m-1}-\bs{r}_m)^2}{4\lambda\tau} + \tau V(\bs{r}_m)
+\dfrac{(\bs{R}_{m-1}-\bs{R}_m)^2}{4\lambda\tau} + \tau V(\bs{R}_m)
 \right]
 \right),
 \end{align}
-where $\lambda\equiv\dfrac{\hbar^2}{2m}$ is the ``quantumness'' of the particle and $d$ is the number of spatial dimensions. Thus, the partition function eq.~(\ref{eq:quantum-nvt-zd}) becomes an integral of a product of high-temperature DMs over all closed paths
+where $\lambda\equiv\dfrac{\hbar^2}{2m}$ is the \emph{quantumness} of the particle and $d$ is the number of spatial dimensions.
+The main advantage of eq.~(\ref{eq:pimc-rhod}) is that it turns the partition function eq.~(\ref{eq:quantum-nvt-zd}) into an integral of a product of high-temperature DMs over all closed paths
 \begin{align} \label{eq:quantum-nvt-zd-pi}
-Z=\lim\limits_{M\rightarrow\infty} \int d\bs{r} d\bs{r}_1\dots d\bs{r}_{M-1}
-\rho_D(\bs{r},\bs{r}_1;\tau)\rho_D(\bs{r}_1,\bs{r}_2;\tau)\dots\rho_D(\bs{r}_{M-1},\bs{r};\tau).
+Z=\lim\limits_{M\rightarrow\infty} \int d\bs{R} d\bs{R}_1\dots d\bs{R}_{M-1}
+\rho_D(\bs{R},\bs{R}_1;\tau)\rho_D(\bs{R}_1,\bs{R}_2;\tau)\dots\rho_D(\bs{R}_{M-1},\bs{R};\tau).
 \end{align}
 Each closed path can be visualized as a collection of ring polymers, one for each particle. The linear extension of a ring polymer is proportional to the particle's de Broglie wavelength $\Lambda=\sqrt{4\pi\lambda\beta}$ eq.~(\ref{eq:debroglie}).
-For distinguishable particles, the integral needed to evaluate the quantum partition function eq.~(\ref{eq:quantum-nvt-zd-pi}) poses no essential difficulty to a Monte Carlo method when compared with its classical counterpart eq.~(\ref{eq:classical-nvt-part-v}). One simply has to integrate $M$ classical systems, which are coupled by the spring-like kinetic energy term in eq.~(\ref{eq:quantum-nvt-zd}).
+For distinguishable particles, the integral needed to evaluate the quantum partition function eq.~(\ref{eq:quantum-nvt-zd-pi}) poses no essential difficulty to a Monte Carlo method when compared with its classical counterpart eq.~(\ref{eq:classical-nvt-part-v}).
+One simply has to integrate $M$ classical systems, which are coupled by the spring-like kinetic energy term in eq.~(\ref{eq:quantum-nvt-zd}).
+Each classical system is typically referred to as a \emph{slice} of imaginary time or a \emph{bead} on the ring polymer.
+Converged results is obtained in the zero time step $\tau\rightarrow0$, equivalently the infinite slice $M\rightarrow\infty$, limit.
+The integrand in eq.~(\ref{eq:pimc-rhod}) is the so-called \emph{primitive approximation} to the exact high-temperature density matrix.
+This approximation is correct only to $O(\tau)$, so a large number of beads is needed, resulting in slow simulations.
+Better approximations can be constructed to be correct to $O(\tau^2)$, for example the pair-product form in Ref.~\cite{Ceperley1995}.
 % a technical difficult for bosons -> permutation moves
 However, if the particles are identical bosons (fermions pose an essential problem, see Sec.~\ref{sec:fermion-sign-problem}), then one has to consider particle permutations along the path
 \begin{align}
-\rho_B(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta),
+\rho_B(\bs{R}_0,\bs{R}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} \rho_D(\bs{R}_0, \mathcal{P}\bs{R}_M;\beta),
 \end{align}
-where $\mathcal{P}\bs{r}_M$ contains the same $N$ coordinates as $\bs{r}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and up to $N$-particle exchanges between adjacent time slices along the path. Thus, the state space of bosonic path integral is much larger than that of boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduced and exact simulations are possible for both bolzmannons and bosons via the Monte Carlo method.
+where $\mathcal{P}\bs{R}_M$ contains the same $N$ coordinates as $\bs{R}_M$, but with the particles relabeled. This permutation can happen via any number of 1-, 2-, and up to $N$-particle exchanges between adjacent time slices along the path. Thus, the state space of bosonic path integral is much larger than that of boltzmannic path integral. Efficient sampling of permuting paths is a significant technical challenge. Fortunately, no uncontrolled approximation has been introduced and exact simulations are possible for both bolzmannons and bosons via the Monte Carlo method~\cite{Ceperley1995,Meldgin2016}.
 
 \subsection{Variation Path Integral a.k.a. Reptation Monte Carlo}
 % ground-state path integral (VPI) -> RMC
 % i.e. use a trial wavefunction as link action
-The ground state is costly to study using the path integral formalism presented so far, because a large number of time slices have to be included to approximate $\beta\rightarrow\infty$. Fortunately, one can still efficiently study the ground state with the help of a trial wave function $\ket{\Psi_T}$, so long as it is non-negative. The ground-state ``partition'' function has only one term
+Even with accurate approximation to the high-temperature density matrix, the ground state is still costly to study using the path integral formalism presented so far, because a large number of time slices have to be included to approximate $\beta\rightarrow\infty$. Fortunately, one can still efficiently study this zero-temperature limit with the help of a trial wave function $\ket{\Psi_T}$, so long as it is non-negative. The ground-state ``partition'' function has only one term
 \begin{align}
 Z_0 = \lim\limits_{\beta\rightarrow\infty} \braket{\Psi_0|e^{-\beta H}|\Psi_0},
 \end{align}
@@ -113,10 +121,17 @@ Z_0 = \lim\limits_{\beta\rightarrow\infty}\braket{\Psi_T|e^{-\frac{\beta}{2} H}e
 \end{align}
 for some $\beta_e$ large enough to be considered ``equilibrated''. Performing path discretization as before
 \begin{align} \label{eq:pimc-vpi-z0}
-Z_0 = \lim\limits_{M\rightarrow\infty} \int d\bs{r}_{-M}\dots d\bs{r}_0\dots d\bs{r}_{M}
-\Psi_T^*(\bs{r}_{-M})\rho(\bs{r}_{-M},\bs{r}_{-M+1};\tau)\dots\rho(\bs{r}_{M-1},\bs{r}_M;\tau)\Psi_T(\bs{r}_M),
+Z_0 = \lim\limits_{M\rightarrow\infty} \int d\bs{R}_{-M}\dots d\bs{R}_0\dots d\bs{R}_{M}
+\Psi_T^*(\bs{R}_{-M})\rho(\bs{R}_{-M},\bs{R}_{-M+1};\tau)\dots\rho(\bs{R}_{M-1},\bs{R}_M;\tau)\Psi_T(\bs{R}_M),
 \end{align}
-where $\tau=\beta_e/M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good approximate to the ground state $\ket{\Psi_0}$. In this sense, $\ket{\Psi_T}\bra{\Psi_T}$ plays the role of a low-temperature density matrix to quickly close a long path, although its temperature is ill-defined. No permutation needs to be sampled because quantum statistics are encoded in the trial wave function. However, translation symmetry along imaginary time is broken. The 2M+1 time slices each sample a different probability distribution. Observables that do not commute with the hamiltonian are unbiased only when evaluated on the middle slice $\bs{r}_0$. The trial wave functions at the ends and the DMs in the middle of eq.~(\ref{eq:pimc-vpi-z0}) must all be non-negative for the integrand to be interpreted as a probability distribution for the path $\{\bs{r}_{-M},\dots,\bs{r}_M\}$. This path is, in general, open ($\bs{r}_{-M}\neq\bs{r}_M$) and can be visualized as a ``reptile''. This method was first mentioned as variational path integral (VPI)~\cite{Ceperley1995}, but later popularized as reptation Monte Carlo (RMC)~\cite{Baroni1999}. While the RMC method can be efficient, it still requires all $M$ classical systems to be stored in memory at one time and intelligent Monte Carlo moves to change the reptile without ergodicity problems. This makes RMC more troublesome to implement than classical Monte Carlo or molecular dynamics, because the entire reptile, containing $O(M)$ classical systems have to be updated to generate $O(1)$ new decorrelated sample for the pure estimator eq.~(\ref{eq:dmc-opure}).
+where $\tau=\beta_e/M$. $\beta_e$ can be small if $\ket{\Psi_T}$ is a good approximate to the ground state $\ket{\Psi_0}$. In this sense, $\ket{\Psi_T}\bra{\Psi_T}$ plays the role of a low-temperature density matrix to quickly close a long path, although its temperature is ill-defined.
+No permutation needs to be sampled because quantum statistics are encoded in the trial wave function.
+However, translation symmetry along imaginary time is broken. The $2M+1$ time slices each sample a different probability distribution.
+Observables that do not commute with the hamiltonian are unbiased only when evaluated in the middle section $\bs{R}_m$, where $\vert m\vert$ is small.
+This is because $\bs{R}_m$ needs to be sufficiently separated from the trail wave function slices $\bs{R}_{-M}$ and $\bs{R}_M$ to be considered the zero-temperature limit.
+The trial wave functions at the ends and the DMs in the middle of eq.~(\ref{eq:pimc-vpi-z0}) must all be non-negative for the integrand to be interpreted as a probability distribution for the path $\{\bs{R}_{-M},\dots,\bs{R}_M\}$.
+This path is, in general, open ($\bs{R}_{-M}\neq\bs{R}_M$) and can be visualized as a ``reptile''. This method was first mentioned as variational path integral (VPI)~\cite{Ceperley1995}, but later popularized as reptation Monte Carlo (RMC)~\cite{Baroni1999}.
+While the RMC method can be efficient, it still requires all $M$ classical systems to be stored in memory at one time and intelligent Monte Carlo moves to change the reptile without ergodicity problems. This makes RMC more troublesome to implement than classical Monte Carlo or molecular dynamics, because the entire reptile, containing $O(M)$ classical systems have to be updated to generate $O(1)$ new decorrelated sample for the pure estimator eq.~(\ref{eq:dmc-opure}).
 
 \subsection{Diffusion Monte Carlo} \label{sec:method-dmc}
 The diffusion Monte Carlo (DMC) method can be viewed as a simplification of RMC.
@@ -137,20 +152,20 @@ For any $t>\beta_e$, the observable value eq.~(\ref{eq:dmc-omixed}) should be st
 %For non-relativistic particles, $\nabla^2$ in the kinetic energy operator turns into a Green function for diffusion $e^{-t\nabla^2}$.
 For identical non-relativistic particles having mass $m$, $\hat{U}$ in coordinate basis is the Green function for imaginary-time Schr\"odinger equation
 \begin{align}
-G(\bs{r}'\leftarrow\bs{r};t) = \braket{\bs{r}'|\hat{U}(t)|\bs{r}} =  \braket{\bs{r}'|e^{-t(\lambda \nabla^2+V)}|\bs{r}} = \lim\limits_{\tau\rightarrow 0}
+G(\bs{R}'\leftarrow\bs{R};t) = \braket{\bs{R}'|\hat{U}(t)|\bs{R}} =  \braket{\bs{R}'|e^{-t(\lambda \nabla^2+V)}|\bs{R}} = \lim\limits_{\tau\rightarrow 0}
 \left(
-(4\pi\lambda\tau)^{-dN/2}e^{-\dfrac{(\bs{r}-\bs{r}')^2}{4\lambda\tau}}
+(4\pi\lambda\tau)^{-dN/2}e^{-\dfrac{(\bs{R}-\bs{R}')^2}{4\lambda\tau}}
 \right)
 \left(
-e^{-\tau V(\bs{r})}
+e^{-\tau V(\bs{R})}
 \right). \label{eq:dmc-green}
 \end{align}
 The two terms in eq.~(\ref{eq:dmc-green}) are the Green function for diffusion and weight accumulation.
-The quantumness $\lambda=\frac{\hbar^2}{2m}$ of the particle determines its diffusion constant in imaginary time. Lighter particles diffuse ``faster''. One can, in principle, start with any classical system $\bs{r}$, apply the Green functions repeatedly to update $\bs{r}$, and eventually end up sampling the mixed distribution $\braket{\Psi_T|\Psi_0}$.
+The quantumness $\lambda=\frac{\hbar^2}{2m}$ of the particle determines its diffusion constant in imaginary time. Lighter particles diffuse ``faster''. One can, in principle, start with any classical system $\bs{R}$, apply the Green functions repeatedly to update $\bs{R}$, and eventually end up sampling the mixed distribution $\braket{\Psi_T|\Psi_0}$.
 
 While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the classical system due to the potential term goes to zero or infinity exponentially fast, specially when two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
 \begin{align}
-f(\bs{r},t) \equiv \Psi_T^*(\bs{r}) e^{-t(H-E_T)}\Psi_T(\bs{r}) \underset{t\rightarrow\infty}{=} \Psi_T^*(\bs{r})\Psi_0(\bs{r}),
+f(\bs{R},t) \equiv \Psi_T^*(\bs{R}) e^{-t(H-E_T)}\Psi_T(\bs{R}) \underset{t\rightarrow\infty}{=} \Psi_T^*(\bs{R})\Psi_0(\bs{R}),
 \end{align}
 where a trial energy $E_T$ is introduced to stablize the potential term.
 Substitute $\Psi_T^{-1}f$ in place of $\Psi$ into the imaginary-time Schr\"odinger equation $-\partial_t \Psi = H\Psi$, where $H=-\lambda\nabla^2+V$, we obtain
@@ -158,11 +173,14 @@ Substitute $\Psi_T^{-1}f$ in place of $\Psi$ into the imaginary-time Schr\"oding
 -\partial_t f = \Psi_T H \Psi_T^{-1} f \Rightarrow -\partial_t f=-\lambda\bs{\nabla}\cdot(\bs{\nabla}-\bs{v})f+(E_L-E_T)f,
 \end{align}
 % derivation is tricky! Remember \nabla\cdot(f\nabla\psi/\psi)
-where the local energy $E_L\equiv \dfrac{H\Psi_T}{\Psi_T}$ and the drift vector $\bs{v}\equiv2\Psi_T^{-1}\bs{\nabla}\Psi_T=\bs{\nabla}\ln\Psi_T^2$.
-After this ``importance-sampling transformation'', the Green function eq.~(\ref{eq:dmc-green}) is now modified to have three contributing processes: diffusion, drift, and weighting. The initial diffusion process becomes a drift-diffusion process guided by the trial wave function. Further, the weighting by the bare potential energy becomes weighting by the local energy. Given suitably designed trial wave function, $E_L$ can be made continuous even if the original potential $V$ contains divergences, e.g., in the Coulomb interaction.
+where the local energy $E_L\equiv \dfrac{H\Psi_T}{\Psi_T}$ and the drift vector
+\begin{align} \label{eq:dmc-drift}
+\bs{v}\equiv2\Psi_T^{-1}\bs{\nabla}\Psi_T=\bs{\nabla}\ln\Psi_T^2.
+\end{align}
+After this \emph{importance-sampling transformation}, the Green function eq.~(\ref{eq:dmc-green}) is now modified to have three contributing processes: diffusion, drift, and weighting. The pure diffusion process becomes a drift-diffusion process guided by the trial wave function. Further, the weighting by the bare potential energy becomes weighting by the local energy. Given suitably designed trial wave function, $E_L$ can be made continuous even if the original potential $V$ contains divergences, e.g., in the coulomb interaction.
 In practice, the mixed distribution is approximated by an ensemble of walkers
 \begin{align}
-f(\bs{r},t) \approx \sum\limits_{i=1}^{N_w} \delta(\bs{r}-\bs{r}_i),
+f(\bs{R},t) \approx \sum\limits_{m=1}^{N_w} \delta(\bs{R}-\bs{R}_m),
 \end{align}
 and the trial energy $E_T$ is adjusted every so often to keep the population of walkers $N_w$ from explosion and extinction. Equation~(\ref{eq:dmc-dfdt}) defines the DMC algorithm.
 While not strictly necessary, one typically adds a Metropolis rejection step using the Green function $G$ as transition probability $T$ in eq.~(\ref{eq:metropolis-accept}). This ensures that the algorithm samples the desired probability distribution at any finite time step, where the Green function is approximate~\cite{Reynolds1982}.
@@ -179,7 +197,7 @@ When VMC is used to calculate the expectation value of the hamiltonian ($\hat{O}
 \begin{align} \label{eq:wf-variational}
 E_V\equiv \braket{\Psi_T|\hat{\ham}|\Psi_T} = \braket{\Psi_T|E_L(\bs{R};\Psi_T)|\Psi_T} \ge E_0,
 \end{align}
-where the local energy serves as the estimator for total energy
+where the local energy serves as a local estimator for the total energy
 \begin{align} \label{eq:wf-eloc}
 E_L(\bs{R};\Psi_T) \equiv \dfrac{\ham\Psi_T}{\Psi_T} (\bs{R}).
 \end{align}
@@ -217,7 +235,7 @@ to have $P(\bs{r})$ as its stationary distribution
 \end{align}
 We can set each term in sum of the r.h.s. of eq.~(\ref{eq:vmc-fokker-planck}) to vanish
 \begin{align}
-\nabla_i^2 f = f\bs{\nabla}_i\cdot\bs{v}_i + \bs{v}_i\cdot\bs{\nabla}_if,
+\nabla_i^2 P = P\bs{\nabla}_i\cdot\bs{v}_i + \bs{v}_i\cdot\bs{\nabla}_iP,
 \end{align}
 which gives the drift vector
 \begin{align} \label{eq:vmc-drift}
@@ -231,7 +249,7 @@ The Langevin equation needed to solve eq.~(\ref{eq:vmc-fokker-planck}) is
 \begin{align}
 \dfrac{\partial\bs{r}(t)}{\partial t} = \lambda \bs{v}(\bs{r}(t)) + \bs{\eta},
 \end{align}
-where $\bs{\eta}$ is a multidimensional Gaussian with a mean of zero and a variance of $2\lambda$. In this light, the VMC algorithm is more akin to stochastic classical molecular dynamics than Monte Carlo. However, the most efficient algorithm is obtained when the Fokker-Planck formulation is combined with Metropolis Monte Carlo. By introducing a metropolis accept/reject procedure at each step of the Fokker-Planck dynamics, we eliminate the time step bias because detailed balance is enforced to sample $\vert\Psi_T\vert^2$. Another way to view this is that Fokker-Planck dynamics is used to construct efficient drift-diffusion moves for an exact Monte Carlo method.
+where $\bs{\eta}$ is a multidimensional Gaussian with a mean of zero and a variance of $2\lambda$. In this light, the VMC algorithm is more akin to stochastic classical molecular dynamics than Monte Carlo. However, the most efficient algorithm is obtained when the Fokker-Planck formulation is combined with Metropolis Monte Carlo. By introducing a metropolis accept/reject procedure at each step of the Fokker-Planck dynamics, we eliminate the time step bias because detailed balance is enforced to sample $\vert\Psi_T\vert^2$. Another way to view this is that Fokker-Planck dynamics provides efficient drift-diffusion moves for an exact Monte Carlo method.
 
 Equation~(\ref{eq:vmc-fokker-planck}) defines an efficient implementation of the VMC algorithm. Interestingly, the governing equation of DMC eq.~(\ref{eq:dmc-dfdt}) without the branching term is identical to that of VMC eq.~(\ref{eq:vmc-fokker-planck}) when the same trial wave function is used for drift eq.~(\ref{eq:vmc-drift}).
 This implies that the drift-diffusion term in the DMC Green function performs sampling of the trial wave function only. The local energy term in eq.~(\ref{eq:dmc-dfdt}), when accumulated over the drift-diffusion process, is responsible for imaginary-time projection.
@@ -243,41 +261,43 @@ An essential difficult arises when one applies the path integral formalism to fe
 \begin{align}
 \rho_F(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} (-1)^{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta).
 \end{align}
-$\rho_F$ is no longer positive definite and cannot be interpreted as a probability distribution to be sampled by Monte Carlo. The canonical work-around is to sample the absolute value of the fermionic DM, which is the bosonic DM, and keep the sign as an observable. In this way, a fermionic observable is calculated as the ratio between a signful bosonic observable and the average bosonic sign
+$\rho_F$ is no longer positive definite and cannot be interpreted as a probability distribution to be sampled by Monte Carlo. The canonical workaround is to sample the absolute value of the fermionic DM, which is the bosonic DM, and keep the sign as an observable. In this way, a fermionic observable is calculated as the ratio between a signful bosonic observable and the average bosonic sign
 \begin{align} \label{eq:pimc-of}
 \braket{\hat{O}}_F \equiv \dfrac{\Tr{\hat{O}e^{-\beta H}}_F}{\Tr{e^{-\beta H}}_F}=
 \dfrac{\Tr{\hat{O}\hat{\sigma}e^{-\beta H}}_B}{\Tr{\hat{\sigma} e^{-\beta H}}_B}=
 \dfrac{\Tr{\hat{O}\hat{\sigma}e^{-\beta H}}_B/Z_B}{\Tr{\hat{\sigma} e^{-\beta H}}_B/Z_B}=\dfrac{\braket{\hat{O}\hat{\sigma}}_B}{ \braket{\hat{\sigma}}_B }.
 \end{align}
-While mathematically exact, this leads to the well-known fermion sign problem, where the denominator in eq.~(\ref{eq:pimc-of}), the average bosonic sign, goes to zero exponentially fast as system size $N$ and inverse temperature $\beta$ increase.
+While mathematically exact, this leads to the well-known \emph{fermion sign problem}, where the denominator in eq.~(\ref{eq:pimc-of}), the average bosonic sign, goes to zero exponentially fast as system size $N$ and inverse temperature $\beta$ increase.
 To see this, consider the total free energies of $N$ bosons vs. $N$ fermions governed by the same hamiltonian $H$. The bosonic average sign can be written as an exponential of the free energy difference
 \begin{align} \label{eq:pimc-avg-sign}
 \braket{\hat{\sigma}}_B = \dfrac{Z_F}{Z_B} = \dfrac{e^{-\beta F_F}}{e^{-\beta F_B}} = e^{-\beta (F_F-F_B)}.
 \end{align}
 Since the total free energy is extensive, the exponent in eq.~(\ref{eq:pimc-avg-sign}) is proportional to $\beta N$.
-At zero Kelvin, all permutations are equally likely and the average sign is exactly zero. The sign problem can be absent in a particular system, for example due to particle-hole symmetry in a half-filled Hubbard model, and can be alleviated at finite-temperature. However, no known polynomial-scaling algorithm can solve the sign problem in general.
+At zero Kelvin, all permutations are equally likely and the average sign is exactly zero.
+At the degeneracy temperature and above, \textit{signful} PIMC is often possible, but comes at a hefty computational cost even for very small systems $O(10)$ particles.
+A practical workaround for the sign problem in path integral is the restricted path approximation~\cite{Ceperley1991,Ceperley1992,Ceperley1996}.
+This approximation uses a trial density matrix to restrict the space of paths that can be sampled.
+Any Monte Carlo move that constructs a path which crosses the node of the trial density matrix is rejected.
+This restricted path integral Monte Carlo (RPIMC) method was proved to be exact if the node of the trial density matrix is exact.
 
-\begin{comment}
-Minus natural logarithm of the DM is defined to be the ``action''
-\begin{align}
-S\equiv-\ln \rho,
-\end{align}
-and the exponent in eq.~(\ref{eq:pimc-rhod}) is the so-called primitive approximation to the action, which slowly becomes exact as time step goes to zero $\tau\rightarrow0$. Faster time-step convergence can be achieved using better approximation to the action.
-\end{comment}
+The sign problem manifests rather differently in DMC than in PIMC.
+If one runs the bosonic DMC algorithm eq.~(\ref{eq:dmc-dfdt}) using the absolute value of a fermionic trial wave function $\vert\Psi_T\vert$ as guiding function, then the drift vector eq.~(\ref{eq:dmc-drift}) will diverge as a walker approaches the node of $\Psi_T$, pushing the walker away.
+This trapping effect greatly diminishes the chance that a walker can cross the node.
+Thus, the walker distribution will approach the bosonic solution in this positive nodal pocket.
+However, once a walker does cross the node, it quickly gets pushed to regions with high $\vert\Psi_T\vert^2$ and branches to solve a similar bosonic problem in the newly found negative nodal pocket.
+Walkers in the positive nodal pocket contribute to estimators with a positive sign, whereas walkers in the negative pocket contribute with a negative sign.
+While the final average is the exact fermionic estimator, it is the difference between two large values and its noise diverges exponentially fast with system size and projection time.
+Exact fermionic simulation is possible using the release-node method~\cite{Ceperley1978}, but a highly-accurate trial wavefunction is required and much care must be taken for efficient and converged calculations.
 
-\begin{comment}
-\begin{table}[h]
-\centering
-\begin{tabular}{cccccc}
-\toprule
-     & Temperature & Classical & Quantum & Quantization & Sign Problem \\
-\midrule
-PIMC &     any     &   yes     &   yes   & first & $\braket{\sigma}\propto \exp\left[ -\beta N (F_f-F_b) \right]$ \\
-DMC  &    zero     &    no     &   yes   & first & $\braket{\sigma}\propto \exp\left[ -\beta N (F_f-F_T) \right]$ \\
-FP-DMC & zero & no & yes & first & no \\
-VMC & low & no & yes & first & no \\
-AFQMC & low & no & yes & second & ? \\
-\bottomrule
-\end{tabular}
-\end{table}
-\end{comment}
+The practical workaround for the sign problem in DMC is the \textit{fixed-node approximation} (for real wave function).
+In this approximation, no walker is allowed to cross the node of the trial wave function.
+This effectively adds to the hailtonian an infinite potential barrier at the node of $\Psi_T$.
+The bosonic problem is exactly solved in the nodal pocket within this barrier, while the rest of the Hilbert space is constructed via antisymmetry of the wave function.
+This procedure effectively constructs a \emph{fixed-node wave function} $\Psi_{FN}$, so the fixed-node DMC (FN-DMC) total energy is variational $E_{FN}\ge E_0$.
+The exact ground state energy can be obtained if the node of the trial wave function is exact.
+When generalized to systems with imaginary trial wave function, an analogous work around is the fixed-phase DMC method (FP-DMC), which forbids walkers to move past phase-change boundaries of the trial wave function.
+FP-DMC is so similar to FN-DMC that they are typically not distinguished as different methods in the literature.
+
+For a general fermionic system, the sign problem is present in all known QMC methods in some form.
+However, the sign problem can be absent in a particular system, for example due to particle-hole symmetry in a half-filled Hubbard model, and can be alleviated at finite-temperature.
+Unfortunately, no known polynomial-scaling algorithm can solve the sign problem in all cases.
