@@ -195,20 +195,21 @@ Before back flow transformation, the static structure factor of the Slater deter
 The Jastrow and back flow functions are variationally optimized using the electronic hamiltonian at vdW-DF optimized clamped-ion geometries. The optimized functions at 480 GPa ($r_s\approx 1.25$) are shown in Fig.~\ref{fig:hsolid-static-jas-bf}.
 These functions remain quantitatively similar across all densities explored.
 The electronic components of the Jastrow and back flow functions are nearly identical for all three molecular candidates.
-The largest contribution is the ``u-d'' term, which introduces correlation between unlike-spin electrons to keep them apart.
+The largest contribution is the u-d term, which introduces correlation between unlike-spin electrons to keep them apart.
 However, the electron-ion components show some variation among candidate structures, with Cmca-4 being the standout among molecular candidates.
-This is likely an artifact of either the clamped-ion approximation or under-converged optimization. Once these functions are reoptimized with dynamic ions, all Jastrow and back flow components involving the electrons become identical across all candidate structures, as shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}.
+Its optimized e-p Jastrow and back flow have much in common with those of the atomic phase.
+This is likely an artifact of either the clamped-ion approximation or under-converged optimization. Once these functions are reoptimized with dynamic ions, all Jastrow and back flow components involving the electrons become essentially identical across all candidate structures, as shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}.
 
 \begin{figure}[h]
 \centering
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_mol-jas-rs125}\\
+\includegraphics[width=\linewidth]{h117b_sjas-rs125}\\
 (a) Jastrow pair functions
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_mol-bf-rs125}\\
+\includegraphics[width=\linewidth]{h117b_sbf-rs125}\\
 (b) Back flow pair functions
 \end{minipage}
 \caption{Jastrow and back flow pair functions optimized at static-lattice minimum at 480 GPa. Color denotes the crystal structure. The solid line is the pair function for electron-proton, the dashed line for same-spin electrons, and the dotted lines for unlike-spin electrons.}
@@ -239,12 +240,12 @@ As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, after re-optimization, the onl
 \centering
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_mol-nbjas-rs125}\\
+\includegraphics[width=\linewidth]{h117b_nbjas-rs125}\\
 (a) Jastrow pair functions
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
-\includegraphics[width=\linewidth]{h117_mol-nbbf-rs125}\\
+\includegraphics[width=\linewidth]{h117b_nbbf-rs125}\\
 (b) Back flow pair functions
 \end{minipage}
 \caption{Jastrow and back flow pair functions optimized using dynamic-lattice VMC. The dash-dotted line is the pair function for proton-proton correlation. All other notations are identical to those in Fig.~\ref{fig:hsolid-static-jas-bf}.}
