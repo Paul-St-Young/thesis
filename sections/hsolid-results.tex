@@ -401,6 +401,7 @@ This large increase in variance is due, in large part, to the use of static-latt
 They can be lowered by re-optimizing the electronic wave function upon every proton-position update, albeit at a significantly increased computational cost.
 
 \subsection{Effect of Dynamic Ions on Energy and Pressure}
+\label{sec:hsolid-dep}
 
 When clamped protons are allowed to move, the energy of the electron-ion system changes in two ways.
 First, proton kinetic energy contributes a sizable positive term to the total kinetic energy of the system. As shown in Fig.~\ref{fig:hsolid-ion-energy}(d), the kinetic energy of the protons increases from $\sim 230$ meV/p at $360$ GPa ($r_s\approx 1.31$) to $\sim 265$ meV/p at $600$ GPa ($r_s\approx 1.20$), increasing by roughly $7.3$ meV/p every $50$ GPa.
@@ -470,10 +471,10 @@ In summary, ZPE stabilizes the atomic phase by roughly $40$ meV/p and the Cmca-4
 \end{figure}
 
 The enthalpy-pressure relation in Fig.~\ref{fig:dynamic-qmc-vs-drummond}(b) tells the same story and we can read off the transition pressures among the candidate structures.
-We see a transition from C2/c-24 to Cmca-4 slightly below 500 GPa, then a molecular-to-atomic transition around 650 GPa from Cmca-4 to I4$_1$/amd.
-The calculated transition pressure to the atomic phase is $150$ GPa higher than the previous QMC calculation~\cite{McMinis2015} and a reported experimental observation~\cite{Silvera2017}.
+We see a transition from C2/c-24 to Cmca-4 slightly below 500 GPa, then a molecular-to-atomic transition around 660 GPa from Cmca-4 to I4$_1$/amd.
+The calculated transition pressure to the atomic phase is $160$ GPa higher than the previous QMC calculation~\cite{McMinis2015} and a reported experimental observation~\cite{Silvera2017}.
 However, the previous calculation used the harmonic approximation to calculate proton ZPE, while the experiment made little characterization of the final sample and has yet to be reproduced.
-As such, a $650$ GPa transition pressure is not outside the realm of possibilities.
+As such, a $660$ GPa transition pressure is not outside the realm of possibilities.
 Admittedly, the current approach has its own drawbacks.
 The most concerning approximation is the use of static-lattice orbitals in the electron-ion wave function eq.~(\ref{eq:hsolid-ei-wf}).
 %h5ca/frozen_dE_vs_r.eps
@@ -603,18 +604,18 @@ The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures 
 \end{figure}
 
 The proton-proton pair correlation function of all candidate structures at $r_s\approx1.25$ are shown in Fig.~\ref{fig:hsolid-ppgrsk}(a).
-Every molecular structure has a peak at the molecular bond length.
-In agreement with the DFT bond lengths shown in Fig.~\ref{fig:hsolid-vdw-ca}(b)
-C2/c-24 at $1.35$ bohr. Cmca-4 at $1.40$ bohr. The Cmca-12 structure is in between.
+Every molecular structure has a peak at the molecular bond length, in agreement with the DFT bond lengths shown in Fig.~\ref{fig:hsolid-vdw-ca}(b).
+C2/c-24 bond length is around $1.35$ bohr, Cmca-4 around $1.40$ bohr, and the Cmca-12 structure is in between.
 The C2/c-24 and Cmca-12 structures have remarkably similar pp g(r).
-Since they are almost degenerate over the entire density range explored, we can infer that the slight monoclinic distortions of their unit cells and the small differences in molecular bond lengths do not contribute significantly to the total energy. The less distorted C2/c-24 structure is more stable.
-The Cmca-4 structure is significantly different from C2/c-24. Cmca-4 has second- and third-nearest neighbor peaks at $2$ and $3$ bohr, respectively, rather than C2/c-24's $2.5$ and $3.2$. The size and shape of these peaks in Cmca-4's pp $g(r)$ are more similar to those in the atomic structure than the other molecular candidates.
+Since they are almost degenerate over the entire density range explored, we can infer that the slight monoclinic distortions of their unit cells and the small differences in their molecular bond lengths do not contribute significantly to the total energy.
+The less distorted C2/c-24 structure is more stable.
+The Cmca-4 structure is significantly different from C2/c-24. Cmca-4 has second- and third-nearest neighbor peaks at $2$ and $3$ bohr, respectively, rather than C2/c-24's $2.5$ and $3.2$. The size and shape of these peaks are more similar to those in the atomic structure than the other molecular candidates.
 
 The long-range fluctuation and order of the protons can be observed in the proton-proton static structure factor. Its fluctuating part is shown in Fig.~\ref{fig:hsolid-ppgrsk}(b).
-All three molecular candidates have very similar levels of long-range fluctuations, whereas the atomic structure has significantly more.
+All three molecular candidates have very similar levels of long-range fluctuations, whereas the atomic structure has noticeably more.
 
 The molecular structures have more crystalline signatures than the atomic phase.
-As shown in Fig.~\ref{fig:hsolid-ppgrsk}(c), after spherical average, each molecular structure has at least three Bragg peaks, while the atomic structure has only one at $k<4$ bohr$^{-1}$.
+As shown in Fig.~\ref{fig:hsolid-ppgrsk}(c), after spherical average, each molecular structure has at least three Bragg peaks for $k<4$ bohr$^{-1}$, while the atomic structure has only one.
 The C2/c-24 and Cmca-12 Bragg peaks have very similar intensities and remain relatively unchanged by pressure.
 However, the Cmca-4 structure's most intense Bragg peak is comparable with that in the atomic structure and decreases in intensity as pressure increases.
 Finally, the long wavelength limit of the static structure factor can be related to the isothermal compressibility $\kappa\equiv n(\dfrac{\partial P}{\partial n})\vert_T$
@@ -655,11 +656,15 @@ The atomic structure is twice as compressible as the molecular structures at all
 \subsection{Conclusion}
 The ordering of the candidate structures from this dynamic-lattice study show similar features as the previous QMC study using vdW-DF geometries and harmonic ZPE~\cite{McMinis2015}.
 The Cmca-12 structure is nearly degenerate with C2/c-24 but slightly less stable at low pressures.
-There is a transition from C2/c-24 to Cmca-4 in the pressure range around $500$ GPa.
+There is a transition from C2/c-24 to Cmca-4 around $500$ GPa.
 Then a Cmca structure transitions to the I4$_1$/amd atomic structure at a higher pressure.
 However, we predict no stability range for the Cmca-12 structure, whereas in Ref.~\cite{McMinis2015}, C2/c-24 transitions to it at $424(3)$ GPa.
 The most significant disagreement lies in the atomic phase.
 We see the atomic phase becomes more stable relative to C2/c-24 around $610$ GPa, whereas Ref.~\cite{McMinis2015} shows this crossing around $450$ GPa.
 Our final prediction for the molecular-to-atomic transition pressure is $660$ GPa, which is significantly higher than the previous experimental report~\cite{Silvera2017}.
+However, as already mentioned in Sec.~\ref{sec:hsolid-dep}, this prediction is not unreasonable.
+The dynamic-lattice DMC method is a conceptually simple way to directly simulate an electron-ion system and offers more ionic observables as well as direct comparisons with the static-lattice system than a single clamped-ion calculation.
+A Born-Oppenheimer study using the DMC energy surface is needed to bridge the previous static-lattice and harmonic ZPE study with the current dynamic-lattice nonadiabatic calculation.
+A detailed comparison among the three variants will hopefully resolve some of the disagreements we currently have.
 
 %\subsection{Time Step and Population Control Biases}
