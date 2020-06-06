@@ -24,7 +24,7 @@ C2/c-24 & 1.307 & 1.287 & 1.269 & 1.253 & 1.239 & 1.225 & 1.198 & 1.185 & \\
 In contrast, the atomic structure is optimized using DMC at constant volume.
 While both constant-volume and constant-pressure optimizations are valid ways to find the minimum energy structure, the final density and pressure differ in general.
 The DMC optimizations for the atomic structure have been carried out at evenly spaced $r_s$ values: $1.31$, $1.29$, $1.27$, $\dots$, $1.17$.
-The density difference between the atomic and a molecular structure at a given pressure range is appreciably larger than the density difference among candidate structures.
+The density difference between the atomic and a molecular structure at a given pressure range is appreciably larger than the density difference among molecular-phase candidate structures.
 Thus, when calculating energy and enthalpy differences, interpolation is needed further from data for the atomic structure than for the molecular structures.
 
 All three molecular structures are monoclinic having $a=b\neq c$, $\alpha=\beta=90^\circ+\eta$, and $\gamma=120^\circ+\delta$. The slight distortions differ for each structure: $\eta=0$, $\delta\approx -0.5^\circ$ for Cmca-4, $\eta=0$, $\delta\approx+3.5^\circ$ for Cmca-12, and $\eta\approx0.1^\circ$, $\delta\approx-0.1^\circ$ for C2/c-24.
@@ -218,7 +218,7 @@ This is likely an artifact of either the clamped-ion approximation or under-conv
 
 \subsubsection{Ionic Components}
 For an electron-ion simulation, the Slater-Jastrow wavefunction has an additional product for distinguishable ions as well as an ion-ion Jastrow
-\begin{align}
+\begin{align} \label{eq:hsolid-ei-wf}
 \Psi_{ei}(\bs{R}, \bs{R}_I) = \det\left( \{ \phi_i(\bs{r}_j+\Delta\bs{r}_j; \bs{R}_I^0)\} \right) e^{-U(\bs{R},\bs{R}_I)} \prod\limits_{I=1}^{N_p} \chi(\bs{r}_I, \bs{r}_I^0),
 \end{align}
 where the proton orbital is an isotropic gaussian centered around its optimized geometry
@@ -308,7 +308,7 @@ As shown by the lines in Fig.~\ref{fig:hsolid-cp-opt}(b), we chose isotropic gau
 \section{Results and Discussion}
 \label{sec:hsolid-results}
 
-\subsection{Energy, Pressure, and Local Energy Variance}
+\subsection{Static-Lattice Energy, Pressure, and Local Energy Variance}
 
 The dominant variation of the total energy as pressure increases is due to the isotropic compression of the electron liquid and the crystal lattice. This variation is on the order of $1$ eV/p over the density range considered and is roughly 50 times the energy difference among the candidate structures.
 To better observe these small differences, we plot energy and pressure relative to a reference equation of state (EOS).
@@ -356,25 +356,9 @@ Even with improved geometry and wave function, we get back the same pressure as 
 \caption{Static-lattice DMC energy and enthalpy relative to Drummond \textit{et al.}~\cite{Drummond2015} reference eq.~(\ref{eq:hsolid-drum-ref}). Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-density EOS, which is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of $\rho$. The markers are finite-size corrected simulation data without performing a fit. $P_0$ is the pressure calculated from the reference EOS $P_0=-dE_0/d\Omega$. \label{fig:static-qmc-vs-drummond}}
 \end{figure}
 
-We fit the energy-density relation to a quadratic function in density to obtain the enthalpy-pressure relation shown in Fig.~\ref{fig:static-qmc-vs-drummond}(b). We observe a transition from C2/c-24 to Cmca-4 around $640$ GPa and no transition to the atomic structure up to $800$ GPa.
+QMC enthalpy can be calculated from virial pressure and plotted relative to the reference EOS as shown in Fig.~\ref{fig:static-qmc-vs-drummond}(b). We observe a transition from C2/c-24 to Cmca-4 around $640$ GPa and no transition to the atomic structure up to $800$ GPa.
 This disagrees with the previous QMC study~\cite{McMinis2015}, showing a $450$ GPa transition from C2/c-24 to Cmca-4, which then transitions to the atomic structure around $700$ GPa.
 The reason for this disagreement is unknown.
-
-% exclude Cmca-4 rs=1.22
-\begin{figure}[h]
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117dd_e-vs-rho}
-(a) energy-density relation
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117dd_h-vs-p}
-(a) enthalpy-pressure relation
-\end{minipage}
-\caption{Dynamic-lattice energy and enthalpy relative to reference.}
-\label{fig:dynamic-qmc-vs-drummond}
-\end{figure}
 
 The QMC \emph{virial pressure}, calculated from kinetic energy $T$, potential energy $V$, and volume $\Omega$
 \begin{align}
@@ -383,7 +367,7 @@ P = \dfrac{2T-V}{3\Omega},
 is shown as a function of density in Fig.~\ref{fig:hsolid-p-vs-n}(a).
 We first note that the QMC pressure is consistently lower than vdW-DF pressure at the same density.
 Plotting the same data on a relative scale in Fig.~\ref{fig:hsolid-p-vs-n}(c),
-we see that the QMC virial pressure is 4.2\% and 3.2\% lower than vdW-DF pressure at 340 GPa ($r_s\approx 1.21$) and 460 GPa ($r_s\approx 1.25$), which agree well with the findings of R. C. Clay III \textit{et al.}, i.e. Fig.~4 in Ref.~\cite{Clay2016}.
+we see that the QMC virial pressure is 4.2\% and 3.2\% lower than vdW-DF pressure at 340 GPa ($r_s\approx 1.21$) and 460 GPa ($r_s\approx 1.25$), respectively. This agrees well with the findings of R. C. Clay III \textit{et al.}, i.e. Fig.~4 in Ref.~\cite{Clay2016}.
 In this plot, we also see that the mixed estimator error is 1 to 5 GPa, so the linearly-extrapolated static-lattice DMC pressure should be accurate to 1 GPa.
 
 \begin{figure}[h]
@@ -416,18 +400,31 @@ In this plot, we also see that the mixed estimator error is 1 to 5 GPa, so the l
 \centering
 \begin{minipage}{0.49\linewidth}
 \centering
-\includegraphics[width=\textwidth]{h117ds_rm121_var-vs-p}
+\includegraphics[width=\textwidth]{h117dc_static_var-vs-pgpa}
+(a) static lattice
+\end{minipage}
+\centering
+\begin{minipage}{0.49\linewidth}
+\centering
+\includegraphics[width=\textwidth]{h117dc_dynamic_var-vs-pgpa}
+(a) dynamic lattice
 \end{minipage}
 \caption{QMC variance vs. pressure. The lines are guides to the eye.}
 \label{fig:hsolid-v-vs-p}
 \end{figure}
 
-Finally, the variance of the optimized static-lattice wave functions are shown in Fig.~\ref{fig:hsolid-v-vs-p} as a function of pressure.
+Finally, the variance of the optimized static-lattice wave functions are shown in Fig.~\ref{fig:hsolid-v-vs-p}(a) as a function of pressure.
 The variance of the molecular structures are $7.5\sim8.5$ eV$^2$/p below $400$ GPa and increases to $8.5\sim9.5$ eV$^2$/p at $550$ GPa.
 The increase in variance may be due to the closing band gaps of the molecular structures around $400$ GPa.
 If true, then it may be better to generate orbitals above $400$ GPa using the PBE functional, because it prefers metallic rather than insulating states when compared to vdW-DF.
+The variance of the atomic structure is about $50$\% higher than that in the molecular phase, ranging from $11$ eV$^2$/p at $r_s=1.31$ to $15$ eV$^2$/p at high densities.
 For comparison, the variance of the best analytical wave function for bcc hydrogen is $13.2(1)$ eV$^2$/p at $r_s=1.31$ (Table III in Ref.~\cite{Holzmann2003}) and $7.40(3)$ eV$^2$/p at $r_s=1.40$ (Table~2 in Ref.~\cite{Pierleoni2008}).
 Small mixed-estimator error and low energy variance are hallmarks of a well-optimized wave function. We have demonstrated both in Fig.~\ref{fig:hsolid-p-vs-n} and Fig.~\ref{fig:hsolid-v-vs-p} for the static-lattice electronic wave function.
+The same cannot be said about the electron-ion wave function.
+As shown in Fig.~\ref{fig:hsolid-v-vs-p}, the local energy variance of all structures in the dynamic-lattice calculations are twice as high as their static-lattice counterparts.
+The atomic-phase variance still sits roughly $3$ eV$^2$/p above the molecular structures.
+This large increase in variance is due, in large part, to the use of static-lattice orbitals eq.~(\ref{eq:hsolid-ei-wf}) at all proton configurations.
+They can be lowered by re-optimizing the electronic wave function upon every proton-position update, albeit at a significantly computational cost.
 
 \subsection{Effect of Dynamic Ions on Energy and Pressure}
 
@@ -467,11 +464,46 @@ Most of the density dependence of the ZPE comes from the proton kinetic energy.
 \label{fig:hsolid-ion-energy}
 \end{figure}
 
-An immediate consequence of the higher kinetic and potentials energies of the dynamic-lattice simulation is that the virial pressure is $\sim 20$ GPa higher than its static-lattice counterpart.
+An immediate consequence of the higher kinetic and potentials energies in the dynamic-lattice simulation is higher virial pressure, about $20$ GPa higher than its static-lattice counterpart.
 Interestingly, this brings the dynamic-lattice QMC pressures into better agreement with static-lattice vdW-DF pressures, as we saw in Fig.~\ref{fig:hsolid-p-vs-n} that the static-lattice QMC pressures are systematically lower by $\sim 15$ GPa.
 
 The energy-density and enthalpy-pressure relations from the dynamic-lattice simulations are shown relative to the same reference EOS eq.~\ref{eq:hsolid-drum-ref} in Fig.\ref{fig:dynamic-qmc-vs-drummond}.
+Figure~\ref{fig:dynamic-qmc-vs-drummond}(a) shows the total energy as a function of density.
+We first note that due to ZPE, the window of energy is shifted up by roughly $500$ meV/p from its static-lattice counterpart Fig.~\ref{fig:static-qmc-vs-drummond}(a).
+Second, the relative energy among molecular structures remain similar.
+The C2/c-24 and Cmca-12 structures remain almost degenerate at all densities, whereas the Cmca-4 transitions from being $20$ meV/p higher in energy at $r_s=1.31$ to being the lowest-energy structure at sufficiently high density.
+The transition density for Cmca-4 does decrease significantly, from $r_s=1.19$ in the static-lattice case to $r_s=1.25$ when ZPE is included.
+In contrast, the overall trend of the molecular-phase total energy is noticeably changed by the inclusion of ZPE.
+Instead of staying flat relative to the reference EOS, the dynamic-lattice energies of the molecular structures all trend upwards.
+%This indicates that proton zero-point motion destabilizes the molecular phase more at high density than it does at low density.
+Similar effects can be observed in the atomic-phase energy-density relation, although the overall upward shift due to ZPE is about $40$ meV/p less.
+In summary, ZPE stabilizes the atomic phase by roughly $40$ meV/p and the Cmca-4 phase by $10$ meV/p relative the C2/c-24 and Cmca-12 without changing the relative angles at which their EOSs cross.
 
+The enthalpy-pressure relation in Fig.~\ref{fig:dynamic-qmc-vs-drummond}(b) tells the same story and we can read off the transition pressures among the candidate structures.
+We see a transition from C2/c-24 to Cmca-4 at around 500 GPa, then a molecular-to-atomic transition around 650 GPa from Cmca-4 to I4$_1$/amd.
+The calculated transition pressure to the atomic phase is $150$ GPa higher than the previous QMC calculation~\cite{McMinis2015} and a reported experimental observation~\cite{Silvera2017}.
+However, the previous calculation used the harmonic approximation to calculate proton ZPE, while the experiment made little characterization of the final sample and has yet to be reproduced.
+As such, a $650$ GPa transition pressure is not outside the realm of possibilities.
+Admittedly, the current approach has its own drawbacks.
+The most concerning approximation is the use of static-lattice orbitals in the electron-ion wave function eq.~(\ref{eq:hsolid-ei-wf}).
+%h5ca/frozen_dE_vs_r.eps
+This ``frozen orbital'' approach incurs around $80$ meV/p more fixed-node error than a Born-Oppenheimer wave function fully-optimized at each new geometry, although this error cancels well between molecular and atomic phases.
+
+% exclude Cmca-4 rs=1.22
+\begin{figure}[h]
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117dd_e-vs-rho}
+(a) energy-density relation
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117dd_h-vs-p}
+(a) enthalpy-pressure relation
+\end{minipage}
+\caption{Dynamic-lattice energy and enthalpy relative to reference. Lines are quadratic fits. The crossed out points are excluded from the fit.}
+\label{fig:dynamic-qmc-vs-drummond}
+\end{figure}
 
 \subsection{Effect of Dynamic Ions on Electronic Correlation Functions}
 
@@ -602,6 +634,28 @@ The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures 
 
 \subsection{Proton-proton g(r) and S(k)}
 
+The proton-proton pair correlation function of all candidate structures at $r_s\approx1.25$ are shown in Fig.~\ref{fig:hsolid-ppgrsk}(a).
+Every molecular structure has a peak at the molecular bond length.
+In agreement with the DFT bond lengths shown in Fig.~\ref{fig:hsolid-vdw-ca}(b)
+C2/c-24 at $1.35$ bohr. Cmca-4 at $1.40$ bohr. The Cmca-12 structure is in between.
+The C2/c-24 and Cmca-12 structures have remarkably similar pp g(r).
+Since they are almost degenerate over the entire density range explored, we can infer that the slight monoclinic distortions of their unit cells and the small differences in molecular bond lengths do not contribute significantly to the total energy. The less distorted C2/c-24 structure is more stable.
+The Cmca-4 structure is significantly different from C2/c-24. It has second- and third-nearest neighbor peaks at $2$ and $3$ bohr, respectively, rather than C2/c-24's $2.5$ and $3.2$. The size and shape of these peaks in Cmca-4's pp $g(r)$ are more similar to those in the atomic structure than the other molecular candidates.
+
+The long-range fluctuation and order of the protons can be observed in the proton-proton static structure factor. Its fluctuating part is shown in Fig.~\ref{fig:hsolid-ppgrsk}(b).
+All three molecular candidates have very similar levels of long-range fluctuations, whereas the atomic structure has significantly more.
+The molecular structures have more crystalline signatures than the atomic phase.
+As shown in Fig.~\ref{fig:hsolid-ppgrsk}(c), after spherical average, each molecular structure has at least three Bragg peaks, while the atomic structure has only one.
+The C2/c-24 and Cmca-12 Bragg peaks have very similar intensities and remain relatively unchanged by pressure.
+However, the Cmca-4 structure's most intense Bragg peak is comparable with that in the atomic structure and decreases in intensity as pressure increases.
+Finally, the long wavelength limit of the static structure factor can be related to the isothermal compressibility $\kappa\equiv n(\dfrac{\partial P}{\partial n})\vert_T$
+\begin{align}
+nk_BT\kappa = S(\bs{0}),
+\end{align}
+where $n$ is the density. We can extract the long wavelength limit of the pp $S(k)$ by fitting its fluctuating part to a quadratic polynomial as shown in Fig.~\ref{fig:hsolid-ppgrsk}(a).
+The value of the fit extrapolated to $k=0$ is shown as a function of pressure for all candidates in Fig.~\ref{fig:hsolid-ppgrsk}(d).
+The compressibility of C2/c-24 is approximately independent of pressure, whereas that of the Cmca structures and the atomic structure increase with pressure at a similar rate.
+The atomic structure is twice as compressible as the molecular structures at all pressures.
 
 \begin{figure}[h]
 \centering
@@ -615,25 +669,22 @@ The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures 
 \includegraphics[width=\linewidth]{h117gd_sk0-s2}\\
 (b) static structure factor $S(k)$
 \end{minipage}
-\caption{Proton-proton pair correlation functions around $r_s=1.25$ ($480$ GPa). The solid lines in (b) are quadratic fits to the smooth part of $S(k)$. The Bragg peaks of the pp $S(k)$ and $S(0)$ are shown in Fig.~\ref{fig:sg-vs-pgpa} as functions of pressure.}
-\label{fig:hsolid-ppgrsk}
-\end{figure}
-
-\begin{figure}[h]
 \centering
 \begin{minipage}{0.49\textwidth}
 \centering
 \includegraphics[width=\linewidth]{h117gd_ppsk-peaks-vs-pgpa}\\
-(a) Bragg peaks
+(c) Bragg peaks of pp $S(k)$
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
 \includegraphics[width=\linewidth]{h117gd_ppsk-k0-vs-pgpa}\\
-(b) long wavelength limit
+(d) long wavelength limit
 \end{minipage}
-\caption{Bragg peak and long wavelength limit of the proton-proton static structure factor as functions of QMC EOS pressure.}
-\label{fig:sg-vs-pgpa}
+\caption{Proton-proton pair correlation functions around $r_s=1.25$ ($480$ GPa). The solid lines in (b) are quadratic fits to the smooth part of $S(k)$. (c) Bragg peaks of the pp $S(k)$ (d) long wavelength limit $S(0)$.  $\vert\bs{G}_1\vert\approx 1.81$ bohr$^{-1}$, $\vert\bs{G}_2\vert\approx 1.87$ bohr$^{-1}$ for all three molecular structures. $\vert\bs{G}_3\vert\approx 2.5$ for C2/c-24 and Cmca-4 and $1.93$ for Cmca-12. The atomic structure's Bragg peak can be found between $1.83$ and $1.88$ bohr$^{-1}$. The same outliers as Fig.~\ref{fig:dynamic-qmc-vs-drummond} are excluded from the quadratic fits in (d).}
+\label{fig:hsolid-ppgrsk}
 \end{figure}
+
+\subsection{Conclusion}
 
 
 %\subsection{Time Step and Population Control Biases}
