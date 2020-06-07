@@ -1,4 +1,15 @@
 \section{Effective One-Particle Theories}
+The most widely used ground-state QMC method, FP-DMC, requires a trial wave function $\Psi_T$ to start the imaginary time projection process.
+The node of $\Psi_T$ directly controls the one uncontrolled error, the fixed-node error, in the DMC total energy.
+Even bosonic details of $\Psi_T$ can matter to observables that do not commute with the hamiltonian due to the mixed-estimator error.
+Further, the complexity of $\Psi_T$ affects the efficiency of a DMC run, because $\Psi_T$ and many its derivatives need to be evaluated at every step.
+Therefore, accurate and compact trial wave functions are crucial for practical high-accuracy DMC simulations.
+
+While it is possible to construct such trial wave functions analytically~\cite{Holzmann2003,Holzmann2006,Pierleoni2008}, the process is rather involved and requires deep understanding of the particular system being simulated.
+For a generic material, it is much easier to base the many-body trial wave function on existing mean-field theory or effective one-electron theory that approximately include some effects of electron correlation.
+%to construct a non-interacting trial wave function  to construct a trial wave function
+This chapter introduces one theory in each of these two categories.
+
 \subsection{Hartree-Fock}
 
 \subsubsection{The Hartree-Fock Equations}
@@ -105,11 +116,11 @@ Even when the complete basis set limit is reached, the HF solution is still not 
 One way to account for correlation effects is to perform a determinant expansion eq.~(\ref{eq:method-hf-ci}).
 The virtual orbitals can be used to construct N-electron determinants that differ from the HF ground state by changing orbital occupation.
 These determinants form a many-body basis, in which any wave function can be expressed as a linear combination.
-This leads to the configuration interaction (CI) expansion, where the exact electronic ground state is expanded in many-body bases of increasing sizes
+This leads to the configuration interaction (CI) expansion, where the exact electronic ground state is expanded as a sum of determinants
 \begin{align} \label{eq:method-hf-ci}
 \psi_0 = \lim\limits_{M\rightarrow\infty}\sum\limits_{i=0}^{M} c_i \ket{D_i}.
 \end{align}
-If all determinants that differ by one particle-hole excitation from reference are considered, then we obtain a CI singles (CIS) expansion. If these and all determinants with two particle-hole excitations are considered, then the expansion is CI singles and doubles (CISD), etc..
+If all determinants that differ by one particle-hole excitation from reference are considered, then we obtain a CI singles (CIS) expansion. If these and all determinants with two particle-hole excitations are considered, then the expansion is CI singles and doubles (CISD), etc.. If all excitations among a set of ``active'' orbitals are considered, then the expansion is said to involve the complete active space (CAS).
 
 \subsubsection{Static and Dynamic Correlation}
 The ground state is said to have \textit{static correlation} if one or more determinants in the exact expansion eq.~(\ref{eq:method-hf-ci}) are nearly degenerate with the reference determinant.

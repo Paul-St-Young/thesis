@@ -1,6 +1,6 @@
 \chapter{Methods} \label{chap:method}
 \section{Classical Monte Carlo}
-The Monte Carlo methods mentioned in this thesis perform high-dimensional integrals by using random numbers to sample probability distributions. These distributions must be non-negative in the entire domain of ``states'' over which they are defined. In classical mechanics, a ``state'' of N particles in $3$ dimensions is labeled by the positions $\bs{r}\equiv\{\bs{r}_i\}$ and momenta $\bs{p}\equiv\{\bs{p}_i\}$ of the particles $i=1,\dots,N$. The classical partition function for the canonical ensemble
+The Monte Carlo methods mentioned in this thesis perform high-dimensional integrals by using random numbers to sample probability distributions. These distributions must be non-negative in the entire domain of ``states'' over which they are defined. In classical mechanics, a ``state'' of N particles in $3$ dimensions is labeled by the positions $\bs{R}\equiv\{\bs{r}_i\}$ and momenta $\bs{P}\equiv\{\bs{p}_i\}$ of the particles $i=1,\dots,N$. The classical partition function for the canonical ensemble
 \begin{align} \label{eq:classical-nvt-part}
 Z \equiv \text{Tr}(e^{-H/k_BT}) = \dfrac{1}{N!h^{3N}} \int d^{3N}\bs{R} d^{3N}\bs{p}~e^{-H(\bs{R}, \bs{P})/k_BT},
 \end{align}
@@ -163,7 +163,7 @@ e^{-\tau V(\bs{R})}
 The two terms in eq.~(\ref{eq:dmc-green}) are the Green function for diffusion and weight accumulation.
 The quantumness $\lambda=\frac{\hbar^2}{2m}$ of the particle determines its diffusion constant in imaginary time. Lighter particles diffuse ``faster''. One can, in principle, start with any classical system $\bs{R}$, apply the Green functions repeatedly to update $\bs{R}$, and eventually end up sampling the mixed distribution $\braket{\Psi_T|\Psi_0}$.
 
-While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the classical system due to the potential term goes to zero or infinity exponentially fast, specially when two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
+While eq.~(\ref{eq:dmc-omixed})-(\ref{eq:dmc-green}) contain the main idea behind the DMC method, they do not result in a practical algorithm. The weight of the classical system due to the potential term goes to zero or infinity exponentially fast, especially when two charged particles coalesce. For a stable algorithm, one can modify the Green function eq.~(\ref{eq:dmc-green}) to more directly sample the mixed distribution
 \begin{align}
 f(\bs{R},t) \equiv \Psi_T^*(\bs{R}) e^{-t(H-E_T)}\Psi_T(\bs{R}) \underset{t\rightarrow\infty}{=} \Psi_T^*(\bs{R})\Psi_0(\bs{R}),
 \end{align}
@@ -280,7 +280,7 @@ This approximation uses a trial density matrix to restrict the space of paths th
 Any Monte Carlo move that constructs a path which crosses the node of the trial density matrix is rejected.
 This restricted path integral Monte Carlo (RPIMC) method was proved to be exact if the node of the trial density matrix is exact.
 
-The sign problem manifests rather differently in DMC than in PIMC.
+The sign problem manifests rather differently in DMC than it does in PIMC.
 If one runs the bosonic DMC algorithm eq.~(\ref{eq:dmc-dfdt}) using the absolute value of a fermionic trial wave function $\vert\Psi_T\vert$ as guiding function, then the drift vector eq.~(\ref{eq:dmc-drift}) will diverge as a walker approaches the node of $\Psi_T$, pushing the walker away.
 This trapping effect greatly diminishes the chance that a walker can cross the node.
 Thus, the walker distribution will approach the bosonic solution in this positive nodal pocket.

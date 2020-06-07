@@ -1,14 +1,5 @@
 \chapter{Introduction}
 
-\begin{comment}
-%Exact simulation of electron-ion systems is the grand challenge of this century.
-Exact simulation of the homogeneous electron gas was the holy grail of the last century. It has led to quantitative understanding of metals and semiconductors as well as the popular local density approximation of the density functional which opened the flood gates on countless materials simulations. However, the grand challenge of this century is the exact simulation of electron-ion systems.
-While the jellium model mimic many essential features of electrons in real materials, valence electrons in real materials interact with point charges (nuclei) and the surrounding inner electrons that screen them.
-To complicate matters, these nuclei form a crystalline arrangement only on average. They move around and can change the electronic structure significantly. Even at absolute zero, the zero-point motion of the ions can still be the deciding factor of the stability between two candidate crystal structures.
-The electron-ion problem is far from being solved.
-Along with excited states.
-\end{comment}
-
 \section{The Electron-Ion Problem}
 The ultimate goal of this thesis is the accurate simulation of a many-body system of charged particles in the non-relativistic limit.
 This goal was not achieved, but some progress has been made.
@@ -122,12 +113,11 @@ These advantages allowed us to obtain excellent agreement with experiment using 
 In addition to alkaline metals, elemental insulators, e.g., diamond carbon and silicon, remain important testing grounds for electronic QMC methods. Accurate and practical prediction of excitation energies using QMC is still an active area of research. We make some progress in chapter~\ref{chap:gap} by reducing finite-size error in bandgap calculations.
 
 \section{Thesis Outline}
-The remainder of this thesis is organized as follows. In chapter~\ref{chap:method}, I start by introducing the effective one-particle electronic structure methods used to generate trial wave function for QMC methods.
-I then introduce the Monte Carlo methods that we use to accurately treat electron correlation in the electronic problem as well as to solve the full electron-ion problem at times.
-chapter~\ref{chap:sj-wf} introduces the Slater-Jastrow wave function while chapter~\ref{chap:fsc} discusses many-body finite-size correction.
-Both are crucial for accurate and practical QMC simulations.
+The remainder of this thesis is organized as follows. In chapter~\ref{chap:method}, I start by introducing the Monte Carlo methods that we use to accurately treat electron correlation in the electronic problem as well as to solve the full electron-ion problem at times. I then introduce the effective one-particle electronic structure methods used to generate trial wave function for the aforementioned QMC methods.
+Chapter~\ref{chap:sj-wf} displays the form and properties of the Slater-Jastrow wave function in detail, while chapter~\ref{chap:fsc} discusses many-body finite-size correction, sometimes based on the properties of the many-body wave function.
+Both wave function form and finite-size correction are crucial for accurate and practical QMC simulations.
 The next four chapters display accurate QMC results for a few simple electron-ion systems.
-chapter~\ref{chap:na-mol} benchmarks the QMC method as a complete solver for the electron-ion problem without invoking the BOA.
-chapter~\ref{chap:hsolid} applies this dynamic-ion QMC method to solve for the ground state of solid hydrogen.
-chapter~\ref{chap:licp} considers the effect of the ions on the momentum distribution of the valence electrons in lithium within the BOA.
+Chapter~\ref{chap:na-mol} benchmarks the QMC method as a complete solver for the electron-ion problem without invoking the BOA on small atoms and molecules.
+Chapter~\ref{chap:hsolid} applies this dynamic-ion QMC method to solve for the ground state of solid hydrogen.
+Chapter~\ref{chap:licp} considers the effect of the ions on the momentum distribution of the valence electrons in lithium within the BOA.
 Finally, chapter~\ref{chap:gap} presents an improved finite-size correction to the (purely electronic) bandgap calculated in QMC.

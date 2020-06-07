@@ -29,11 +29,12 @@ sorting=none
 \addbibresource{sections/books}
 \addbibresource{sections/wf}
 \addbibresource{sections/fsc}
-\addbibresource{sections/nad-ref.bib}
+\addbibresource{sections/nad-ref}
 \defbibheading{general}{\section{References}}
 \defbibheading{all}{\chapter{References}}
-\addbibresource{papers/licp/licp-ref.bib}
-\addbibresource{papers/nonbo/nonbo-ref.bib}
+\addbibresource{papers/licp/licp-ref}
+\addbibresource{papers/bandgap/bandgap}
+%\addbibresource{papers/nonbo/nonbo-ref}
 \addbibresource{ref}
 
 %% try chapter bib
@@ -105,30 +106,27 @@ sorting=none
 %\include{sections/lists}
 \mainmatter
 
-%\include{sections/introduction}
+\include{sections/introduction}
 
-%\input{sections/monte-carlo}
-%\input{sections/mean-field-theory}
-%\include{sections/slater-jastrow}
-%\include{sections/finite-size-correction}
+\input{sections/monte-carlo}
+\input{sections/mean-field-theory}
+\include{sections/slater-jastrow}
+\include{sections/finite-size-correction}
 
-%\chapter{Benchmark of dynamic-ion DMC on small molecules} \label{chap:na-mol}
-%%\include{papers/nonbo/nonbo-chapter}
+\include{papers/nonbo/nonbo-chapter}
 
 \include{sections/hsolid-intro}
 \include{sections/hsolid-results}
-%\include{papers/hsolid/hsolid-chapter}
+%%\include{papers/hsolid/hsolid-chapter}
 
-%\chapter{Effect of ions on the electronic momentum distribution} \label{chap:licp}
-%%\include{papers/licp/licp-chapter}
-%
-%\chapter{Finite-size correction to the fundamental gap of insulators} \label{chap:gap}
-%%\include{papers/bandgap/bandgap-chapter}
+\include{papers/licp/licp-chapter}
 
-%\begin{appendices}
-%\input{sections/nad-h2} % Beyond BO/Tutorial/h2_summary
-%\input{sections/mbh2}
-%\end{appendices}
+\include{papers/bandgap/bandgap-chapter}
+
+\begin{appendices}
+\input{sections/nad-h2} % Beyond BO/Tutorial/h2_summary
+\input{sections/mbh2}
+\end{appendices}
 
 %\bibliographystyle{unsrt}
 \printbibliography
