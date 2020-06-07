@@ -24,7 +24,7 @@
 
 \section{Introduction}
 Insulator and semiconductors are characterized by a non-vanishing {\it fundamental gap}
-\cite{book}, 
+\cite{Martin2016}, 
 defined in terms of the ground state energies of a system of fixed ions as the number of electrons is varied:
 \beq
 \Delta_{N_e} = E_0(N_e+1)+ E_0(N_e-1)- 2 E_0(N_e)
@@ -34,15 +34,15 @@ where $E_0(N_e)$ is the ground-state energy of an $N_e$ electron system.
 
 Within density functional theory (DFT), it is common to interpret the eigenvalues of the
 Kohn-Sham equations as excitation energies, the gap being the minimum excitation energy. However, the resulting band gap
-within the local density approximation (LDA) is typically found to be too small \cite{Perdew}.
+within the local density approximation (LDA) is typically found to be too small \cite{Perdew1985}.
 This qualitative failure can be alleviated
 either by hybrid functionals or by adding corrections based on GW many-body perturbation theory,
-although the precise value depends on the underlying functional and approximation scheme involved \cite{book}.
+although the precise value depends on the underlying functional and approximation scheme involved \cite{Martin2016}.
 In principle, the fundamental gap can be calculated from any method for ground-state energies
 based on the above formula.
 High-precision methods for correlation energies as, for example, provided
-by quantum Monte Carlo (QMC) \cite{rev1,rev2,rev3,Ruggeri18} or coupled cluster methods
-\cite{Shepherd13,Gruber18} can be used.  
+by quantum Monte Carlo (QMC) \cite{Foulkes2001,Kolorenc2011,Wagner2016,Ruggeri2018a} or coupled cluster methods
+\cite{Shepherd2013,Gruber2018} can be used.  
 In this work, we propose a method for accurate calculations of the fundamental gap
 within explicitly correlated methods and demonstrate its use with fixed-node diffusion Monte Carlo (DMC) benchmark studies on solid H$_2$,  C, and Si.
 
@@ -53,25 +53,25 @@ are usually applied to finite-sized systems, e.g.,
 %been pointed out previously \cite{Williamson98,Kent98,Kent99}.
 limited to supercells containing only few unit cells.
 QMC calculations of single-particle excitations for adding and removing electrons 
-\cite{Kent98,Kent99,Mitra15,McMinis15} crucially rely on the imposed extrapolation law
-(e.g., finite-size error $\propto 1/L$ in Ref.~\cite{McMinis15} opposed to $1/L^3$ in Ref.~\cite{Mitra15}, where $L$ denotes the linear extension of the supercell). This introduces considerable uncertainty in the results.
+\cite{Kent1998,Kent1999,Mitra2015,McMinis2015} crucially rely on the imposed extrapolation law
+(e.g., finite-size error $\propto 1/L$ in Ref.~\cite{McMinis2015} opposed to $1/L^3$ in Ref.~\cite{Mitra2015}, where $L$ denotes the linear extension of the supercell). This introduces considerable uncertainty in the results.
 Heuristically, single-particle excitations are expected to converge slowly for electronic systems,
 inversely proportional to $L$,
-due to the interaction of charges across the periodic boundaries \cite{Payne,Engel}.
+due to the interaction of charges across the periodic boundaries \cite{Makov1995,Engel1995}.
 Extrapolations with respect to the size of the supercells are then
 essential to obtain reliable values of the gap in the thermodynamic limit.
 
 Most of the QMC calculations 
-\cite{Ceperley87,Mitas94,Williamson98,Towler2000,Kolorenc08,Ma13,Wagner14,Yu15,Zheng18,Frank19} 
+\cite{Ceperley1987,Mitas1994,Williamson1998,Towler2000,Kolorenc2008,Ma2013,Wagner2014,Yu2015,Zheng2015,Frank2019} 
 have therefore addressed charge-neutral, particle-hole excitations,
 where faster convergence with respect to the size of the supercell is expected.
-Although the comparison with experiment is appealing \cite{rev3}, 
-a later, more extended DMC study \cite{Hunt} of simple semiconductor materials
+Although the comparison with experiment is appealing \cite{Wagner2016}, 
+a later, more extended DMC study \cite{Hunt2018} of simple semiconductor materials
 with larger supercells observed a $1/L$ dependence of the gap on the size of the supercell
 for both charged single-particle and charge-neutral particle-hole excitations.
 In addition, 
 fixed-node energy differences are not constrained to be upper bounds for particle-hole excitations
-\cite{Foulkes99} since orthogonality to the ground state cannot be strictly guaranteed.
+\cite{Foulkes1999} since orthogonality to the ground state cannot be strictly guaranteed.
 Furthermore, all QMC calculations so far have addressed excitations at selected
 symmetry points contained inside the supercell of the simulation.
 The fundamental gap was then estimated indirectly by introducing 
@@ -86,7 +86,7 @@ and are related to the dielectric constant of the material. Such effects
 can be understood and corrected for by using
 the long wavelength properties of the electronic
 structure factor. 
-For that, we extend the approach described in Refs.~\cite{fse,finitesize} 
+For that, we extend the approach described in Refs.~\cite{Chiesa2006,Holzmann2016} 
 which discusses the correction
 of finite size effects on the ground-state energy
 based on information contained in the static correlation functions of the finite system.
@@ -132,8 +132,8 @@ the phase of the many-body wave function changes by $\theta$.
 The ground-state energy then depends on the twist angle, $E_0(N_e,\theta)$. 
 Twist averaging
 can significantly accelerate convergence 
-to the thermodynamic limit \cite{Lin01}.
-Within the grand-canonical ensemble \cite{fse,finitesize}, the optimal number
+to the thermodynamic limit \cite{Lin2001}.
+Within the grand-canonical ensemble \cite{Chiesa2006,Holzmann2016}, the optimal number
 of electrons ${\bar N}_e(\theta)$ will depend  on $\theta$ for given chemical potential $\mu$. To fix nomenclature, we define the
 \emph{mean electronic density},
 \begin{equation} \label{eq:ne}
@@ -195,21 +195,21 @@ Size corrections as discussed in the text are included.
 
 A key quantity in understanding size effects is the long wavelength behavior of the static structure factor,
 $S_{N_e}(\kvec)=\langle \rho_{-\kvec} \rho_{\kvec} \rangle/N_e$, where $\rho_\kvec=\sum_j e^{i \kvec \cdot \rvec_j}$ is the Fourier transform of the instantaneous electron density.
-The structure factor for a homogeneous system obeys the bound \cite{Ceperley87,book},
+The structure factor for a homogeneous system obeys the bound \cite{Ceperley1987,Martin2016},
 \beq
 S_{N_e}(k) \le \frac{\hbar k^2}{2m \omega_p}\left( 1 - \frac{1}{\epsilon_k} \right)^{1/2},
 \label{davidbound}
 \eeq
 where $\omega_p=4 \pi \hbar^2 e^2 n_e/m$ is the plasma frequency and $\epsilon_k$ the static dielectric constant for wavevector $k$ (to simplify the notations, we will suppress the dependence on the wave vector in the following). This inequality is derived by applying the plasmon-pole approximation to the sum rules of the dynamic structure factor $S(k, \omega)$. It implies that the structure factor must vanish quadratically as
-$k \rightarrow 0$ \cite{Nozieres}.
+$k \rightarrow 0$ \cite{Nozieres1989}.
 Equality will be obtained if $S(k,\omega)$ reduces to a single delta function at small $k$.
 The $1/N_e$ finite-size corrections of the energy per electron is a direct consequence of
-this behavior of $S_{N_e}(k)$ \cite{fse}. However, these leading order corrections are not sufficient for excitation energies, since the energy gap is of the same order as finite-size corrections to the total energy.
+this behavior of $S_{N_e}(k)$ \cite{Chiesa2006}. However, these leading order corrections are not sufficient for excitation energies, since the energy gap is of the same order as finite-size corrections to the total energy.
 
 As we will show below, the key to understanding size effects of energy differences is encoded in the change of $S_{N_e}(k)$ as electrons are added or removed. In particular, the limiting behavior of $S_{N_e\pm 1}(k)$ as $k\rightarrow0$ will provide the dominant finite-size correction.
 
 For concreteness, we will assume a Slater-Jastrow form for the ground-state wave function
-$\Psi_0 \propto D \exp[-U]$. The determinant, $D$, is built out of Bloch orbitals, $\phi_{\qvec n}(\rvec)$ with $\qvec$ inside the first Brillouin zone, $n$ is the band index, and $U$ is a general, symmetric $n$-body correlation factor \cite{nbody}. For simplicity, we assume it is two body: $U=\sum_{i<j} u(r_i,r_j)$.  
+$\Psi_0 \propto D \exp[-U]$. The determinant, $D$, is built out of Bloch orbitals, $\phi_{\qvec n}(\rvec)$ with $\qvec$ inside the first Brillouin zone, $n$ is the band index, and $U$ is a general, symmetric $n$-body correlation factor \cite{Holzmann2006}. For simplicity, we assume it is two body: $U=\sum_{i<j} u(r_i,r_j)$.  
 Let us consider the action of $e^{i \kvec \cdot \rvec_j}$ on a single-particle orbital
 $\phi_{\qvec n}(\rvec_j)$ in the Slater determinant of the ground state.
 In the limit of small $\kvec$,  
@@ -232,10 +232,10 @@ hole orbital, we get
 \label{limitk}
 \eeq
 for $k \ne 0$, where different signs for particle or hole excitations on the r.h.s. are chosen to match 
-the most common sign convention, e.g., of Ref.~\cite{Kohn58}. The limit $k \to 0$ is discontinuous since 
+the most common sign convention, e.g., of Ref.~\cite{Kohn1958}. The limit $k \to 0$ is discontinuous since 
 $\rho_{\kvec=0} \Psi_0(N_e \pm 1;\qvec, m)\equiv (N_e \pm 1)\Psi_0(N_e \pm 1;\qvec, m)$.
 
-Kohn \cite{Kohn57,Kohn58} has pointed out that in the insulating state, the matrix elements
+Kohn \cite{Kohn1957,Kohn1958} has pointed out that in the insulating state, the matrix elements
 \bea
 \lim_{\qvec' \to \qvec} \langle \Psi_0(N_e \pm 1;\qvec, m) | \rho_{\qvec-\qvec'} |
 \Psi_0(N_e \pm 1;\qvec', m) \rangle = \pm \frac1{\epsilon}
@@ -274,11 +274,11 @@ v_M=
 \sim L^{-1} \sim N_e^{-1/3}.
 \label{vMdef}
 \eeq
-For the Coulomb potential, $v_M$ is proportional to $L^{-1}$, the inverse linear extension of the simulation cell. The negative proportionality constant  depends on the boundary conditions, e.g., cell geometry, and can be calculated by the Ewald image technique \cite{Ewald}.
+For the Coulomb potential, $v_M$ is proportional to $L^{-1}$, the inverse linear extension of the simulation cell. The negative proportionality constant  depends on the boundary conditions, e.g., cell geometry, and can be calculated by the Ewald image technique \cite{Ewald1921}.
 
 \subsection{Kinetic energy}
 
-Following Ref.~\cite{finitesize}, we now discuss the kinetic energy
+Following Ref.~\cite{Holzmann2006}, we now discuss the kinetic energy
 contribution $\hbar^2 [\nabla U]^2/2m$ which arises from electron correlation.
 For a two-body Jastrow, $U=\sum_\kvec u_k \rho_\kvec  \rho_{-\kvec}/2 V$, and we are only
 interested in the long-wavelength limit, $k \to 0$, of the electron-electron 
@@ -307,7 +307,7 @@ contribute to the leading order size corrections with
 \end{eqnarray}
 where $c= \lim_{ k \to 0} n_e \hbar^2 k^2u_k^2/(mv_k)$ is approximately given by the ratio of the $1/N_e$ finite-size
 corrections of the kinetic to potential energy of the ground state energy per particle due to
-two-body correlations \cite{finitesize}.
+two-body correlations \cite{Holzmann2016}.
 
 \subsection{Total gap corrections from Coulomb singularity}
 
@@ -322,7 +322,7 @@ this proportionality factor is indeed given by the dielectric constant
 \label{gapepsilon}
 \eeq
 as phenomenologically
-assumed in previous work \cite{Engel,Hunt}.
+assumed in previous work \cite{Engel1995,Hunt2018}.
 
 We prove this by an independent argument based on commutation relations.
 Let us denote the exact insulating ground state of the $N_e$ electron system as $|\Psi_0^{N_e} \rangle$, its energy as $E_0^{N_e}$, and the exact excited state of the $N_e\pm 1$ electron system as $|\Psi_\kvec^{N_e\pm 1} \rangle$ with energy $E_\kvec^{N_e\pm 1}$; $\kvec$ indicates that the additional/subtracted electron adds/subtracts the crystal momentum $\kvec$.
@@ -395,7 +395,7 @@ and
 -\frac12 \left[1+ \frac{1}{\epsilon}\right].
 \eea
 Both relations can be obtained \cite{footnote} by extending Kohn's diagrammatic approach 
-\cite{Kohn58} (see Supplemental Material~\cite{supp}).
+\cite{Kohn1958} (see Supplemental Material~\cite{supp}).
 Integrating around the $v_q$ singularity for small $q$ in Eq.~(\ref{Veecom}),
 we obtain the leading order finite size corrections. As before, this involves the Madelung constant,
 Eq~(\ref{vMdef}).
@@ -405,7 +405,7 @@ in the hole channel, $\frac{|v_M|}{2} \left(\frac{1}{\epsilon} + 1 \right)$.
 The corrections independent of $\epsilon$ correspond to the change in the background charge which
 cancel for the fundamental gap and we obtain Eq.~(\ref{gapepsilon}).
 
-Previous, heuristic approaches \cite{Hunt} have suggested that one can use
+Previous, heuristic approaches \cite{Hunt2018} have suggested that one can use
 experimental or DFT values of the dielectric constant for finite-size extrapolation.
 Our approach further suggests that this value can be determined from
 the QMC structure factor extrapolated to zero wave vector
@@ -439,7 +439,7 @@ properties in the contribution of the direct Coulomb interaction.
 
 For inhomogeneous systems, it is convenient to separate the mean density from its
 fluctuating components in the
-static structure factor \cite{finitesize}, i.e.,
+static structure factor \cite{Holzmann2006}, i.e.,
 \bea
 S_{N_e}(\kvec) &= &\frac{1}{N_e} \langle \rho_\kvec \rangle \langle \rho_{-\kvec} \rangle + \delta S_{N_e}(\kvec),
 \\
@@ -449,7 +449,7 @@ S_{N_e}(\kvec) &= &\frac{1}{N_e} \langle \rho_\kvec \rangle \langle \rho_{-\kvec
 For crystals with periodic density distributions, the Fourier components
 of the mean density, $\langle \rho_\kvec \rangle$, only contribute for reciprocal lattice vectors, $\kvec \in \Gvec$. The long wavelength behavior of the structure factor is entirely
 due to the fluctuating part $\delta S_{N_e}(k)$, which therefore contains the leading order
-size effects \cite{finitesize}. However, the mean 
+size effects \cite{Holzmann2006}. However, the mean 
 single particle density,
 $\langle \rho(\rvec) \rangle=V^{-1} \sum_\kvec \langle \rho_\kvec \rangle e^{i \kvec \cdot \rvec}$, of the finite system may significantly differ from  the infinite one, particularly
 in cases where the supercell is not compatible with the full symmetry group of the crystal.
@@ -465,7 +465,7 @@ where we have explicitly indicated the $N_e$ and $\theta$ dependence on the expe
 on the r.h.s. For any single-particle theory, $\overline{\rho( \rvec )}$ approaches its thermodynamic
 limit for calculations at fixed $N_e$  by
 averaging over a dense grid of twist angles ($M_\theta \to \infty$). % due to Bloch's theorem.
-Within many-body calculations, twist-averaging \cite{Lin01} takes over a large part of this
+Within many-body calculations, twist-averaging \cite{Lin2001} takes over a large part of this
 property to any observable {\em linear} in the density. Here, we extend this approach to
 also correct the quadratic expression entering the two-body contributions
 of the total energy.
@@ -479,7 +479,7 @@ For the potential energy, this correction to the twist-converged QMC calculation
 - \overline{\rho_\kvec \rho_{-\kvec}} .
 \label{deltaV}
 \eea
-For the ground-state energies, this correction provides only a small improvement over our previous correction~\cite{fse,finitesize}.
+For the ground-state energies, this correction provides only a small improvement over our previous correction~\cite{Chiesa2006,Holzmann2006}.
 
 For the gap, many terms entering Eqs.~(\ref{deltaV}) cancel and the expression can be simplified. Let us consider the case of adding/removing one electron at twist $\phi$ to
 the insulating ground state, denoting $\Pi_\kvec^{\pm}$ the difference of the respective densities:
@@ -559,8 +559,8 @@ The horizontal lines mark experimental inverse dielectric constants.
 We have performed electronic QMC calculations on three insulating solids:
 molecular hydrogen at high pressure,
 and carbon and silicon in the diamond structure at zero pressure. Since we are interested in the
-spin-neutral charge gap, we used an equal number of spin-up and spin-down electrons. We used a Slater-Jastrow  trial wave function with backflow (BF) corrections \cite{Holzmann2003,Trial}. The Jastrow and BF functions were fully optimized within variational Monte Carlo, including the long-range (reciprocal lattice) contributions.
-The orbitals in the Slater determinant were taken from DFT calculations using Quantum Espresso~\cite{QE2009, QE2017}. The carbon and silicon orbitals were generated using the LDA functional, whereas the hydrogen orbitals were generated using the PBE functional, which has been shown to provide a good trial QMC wave function \cite{Morales2012,Pierleoni2016}.
+spin-neutral charge gap, we used an equal number of spin-up and spin-down electrons. We used a Slater-Jastrow  trial wave function with backflow (BF) corrections \cite{Holzmann2003,Pierleoni2008}. The Jastrow and BF functions were fully optimized within variational Monte Carlo, including the long-range (reciprocal lattice) contributions.
+The orbitals in the Slater determinant were taken from DFT calculations using Quantum Espresso~\cite{QE2009, QE2017}. The carbon and silicon orbitals were generated using the LDA functional, whereas the hydrogen orbitals were generated using the PBE functional, which has been shown to provide a good trial QMC wave function \cite{Morales2014,Pierleoni2016}.
 
 Molecular hydrogen was placed in the C2/c-24 structure \cite{Pickard2007} at two different densities ($r_s=1.38$ and $r_s=1.34$), roughly corresponding to pressures of 234 GPa and 285 GPa, respectively.
 Energies and structure factors were obtained from reptation Quantum Monte Carlo calculations using the BOPIMC code \cite{BOPIMC}. For carbon and silicon, DMC calculations have been performed with the QMCPACK code \cite{QMCPACK}
@@ -636,10 +636,10 @@ it is now feasible to address the systematic error due to the fixed node approxi
 To reduce this bias,
 we have added BF correlations in the Slater orbitals. Our BF correlations lower
 the SJ gap by $0.1$ eV for both, C and Si.
-Previous BF calculations \cite{Hunt} on Si have reported a $0.2$ eV lowering compared to SJ.
+Previous BF calculations \cite{Hunt2018} on Si have reported a $0.2$ eV lowering compared to SJ.
 The difference might be due to a different functional form or optimization procedure.
-A systematic study on the bias of the fixed-node approximation such as done with more general BF correlations \cite{BFN,orbitalbf} or
-multi-determinant trial wave functions \cite{Zhao19}, possible for small supercells,
+A systematic study on the bias of the fixed-node approximation such as done with more general BF correlations \cite{Ruggeri2018,Holzmann2019} or
+multi-determinant trial wave functions \cite{Zhao2019}, possible for small supercells,
 could be done in the future.
 
 So far, in our analysis of C and Si, we have imposed the experimentally known dielectric constant
@@ -725,7 +725,7 @@ static structural quantities. Excitation spectra, in particular, the single-part
 may be less well described.
 This has been found in many-body perturbation theory calculations within the $GW$ framework
 where all-electron calculations have been shown to lower the gap of C and Si by $\sim -0.3$ eV
-\cite{Wu02,GomezAbal08}
+\cite{Ku2002,Gomez-Abal2008}
 with respect to  pseudo-potentials calculations.
 Although the actual pseudo-potentials of our QMC simulations differ from those used in the
 $GW$ calculations, 
@@ -734,7 +734,7 @@ the all-electron correction of $GW$ to our QMC results.
 
 For lighter atoms, electron-phonon coupling leads to a further reduction of the
 gap values, even at zero temperature, due to the presence of zero point motion of the ions in
-the crystal. For C, $GW$ predicts a significant lowering of the gap by $-0.6$ eV \cite{Giustino10}, whereas a smaller shift between $-60$ meV \cite{Monserrat14} and $-0.1$ eV \cite{Lautenschlager85} is expected from DFT for Si. The effect of thermal expansion is to lower the gap by about 0.01 eV at room temperature for both carbon~\cite{Monserrat2014,Clark1963} and silicon~\cite{Monserrat2016,Logothetidis1986}, beyond the resolution of present calculations.
+the crystal. For C, $GW$ predicts a significant lowering of the gap by $-0.6$ eV \cite{Giustino2010}, whereas a smaller shift between $-60$ meV \cite{Monserrat2014} and $-0.1$ eV \cite{Lautenschlager1985} is expected from DFT for Si. The effect of thermal expansion is to lower the gap by about 0.01 eV at room temperature for both carbon~\cite{Monserrat2014,Clark1964} and silicon~\cite{Monserrat2016,Logothetidis1986}, beyond the resolution of present calculations.
 
 Considering both, the bias due to the pseudo-potential approximation and the neglect of 
 electron-phonon coupling, our BF-DMC calculations for C and Si overestimate the gap by $\sim 0.1-0.2$ eV
@@ -779,14 +779,13 @@ the neglect of electron-phonon coupling (e-ph).
 \hline\hline
 & $\Delta_{BF}$ & AE - PP & e-ph  & exp \\
 \hline
-C & 6.6(2) &   $-0.26$ ($G_0W_0$) \cite{GomezAbal08} & $-0.6$ ($GW$)~~\cite{Giustino10} & $5.48$ \cite{exp}\\
+C & 6.6(2) &   $-0.26$ ($G_0W_0$) \cite{Gomez-Abal2008} & $-0.6$ ($GW$)~~\cite{Giustino2010} & $5.48$ \cite{Madelung1987}\\
 \hline \\
-Si &  1.7(1)  & $-0.25$ ($G_0W_0$)\cite{GomezAbal08}  & $-0.06$ ($DFT$) \cite{Monserrat14} & $1.17$ \cite{exp} \\
+Si &  1.7(1)  & $-0.25$ ($G_0W_0$)\cite{Gomez-Abal2008}  & $-0.06$ ($DFT$) \cite{Monserrat2014} & $1.17$ \cite{Madelung1987} \\
  %&    &  & $-0.1$ ($DFT$) \cite{Lautenschlager85} & \\
 \hline\hline
 \end{tabular}
 \end{table}
-
 
 \section{Conclusions}
 \label{sec:bg-conclude}
@@ -809,7 +808,7 @@ ones. We have argued that the bias may be due to the pseudo-potential approximat
 
 We note that this procedure is not restricted to QMC calculations, but can be applied
 within any method which calculates the many-body wave functions and ground-state energies,
-e.g., for coupled cluster methods~\cite{Gruber18}. Our results for C and Si demonstrate that
+e.g., for coupled cluster methods~\cite{Gruber2018}. Our results for C and Si demonstrate that
 the bias due to the finite size supercell can be corrected for, so
 precise values in the thermodynamic limit can be obtained for small supercells
 without need for numerical extrapolation.
@@ -817,7 +816,7 @@ without need for numerical extrapolation.
 The procedure here has been developed for perfect crystals but can be generalized 
 to systems with disorder, either due to thermal or quantum effects. Furthermore, the procedure provides a starting point 
 to address optical, i. e.,  charge neutral excitations. Although neutral excitations are expected to be less sensitive to finite-size effects,
-recent calculations \cite{Hunt,Frank19} have observed the same slow $1/L$ decay for the 
+recent calculations \cite{Hunt2018,Frank2019} have observed the same slow $1/L$ decay for the 
 optical gap. Since it is often not practical to perform calculations for more than two significantly different supercell sizes, our method suggests that 
 the asymptotic behavior of the structure factor provides
 the needed insight to whether $1/L$ or $1/L^3$ should be used as a functional form for the
