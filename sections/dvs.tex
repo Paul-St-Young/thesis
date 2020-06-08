@@ -1,0 +1,130 @@
+\chapter{Derivation of Higher-order Band Gap Correction}
+
+Total potential energy
+\begin{align}
+V = \frac{N_e}{\Omega}\sum_{\bs{k}\neq\bs{0}} \frac{1}{2} v_k S_{\bs{k}},
+\end{align}
+where $S_{\bs{k}}\equiv\frac{1}{N_e}\braket{\rho_{\bs{k}}\rho_{-\bs{k}}}$. $\rho_{\bs{k}}\equiv \sum_{j=1}^{N_e} e^{i\bs{k}\cdot\bs{r}_j}$ is the electronic density in reciprocal space. $\Omega$ is system volume. $\braket{}$ denotes average over walker ensemble. The potential energy $V$ can be written as a sum of static (density) contribution and fluctuating contribution
+\begin{align}
+V = \left(
+\frac{1}{\Omega} \sum_{\bs{k}\neq\bs{0}}
+\frac{1}{2} v_k \braket{\rho_{\bs{k}}}\braket{\rho_{-\bs{k}}}
+\right) +
+\left(
+\frac{1}{\Omega}\sum_{\bs{k}\neq\bs{0}}
+\frac{1}{2} v_k  (\rho_{\bs{k}}-\braket{\rho_{\bs{k}}}) (\rho_{-\bs{k}}-\braket{\rho_{-\bs{k}}})
+\right).
+\end{align}
+The fluctuating part can be used to calculate leading-order finite-size correction to the band gap, where the static part leads to the next-to-leading-order correction.
+\begin{align}
+V_s \equiv \frac{1}{\Omega}\sum_{\bs{k}\neq\bs{0}} \frac{1}{2} v_k \braket{\rho_{\bs{k}}}\braket{\rho_{-\bs{k}}}.
+\end{align}
+The goal of this Appendix is to find the FSC formula for $V_s$. Assuming the finite-size error in the electron density can be fully recovered by twist-averaging, the infinite-system potential energy can be computed using the twist-averaged density $\overline{\braket{\rho_{\bs{k}}}}$, where twist average is denoted by overline
+\begin{align}
+V_s^{N\rightarrow\infty} = \frac{1}{\Omega}\sum_{\bs{k}\neq\bs{0}} \frac{1}{2} v_k \overline{\braket{\rho_{\bs{k}}}} \ \ \overline{\braket{\rho_{-\bs{k}}}}. \label{eq:vsinf}
+\end{align}
+Therefore, the FSC of $V_s$ is
+\begin{align}
+\delta V_s \equiv V_s^{N\rightarrow\infty} - V_s = \frac{1}{\Omega}\sum_{\bs{k}\neq\bs{0}} \frac{1}{2} v_k \left[ \overline{\braket{\rho_{\bs{k}}}} \ \ \overline{\braket{\rho_{-\bs{k}}}} -
+\braket{\rho_{\bs{k}}}\braket{\rho_{-\bs{k}}}
+\right].
+\end{align}
+$\braket{\rho_{\bs{k}}}$ differs from twist to twist, so there is one such correction for each twist. Define
+\begin{align}
+C_{\bs{k}} \equiv  \left[ \overline{\braket{\rho_{\bs{k}}}} \ \ \overline{\braket{\rho_{-\bs{k}}}} -
+\braket{\rho_{\bs{k}}}\braket{\rho_{-\bs{k}}}
+\right], \label{eq:ck}
+\end{align}
+then the FSC of the potential energy is%, with the summand plotted for Si in Fig.~\ref{fig:si-cbyk2}
+\begin{align}
+\delta V_s = \frac{2\pi}{\Omega} \sum_{\bs{k}\neq\bs{0}} C_{\bs{k}}/k^2.
+\end{align}
+In simulation, we assemble the $MN_e+1$ system with varying density at each twist
+\begin{align} \label{eq:rkt}
+\rho_{\bs{k}}^{MN_e\pm 1} = \sum\limits_{\bs{\theta}}
+\left(\braket{\rho_{\bs{k}}}_{N_e\pm1, \bs{\phi}}-\braket{\rho_{\bs{k}}}_{N_e, \bs{\phi}}\right)\delta_{\bs{\theta}, \bs{\phi}}+
+\braket{\rho_{\bs{k}}}_{N_e,\bs{\theta}}. 
+\end{align}
+The GCTA corrected charge density varies only at the target twist $\bs{\phi}$
+\begin{align} \label{eq:rkm}
+\overline{\rho_{\bs{k}}}^{MN_e\pm 1} = \sum\limits_{\bs{\theta}}
+\left(\braket{\rho_{\bs{k}}}_{N_e\pm1, \bs{\phi}}-\braket{\rho_{\bs{k}}}_{N_e, \bs{\phi}}\right)\delta_{\bs{\theta}, \bs{\phi}} + \overline{\rho_{\bs{k}}}^{N_e}.
+\end{align}
+The \emph{neutral mean density} $\overline{\rho_{\bs{k}}}^{N_e}$ has no dependence on the twist $\bs{\theta}$
+\begin{align}
+\overline{\rho_{\bs{k}}}^{N_e} \equiv \frac{1}{M_{\bs{\theta}}} \braket{\rho}_{N_e, \bs{\theta}}.
+\end{align}
+For simplicity, define the charge density of the particle/hole as
+\begin{align}
+\Pi_{\bs{k}} \equiv \braket{\rho_{\bs{k}}}_{N_e\pm1, \bs{\phi}}-\braket{\rho_{\bs{k}}}_{N_e, \bs{\phi}}.
+\end{align}
+Now, the GCTA correction can be clearly seen as the replacement of \emph{neutral twist density} $\braket{\rho_{\bs{k}}}_{N_e,\bs{\theta}}$ with \emph{neutral mean density} $\overline{\rho_{\bs{k}}}^{N_e}$
+\begin{align}
+\left\{
+\begin{array}{lrl}
+\rho_{\bs{k}}^{MN_e\pm 1} \equiv& \sum\limits_{\bs{\theta}} \rho^{N_e\pm1}_{\bs{k}}(\bs{\theta})
+=& \sum\limits_{\bs{\theta}}\left(
+\Pi_{\bs{k}}\delta_{\bs{\theta}, \bs{\phi}}+\braket{\rho_{\bs{k}}}_{N_e,\bs{\theta}}
+\right) \\
+\overline{\rho_{\bs{k}}}^{MN_e\pm 1} \equiv&  \sum\limits_{\bs{\theta}} \overline{\rho_{\bs{k}}}^{N_e\pm1}(\bs{\theta})
+=& \sum\limits_{\bs{\theta}}\left(
+\Pi_{\bs{k}}\delta_{\bs{\theta}, \bs{\phi}} + \overline{\rho_{\bs{k}}}^{N_e}
+\right)
+\end{array}
+\right..
+\end{align}
+The \emph{charged twist density} $\rho^{N_e\pm1}_{\bs{k}}(\bs{\theta})$ and the \emph{charged mean density} $\overline{\rho_{\bs{k}}}^{N_e\pm 1}(\bs{\theta})$ are defined by the summand on each line. A likely cause of confusion here is that the charged mean density depends on the twist $\bs{\theta}$. Further, it is \textcolor{red}{not} the mean of the charged twist density
+\begin{align}
+\overline{\rho_{\bs{k}}}^{N_e\pm 1}(\bs{\theta}') \textcolor{red}{\neq}
+\frac{1}{M_{\bs{\theta}}}\sum\limits_{\bs{\theta}}\rho^{N_e\pm1}_{\bs{k}}(\bs{\theta}).
+\end{align}
+This correction does not affect properties linear in $\rho_{\bs{k}}$, but does change the potential energy, which is quadratic in $\rho_{\bs{k}}$. If the $MN_e$ system is constructed from $M$ independent simulations each containing $N_e$ electrons, then the charge density is different at each twist. The Hartree contribution to the total potential energy is
+\begin{align}\label{eq:vsmnp1}
+V_s^{MN_e+1} = \frac{1}{\Omega} \sum\limits_{\bs{\theta}} \sum\limits_{\bs{k}\in G}
+\frac{1}{2}v_k~
+\rho^{N_e+1}_{\bs{k}}(\bs{\theta}) \rho^{N_e+1}_{-\bs{k}}(\bs{\theta}). 
+\end{align}
+One can speed up the convergence of eq.~(\ref{eq:vsmnp1}) to the thermodynamic limit by replacing twist density with mean density
+%correcting each twist to interact with the same mean potential generated from the mean charge density eq.~(\ref{eq:rkm}). Therefore, the finite-size correction to the total potential energy is
+\begin{align}
+\lim\limits_{N\rightarrow\infty} V_s^{MN_e+1} = \frac{1}{\Omega} \sum\limits_{\bs{\theta}} \sum\limits_{\bs{k}\in G}
+\frac{1}{2}v_k~
+\overline{\rho_{\bs{k}}}^{N_e+1}(\bs{\theta}) \overline{\rho_{-\bs{k}}}^{N_e+1}(\bs{\theta}).
+\end{align}
+Define the correction factor
+\begin{align}\label{eq:gc-ckt}
+C_{\bs{k}}^{N_e+1}(\bs{\theta}) \equiv& \overline{\rho}^{N_e+1}_{\bs{k}}(\bs{\theta})\overline{\rho}^{N_e+1}_{-\bs{k}}(\bs{\theta})
+-
+\rho^{N_e+1}_{\bs{k}}(\bs{\theta})\rho^{N_e+1}_{-\bs{k}}(\bs{\theta}),
+\end{align}
+then the GCTA finite-size correction to the Hartree contribution to the potential is
+\begin{align}\label{eq:dvsmnp1}
+\delta V_s^{MN_e+1} = \frac{1}{\Omega} \sum\limits_{\bs{k}\in G}\frac{1}{2}v_k~
+\sum\limits_{\bs{\theta}}
+C_{\bs{k}}^{N_e+1}(\bs{\theta}).
+\end{align}
+Eq.~(\ref{eq:gc-ckt}) can be much simplified when calculated relative to the neutral state
+\begin{align}
+C_{\bs{k}}^{N_e+1}(\bs{\theta})=&
+(\Pi_{\bs{k}}\delta_{\bs{\theta}, \bs{\phi}} + \overline{\rho_{\bs{k}}}^{N_e})(\Pi_{\bs{k}}\delta_{\bs{\theta}, \bs{\phi}} + \overline{\rho_{\bs{k}}}^{N_e}) -
+(\Pi_{\bs{k}}\delta_{\bs{\theta}, \bs{\phi}}+\braket{\rho_{\bs{k}}}_{N_e,\bs{\theta}})(\Pi_{\bs{k}}\delta_{\bs{\theta}, \bs{\phi}}+\braket{\rho_{\bs{k}}}_{N_e,\bs{\theta}}) \nonumber \\
+=& \Pi_{\bs{k}}\delta_{\bs{\theta}, \bs{\phi}}(\overline{\rho_{-\bs{k}}}^{N_e} - \braket{\rho_{-\bs{k}}}_{N_e, \bs{\theta}}) +
+(\overline{\rho_{\bs{k}}}^{N_e} - \braket{\rho_{\bs{k}}}_{N_e, \bs{\theta}})\Pi_{-\bs{k}}\delta_{\bs{\theta}, \bs{\phi}} \nonumber \\
+&+
+\left[
+\overline{\rho_{\bs{k}}}^{N_e}\overline{\rho_{-\bs{k}}}^{N_e} - \braket{\rho_{\bs{k}}}_{N_e, \bs{\theta}}\braket{\rho_{\bs{k}}}_{N_e, \bs{\theta}}
+\right] \nonumber \\
+=& \Pi_{\bs{k}}\delta_{\bs{\theta}, \bs{\phi}}(\overline{\rho_{-\bs{k}}}^{N_e} - \braket{\rho_{-\bs{k}}}_{N_e, \bs{\theta}}) +
+(\overline{\rho_{\bs{k}}}^{N_e} - \braket{\rho_{\bs{k}}}_{N_e, \bs{\theta}})\Pi_{-\bs{k}}\delta_{\bs{\theta}, \bs{\phi}} + C_{\bs{k}}^{N_e}(\bs{\theta}).
+\end{align}
+Therefore, the correction to electron addition energy is
+\begin{align}
+\delta\mu_s^+ =& \frac{1}{\Omega} \sum\limits_{\bs{k}\in G} \frac{1}{2}v_k \left[ \sum\limits_{\bs{\theta}} C_{\bs{k}}^{N_e+1}(\bs{\theta})-C_{\bs{k}}^{N_e}(\bs{\theta}) \right] \nonumber \\
+=& \frac{1}{\Omega} \sum\limits_{\bs{k}\in G} \frac{1}{2}v_k \left\{
+\left[
+\overline{\rho_{\bs{k}}}^{N_e}-\braket{\rho_{\bs{k}}}_{N_e,\bs{\phi}}
+\right]\Pi_{-\bs{k}} +\Pi_{\bs{k}}\left[
+\overline{\rho_{-\bs{k}}}^{N_e}-\braket{\rho_{-\bs{k}}}_{N_e,\bs{\phi}}
+\right]
+\right\}.
+\end{align}
