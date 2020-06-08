@@ -394,8 +394,8 @@ and
 =
 -\frac12 \left[1+ \frac{1}{\epsilon}\right].
 \eea
-Both relations can be obtained \cite{footnote} by extending Kohn's diagrammatic approach 
-\cite{Kohn1958} (see Supplemental Material~\cite{supp}).
+Both relations can be obtained \cite{diag-footnote} by extending Kohn's diagrammatic approach 
+\cite{Kohn1958} (see Supplemental Materials~\cite{bandgap-supp}).
 Integrating around the $v_q$ singularity for small $q$ in Eq.~(\ref{Veecom}),
 we obtain the leading order finite size corrections. As before, this involves the Madelung constant,
 Eq~(\ref{vMdef}).
@@ -560,10 +560,10 @@ We have performed electronic QMC calculations on three insulating solids:
 molecular hydrogen at high pressure,
 and carbon and silicon in the diamond structure at zero pressure. Since we are interested in the
 spin-neutral charge gap, we used an equal number of spin-up and spin-down electrons. We used a Slater-Jastrow  trial wave function with backflow (BF) corrections \cite{Holzmann2003,Pierleoni2008}. The Jastrow and BF functions were fully optimized within variational Monte Carlo, including the long-range (reciprocal lattice) contributions.
-The orbitals in the Slater determinant were taken from DFT calculations using Quantum Espresso~\cite{QE2009, QE2017}. The carbon and silicon orbitals were generated using the LDA functional, whereas the hydrogen orbitals were generated using the PBE functional, which has been shown to provide a good trial QMC wave function \cite{Morales2014,Pierleoni2016}.
+The orbitals in the Slater determinant were taken from DFT calculations using Quantum Espresso~\cite{Giannozzi2009,Giannozzi2017}. The carbon and silicon orbitals were generated using the LDA functional, whereas the hydrogen orbitals were generated using the PBE functional, which has been shown to provide a good trial QMC wave function \cite{Morales2014,Pierleoni2016}.
 
 Molecular hydrogen was placed in the C2/c-24 structure \cite{Pickard2007} at two different densities ($r_s=1.38$ and $r_s=1.34$), roughly corresponding to pressures of 234 GPa and 285 GPa, respectively.
-Energies and structure factors were obtained from reptation Quantum Monte Carlo calculations using the BOPIMC code \cite{BOPIMC}. For carbon and silicon, DMC calculations have been performed with the QMCPACK code \cite{QMCPACK}
+Energies and structure factors were obtained from reptation Quantum Monte Carlo calculations using the BOPIMC code \cite{BOPIMC}. For carbon and silicon, DMC calculations have been performed with the QMCPACK code \cite{Kim2018}
 at the experimentally measured zero pressure valence densities, $r_s=1.318$ and $r_s=2.005$, respectively.
 The crystal structures were optimized by DFT using the vdW-DF1 functional.
 For hydrogen, the QMC calculations have been done with the bare Coulomb interaction. The PAW pseudo-potential has been used for the DFT results shown in Fig.~\ref{fig:H_C2CP250}. For carbon and silicon, pseudopotentials were used to remove the core electrons: carbon ions modeled by the Burkatzki-Filippi-Dolg pseudopotential~\cite{Burkatzki2007}, and silicon ions by the Trail-Needs pseudopotential~\cite{Trail2005}. These are considered good pseudo-potentials for correlated calculations, but their use within DFT calculations produces slightly different results from the literature even with the same functional.
