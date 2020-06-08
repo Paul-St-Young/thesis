@@ -49,10 +49,26 @@ One type of the H$_2$ molecules in Cmca-12 has pressure-sensitive bond length, i
 \begin{minipage}{0.49\textwidth}
 \centering
 \includegraphics[width=\linewidth]{h11_mol-rb}
-(a) H$_2$ bond length
+(b) H$_2$ bond length
 \end{minipage}
 \caption{vdW-DF optimized molecular candidate structures at target pressures. (a) lattice parameters (b) molecular bond length. C2/c and Cmca-12 each have two types of H$_2$ molecules, whereas Cmca-4 has only one.}
 \label{fig:hsolid-vdw-ca}
+\end{figure}
+
+The atomic candidate structure I4$_1$/amd has only one free parameter, the $c/a$ ratio, at each density.
+Therefore, we can afford to optimize its geometry using DMC within the clamped-ion approximation.
+As shown in Fig.~\ref{fig:hsolid-i4-ca}, the DMC-optimized $c/a$ ratio is $4$ to $8$\% below the PBE-optimized ones.
+It increases continuously as density increases, whereas the PBE-optimized $c/a$ ratio exhibits discontinuities around $r_s=1.21$ and $1.14$.
+We fit $c/a$ as a linear function of $r_s$ to smooth out noise from the optimization process.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.49\textwidth}
+\centering
+\includegraphics[width=\linewidth]{h117e_i4-ca}
+\end{minipage}
+\caption{DMC optimized atomic structure $c/a$ ratio as a function of density. The blue points are DFT(PBE) optimized $c/a$ ratios.}
+\label{fig:hsolid-i4-ca}
 \end{figure}
 
 While the vdW-DF optimized structures in Ref.~\cite{McMinis2015} are not published, we can infer from the enthalpy-pressure relations that the same structures as in Ref.~\cite{McMinis2015} have been reproduced in this study. Figure~\ref{fig:dft-opt-geo} shows the enthalpy of each candidate structure relative to C2/c-24 at the vdW-DF static-lattice minimum. The results agree well with those from McMinis \textit{et al.}~\cite{McMinis2015} where available.
@@ -172,8 +188,8 @@ where $\alpha, \beta$ denote unique particle species, including up-electron, dow
 \end{align}
 Isotropic Jastrow $u(r)$ and back flow $\eta(r)$ functions are optimized in VMC to lower the variational energy.
 The single-particle orbitals in the determinant are taken as the Kohn-Sham orbitals with the lowest eigenvalues.
-These orbitals are generated using the vdW-DF functional for the molecular candidates and PBE for the atomic structure. We remove the approximate cusp of each orbital by diving out the RPA ep Jastrow following Refs.~\cite{Ceperley1987,Natoli1993,Natoli1995}.
-This allows the exact ep Jastrow to be re-introduced in the ep Jastrow and is always maintained as the protons move.
+These orbitals are generated using the vdW-DF functional for the molecular candidates and PBE for the atomic structure. We remove the approximate cusp of each orbital by dividing out the RPA e-p Jastrow following Refs.~\cite{Ceperley1987,Natoli1993,Natoli1995}.
+This allows the exact e-p Jastrow to be re-introduced in the e-p Jastrow and is always maintained as the protons move.
 Before back flow transformation, the static structure factor of the Slater determinant is quite similar to that of the unpolarized homogeneous electron gas, as shown in Fig.~\ref{fig:hsolid-det-sk-nk}(a). However, as shown in  Fig.~\ref{fig:hsolid-det-sk-nk}(a), the momentum distribution of the metallic atomic structure is different from the rest, because the molecular structures are insulating.
 
 \begin{figure}[h]
@@ -513,7 +529,7 @@ The correlation functions of the 3D unpolarized homogeneous electron gas are als
 The bottom panel of each plot shows the difference between the hydrogen $g(r)$s from those of the electron gas.
 This difference highlights the modification of the electron liquid due to the ionic lattice.
 The dynamic-lattice electronic $g(r)$s are identical to those from the static-lattice calculations on the scale of the difference panel ($0.1$).
-For the molecular structures, both the same-spin (uu) and unlike-spin (ud) $g(r)$s are the same over the entire range from zero ($r=0$) to the supercell image distance ($r=R_{WS}$).
+For the molecular structures, both the same-spin (u-u) and unlike-spin (u-d) $g(r)$s are the same over the entire range from zero ($r=0$) to the supercell image distance ($r=R_{WS}$).
 The most notable deviation from the electron gas is an enhanced correlation between unlike-spin electrons at small separation.
 This is likely due to the presence of covalent bonds, formed by a pair of unlike-spin electrons at the center of each H$_2$ molecules.
 A more subtle difference is the presence of small periodic modulations of the electronic $g(r)$ that seem to persist to long distances.
@@ -592,21 +608,21 @@ The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures 
 \begin{minipage}{0.49\textwidth}
 \centering
 \includegraphics[width=\linewidth]{h117gd_ppsk-peaks-vs-pgpa}\\
-(c) Bragg peaks of pp $S(k)$
+(c) Bragg peaks of p-p $S(k)$
 \end{minipage}
 \begin{minipage}{0.49\textwidth}
 \centering
 \includegraphics[width=\linewidth]{h117gd_ppsk-k0-vs-pgpa}\\
 (d) long wavelength limit
 \end{minipage}
-\caption{Proton-proton pair correlation functions around $r_s=1.25$ ($480$ GPa). The solid lines in (b) are quadratic fits to the smooth part of $S(k)$. (c) Bragg peaks of the pp $S(k)$ (d) long wavelength limit $S(0)$.  $\vert\bs{G}_1\vert\approx 1.81$ bohr$^{-1}$, $\vert\bs{G}_2\vert\approx 1.87$ bohr$^{-1}$ for all three molecular structures. $\vert\bs{G}_3\vert\approx 2.5$ for C2/c-24 and Cmca-4 and $1.93$ for Cmca-12. The atomic structure's Bragg peak can be found between $1.83$ and $1.88$ bohr$^{-1}$. The same outliers as Fig.~\ref{fig:dynamic-qmc-vs-drummond} are excluded from the quadratic fits in (d).}
+\caption{Proton-proton pair correlation functions around $r_s=1.25$ ($480$ GPa). The solid lines in (b) are quadratic fits to the smooth part of $S(k)$. (c) Bragg peaks of the p-p $S(k)$ (d) long wavelength limit $S(0)$.  $\vert\bs{G}_1\vert\approx 1.81$ bohr$^{-1}$, $\vert\bs{G}_2\vert\approx 1.87$ bohr$^{-1}$ for all three molecular structures. $\vert\bs{G}_3\vert\approx 2.5$ for C2/c-24 and Cmca-4 and $1.93$ for Cmca-12. The atomic structure's Bragg peak can be found between $1.83$ and $1.88$ bohr$^{-1}$. The same outliers as Fig.~\ref{fig:dynamic-qmc-vs-drummond} are excluded from the quadratic fits in (d).}
 \label{fig:hsolid-ppgrsk}
 \end{figure}
 
 The proton-proton pair correlation function of all candidate structures at $r_s\approx1.25$ are shown in Fig.~\ref{fig:hsolid-ppgrsk}(a).
 Every molecular structure has a peak at the molecular bond length, in agreement with the DFT bond lengths shown in Fig.~\ref{fig:hsolid-vdw-ca}(b).
 C2/c-24 bond length is around $1.35$ bohr, Cmca-4 around $1.40$ bohr, and the Cmca-12 structure is in between.
-The C2/c-24 and Cmca-12 structures have remarkably similar pp g(r).
+The C2/c-24 and Cmca-12 structures have remarkably similar p-p g(r).
 Since they are almost degenerate over the entire density range explored, we can infer that the slight monoclinic distortions of their unit cells and the small differences in their molecular bond lengths do not contribute significantly to the total energy.
 The less distorted C2/c-24 structure is more stable.
 The Cmca-4 structure is significantly different from C2/c-24. Cmca-4 has second- and third-nearest neighbor peaks at $2$ and $3$ bohr, respectively, rather than C2/c-24's $2.5$ and $3.2$. The size and shape of these peaks are more similar to those in the atomic structure than the other molecular candidates.
@@ -622,7 +638,7 @@ Finally, the long wavelength limit of the static structure factor can be related
 \begin{align}
 nk_BT\kappa = S(\bs{0}),
 \end{align}
-where $n$ is the density. We can extract the long wavelength limit of the pp $S(k)$ by fitting its fluctuating part to a quadratic polynomial as shown in Fig.~\ref{fig:hsolid-ppgrsk}(a).
+where $n$ is the density. We can extract the long wavelength limit of the p-p $S(k)$ by fitting its fluctuating part to a quadratic polynomial as shown in Fig.~\ref{fig:hsolid-ppgrsk}(a).
 The value of the fit extrapolated to $k=0$ is shown as a function of pressure for all candidates in Fig.~\ref{fig:hsolid-ppgrsk}(d).
 The compressibility of C2/c-24 is approximately independent of pressure, whereas that of the Cmca structures and the atomic structure increase with pressure at a similar rate.
 The atomic structure is twice as compressible as the molecular structures at all pressures.
