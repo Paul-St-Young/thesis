@@ -1,5 +1,9 @@
 \chapter{Finite-size Effects} \label{chap:fsc}
-In this chapter, I will describe the common types of finite size effects encountered in electronic structure simulations and a few correction schemes. I will begin the discussion from the most general correction that works for quantum and classical systems at zero or finite temperature: the static structure factor correction to the potential energy. From there, the method is extended to correct kinetic energy from the momentum distribution, and in the quantum case, the Jastrow pair function. %Then, I will discuss the dominant single-particle kinetic finite size effect in fermion systems, the so-called "shell filling" effects.
+In the previous two chapters, I introduced the ground-state QMC method and the trial wave function needed to make it accurate for a well-defined electron-ion Hamiltonian.
+However, practical QMC simulations cannot handle the hamiltonian governing $O(10^{23})$ particles found in typical condensed matter experiments.
+While we use periodic boundary condition to eliminate surfaces from our simulations, there is significant remaining difference between the properties of this model system and those from experiment.
+
+In this chapter, I will describe common types of finite size effects encountered in electronic structure simulations and a few correction schemes. I will begin discussion from the most general correction that works for quantum and classical systems at zero or finite temperature: the static structure factor correction to the potential energy. From there, the method is extended to correct kinetic energy using the momentum distribution, and in the quantum case, using the Jastrow pair function. %Then, I will discuss the dominant single-particle kinetic finite size effect in fermion systems, the so-called "shell filling" effects.
 %Many-body corrections beyond pair interactions are outside the scope of this discussion.
 
 \section{Correction to the potential energy}

@@ -1,10 +1,17 @@
 \chapter{Slater-Jastrow wave function} \label{chap:sj-wf}
-One goal of studying the many-body wave function is to understand electron correlation~\cite{Ceperley1999-wf}. As P. Dirac pointed out, knowing the Dirac/Schr\"odinger equation and the hamiltonian of the system does not constitute an understanding, because it ``leads to equations much too complicated to be soluble". Even a simple hamiltonian that contains only pair interactions, e.g., the Coulomb hamiltonian, can create complex many-body correlations and phase diagrams.
+
+In the previous chapter, I introduced the FN-DMC method, which calculates ground-state properties of a many-body system starting from a trial wave function $\Psi_T$. The accuracy and efficiency of the method depends on the choice of $\Psi_T$.
+Understanding of the many-body wave function and its connection to physical properties of particular systems can help us make educated guesses at high-quality trial wave function and perform accurate simulations.
+In this chapter, I will describe the most well understood many-body wave function for electronic structure, the Slater-Jastrow wave function, and discuss what behavior of electrons we can learn from it.
+
+The many-body wave function is also interesting in its own right. One goal of studying the many-body wave function is to understand electron correlation~\cite{Ceperley1999-wf}.
+As P.A.M. Dirac pointed out, knowing the Dirac/Schr\"odinger equation and the hamiltonian of the system does not constitute an understanding, because it ``leads to equations much too complicated to be soluble"~\cite{Dirac1929}.
+Even a simple hamiltonian that contains only pair interactions, e.g., the Coulomb hamiltonian, can create complex many-body correlations and phase diagrams.
 %Hogenberg-Kohn theorem tells us that the exact density functional encodes everything one needs to know about the ground state. How much physical intuition can be extracted from the exact density functional? Does one need to look at the charge density instead?
 %What have we learnt from studying wave functions?
 %Cusp condition, plasmon modes, back flow quasiparticle excitations
 Thus, direct studies of experimental observables, the many-body wave function, and perhaps properties the exact density functional will be more informative.
-In this chapter, I will describe the most understood many-body wave function for electronic structure, the Slater-Jastrow wave function, and discuss what behavior of electrons we can learn from it.
+
 
 \section{Historic Overview}
 

@@ -1,4 +1,9 @@
 \chapter{Methods} \label{chap:method}
+
+The main method used throughout this thesis is ground-state quantum Monte Carlo (QMC). This chapter provides a physically motivated introduction to this method.
+In the first part, I start from the familiar finite-temperature classical Monte Carlo method, then describe its generalization to a quantum system, finally take the zero-temperature limit.
+The second part of this chapter describes practical methods for constructing a many-body trial wave function, which is a crucial ingredient in QMC methods.
+
 \section{Classical Monte Carlo}
 The Monte Carlo methods mentioned in this thesis perform high-dimensional integrals by using random numbers to sample probability distributions. These distributions must be non-negative in the entire domain of ``states'' over which they are defined. In classical mechanics, a ``state'' of N particles in $3$ dimensions is labeled by the positions $\bs{R}\equiv\{\bs{r}_i\}$ and momenta $\bs{P}\equiv\{\bs{p}_i\}$ of the particles $i=1,\dots,N$. The classical partition function for the canonical ensemble
 \begin{align} \label{eq:classical-nvt-part}
