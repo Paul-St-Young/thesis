@@ -1,5 +1,5 @@
 \section{Effective One-Particle Theories}
-The most widely used ground-state QMC method, FP-DMC, requires a trial wave function $\Psi_T$ to start the imaginary time projection process.
+The most widely used ground-state QMC method, FN-DMC, requires a trial wave function $\Psi_T$ to start the imaginary time projection process.
 The node of $\Psi_T$ directly controls the one uncontrolled error, the fixed-node error, in the DMC total energy.
 Even bosonic details of $\Psi_T$ can matter to observables that do not commute with the hamiltonian due to the mixed-estimator error.
 Further, the complexity of $\Psi_T$ affects the efficiency of a DMC run, because $\Psi_T$ and many its derivatives need to be evaluated at every step.
@@ -242,10 +242,10 @@ When extended to handle systems with fractional electron number, the derivative 
 
 While extremely successful, the LDA has well-documented deficiencies.
 As discussed in Sec.~\ref{sec:method-dft-bandgap}, LDA underestimates the band gap due to a lack of derivative discontinuity.
-Further, LDA tends to overestimate the binding energy of molecular systems. This is attributed to the logarithmic divergence of the LDA correlation functional as density tends to infinity (see eq.~(7.55) in Ref.~\cite{Giuliani2005}).
+Further, it tends to overestimate the binding energy of molecular systems. This is attributed to the logarithmic divergence of the LDA correlation functional as density tends to infinity (see eq.~(7.55) in Ref.~\cite{Giuliani2005}).
 %For an isolated atom, the LDA xc potential approaches zero exponentially fast at large distances rather than the correct asymptotic limit $-e^2/r$.
 
-The logarithmic divergence of the LDA is largely corrected by the generalized gradient approximation (GGA). This modification is as straight-forward as adding an extra term that depends on the gradient of the electron density $\bs{\nabla}n$ to the exchange-correlation function. An arbitrary choice of the gradient term can distort the xc hole and break the sum rule that controls its global strength
+The logarithmic divergence of the LDA is largely corrected by the generalized gradient approximation (GGA). This modification is not as straight-forward as adding an extra term that depends on the gradient of the electron density $\bs{\nabla}n$ to the exchange-correlation function. An arbitrary choice of the gradient term can distort the xc hole and break the sum rule that controls its global strength
 \begin{align}
 \int\bs{r}' n(\bs{r}')[g(\bs{r},\bs{r}')-1] = -1.
 \end{align}
@@ -260,10 +260,10 @@ where $\epsilon_x$ is the LDA exchange function and the scaled gradient
 A simple form for the exchange enhancement factor $F_x$ was given by J. Perdew, K. Burke, and E. Ernzerhof~\cite{Perdew1996} in 1996. After another careful cutoff on the correlation functional, the immensely popular PBE functional was constructed. The PBE xc functional takes the same form as eq.~(\ref{eq:method-dft-pbe-x}), but with a different enhancement factor $F_{xc}$ instead of $F_x$.
 PBE softens molecular bonds relative to the LDA and predict an order of magnitude more accurate dissociation energies of many molecules~\cite{Perdew1996}.
 
-Unfortunately, both LDA and PBE suffer from a well-known failure of local and semi-local density functional theory: the absence of Van der Waals interaction.
+Unfortunately, both LDA and PBE suffer from a well-known failure of any local and semi-local density functional theory: the absence of Van der Waals interaction.
 This interaction is entirely due to the correlation of density fluctuations and is dominant for two neutral objects with non-overlapping electron densities.
 When fluctuation creates an instantaneous dipole moment in one electron distribution, it induces an anti-aligned dipole moment in the other.
-The Van der Waals interaction is thus attractive and decays as dipole-dipole interaction strength, $\frac{1}{r^6}$, in the separation distance $r$ between the centers of the two distributions.
+The van der Waals interaction is thus attractive and decays as dipole-dipole interaction strength, $\frac{1}{r^6}$, in the separation distance $r$ between the centers of the two distributions.
 While KS-DFT relies on the average electron density of a non-interacting system, it is still possible to include the contribution of Van der Waals interaction in the density functional.
 Consider the Coulomb interaction as a perturbation to two widely separated atoms, one can show that the interaction energy is proportional to a convolution of the density-density response functions of the isolated atoms
 \begin{align}
@@ -280,6 +280,6 @@ as written in eq~.(7.116) in Ref.~\cite{Giuliani2005}. One can then proceed to a
 
 Finally, exact-exchange functionals such as PBE0 and HSE~\cite{Heyd2003} have been developed for atoms having localized valence electrons, e.g., with d or f angular momentum.
 These functionals are crucial in the study of magnetism, as PBE functional overly favor delocalized electrons and often predict qualitatively wrong magnetic momentum and spin orderings of transition metals.
-However, these functionals were never a focus throughout this thesis, so I will not go into details here.
+However, these exact-exchange functionals were never a focus throughout this thesis, so I will not go into details here.
 %exact exchange functionals (HSE)
 %SCAN?

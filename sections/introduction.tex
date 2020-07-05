@@ -3,7 +3,7 @@
 \section{The Electron-Ion Problem}
 The ultimate goal of this thesis is the accurate simulation of a many-body system of charged particles in the non-relativistic limit.
 This goal was not achieved, but some progress has been made.
-For the remainder of this thesis, the ground truth is assumed to be established by the exact solution of the Schr\"odinger equation~(\ref{eq:intro-schro}) for the electron-ion wave function $\Psi(\bs{R},\RI)$ for $N$ electrons and $N_I$ ions
+For the remainder of this thesis, the ground truth is assumed to be established by the exact solution of the Schr\"odinger equation~(\ref{eq:intro-schro}) for the electron-ion wave function $\Psi(\bs{R},\RI)$ of $N$ electrons and $N_I$ ions
 \begin{align} \label{eq:intro-schro}
 \hat{H} \Psi(\bs{R},\RI) = i\hbar\frac{d}{dt}\Psi(\bs{R},\RI),
 \end{align}
@@ -83,8 +83,8 @@ Hydrogen is a logical starting point for solving the electron-ion problem.
 It has the simplest atomic structure and no core electrons.
 The non-relativistic Schr\"odinger equation eq.~(\ref{eq:intro-schro}) and (\ref{eq:intro-ei-ham}) should work well for hydrogen. Further, the ground state of its electronic hamiltonian can be compactly and accurately represented~\cite{Holzmann2003}.
 Without core electrons, no essential modification needs to be made to the hamiltonain eq.~(\ref{eq:intro-ei-ham}) for a practical simulation, e.g., pseudopotential.
-At sufficiently high temperatures, the hydrogen plasma, equal mixture of isotropic positive charge (protons) and negative charge (electrons), is a straightforward generalization of the jellium model to two components. However, at low temperatures, the two-component analogue of the Wigner crystal, solid hydrogen, is surprisingly complex.
 
+At sufficiently high temperatures, the hydrogen plasma, equal mixture of isotropic positive charge (protons) and negative charge (electrons), is a straightforward generalization of the jellium model to two components. However, at low temperatures, the two-component analogue of the Wigner crystal, solid hydrogen, is surprisingly complex.
 Since hydrogen is the lightest element, its zero-point motion has large amplitude. The ion wave function explores a sufficiently large space to invalidate the harmonic approximation for lattice vibrations.
 Further complicating matters, one can expect a metal-to-insulator transition as well as an atomic-to-molecular transition that may or may not coincide as temperature or pressure is decreased.
 On top of all that, naturally occurring isotopes, e.g., deuterium, and spin isomers, e.g., para- and ortho-H$_2$, allow the possibility of an intriguing blend of quantum effects at low temperatures.

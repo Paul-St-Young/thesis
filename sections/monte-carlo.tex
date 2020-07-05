@@ -152,7 +152,7 @@ For any $t>\beta_e$, the observable value eq.~(\ref{eq:dmc-omixed}) should be st
 %For non-relativistic particles, $\nabla^2$ in the kinetic energy operator turns into a Green function for diffusion $e^{-t\nabla^2}$.
 For identical non-relativistic particles having mass $m$, $\hat{U}$ in coordinate basis is the Green function for imaginary-time Schr\"odinger equation
 \begin{align}
-G(\bs{R}'\leftarrow\bs{R};t) = \braket{\bs{R}'|\hat{U}(t)|\bs{R}} =  \braket{\bs{R}'|e^{-t(\lambda \nabla^2+V)}|\bs{R}} = \lim\limits_{\tau\rightarrow 0}
+G(\bs{R}'\leftarrow\bs{R};t) = \braket{\bs{R}'|\hat{U}(t)|\bs{R}} =  \braket{\bs{R}'|e^{-t(\lambda \nabla^2+V)}|\bs{R}}\nonumber \\ \lim\limits_{\tau\rightarrow 0} G(\bs{R}'\leftarrow\bs{R};\tau) =
 \left(
 (4\pi\lambda\tau)^{-dN/2}e^{-\dfrac{(\bs{R}-\bs{R}')^2}{4\lambda\tau}}
 \right)
@@ -186,7 +186,7 @@ and the trial energy $E_T$ is adjusted every so often to keep the population of 
 While not strictly necessary, one typically adds a Metropolis rejection step using the Green function $G$ as transition probability $T$ in eq.~(\ref{eq:metropolis-accept}). This ensures that the algorithm samples the desired probability distribution at any finite time step, where the Green function is approximate~\cite{Reynolds1982}.
 %When viewed in a vacuum, the DMC method can be derived simply as a stochastic implementation of the power method in linear algebra.
 
-For bosons and Bolzmannons, DMC gives the exact ground-state energy of $H$ in the limit of infinitesimal time step and uncontrolled walker population. Observables that do not commute with the hamiltonian will suffer a mixed-estimator error, which vanishes as the trial wave function is approaches the ground state.
+For bosons and Bolzmannons, DMC gives the exact ground-state energy of $H$ in the limit of infinitesimal time step and uncontrolled walker population. Observables that do not commute with the hamiltonian will suffer a mixed-estimator error, which vanishes as the trial wave function approaches the ground state.
 
 \subsection{Variational Monte Carlo}
 Variational Monte Carlo (VMC) can be viewed as a limit of DMC at zero projection time, i.e., no branching. I define VMC as a Monte Carlo algorithm that calculates the expectation value of an operator using a fixed trial wave function $\Psi_T$
@@ -202,7 +202,7 @@ where the local energy serves as a local estimator for the total energy
 E_L(\bs{R};\Psi_T) \equiv \dfrac{\ham\Psi_T}{\Psi_T} (\bs{R}).
 \end{align}
 The variational energy $E_V$ is often taken as a measure of the quality of the trial wave function.
-In variational optimization, one changes parameters in $\Psi_T$ to lower $E_V$.
+In \emph{variational optimization}, one changes parameters in $\Psi_T$ to lower $E_V$.
 However, $E_V$ is only one number and is far from a complete descriptor of the 3N-dimensional many-body wave function.
 Another, arguably more powerful, measure of the quality of $\Psi_T$ is the variance of the local energy eq.~(\ref{eq:wf-eloc})
 \begin{align}
@@ -261,20 +261,20 @@ An essential difficult arises when one applies the path integral formalism to fe
 \begin{align}
 \rho_F(\bs{r}_0,\bs{r}_M;\beta) = \frac{1}{N!}\sum\limits_{\mathcal{P}} (-1)^{\mathcal{P}} \rho_D(\bs{r}_0, \mathcal{P}\bs{r}_M;\beta).
 \end{align}
-$\rho_F$ is no longer positive definite and cannot be interpreted as a probability distribution to be sampled by Monte Carlo. The canonical workaround is to sample the absolute value of the fermionic DM, which is the bosonic DM, and keep the sign as an observable. In this way, a fermionic observable is calculated as the ratio between a signful bosonic observable and the average bosonic sign
+$\rho_F$ is no longer positive definite and cannot be interpreted as a probability distribution to be sampled by Monte Carlo. The canonical workaround is to sample the absolute value of the fermionic DM, which is the bosonic DM, and keep the sign as an observable. In this way, a fermionic observable is calculated as the ratio between a signful bosonic observable and the bosonic average of the permutation sign
 \begin{align} \label{eq:pimc-of}
 \braket{\hat{O}}_F \equiv \dfrac{\Tr{\hat{O}e^{-\beta H}}_F}{\Tr{e^{-\beta H}}_F}=
 \dfrac{\Tr{\hat{O}\hat{\sigma}e^{-\beta H}}_B}{\Tr{\hat{\sigma} e^{-\beta H}}_B}=
 \dfrac{\Tr{\hat{O}\hat{\sigma}e^{-\beta H}}_B/Z_B}{\Tr{\hat{\sigma} e^{-\beta H}}_B/Z_B}=\dfrac{\braket{\hat{O}\hat{\sigma}}_B}{ \braket{\hat{\sigma}}_B }.
 \end{align}
-While mathematically exact, this leads to the well-known \emph{fermion sign problem}, where the denominator in eq.~(\ref{eq:pimc-of}), the average bosonic sign, goes to zero exponentially fast as system size $N$ and inverse temperature $\beta$ increase.
-To see this, consider the total free energies of $N$ bosons vs. $N$ fermions governed by the same hamiltonian $H$. The bosonic average sign can be written as an exponential of the free energy difference
+While mathematically exact, this leads to the well-known \emph{fermion sign problem}, where the denominator in eq.~(\ref{eq:pimc-of}), the average sign, goes to zero exponentially fast as system size $N$ and inverse temperature $\beta$ increase.
+To see this, consider the total free energies of $N$ bosons vs. $N$ fermions governed by the same hamiltonian $H$. The average sign can be written as an exponential of the free energy difference
 \begin{align} \label{eq:pimc-avg-sign}
 \braket{\hat{\sigma}}_B = \dfrac{Z_F}{Z_B} = \dfrac{e^{-\beta F_F}}{e^{-\beta F_B}} = e^{-\beta (F_F-F_B)}.
 \end{align}
 Since the total free energy is extensive, the exponent in eq.~(\ref{eq:pimc-avg-sign}) is proportional to $\beta N$.
 At zero Kelvin, all permutations are equally likely and the average sign is exactly zero.
-At the degeneracy temperature and above, \textit{signful} PIMC is often possible, but comes at a hefty computational cost even for very small systems $O(10)$ particles.
+At the degeneracy temperature and above, \textit{signful} PIMC is often possible, but comes at a hefty computational cost even for very small systems, e.g., $O(10)$ particles.
 A practical workaround for the sign problem in path integral is the restricted path approximation~\cite{Ceperley1991,Ceperley1992,Ceperley1996}.
 This approximation uses a trial density matrix to restrict the space of paths that can be sampled.
 Any Monte Carlo move that constructs a path which crosses the node of the trial density matrix is rejected.
@@ -294,7 +294,7 @@ In this approximation, no walker is allowed to cross the node of the trial wave 
 This effectively adds to the hailtonian an infinite potential barrier at the node of $\Psi_T$.
 The bosonic problem is exactly solved in the nodal pocket within this barrier, while the rest of the Hilbert space is constructed via antisymmetry of the wave function.
 This procedure effectively constructs a \emph{fixed-node wave function} $\Psi_{FN}$, so the fixed-node DMC (FN-DMC) total energy is variational $E_{FN}\ge E_0$.
-The exact ground state energy can be obtained if the node of the trial wave function is exact.
+The exact ground-state energy can be obtained if the node of the trial wave function is exact.
 When generalized to systems with imaginary trial wave function, an analogous work around is the fixed-phase DMC method (FP-DMC), which forbids walkers to move past phase-change boundaries of the trial wave function.
 FP-DMC is so similar to FN-DMC that they are typically not distinguished as different methods in the literature.
 
