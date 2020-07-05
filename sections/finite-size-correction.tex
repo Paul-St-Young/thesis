@@ -36,7 +36,7 @@ Suppose $S(\bs{k})$ is converged, i.e., does not change with system size, then t
 
 Equation~(\ref{eq:fsc-dvn}) is not practical, because $\lim\limits_{k\rightarrow\infty}S(k)=1$ and both the sum and the integral diverge. Fortunately, large $k$ corresponds to short-range interaction, so its contribution to finite-size error vanish rapidly with system size. Thus, we can truncate the large-$k$ part of eq.~(\ref{eq:fsc-dvn}) with little effect on its value. This can be achieved either using an explicit suppression factor $e^{-\epsilon k^2}$ as done in eq.~(24) of Ref.~\cite{Drummond2008} by Drummond \textit{et al.}, or splitting out the long-range part of the Coulomb potential as done in eq.~(30) of Ref.~\cite{Holzmann2016} by Holzmann \textit{et al.}.
 
-While the Madelung term in eq.~(\ref{eq:fsc-vn-vk}) is specific to charged systems, the idea finite-size error as a quadrature error eq.~(\ref{eq:fsc-dvn}) applies to any pair potential $v(\bs{r})$. This error can be accurately corrected given converged pair correlation functions in real $g(\bs{r})$ and reciprocal space $S(\bs{k})$.
+While the Madelung term in eq.~(\ref{eq:fsc-vn-vk}) is specific to charged systems, the idea of finite-size error as a quadrature error eq.~(\ref{eq:fsc-dvn}) applies to any pair potential $v(\bs{r})$. This error can be accurately corrected given converged pair correlation functions in real $g(\bs{r})$ and reciprocal space $S(\bs{k})$.
 
 \subsection{Homogeneous electron gas}
 In the case of the electron gas, more progress can be made by considering the long wavelength behavior of the wave function. The dominant contribution to eq.~(\ref{eq:fsc-dvn}) comes from the volume element around $\bs{k}=\bs{0}$, because $v_k$ diverges there.
@@ -50,7 +50,7 @@ Bohm and Pines~\cite{Bohm1953} discovered that the many-body wave function of th
 \right).
 \end{align}
 In the random phase approximation (RPA), we ignore the mode coupling terms, such as $w(\bs{k},\bs{q})$, and find the Gaskell RPA static structure factor eq.~(\ref{eq:wf-gaskell-rpa-sk}).
-Using the leading-order approximation of $S(\bs{k})$ eq.~(\ref{eq:wf-gaskell-rpa-sk-taylor}) in the finite-sie correction formula eq.~(\ref{eq:fsc-dvn-missing}), we obtain the main correction to the potential energy
+Using the leading-order approximation of $S(\bs{k})$ eq.~(\ref{eq:wf-gaskell-rpa-sk-taylor}) in the finite-size correction formula eq.~(\ref{eq:fsc-dvn-missing}), we obtain the main correction to the potential energy
 \begin{align}
 \Delta V_N^{l.o.} = \frac{\omega_p}{4}.
 \end{align}
@@ -128,7 +128,7 @@ u_{\bs{q}}(1-S(\bs{q}))-\rho u(\bs{q})^2S(\bs{q})
 n_N(\bs{k}+\bs{q})-n_N(\bs{k})
 \right),
 \end{align}
-where $u_{\bs{q}}$ is the Jastrow pair potential in the wave function eq.~(\ref{eq:fsc-rpa-wf}).
+where $u_{\bs{q}}$ is the Jastrow pair function in the wave function eq.~(\ref{eq:fsc-rpa-wf}).
 As shown in Fig.~8 of Ref.~\cite{Yang2020-licp}, the leading-order correction to $n(\bs{k})$ works well for lithium. Further, Table~III in the Supplemental materials of Ref.~\cite{Yang2020-licp} shows that the corrected $n_N(\bs{k})$ can be used to accurately correct the finite-size error in the kinetic energy using eq.~(\ref{eq:fsc-dtn-nk}). To achieve this good result for a metal with a sharp Fermi surface such as lithium, it is crucial to densely sample momentum space while preserving the Fermi surface using grand-canonical twist averaging.
 
 \subsection{From wave function}
