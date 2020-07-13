@@ -394,8 +394,8 @@ and
 =
 -\frac12 \left[1+ \frac{1}{\epsilon}\right].
 \eea
-Both relations can be obtained \cite{diag-footnote} by extending Kohn's diagrammatic approach 
-\cite{Kohn1958} (see Supplemental Materials~\cite{bandgap-supp}).
+Both relations can be obtained\footnotemark\footnotetext{We can adapt the proof of Kohn \cite{Kohn1958} by noting that the extra particle (hole) propagator does not interact with the other particles before $t=0$. The equivalent graphs of class I contribute with $\pm 1$ for particle and hole excitations, the equivalent graphs of class IIA remain, contributing $\pm (1/\epsilon -1)/2$, whereas graphs of class IIB are absent.} by extending Kohn's diagrammatic approach 
+\cite{Kohn1958} (see Supplemental Materials\footnotemark[2]\footnotetext[2]{See Supplemental Material at \url{http://link.aps.org/supplemental/ 10.1103/PhysRevB.101.085115} for diagrammatic proof and QMC data.}).
 Integrating around the $v_q$ singularity for small $q$ in Eq.~(\ref{Veecom}),
 we obtain the leading order finite size corrections. As before, this involves the Madelung constant,
 Eq~(\ref{vMdef}).
@@ -568,7 +568,7 @@ at the experimentally measured zero pressure valence densities, $r_s=1.318$ and 
 The crystal structures were optimized by DFT using the vdW-DF1 functional.
 For hydrogen, the QMC calculations have been done with the bare Coulomb interaction. The PAW pseudo-potential has been used for the DFT results shown in Fig.~\ref{fig:H_C2CP250}. For carbon and silicon, pseudopotentials were used to remove the core electrons: carbon ions modeled by the Burkatzki-Filippi-Dolg pseudopotential~\cite{Burkatzki2007}, and silicon ions by the Trail-Needs pseudopotential~\cite{Trail2005}. These are considered good pseudo-potentials for correlated calculations, but their use within DFT calculations produces slightly different results from the literature even with the same functional.
 For hydrogen, we used a supercell with  $2 \times 2 \times 1$ primitive cells so the supercell is nearly cubic and contained 96 protons. For carbon, we used two system sizes: the cubic cell containing 8 atoms and a $2\times 2\times 2$ supercell containing 64 atoms. For silicon, in addition to these systems, we used a $3\times 3\times 3$ supercell containing 216 atoms.
-For hydrogen, the twist convergence has been achieved using a $8 \times 8 \times 8$ twist grid. For C and Si, the twist grid density decreases with increasing system size. The Supplemental Material~\cite{supp} contains the QMC calculated energies and variances of the insulating ground states
+For hydrogen, the twist convergence has been achieved using a $8 \times 8 \times 8$ twist grid. For C and Si, the twist grid density decreases with increasing system size. The Supplemental Material~\footnotemark[2] contains the QMC calculated energies and variances of the insulating ground states
 of the various systems obtained after twist averaging and two-body finite size corrections.
 
 \section{Results\label{sec:bg-results}}
@@ -589,7 +589,7 @@ to a quadratic form which implies $e_0(\mu) = \mu^{\pm} n_e(\mu) + b^\pm n_e(\mu
 Applying our GCTABC procedure to a single-particle theory,
 all states with energies below the chemical potential are occupied. Varying the chemical potential
 thus scans the underlying density of states. The band gap is then determined by locating the band
-edges, $\mu^\pm$, disregarding the location in the Brillouin zone \cite{BrillouinFootnote}.
+edges, $\mu^\pm$, disregarding the location in the Brillouin zone\footnotemark\footnotetext{The reciprocal space information is not lost. By keeping track of the Bloch momentum of the states we can determine the locations of the HOMO and LUMO, but that has not been done here.}.
 Figure~\ref{fig:band_edges} illustrates the density of states
 obtained from GCTABC giving an LDA gap of 3.95 eV for the carbon gap
 %with band edges at 13.27 eV and 17.22 eV,
