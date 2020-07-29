@@ -297,16 +297,16 @@ Thus, the walker distribution will approach the bosonic solution in this positiv
 However, once a walker does cross the node, it quickly gets pushed to regions with high $\vert\Psi_T\vert^2$ and branches to solve a similar bosonic problem in the newly found negative nodal pocket.
 Walkers in the positive nodal pocket contribute to estimators with a positive sign, whereas walkers in the negative pocket contribute with a negative sign.
 While the final average is the exact fermionic estimator, it is the difference between two large values and its noise diverges exponentially fast with system size and projection time.
-Exact fermionic simulation is possible using the release-node method~\cite{Ceperley1978}, but a highly-accurate trial wavefunction is required and much care must be taken for efficient and converged calculations.
+Exact fermionic simulation is possible using the release-node method~\cite{Ceperley1978}, but a highly-accurate trial wavefunction is required and much care must be taken to efficiently converge the calculation before noise takes over.
 
-The practical workaround for the sign problem in DMC is the \textit{fixed-node approximation} (for real wave function).
+The practical workaround for the sign problem in DMC is the \textit{fixed-node approximation} (for real-valued wave functions).
 In this approximation, no walker is allowed to cross the node of the trial wave function.
 This effectively adds to the hamiltonian an infinite potential barrier at the node of $\Psi_T$.
-The bosonic problem is exactly solved in the nodal pocket within this barrier, while the rest of the Hilbert space is constructed via antisymmetry of the wave function.
-This procedure effectively constructs a \emph{fixed-node wave function} $\Psi_{FN}$, so the fixed-node DMC (FN-DMC) total energy is variational $E_{FN}\ge E_0$.
+The bosonic problem is exactly solved in the nodal pocket within this barrier, while the rest of Hilbert space is constructed via antisymmetry of the wave function.
+This restricted random walk effectively constructs a \emph{fixed-node wave function} $\Psi_{FN}$ as an approximation to the true ground state, so the fixed-node DMC (FN-DMC) total energy is variational $E_{FN}\ge E_0$.
 The exact ground-state energy can be obtained if the node of the trial wave function is exact.
-When generalized to systems with imaginary trial wave function, an analogous work around is the fixed-phase DMC method (FP-DMC), which forbids walkers to move past phase-change boundaries of the trial wave function.
-FP-DMC is so similar to FN-DMC that they are typically not distinguished as different methods in the literature.
+When generalized to systems with complex-valued trial wave function, an analogous work around is the fixed-phase DMC method (FP-DMC), which forbids walkers to move past phase-change boundaries of the trial wave function.
+FP-DMC is so similar to FN-DMC that they are often not distinguished as different methods in the literature.
 
 For a general fermionic system, the sign problem is present in all known QMC methods in some form.
 However, the sign problem can be absent in a particular system, for example due to particle-hole symmetry in a half-filled Hubbard model, and can be alleviated at finite-temperature.
