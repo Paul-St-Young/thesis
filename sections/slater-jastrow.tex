@@ -1,6 +1,6 @@
 \chapter{Slater-Jastrow wave function} \label{chap:sj-wf}
 
-In the previous chapter, I introduced the FN-DMC method, which calculates ground-state properties of a many-body system starting from a trial wave function $\Psi_T$. The accuracy and efficiency of the method depends on the choice of $\Psi_T$.
+In the previous chapter, I introduced the FN-DMC method, which calculates ground-state properties of a many-body system starting from a trial wave function $\Psi_T$. The accuracy and efficiency of the method depend on the choice of $\Psi_T$.
 Understanding of the many-body wave function and its connection to physical properties of particular systems can help us make educated guesses at high-quality trial wave function and perform accurate simulations.
 In this chapter, I will describe the most well-understood many-body wave function for electronic structure, the Slater-Jastrow wave function, and discuss what behavior of electrons we can learn from it.
 
@@ -19,10 +19,10 @@ In condensed matter, the development of many-body wave function took off in the 
 %Of course, the energy value is only one number. More are needed to truly quantify the accuracy of a wave function, but I digress.
 
 As early as 1934, E. Wigner~\cite{Wigner1934} noted that by introducing a “hole” in the correlation function of opposite-spin elections, one can improve the Slater determinant and lower its energy value in the homogeneous electron gas. Although, this hint was not acted on until much later.
-In 1940, A. Bijl~\cite{Bijl1940} found that the logarithm of the wave function of many-interacting particles is size extensive. This logarithm can be expressed as a perturbation expansion involving one- and two-electron terms and is convergent in the thermodynamic limit.
+In 1940, A. Bijl~\cite{Bijl1940} found that the logarithm of the wave function of many-interacting particles is size-extensive. This logarithm can be expressed as a perturbation expansion involving one- and two-electron terms and is convergent in the thermodynamic limit.
 Unfortunately, this work went unnoticed for 30 years while others independently developed similar ideas. Expanding the logarithm of the wave function is a general idea that later became known as the Bijl-Dingle-Jastrow-Feenberg expansion~\cite{Carleo2017} for historical reasons, which I will now describe.
 
-In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wave function by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle pair-product wave functions to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wave function was born. While this thesis is mostly focused on the Slater-Jastrow wave function for electronic matter, the idea of separating particle statistics from correlation is more general. The Slater-Jastrow wave function is the fermion variant of eq.~(\ref{eq:wf-prod-jas})
+In 1949, R. B. Dingle~\cite{Dingle1949}, while estimating the zero-point energy of hard spheres, came up with a product of exponential functions as a variational wave function by considering symmetries and limits. In 1955, R. Jastrow~\cite{Jastrow1955} generalized the Dingle pair-product wave functions to indistinguishable particles with Bose and Fermi statistics. To generalize to fermions, he multiplied by a Slater determinant to enforce antisymmetric permutation symmetry. Thus, the Slater-Jastrow wave function was born. While this thesis is mostly focused on the Slater-Jastrow wave function for electronic matter, the idea of separating particle statistics from correlation is general. The Slater-Jastrow wave function is the fermion variant of eq.~(\ref{eq:wf-prod-jas})
 \begin{align} \label{eq:wf-prod-jas}
 \Psi = \left\{\begin{array}{ll}
 I(\{\phi_i\}) \exp(-U) & \text{distinguishabe} \\
@@ -30,7 +30,7 @@ P(\{\phi_i\}) \exp(-U) & \text{bosons} \\
 D(\{\phi_i\}) \exp(-U) & \text{fermions}
 \end{array}\right.,
 \end{align}
-where $I$, $P$, $D$ are identity, permanent, and determinant respectively.
+where $I$, $P$, $D$ are identity, permanent, and determinant, respectively.
 $\{\phi_i\}$ is a set of single-particle wave functions and $U$ consists of pair terms only
 \begin{align} \label{eq:wf-pair-jas}
 U = \sum\limits_{i<j} u(r_ij).
@@ -54,10 +54,10 @@ Similar ideas arose in the study of fermions in the same year.
 
 %The most prominent success of the Slater-Jastrow wave function is its application to the homogeneous electron gas.
 Also in 1961, T. Gaskell~\cite{Gaskell1961} derived a Jastrow pair function for homogeneous electron gas from perturbation calculation of its pair correlation function. He expressed the Jastrow pair function in collective coordinates and derived an analytical formula using the random phase approximation (RPA). By minimizing the total energy in the long wavelength limit, Gaskell found an accurate Jastrow pair function, having correct limits at both short and long wavelengths.
-This Gaskell RPA wave function proved particularly useful in the study of the homogeneous electron gas and will be discussed in Sec.~\ref{sec:gaskell-rpa-jas} and extended in Sec.~\ref{sec:mc-rpa-jas}.
+This Gaskell RPA wave function proved particularly useful in the study of the homogeneous electron gas and will be discussed in Sec.~\ref{sec:gaskell-rpa-jas}, then extended in Sec.~\ref{sec:mc-rpa-jas}.
 Remarkably, this wave function is accurate in both 2D and 3D.
 %In 1978, D. M. Ceperley~\cite{Ceperley1978} extended the Gaskell pair function to Wigner crystal.
-Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley and B. J. Alder~\cite{Ceperley1980} solved the homogeneous electron gas problem in 3D using exact QMC simulations.
+Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley and B. J. Alder~\cite{Ceperley1980} found the ground state of the homogeneous electron gas in 3D using exact QMC simulations.
 
 %In 1977, C. C. Chang and C. E. Campbell~\cite{Chang1977} added a three-body term to the Slater-Jastrow wave function and observed better agreement with experiment.
 A common theme of these early successes is guessing and checking of correlation. One guesses that a many-body correlation is important, incorporates said correlation into the wave function, then checks if the energy value is lowered and/or correlation functions get closer to experiment. %This approach requires one to think long and hard about the physics of a particular problem, to have the mathematical prowess to connect observed correlation with a wave function form, and to be lucky enough to have some experimental data to compare with. This set of circumstances is less and less likely today
