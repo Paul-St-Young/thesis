@@ -2,7 +2,7 @@
 The most widely used ground-state QMC method, FN-DMC, requires a trial wave function $\Psi_T$ to start the imaginary time projection process.
 The node of $\Psi_T$ directly controls the one uncontrolled error, the fixed-node error, in the DMC total energy.
 Even bosonic details of $\Psi_T$ can matter to observables that do not commute with the hamiltonian due to the mixed-estimator error.
-Further, the complexity of $\Psi_T$ affects the efficiency of a DMC run, because $\Psi_T$ and many its derivatives need to be evaluated at every step.
+Further, the complexity of $\Psi_T$ affects the efficiency of a DMC run, because $\Psi_T$ and many its derivatives need to be evaluated at every step of the algorithm.
 Therefore, accurate and compact trial wave functions are crucial for practical high-accuracy DMC simulations.
 
 While it is possible to construct such trial wave functions analytically~\cite{Holzmann2003,Holzmann2006,Pierleoni2008}, the process is rather involved and requires deep understanding of the particular system being simulated.
@@ -13,14 +13,14 @@ This chapter introduces one theory in each of these two categories.
 \subsection{Hartree-Fock}
 
 \subsubsection{The Hartree-Fock Equations}
-The Hartree-Fock (HF) equations are a set of equations that couple spin orbitals in a determinant wavefunction. They can be obtained by minimizing the energy of a Slater determinant with the constraint that spin orbitals remain orthonormal. If each molecular orbital $a$ is written as a linear combination of a set of basis functions $\{\phi_\mu\}$
+The Hartree-Fock (HF) equations are a set of equations that couple spin orbitals in a determinant wave function. They can be obtained by minimizing the energy of a Slater determinant with the constraint that spin orbitals remain orthonormal. If each molecular orbital $a$ is written as a linear combination of a set of basis functions $\{\phi_\mu\}$
 \begin{align} \label{eq:hf-psia}
 \psi_a = \sum\limits_{\mu=1}^K C_{\mu a} \phi_\mu,
 \end{align}
 then the constraint optimization problem can be converted to a set of linear equations, resulting in an eigenvalue problem.
 However, the eigenvectors of this linear problem are needed to construct the problem to be solved.
 This self-consistency requirement makes the HF equations non-linear, thus requiring an iterative solver.
-Once an initial guess for the eigenvectors $C_{\mu a}$ have been chosen, one can construct the linear problem to solve via a \emph{Fock matrix}.
+Once an initial guess for the eigenvectors $C_{\mu a}$ have been chosen, one can construct the linear problem to be solved via a \emph{Fock matrix}.
 For a spin-unpolarized system $N_{\up}=N_{\dn}=N/2$, the restricted Hartree-Fock (RHF) solution is defined by the first $N/2$ eigenvectors of the Fock matrix
 \begin{align}
 F_{\mu\nu} = \hcore + \sum\limits_{\lambda\sigma} P_{\lambda\sigma} \left[
@@ -29,9 +29,9 @@ F_{\mu\nu} = \hcore + \sum\limits_{\lambda\sigma} P_{\lambda\sigma} \left[
 \end{align} % (3.154)
 where $P_{\lambda\sigma}=2\sum_{a=1}^{N/2} C_{\lambda a}C_{\sigma a}^*$ is the density matrix of the trial states. The \textit{Coulomb integral} notation
 \begin{align}
-(\mu\nu|\lambda\sigma) = \iint d\bs{r}_1 d\bs{r}_2 \phi_\mu^*(\bs{r}_1)\phi_{\nu}(\bs{r}_1)
+(\mu\nu|\lambda\sigma) = \iint d\bs{r}_1 d\bs{r}_2 \psi_\mu^*(\bs{r}_1)\psi_{\nu}(\bs{r}_1)
 \frac{1}{\vert\bs{r}_1-\bs{r}_2\vert}
-\phi_\lambda^*(\bs{r}_2)\phi_\sigma(\bs{r}_2).
+\psi_\lambda^*(\bs{r}_2)\psi_\sigma(\bs{r}_2).
 \end{align}
 $\hcore$ is the one-electron part of the Hamiltonian expressed in the given basis % (3.149)
 \begin{align}
@@ -39,20 +39,20 @@ $\hcore$ is the one-electron part of the Hamiltonian expressed in the given basi
 -\frac{1}{2}\nabla_1^2-\sum\limits_A \dfrac{Z_A}{\vert\bs{r}_1-\bs{R}_A\vert}
 \right)  \phi_\nu(\bs{r}_1).
 \end{align}
+The RHF total energy is the expectation of the electronic hamiltonian in the determinant wave function
+\begin{align}
+\Psi_{RHF} = D_{\up}(\{\psi_a\}) D_{\dn}(\{\psi_a\}), \\
+E^{RHF}_0 \equiv \braket{\Psi_{RHF}|\ham|\Psi_{RHF}} = 2\sum\limits\braket{\psi_a|\hcore|\psi_a} + \sum\limits_{a=1}^{N/2}\sum\limits_{b=1}^{N/2} \braket{ab||ab},
+\end{align}
 where the \textit{exchange integral} is defined as
 \begin{align}
 \braket{ab||ab} \equiv \int d\bs{r}_1d\bs{r}_2 \psi_a^*(\bs{r}_1)\psi_b^*(\bs{r}_2)r_{12}^{-1}(1-\mathcal{P}_{12})\psi_c(\bs{r}_1)\psi_d(\bs{r}_2).
 \end{align}
-The RHF total energy is the expectation of the electronic hamiltonian in the determinant wave function
-\begin{align}
-\Psi_{RHF} = D_{\up}(\{\psi_a\}) D_{\dn}(\{\psi_a\}), \\
-E^{RHF}_0 \equiv \braket{\Psi_{RHF}|\ham|\Psi_{RHF}} = 2\sum\limits\braket{\psi_a|\hcore|\psi_a} + \sum\limits_{a=1}^{N/2}\sum\limits_{b=1}^{N/2} \braket{ab||ab}.
-\end{align}
 Importantly, $E^{RHF}_0$ is not the sum of the eigenvalues of the Fock operator
 \begin{align} \label{eq:hf-esum}
-2\sum\limits_{a=1}^{N/2} \epsilon_a = 2\sum\limits\braket{\psi_a|\hcore|\psi_a} + 2\sum\limits_{a=1}^{N/2}\sum\limits_{b=1}^{N/2} \braket{ab||ab} \neq E^{RHF}_0,
+2\sum\limits_{a=1}^{N/2} \epsilon_a = 2\sum\limits\braket{\psi_a|\hcore|\psi_a} + 2\sum\limits_{a=1}^{N/2}\sum\limits_{b=1}^{N/2} \braket{ab||ab} = E^{RHF}_0-\sum\limits_{a=1}^{N/2}\sum\limits_{b=1}^{N/2} \braket{ab||ab},
 \end{align}
-which double counts Coulomb interaction. This is because both $\epsilon_a$ and $\epsilon_b$ include the Coulomb interaction energy between orbitals $a$ and $b$.
+because it double counts Coulomb interaction. The root cause if that both $\epsilon_a$ and $\epsilon_b$ include the Coulomb interaction energy between orbitals $a$ and $b$.
 Not being able to sum the eigenvalues to obtain the total energy is a minor inconvenience for the fact that these eigenvalues have the physical meaning of electron/hole excitation energies.
 Since the HF method constructs a determinant as trial wave function for the exact electronic hamiltonian, the HF energy is variational $E^{RHF}_0 \ge E_0$.
 
@@ -64,9 +64,9 @@ An application of RHF to the isolated H$_2$ molecule is detailed in Appendix~\re
 \subsubsection{Koopmans Theorem}
 HF theory can be used to study excitations from the ground state. Consider removing an electron from orbital $\delta\le N$, thus creating a hole (h). The wave function for the $(N-1)$-electron system is~\cite{Giuliani2005}
 \begin{align}
-\ket{\Psi_{HF}^{(h,\delta)}} = \hat{a}_\delta\ket{\Psi_{HF}}
+\ket{\Psi_{HF}^{(h,\delta)}} = \hat{a}_\delta\ket{\Psi_{HF}}.
 \end{align}
-in the frozen orbital approximation, where the orbitals of the remaining electrons cannot respond to the removed one. The energy of this wave function can be shown to differ from the ground state by $\epsilon_\delta$, the HF eigenvalue of the orbital being emptied.
+In the frozen orbital approximation, where the orbitals of the remaining electrons cannot respond to the removed one, the energy of this wave function can be shown to differ from the ground state by $\epsilon_\delta$, the HF eigenvalue of the orbital being emptied
 \begin{align}
 E_{HF}^{(h,\delta)} \equiv \braket{\ket{\Psi_{HF}^{(h,\delta)}}|\ham|\ket{\Psi_{HF}^{(h,\delta)}}} = E_{HF} - \epsilon_\delta.
 \end{align}
@@ -90,10 +90,10 @@ Koopmans theorem  is only applicable relative to the HF ground state. For exampl
 
 \subsubsection{Basis Set Error}
 
-To obtain the HF solution the basis set used to represent the spin orbitals, i.e. $\{\phi_\mu\}$ in eq.~(\ref{eq:hf-psia}), must be complete.
+To obtain a converged HF solution, the basis set used to represent the spin orbitals, i.e. $\{\phi_\mu\}$ in eq.~(\ref{eq:hf-psia}), must be complete.
 In practice, one can approach this \textit{complete basis set limit} by using a sequence of basis sets increasing in size.
 The correlation-consistent (cc) basis sets are a widely used standard for this purpose.
-The convergence of the total energy of H$_2$ molecule is shown in Fig.~\ref{fig:hf-h2} and compared to an exact references obtained by Kolos and Wolniewicz (KW)~\cite{Kolos1964}.
+The convergence of the total energy of an H$_2$ molecule is shown in Fig.~\ref{fig:hf-h2} and compared to the exact references obtained by Kolos and Wolniewicz (KW)~\cite{Kolos1964}.
 The total energy is converged on the scale of the plot using a triple-zeta (TZ) basis, which contains three basis functions per atom, and above.
 All RHF energy curves are at least $40$ mha above the exact solution of the Schr\"odinger equation including electron-electron correlation, in accordance with the variational principle.
 Further, even after basis-set convergence, the RHF energy is still quite different from the exact values.
@@ -114,7 +114,7 @@ The difference between the exact and the RHF energies defines the \textit{correl
 \subsubsection{Beyond Hartree-Fock}
 Even when the complete basis set limit is reached, the HF solution is still not the exact electronic ground state due to its neglect of electron correlation.
 One way to account for correlation effects is to perform a determinant expansion eq.~(\ref{eq:method-hf-ci}).
-The virtual orbitals can be used to construct N-electron determinants that differ from the HF ground state by changing orbital occupation.
+The unoccupied \emph{virtual} orbitals can be used to construct N-electron determinants that differ from the HF ground state by changing orbital occupation.
 These determinants form a many-body basis, in which any wave function can be expressed as a linear combination.
 This leads to the configuration interaction (CI) expansion, where the exact electronic ground state is expanded as a sum of determinants
 \begin{align} \label{eq:method-hf-ci}
@@ -127,21 +127,21 @@ The ground state is said to have \textit{static correlation} if one or more dete
 This will happen if there are virtual orbitals nearly degenerate with the highest occupied molecular orbital.
 In contrast, the system has \textit{dynamic correlation} if the $c_i$ coefficients are small but non-zero for many determinants with high levels of excitation.
 Dynamic correlation is often attributed to strong local correlation such as the electron-electron cusp condition.
-The current definition of static and dynamic correlations is not precision~\cite{Benavides-Riveros2017}.
+The current definition of static and dynamic correlations is not precise~\cite{Benavides-Riveros2017}.
 I introduce the above working definitions, because static correlation can be interpreted as a delocalization error due to fractional electron~\cite{Cohen2008}, and is related to the self-interaction error in density functional theory (DFT).
 This bridges the languages used in quantum chemistry and condensed matter as well as points to a solution of the infamous ``bandgap problem'', to be introduced in  Sec.~\ref{sec:method-dft-bandgap}.
 
-While the HF method enjoys much success in the study of atoms, its complete neglect of (Coulomb) electron correlation is woefully inadequate for many solids. The total energy is dominated by inner shell contributions, which overshadows the valence contributions important for correlated excitations in solids.
+While the HF method enjoys much success in the study of atoms, its complete neglect of (Coulomb) electron correlation is woefully inadequate for many solids. The HF total energy is dominated by inner shell contributions, which overshadows the valence contributions important for correlated excitations in solids.
 The HF energy eigenvalues show vanishing density of states at the Fermi level in metals and unphysically large band gaps in insulators~\cite{Perdew1981}.
 
 \subsection{Kohn-Sham Density Functional Theory}
 
 Using a mapping from electron density to total energy, density functional theory (DFT) is a method that can, in principle, exactly include electron correlation effects.
-Even though the exact density functional is unknown, even approximate functionals can lead to useful results.
+Though the exact density functional is unknown, even approximate functionals can lead to useful results.
 DFT uses the three-dimensional total electron density $n(\bs{r})$ as the basic variable rather than the 3N-dimensional many-body wave function $\Psi(\bs{r}_1,\dots,\bs{r}_N)$. This is a dramatic simplification that likely lead to its dominance in modern electronic structure theory of solids and material science.
 
 \subsubsection{The Hohenberg-Kohn theorems}
-While having roots in Thomas-Fermi theory~\cite{Parr1989}, DFT was put on firm theoretical foundation by P. Hohenberg and W. Kohn (HK) in 1964~\cite{Hohenberg1964}, where they calculate the total energy $E$ from an external potential $v(\bs{r})$ and a functional of the ground-state electron density
+While having roots in Thomas-Fermi theory~\cite{Parr1989}, DFT was put on firm theoretical foundation by P. Hohenberg and W. Kohn (HK) in 1964~\cite{Hohenberg1964}, where they calculate the total electronic energy $E$ from an external potential $v(\bs{r})$ and a functional of the ground-state electron density
 \begin{align}
 E\equiv \int d\bs{r} n(\bs{r}) v(\bs{r}) + F[n(\bs{r})].
 \end{align}
@@ -164,7 +164,7 @@ Consider an external potential $v$, its hamiltonian $H$, and its unique ground s
 
 These initial proofs by HK have two important assumptions: 1. the ground-state is non-degenerate and 2. the electron density $n(\bs{r})$ is V-representable. The latter is especially sever because reasonable densities were shown not to be V-representable~\cite{Levy1982,Lieb1983}. Fortunately, M. Levy proved that both assumptions can be weakened~\cite{Levy1979}. The HK theorems hold for N-representable densities regardless of ground-state degeneracy.
 \begin{definition}
-\textit{N representable density} A density $n(\bs{r})$ is N-representable if it can be obtained from some anti-symmetric wave function.
+\textit{N representable density} A density $n(\bs{r})$ is N-representable if it can be obtained from some many-body wave function of N particles.
 \end{definition}
 
 While less publicized, HK also pointed out that the exact density functional less the direct/Column contribution can be calculated from a local energy-density functional $g_{\bs{r}}[n]$
@@ -224,14 +224,14 @@ T_s[n] + \int d\bs{r}v(\bs{r}) + \int d\bs{r}\int d\bs{r}' \dfrac{n(\bs{r}')}{\v
 
 \subsubsection{The Band Gap Problem} \label{sec:method-dft-bandgap}
 The Kohn-Sham eigenvalues do not have the same physical meaning as the Hartree-Fock eigenvalues as given by Koopmans theorem. Thus, a band gap ``problem'' arises when one compares the HOMO-LUMO gap from KS-DFT to experimental measurements of the fundamental gap $E_g$. The eigenvalue of the Kohn-Sham HOMO can be identified with the ionization energy of an isolated molecule if the exchange-correlation potential vanish at infinity.
-In this case, the ionization energy is dominated by the long-range asymptotic behavior of the 1RDM, which is determined by the long-range tail of the electronic density with no contribution from the short-sighted exchange correlation potential.
+This is a special case, because the ionization energy is dominated by the long-range asymptotic behavior of the 1RDM, which is determined by the long-range tail of the electronic density with no contribution from the short-sighted exchange correlation potential.
 
 When extended to handle systems with fractional electron number, the derivative discontinuity of the exact density functional is $E_g$. It has contribution from both the non-interacting kinetic functional $T_s[n]$ and the exact exchange-correlation functional $E_{xc}[n]$. The KS HOMO-LUMO gap measures the derivative discontinuity in $T_s[n]$. However, as shown in Fig.~\ref{fig:method-dft-smooth-lda}, the $E_{xc}[n]$ under LDA is smooth, so its contribution to the gap is missing. As a result, the LDA gap is $\sim 50\%$ that of experiment, showing that the derivative discontinuity in $E_{xc}[n]$ can be of similar magnitude as the gap and cannot be ignored.
 
 \begin{figure}[h]
 \includegraphics[width=0.45\linewidth]{cohen2008-fig1}
 \includegraphics[width=0.52\linewidth]{cohen2008-fig2}
-\caption{A. J. Cohen, P. Mori-S\'anchez, and W. Yang~\cite{Cohen2008} explains that the self-interaction error in H$_2$ binding curve (left panel C and D) is due to the presence of fractional electron (left panel B), which leads to a delocalization error when LDA is used (right panel).}
+\caption{A. J. Cohen, P. Mori-S\'anchez, and W. Yang~\cite{Cohen2008} explains that the self-interaction error in H$_2^+$ binding curve (left panel A) is due to the presence of fractional electron (left panel B), which leads to a delocalization error when LDA is used.}
 \label{fig:method-dft-smooth-lda}
 \end{figure}
 
@@ -257,8 +257,8 @@ where $\epsilon_x$ is the LDA exchange function and the scaled gradient
 \begin{align}
 \bs{s}(\bs{r}) = \dfrac{\bs{\nabla}n(\bs{r})}{2k_F(\bs{r})n(\bs{r})}.
 \end{align}
-A simple form for the exchange enhancement factor $F_x$ was given by J. Perdew, K. Burke, and E. Ernzerhof~\cite{Perdew1996} in 1996. After another careful cutoff on the correlation functional, the immensely popular PBE functional was constructed. The PBE xc functional takes the same form as eq.~(\ref{eq:method-dft-pbe-x}), but with a different enhancement factor $F_{xc}$ instead of $F_x$.
-PBE softens molecular bonds relative to the LDA and predict an order of magnitude more accurate dissociation energies of many molecules~\cite{Perdew1996}.
+A simple form for the \emph{exchange enhancement factor} $F_x$ was given by J. Perdew, K. Burke, and E. Ernzerhof~\cite{Perdew1996} in 1996. After another careful cutoff on the correlation functional, the immensely popular PBE functional was constructed. The PBE xc functional takes the same form as eq.~(\ref{eq:method-dft-pbe-x}), but with a different enhancement factor: $F_{xc}$ instead of $F_x$.
+PBE softens molecular bonds relative to the LDA and predicts an order of magnitude more accurate dissociation energies of many molecules~\cite{Perdew1996}.
 
 Unfortunately, both LDA and PBE suffer from a well-known failure of any local and semi-local density functional theory: the absence of Van der Waals interaction.
 This interaction is entirely due to the correlation of density fluctuations and is dominant for two neutral objects with non-overlapping electron densities.
@@ -276,7 +276,7 @@ Consider the Coulomb interaction as a perturbation to two widely separated atoms
 \chi_1(\bs{r}_1, \bs{r}_1')
 \chi_2(\bs{r}_2, \bs{r}_2') + h.o.,
 \end{align}
-as written in eq~.(7.116) in Ref.~\cite{Giuliani2005}. One can then proceed to approximate the density-density response function using the static electron density, for example using the polarizability of the homogeneous electron gas.
+as written in eq.~(7.116) in Ref.~\cite{Giuliani2005}. One can then proceed to approximate the density-density response function using the static electron density, e.g. using the polarizability of the homogeneous electron gas.
 
 Finally, exact-exchange functionals such as PBE0 and HSE~\cite{Heyd2003} have been developed for atoms having localized valence electrons, e.g., with d or f angular momentum.
 These functionals are crucial in the study of magnetism, as the PBE functional overly favor delocalized electrons and often predict qualitatively wrong magnetic momentum and spin orderings of transition metals.
