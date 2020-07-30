@@ -3,14 +3,14 @@ In the previous two chapters, I introduced the ground-state QMC method and the t
 However, practical QMC simulations cannot handle the hamiltonian governing $O(10^{23})$ particles found in typical condensed matter experiments.
 While we use periodic boundary condition to eliminate surfaces from our simulations, there is significant remaining difference between the properties of this model system and those from experiment.
 
-In this chapter, I will describe common types of finite size effects encountered in electronic structure simulations and a few correction schemes. I will begin discussion from the most general correction that works for quantum and classical systems at zero or finite temperature: the static structure factor correction to the potential energy. From there, the method is extended to correct kinetic energy using the momentum distribution, and in the quantum case, using the Jastrow pair function. %Then, I will discuss the dominant single-particle kinetic finite size effect in fermion systems, the so-called "shell filling" effects.
+In this chapter, I will describe common types of finite size effects encountered in electronic structure simulations and a few correction schemes. I will begin discussion from the most general correction that works for quantum and classical systems at zero and finite temperature: the static structure factor correction to the potential energy. From there, the method is extended to correct kinetic energy using the momentum distribution, and in the quantum case, using the Jastrow pair function. %Then, I will discuss the dominant single-particle kinetic finite size effect in fermion systems, the so-called "shell filling" effects.
 %Many-body corrections beyond pair interactions are outside the scope of this discussion.
 
 \section{Correction to the potential energy}
 
 \subsection{General Theory}
 Given a simulation using periodic boundary conditions, the accessible momenta are quantized. As the simulation cell is enlarged, the grid of accessible momenta becomes finer until it grants access to the full continuum of momentum space in the thermodynamic limit. By considering the difference between this infinite system and the finite simulation cell, we can understand finite-size effects and attempt to correct them.
-Consider an orthorhombic box with side length $L_x$ along the x direction. The momentum along the $x$ direction must take discrete values $k_x=\dfrac{2\pi}{L_x}n_x$, where $n_x\in\mathcal{N}$. Similarly discretization exist along the other directions.
+Consider an orthorhombic box with side length $L_x$ along the x direction. The momentum along the $x$ direction must take discrete values $k_x=\dfrac{2\pi}{L_x}n_x$, where $n_x\in\mathbb{N}$. Similarly discretization exist along the other directions.
 %For simulations with the Coulomb interaction, one has no access to the $\bs{k}=\bs{0}$ volume element in reciprocal space.
 In a simulation where particles interact via the Coulomb pair potential $v(r)=\frac{1}{r}$, the total potential energy of the system %can be written as an integral over the pair correlation function
 \begin{align}
@@ -29,7 +29,7 @@ This equation can be equivalently written in reciprocal space as
 \begin{align} \label{eq:fsc-vn-vk}
 V_N \equiv V/N = v_M + \frac{1}{2\Omega} \sum\limits_{\bs{k}\neq\bs{0}} v_{\bs{k}} S(\bs{k}),
 \end{align}
-where $v_{\bs{k}}=\dfrac{2\pi (d-1)}{k^{d-1}}$ is the Fourier transform of the Coulomb pair potential in $d$ spatial dimensions. $v_M$ is the Madelung constant, which combines the electrostatic energy of an infinite periodic array of charges on $\bs{L}$ with a neutralizing background. Equation~(\ref{eq:fsc-vn-vk}) looks different than its original proposal in Ref.~\cite{Chiesa2006} due to a different Fourier transform convention. Here, I follow the definitions eq.~(6) and (7) in Ref.~\cite{Holzmann2016}, which are reiterated in Sec.~\ref{sec:def-ft}.
+where $v_{\bs{k}}=\dfrac{2\pi (d-1)}{k^{d-1}}$ is the Fourier transform of the Coulomb pair potential in $d$ spatial dimensions. $v_M$ is the Madelung constant, which combines the electrostatic energy of an infinite periodic array of charges on $\bs{L}$ with a neutralizing background. Equation~(\ref{eq:fsc-vn-vk}) looks different than its original proposal in Ref.~\cite{Chiesa2006} due to a difference in Fourier transform convention. Here, I follow the definitions eq.~(6) and (7) in Ref.~\cite{Holzmann2016}, which are reiterated in Sec.~\ref{sec:def-ft}.
 
 Suppose $S(\bs{k})$ is converged, i.e., does not change with system size, then the only difference between the infinite-system and the finite-size potential energies is the replacement of the sum in eq.~(\ref{eq:fsc-vn-vk}) by an integral
 \begin{align} \label{eq:fsc-dvn}
@@ -40,10 +40,10 @@ Suppose $S(\bs{k})$ is converged, i.e., does not change with system size, then t
 
 Equation~(\ref{eq:fsc-dvn}) is not practical, because $\lim\limits_{k\rightarrow\infty}S(k)=1$ and both the sum and the integral diverge. Fortunately, large $k$ corresponds to short-range interaction, so its contribution to finite-size error vanish rapidly with system size. Thus, we can truncate the large-$k$ part of eq.~(\ref{eq:fsc-dvn}) with little effect on its value. This can be achieved either using an explicit suppression factor $e^{-\epsilon k^2}$ as done in eq.~(24) of Ref.~\cite{Drummond2008} by Drummond \textit{et al.}, or splitting out the long-range part of the Coulomb potential as done in eq.~(30) of Ref.~\cite{Holzmann2016} by Holzmann \textit{et al.}.
 
-While the Madelung term in eq.~(\ref{eq:fsc-vn-vk}) is specific to charged systems, the idea of finite-size error as a quadrature error eq.~(\ref{eq:fsc-dvn}) applies to any pair potential $v(\bs{r})$. This error can be accurately corrected given converged pair correlation functions in real $g(\bs{r})$ and reciprocal space $S(\bs{k})$.
+While the Madelung term in eq.~(\ref{eq:fsc-vn-vk}) is specific to charged systems, the idea of finite-size error as a quadrature error eq.~(\ref{eq:fsc-dvn}) applies to any pair potential $v(\bs{r})$. This error can be accurately corrected given converged pair correlation functions in real $g(\bs{r})$ and reciprocal $S(\bs{k})$ spaces.
 
 \subsection{Homogeneous electron gas}
-In the case of the electron gas, more progress can be made by considering the long wavelength behavior of the wave function. The dominant contribution to eq.~(\ref{eq:fsc-dvn}) comes from the volume element around $\bs{k}=\bs{0}$, because $v_k$ diverges there.
+In the case of the electron gas, more progress can be made due to known long-wavelength behavior of the wave function. The dominant contribution to eq.~(\ref{eq:fsc-dvn}) comes from the volume element around $\bs{k}=\bs{0}$, because $v_k$ diverges there.
 \begin{align} \label{eq:fsc-dvn-missing}
 \Delta V_N \approx \int_{\frac{(2\pi)^d}{\Omega}} \dfrac{d^d\bs{k}}{(2\pi)^d} \frac{v_k}{2}S(\bs{k}).
 \end{align}
@@ -89,11 +89,11 @@ S(\bs{k}) \equiv \frac{1}{N}\left\langle
 As shown in Fig.~\ref{fig:fsc-sk-dsk-rhok}, the static part due to charge density $\rho_{\bs{k}}$ is non-zero only at reciprocal lattice of the primitive cell of the underlying crystal structure, whereas the fluctuating part varies smoothly from $0$ to $1$. Its value within the missing $\bs{k}=\bs{0}$ region (red area in Fig.~\ref{fig:fsc-sk-dsk-rhok}) can be used to correct the potential energy to leading order following eq.~(\ref{eq:fsc-dvn-missing}).
 Changes in the charge density with system size is a higher-order effect and is small compared to the total potential energy~\cite{Clay2016}. However, as shown in Ref.~\cite{Yang2020-gap}, this static contribution becomes important when energy differences are taken, such as in the calculation of the fundamental gap.
 
-Equation~(\ref{eq:wf-gaskell-rpa-sk}) still works well at $k\ll k_F$, but the short-range contribution $S_0(k)$ no longer comes from a simple determinant of plane waves. For insulators, dielectric screening suppresses long-range fluctuation and changes the leading-order behavior of $S(k)$ from eq.~(\ref{eq:wf-gaskell-rpa-sk-taylor}) to eq.~(7) in Ref.~\cite{Yang2020-gap}
+Even in an insulator, eq.~(\ref{eq:wf-gaskell-rpa-sk}) still works well at $k\ll k_F$, but the short-range contribution $S_0(k)$ no longer comes from a simple determinant of plane waves. Dielectric screening suppresses long-range fluctuation and changes the leading-order behavior of $S(k)$ from eq.~(\ref{eq:wf-gaskell-rpa-sk-taylor}) to eq.~(7) in Ref.~\cite{Yang2020-gap}
 \begin{align}
 S(k) \approx \dfrac{k^2}{2\omega_p}(1-\epsilon_k^{-1})^{1/2},
 \end{align}
-so long as plasmons are the dominant excitation in the system.
+so long as only one excitation dominates the dynamic structure factor.
 
 \section{Correction to the kinetic energy}
 
@@ -158,7 +158,7 @@ T^D_N \equiv -\dfrac{\hbar^2}{2m}\sum\limits_{i=1}^N \dfrac{\nabla_i^2D}{D} = \l
 \sum\limits_{n=1}^N\epsilon_n - \sum\limits_{i=1}^N \veff(\bs{r}_i)
 \right],
 \end{align}
-by eq.~(19) in Ref.~\cite{Holzmann2016}. As the number of electrons is increased, the kinetic contribution eq.~(\ref{eq:fsc-tdn}) increases by the energies of the new orbitals being occupied. Consider the ideal Fermi gas in a 2D square box. As the number of same-spin particles increase from $N=2$ to $5$, the first shell of states in reciprocal space become filled. They all have the same single-particle energy, so the total kinetic energy increases linearly with $N$. However, when one adds a 6$^{\text{th}}$ particle, it increases the total energy by twice the amount as one in the first shell. As shown in Fig.~\ref{fig:fsc-lin-tabc}, this shell filling effect causes oscillation in the kinetic energy as a function of the number of particles, making size extrapolation difficult. This shell filling effect can be drastically reduced by adopting canonical twist averaged boundary conditions (TABC), where the number of particles is the same across all twists. Further, grand-canonical twist averaged boundary condition (GC-TABC), where the number of particles change to according to the exact Fermi surface, can exactly remove this single-particle finite-size effect. Finally, there is another ``pocket'' method which reduces the number of twists needed. Within a pocket in reciprocal space, the orbitals in the determinant smoothly acquire a phase as the twist is varied. Once these pockets are mapped out, one can perform one calculation per pocket and weigh it by the volume of the pocket to exactly remove the one-particle finite-size error~\cite{Holzmann2016}.
+by eq.~(19) in Ref.~\cite{Holzmann2016}. As the number of electrons is increased, the kinetic contribution eq.~(\ref{eq:fsc-tdn}) increases by the energies of the new orbitals being occupied. Consider the ideal Fermi gas in a 2D square box. As the number of same-spin particles increase from $N=2$ to $5$, the first shell of states in reciprocal space become filled. They all have the same single-particle energy, so the total kinetic energy increases linearly with $N$. However, when one adds a 6$^{\text{th}}$ particle, it increases the total energy by twice the amount as one in the first shell. As shown in Fig.~\ref{fig:fsc-lin-tabc}, this shell filling effect causes oscillation in the kinetic energy as a function of the number of particles, making size extrapolation difficult. It can be drastically reduced by adopting canonical twist averaged boundary conditions (TABC), where the number of particles is the same across all twists. Further, grand-canonical twist averaged boundary condition (GC-TABC), where the number of particles change according to the exact Fermi surface, can exactly remove this single-particle finite-size effect. Finally, there is another ``pocket'' method which reduces the number of twists needed. Within a pocket in reciprocal space, the orbitals in the determinant smoothly acquire a phase as the twist is varied. Once these pockets are mapped out, one can perform one calculation per pocket and weigh it by the volume of the pocket to exactly remove the one-particle finite-size error~\cite{Holzmann2016}.
 
 \begin{figure}[h]
 \centering
