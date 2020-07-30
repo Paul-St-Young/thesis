@@ -61,7 +61,7 @@ Using the Gaskell RPA wave function as trial function, in 1980, D. M. Ceperley a
 
 %In 1977, C. C. Chang and C. E. Campbell~\cite{Chang1977} added a three-body term to the Slater-Jastrow wave function and observed better agreement with experiment.
 A common theme of these early successes is guessing and checking of correlation. One guesses that a many-body correlation is important, incorporates said correlation into the wave function, then checks if the energy value is lowered and/or correlation functions get closer to experiment. %This approach requires one to think long and hard about the physics of a particular problem, to have the mathematical prowess to connect observed correlation with a wave function form, and to be lucky enough to have some experimental data to compare with. This set of circumstances is less and less likely today
-In contrast, recent improvements to the many-body wave function rely heavily on numerical optimization of general wave function forms with many parameters. Examples include orbital rotation in a single determinant, multi-determinant expansion, iterative back flow, and neural network.
+In contrast, recent improvements to the many-body wave function rely heavily on numerical optimization of general wave function forms with many parameters. Examples include orbital rotation in a single determinant, multi-determinant expansion, iterative back flow~\cite{PhysRevB.91.115106}, and neural network.
 As we move towards these complicated wave functions, it will likely become increasingly difficult to extract physical understanding directly from the wave function.
 This chapter will serve as a summary of some physical insights we have been able to grasp from the Slater-Jastrow wave function. I hope some of these will remain useful for more complex wave function forms. After some definitions, I will first discuss the short-range asymptotic behavior of the two-body contribution, i.e., the cusp condition in Sec.~\ref{sec:wf-cusp}. Second, I discuss the two-body long wavelength behavior by studying the Gaskell RPA Jastrow in Sec.~\ref{sec:gaskell-rpa-jas} for one-component system, then extend it to multi-component system in Sec.~\ref{sec:mc-rpa-jas}. Third, in Sec.~\ref{sec:wf-pw-sdet}, I show observables that can be calculated from the Slater determinant in plane wave basis, namely the momentum distribution from  one-particle reduced density matrix (1RDM) in Sec.~\ref{sec:wf-pw-sdet-nk} and the static structure factor from two-particle reduced density matrix (2RDM) in Sec.~\ref{sec:wf-pw-sdet-sk}.
 
@@ -85,12 +85,12 @@ f(\bs{r}) = \frac{1}{\Omega} \sum\limits_{\bs{k}} e^{-i\bs{k}\cdot\bs{r}} f_{\bs
 \end{align}
 
 \subsection{Definition 2: Collective Coordinates}
-The collective coordinates of $N$ particles of species $\alpha$ is the Fourier transform of the instantaneous number density
+The collective coordinate of $N$ particles of species $\alpha$ is the Fourier transform of their instantaneous number density
 \begin{align}
 \rho^\alpha(\bs{k}) = \int d^3\bs{r} e^{i\bs{k}\cdot\bs{r}} \rho^\alpha(\bs{r})
 = \int d^3\bs{r} e^{i\bs{k}\cdot\bs{r}} \sum\limits_{j=1}^{N_\alpha} \delta(\bs{r}-\bs{r}^\alpha_j)=\sum\limits_{j=1}^{N_\alpha} e^{i\bs{k}\cdot\bs{r}_j^\alpha}. \label{eq:rhok}
 \end{align}
-The collective coordinates provide a basis for many-body functions in reciprocal space. Consider $N$ particles in a cell of volume $\Omega$ interacting via an isotropic pair potential $v(r)$. The potential energy
+The collective coordinates provide a fixed basis for many-body functions in reciprocal space. Consider $N$ particles in a cell of volume $\Omega$ interacting via an isotropic pair potential $v(r)$. The potential energy
 \begin{align}
 V =& \sum\limits_{i<j} v(r_{ij}) = \frac{1}{2} \sum\limits_{i\neq j} v(r_{ij}) \nonumber \\
 =& \frac{1}{2\Omega} \sum\limits_{\bs{k}}v_{\bs{k}} \sum\limits_{i\neq j}   e^{-i\bs{k}\cdot(\bs{r}_i-\bs{r}_j)} \nonumber \\
@@ -127,7 +127,7 @@ A Slater determinant is a many-body wavefunction ansatz for the ground state of 
 \begin{align}
 \Psi = \frac{1}{\sqrt{N!}}\sum\limits_{\mathcal{P}} (-1)^{\mathcal{P}} \left( \prod\limits_{i=1}^N \phi_{\mathcal{P}_i}(\bs{r}_i) \right),\label{eq:det}
 \end{align}
-where $N$ is the number of fermions, $\bs{r}_1, \bs{r}_2, \dots, \bs{r}_N$ are their spatial coordinates. $\mathcal{P}$ is a permutation of the particle index $1, 2, \dots, N$. $\phi_1, \phi_2, \dots, \phi_N$ are a set of one-body wavefunctions (a.k.a. orbitals).
+where $N$ is the number of fermions, $\bs{r}_1, \bs{r}_2, \dots, \bs{r}_N$ are their spatial coordinates. $\mathcal{P}$ is a permutation of the particle indices $1, 2, \dots, N$. $\phi_1, \phi_2, \dots, \phi_N$ are a set of one-body wave functions (a.k.a. orbitals).
 
 \section{Cusp Conditions}\label{sec:wf-cusp}
 \emph{Derivation guided by Ex.~6.6 in Ref.~\cite{Martin2016}}
@@ -147,15 +147,15 @@ E_L \equiv \dfrac{\ham\psi}{\psi} = v(r) + \lambda\nabla^2u(r) - (\bs{\nabla}u(r
 \end{align}
 where $d$ is the number of spatial dimensions.
 We see that the laplacian term in the kinetic energy has a potentially divergent term at $r=0$.
-This term can respond to the potential and keep $E_L$ stationary, even if $v(r)$ has a divergence at $r=0$, e.g., the Coulomb potential. Suppose the two particles have charges $q_1$, $q_2$, and $v(r)=q_1q_2/r$, the condition for stationary $E_L$ requires
+This term can respond to the potential and keep $E_L$ stationary, even if $v(r)$ has a divergence at $r=0$, e.g., the Coulomb potential. Suppose the two particles have charges $q_1$, $q_2$, and $v(r)=q_1q_2/r$, the condition for stationary $E_L$ is
 \begin{align}
 \lim\limits_{r\rightarrow 0}\frac{1}{r} (q_1q_2+ \lambda (d-1) u')=0 \Rightarrow u'(0) = -\dfrac{q_1q_2}{\lambda (d-1)}
 \end{align}
-For electron-electron interaction in Hartree atomic units $m_1=m_2=1$, so $\lambda=1$ and $u'(0)=-\frac{1}{2}$ in 3D. This is the cusp condition for unlike-spin electron pair. For same-spin pair, the two particles are indistinguishable and the laplacian for each particle contributes a copy of the divergent term and $u'(0)=-\frac{1}{4}$. For an electron-ion pair in the clamped-ion approximation ($m_2\rightarrow\infty$)
+For electron-electron interaction in Hartree atomic units $m_1=m_2=1$, so $\lambda=1$ and $u'(0)=-\frac{1}{2}$ in 3D. This is the cusp condition for unlike-spin electron pair. For same-spin pair, the two particles are indistinguishable and the laplacian for each particle contributes a copy of the divergent term, thus $u'(0)=-\frac{1}{4}$. For an electron-ion pair in the clamped-ion approximation ($m_2\rightarrow\infty$)
 \begin{align} \label{eq:wf-ei-cusp}
 u'(0) = \dfrac{2Z}{d-1},
 \end{align}
-where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a trial wave function greatly reduces the variance of the local energy and improves the efficiency of a QMC calculation. The electron-ion cusp eq.~(\ref{eq:wf-ei-cusp}) is the most important one to maintain, because the wave function amplitude around an ion is high and many samples from the MC algorithm will have some electron close to an ion. In contrast, one rarely samples a configuration with two electrons close together due to strong electron-electron repulsion at density relevant for materials science, e.g., bulk silicon. However, at high density, electron-electron correlation is relatively weak relative to kinetic energy, so the electron-electron cusp condition is important to maintain. Nevertheless, the effect of imposing the electron-electron cusp condition is less typically pronounced than the electron-ion one.
+where $Z$ is the atomic number of the ion. Imposing the cusp conditions on a trial wave function greatly reduces the variance of the local energy and improves the efficiency of a QMC calculation. The electron-ion cusp eq.~(\ref{eq:wf-ei-cusp}) is the most important one to maintain, because the wave function amplitude around an ion is high and many samples from the MC algorithm will have some electron close to an ion. In contrast, one rarely samples a configuration with two electrons close together due to strong electron-electron repulsion at density relevant for materials science, e.g., bulk silicon. However, at high density, electron-electron correlation is weak relative to kinetic energy, so the electron-electron cusp condition is important to maintain. Nevertheless, the effect of imposing the electron-electron cusp condition is typically less pronounced than that of the electron-ion one.
 
 \begin{comment}
 For the gravitational interaction $v(r)=Gm_1m_2/r^2$, eq.~(\ref{eq:wf-cusp}) implies
@@ -188,13 +188,13 @@ Another method for systematically improving the many-body wave function is to us
 \right)
 \right\rangle_{\Psi_T^2},
 \end{align}
-where $\braket{}_{\Psi_T^2}$ denotes average over drift-diffusion random walks guided by $\Psi_T$ eq.~(\ref{eq:dmc-dfdt}). $E_L(\bs{R}_t;\Psi_T)$ is the local energy of the trial wave function at walker position $\bs{R}_t$ during the random walk. If $\Psi_T$ is a good approximation for the ground state $\Psi_0$, then the imaginary time propagation can be cutoff at a small equilibrium ``time'' $\tau$ and eq.~(\ref{eq:wf-fk}) has a compelling physical interpretation eq.~(6.13) in Ref.~\cite{Martin2016}
+where $\braket{}_{\Psi_T^2}$ denotes average over drift-diffusion random walks guided by $\Psi_T$ eq.~(\ref{eq:dmc-dfdt}). $E_L(\bs{R}_t;\Psi_T)$ is the local energy of the trial wave function at walker position $\bs{R}_t$ during the random walk. If $\Psi_T$ is a good approximation for the ground state $\Psi_0$, then imaginary time propagation can be cut off at a small equilibrium ``time'' $\tau$ and eq.~(\ref{eq:wf-fk}) has a compelling physical interpretation eq.~(6.13) in Ref.~\cite{Martin2016}
 \begin{align} \label{eq:wf-fk-small-tau}
 \ln\Psi_0(\bs{R}_0) \approx \ln\Psi_T(\bs{R}_0) - \tau [
 \left\langle E_L\right\rangle_{\Psi_T^2}(\bs{R}_0) - E_0
 ].
 \end{align}
-Equation~(\ref{eq:wf-fk-small-tau}) says the correction to the exponent of $\Psi_T$ at $\bs{R}_0$ is proportional to the average of its local energy over a small region around $\bs{R}_0$ having size $O(\sqrt{d N\lambda\tau})$ in dN-dimensional space. This observation is quite useful for practitioners of the DMC method, because it implies longer projection time is needed for:
+Equation~(\ref{eq:wf-fk-small-tau}) says the correction to the exponent of $\Psi_T$ at $\bs{R}_0$ is proportional to the average of its local energy over a small region around $\bs{R}_0$ having size $O(\sqrt{d \lambda\tau})$ in dN-dimensional space. This observation is quite useful for practitioners of the DMC method, because it implies longer projection time is needed for:
 \begin{enumerate}
 \item \textit{larger system}, because the space over which $E_L$ needs to be averaged increase with $N$.
 \item \textit{heavier particles}, because they have smaller quantumness $\lambda$, thus smaller diffusion constant.
