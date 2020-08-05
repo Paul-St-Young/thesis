@@ -123,25 +123,25 @@ The goal is to provide the most accurate properties of the solid hydrogen phases
 We consider three candidates C2/c-24~\cite{Pickard2007}, Cmca-4~\cite{Johnson2000}, Cmca-12~\cite{Pickard2007} for the molecular phase and one candidate I4$_1$/amd~\cite{McMahon2011} for the atomic phase at $T=0K$ over the pressure range 350 GPa to 700 GPa. The static-lattice structures in the molecular phase are optimized using the vdW-DF functional at constant pressure.
 As shown in Table~\ref{tab:hsolid-mol-press-rs}, all three molecular structures optimize to similar density at each pressure.
 \begin{table}[h]
-	% 2020/05/18 notes, extracted from h11/analysis/11a_axes_pos.json
-	% 2020/06/03 updated using h117a/data/h117a_dft-geo.json
-	\centering
-	\begin{tabular}{cccccccccc}
-		\toprule
-		vdW-DF P(GPa) & 360 & 400 & 440 & 480 & 520 & 560 & 650 & 700 & 780 \\
-		\midrule
-		Cmca-4  & 1.303 & 1.283 & 1.265 & 1.250 & 1.235 & 1.222 & 1.196 & 1.183 & 1.164 \\
-		Cmca-12 & 1.306 & 1.286 & 1.268 & 1.252 & 1.237 & 1.224 & & & \\
-		C2/c-24 & 1.307 & 1.287 & 1.269 & 1.253 & 1.239 & 1.225 & 1.198 & 1.185 & \\
-		\bottomrule
-	\end{tabular}
-	\caption{vdW-DF pressure-density (expressed in $r_s$) relation of relaxed molecular candidate structures.}
-	\label{tab:hsolid-mol-press-rs}
+% 2020/05/18 notes, extracted from h11/analysis/11a_axes_pos.json
+% 2020/06/03 updated using h117a/data/h117a_dft-geo.json
+\centering
+\begin{tabular}{cccccccccc}
+\toprule
+vdW-DF P(GPa) & 360 & 400 & 440 & 480 & 520 & 560 & 650 & 700 & 780 \\
+\midrule
+Cmca-4  & 1.303 & 1.283 & 1.265 & 1.250 & 1.235 & 1.222 & 1.196 & 1.183 & 1.164 \\
+Cmca-12 & 1.306 & 1.286 & 1.268 & 1.252 & 1.237 & 1.224 & & & \\
+C2/c-24 & 1.307 & 1.287 & 1.269 & 1.253 & 1.239 & 1.225 & 1.198 & 1.185 & \\
+\bottomrule
+\end{tabular}
+\caption{vdW-DF pressure-density (expressed in $r_s$) relation of relaxed molecular candidate structures.}
+\label{tab:hsolid-mol-press-rs}
 \end{table}
 In contrast, the atomic structure is optimized using DMC at constant volume.
 While both constant-volume and constant-pressure optimizations are valid ways to find the minimum energy structure, the final density and pressure differ in general.
 The DMC optimizations for the atomic structure have been carried out at evenly spaced $r_s$ values: $1.31$, $1.29$, $1.27$, $\dots$, $1.17$.
-The density difference between the atomic and a molecular structure at a given pressure range is appreciably larger than the density difference among molecular-phase candidate structures.
+At a given pressure, the density difference between the atomic and molecular structure is appreciably larger than that among molecular-phase candidate structures.
 Thus, when calculating energy and enthalpy differences, interpolation is needed further from data for the atomic structure than for the molecular structures.
 
 All three molecular structures are monoclinic having $a=b\neq c$, $\alpha=\beta=90^\circ+\eta$, and $\gamma=120^\circ+\delta$. The slight distortions differ for each structure: $\eta=0$, $\delta\approx -0.5^\circ$ for Cmca-4, $\eta=0$, $\delta\approx+3.5^\circ$ for Cmca-12, and $\eta\approx0.1^\circ$, $\delta\approx-0.1^\circ$ for C2/c-24.
@@ -206,7 +206,7 @@ The remaining finite-size error can be removed using methods discussed in Chap.~
 The supercells also need to be small enough for dynamic-ion QMC to be practical.
 In the end, we use 72-atom simulation cells for all QMC calculations.
 
-Each simulation cell is tiled from the optimized unit cell using a non-diagonal \emph{supercell matrix}~\cite{Lloyd-Williams2015}, which is optimized to maximize the distance between minimum images.
+Each simulation cell is tiled from the optimized unit cell using a non-diagonal \emph{supercell matrix}~\cite{Lloyd-Williams2015}, which is optimized to maximize the distance between minimum images under periodic boundary conditions.
 A supercell matrix in 3D is a $3\times 3$ matrix of integers that map primitive lattice vectors $\bs{a}, \bs{b}, \bs{c}$ to supercell lattice vectors  $\bs{a}_s, \bs{b}_s, \bs{c}_s$
 \begin{align}
 \left(\begin{array}{c}
@@ -298,7 +298,7 @@ For the electronic wave function, we use the standard Slater-Backflow-Jastrow (S
 \Psi(\bs{R};\bs{R}_I) = \det\left( \{ \phi_i(\bs{r}_j+\Delta\bs{r}_j;\bs{R}_I)\} \right) e^{-U(\bs{R},\bs{R}_I)}, \\
 U = \frac{1}{2}\sum\limits_{\alpha, \beta} \sum\limits_{i=1}^{N_\alpha} \sum\limits_{j=1}^{N_\beta, (j,\beta)\neq(i,\alpha)} u_{\alpha\beta}(\bs{r}_i, \bs{r}_j), \label{eq:hsolid-ujas}
 \end{align}
-where $\alpha, \beta$ denote unique particle species, including up-electron, down-electron, and proton, although the proton-proton contribution is always set to zero in static-lattice calculations. $\bs{r}_j+\Delta\bs{r}_j$ is the quasi-particle coordinate of particle $j$ as determined by the back flow function as follows
+where $\alpha, \beta$ denote unique particle species, including up-electron, down-electron, and proton, although the proton-proton contribution is always set to zero in static-lattice calculations. $\bs{r}_j+\Delta\bs{r}_j$ is the quasi-particle coordinate of particle $j$ as determined by the back flow function $\eta$ as follows
 \begin{align}
 \Delta \bs{r}_j = \frac{1}{2}\sum\limits_{\alpha, \beta} \sum\limits_{i=1}^{N_\alpha} \sum\limits_{j=1}^{N_\beta, (j,\beta)\neq(i,\alpha)} \eta_{\alpha\beta}(\bs{r}_i^\alpha, \bs{r}_j^\beta)(\bs{r}_i-\bs{r}_j).
 \label{eq:hsolid-bf}
@@ -350,7 +350,7 @@ This is likely an artifact of either the clamped-ion approximation or under-conv
 \end{figure}
 
 \subsubsection{Ionic Components}
-For an electron-ion simulation, the SBJ wavefunction has an additional product for distinguishable ions as well as an ion-ion Jastrow
+For an electron-ion simulation, the SBJ wavefunction has an additional Hartree product for distinguishable ions as well as an ion-ion Jastrow
 \begin{align} \label{eq:hsolid-ei-wf}
 \Psi_{ei}(\bs{R}, \bs{R}_I) = \det\left( \{ \phi_i(\bs{r}_j+\Delta\bs{r}_j; \bs{R}_I^0)\} \right) e^{-U(\bs{R},\bs{R}_I)} \prod\limits_{I=1}^{N_p} \chi(\bs{r}_I, \bs{r}_I^0),
 \end{align}
@@ -385,7 +385,7 @@ As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, after re-optimization, the onl
 	\label{fig:hsolid-dynamic-jas-bf}
 \end{figure}
 
-In contrast, the width of the gaussians in the proton orbital $C_p$ are optimized using \emph{maximum overlap}~\cite{Reatto1982,Natoli1993,Natoli1995}.
+The width of the gaussians in the proton orbital $C_p$ are optimized using \emph{maximum overlap}~\cite{Reatto1982,Natoli1993,Natoli1995}.
 In this method, we measure the mean-squared deviation (MSD) of each proton from its ideal site, as determined by vdW-DF, and adjust the gaussian exponent in the proton wave function $C_p$ until the VMC and DMC estimates of the MSD agree.
 This method works by maximizing the overlap between the trial and ground-state wave function along the dimension controlled by $C_p$.
 Since proton MSD is a rather direct measure of the shape of the wave function and DMC pushes the VMC MSD towards its ground-state value, the optimal $C_p$ is obtained when DMC and VMC MSDs agree.
@@ -395,7 +395,7 @@ Consider an isolated proton having a normalized gaussian wave function
 -C_p(x^2+y^2+z^2)
 \right).
 \end{align}
-The mean squared deviation of this wave function
+The mean squared deviation of this wave function is
 \begin{align} \label{eq:hsolid-x2-cp}
 \braket{x^2}=\braket{y^2}=\braket{z^2}=\dfrac{1}{4C_p}.
 \end{align}
@@ -405,7 +405,7 @@ Note that the DMC runs here are short and likely under-converged.
 Fortunately, they are sufficient for determining the point of maximum overlap between the VMC and DMC wave functions.
 As such, the computational cost of maximum overlap optimization is more similar to VMC optimization than to a converged DMC run.
 We further note that optimal $C_p$ is the same along $x$, $y$, and $z$ directions, so an isotropic Gaussian wave function is flexible enough to optimally sample the proton wave function.
-Finally, the exact value of $C_p$ will not bias the DMC result so long as the projection time is sufficiently converged. This is because the protons are treated as distinguishable particles and DMC is exact at infinite projection time.
+Finally, the exact value of $C_p$ will not bias the DMC result so long as the projection time is sufficiently converged. This is because the protons are treated as distinguishable particles for which DMC is exact at infinite projection time.
 
 \begin{figure}[h]
 	\centering
@@ -432,11 +432,11 @@ Nevertheless, it pays to choose an optimal value for $C_p$.
 If $C_p$ is too large, then the proton wave function will be too localized.
 This results in undersampling of the ground-state wave function and is a dangerous scenario.
 During the DMC run, the kinetic energy of the protons will likely have mostly small fluctuation in this case.
-However, occasional spikes, which are important for an unbiased mean will occur infrequently.
+However, occasional spikes, which are important for an unbiased mean, will occur infrequently.
 If one misses or discards these spikes, then the results will be biased.
 In contrast, oversampling will increase the variance of the wave function without biasing the mean.
 The resultant calculation will require more time to reach a certain accuracy target, so a balance needs to be sought.
-As shown by the lines in Fig.~\ref{fig:hsolid-cp-opt}(b), we choose isotropic gaussian exponent that are close to optimal but error slightly on the side of oversampling.
+As shown by the lines in Fig.~\ref{fig:hsolid-cp-opt}(b), we choose isotropic gaussian exponent that are close to optimal but error slightly on the side of oversampling (smaller $C_p$ than optimal).
 
 \section{Results and Discussion}
 \label{sec:hsolid-results}
@@ -611,7 +611,7 @@ As such, a $660$ GPa transition pressure is not outside the realm of possibiliti
 Admittedly, the current approach has its own drawbacks.
 The most concerning approximation is the use of static-lattice orbitals in the electron-ion wave function eq.~(\ref{eq:hsolid-ei-wf}).
 %h5ca/frozen_dE_vs_r.eps
-This ``frozen orbital'' approach incurs around $80$ meV/p more fixed-node error than a Born-Oppenheimer wave function fully-optimized at each new geometry, although this error cancels well between molecular and atomic phases.
+This ``frozen orbital'' approach incurs around $80$ meV/p more fixed-node error than a Born-Oppenheimer wave function fully-optimized at each new geometry, although this error cancels to a large extent between molecular and atomic phases.
 
 \subsection{Effect of Dynamic Ions on Electronic Correlation Functions}
 
