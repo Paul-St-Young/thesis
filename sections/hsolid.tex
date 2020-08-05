@@ -328,7 +328,7 @@ Before back flow transformation, the static structure factor of the Slater deter
 The Jastrow and back flow functions are variationally optimized using the electronic hamiltonian at vdW-DF optimized clamped-ion geometries. The optimized functions at 480 GPa ($r_s\approx 1.25$) are shown in Fig.~\ref{fig:hsolid-static-jas-bf}.
 These functions remain quantitatively similar across all densities explored.
 The electronic components of the Jastrow and back flow functions are nearly identical for all three molecular candidates.
-The largest contribution is the u-d term, which introduces correlation between unlike-spin electrons to keep them apart.
+The largest contribution is the u-d term, which introduces correlation between opposite-spin electrons to keep them apart.
 However, the electron-ion components show some variation among candidate structures, with Cmca-4 being the standout among molecular candidates.
 Its optimized e-p Jastrow and back flow have much in common with those of the atomic phase.
 This is likely an artifact of either the clamped-ion approximation or under-converged optimization. Once these functions are reoptimized with dynamic ions, all Jastrow and back flow components involving the electrons become essentially identical across all candidate structures, as shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}.
@@ -345,7 +345,7 @@ This is likely an artifact of either the clamped-ion approximation or under-conv
 		\includegraphics[width=\linewidth]{h117b_sbf-rs125}\\
 		(b) Back flow pair functions
 	\end{minipage}
-	\caption{Jastrow and back flow pair functions optimized at static-lattice minimum at 480 GPa. Color denotes the crystal structure. The solid line is the pair function for electron-proton, the dashed line for same-spin electrons, and the dotted lines for unlike-spin electrons.}
+	\caption{Jastrow and back flow pair functions optimized at static-lattice minimum at 480 GPa. Color denotes the crystal structure. The solid line is the pair function for electron-proton, the dashed line for same-spin electrons, and the dotted lines for opposite-spin electrons.}
 	\label{fig:hsolid-static-jas-bf}
 \end{figure}
 
@@ -641,16 +641,16 @@ This ``frozen orbital'' approach incurs around $80$ meV/p more fixed-node error 
 	\label{fig:hsolid-eegr}
 \end{figure}
 
-The electron-electron pair correlation function are shown in real space $g(r)$ in Fig.~\ref{fig:hsolid-eegr}.
+The electron-electron pair correlation function in real space, $g(r)$, are shown in Fig.~\ref{fig:hsolid-eegr}.
 The correlation functions of the 3D unpolarized homogeneous electron gas are also shown as reference.
 The bottom panel of each plot shows the difference between the hydrogen $g(r)$s from those of the electron gas.
 This difference highlights the modification of the electron liquid due to the ionic lattice.
 The dynamic-lattice electronic $g(r)$s are identical to those from the static-lattice calculations on the scale of the difference panel ($0.1$).
-For the molecular structures, both the same-spin (u-u) and unlike-spin (u-d) $g(r)$s are the same over the entire range from zero ($r=0$) to the supercell image distance ($r=R_{WS}$).
-The most notable deviation from the electron gas is an enhanced correlation between unlike-spin electrons at small separation.
-This is likely due to the presence of covalent bonds, formed by a pair of unlike-spin electrons at the center of each H$_2$ molecules.
-A more subtle difference is the presence of small periodic modulations of the electronic $g(r)$ that seem to persist to long distances.
-The atomic structure shows no enhancement of unlike-spin correlation function at $r=0$, whereas it shows the same periodic modulations as the molecular structures at long range.
+For the molecular structures, both the same-spin (u-u) and opposite-spin (u-d) $g(r)$s are the same over the entire range from zero ($r=0$) to the supercell image distance ($r=R_{WS}$).
+The most notable deviation from the electron gas is an enhanced correlation between opposite-spin electrons at small separation.
+This is likely due to the presence of covalent bonds, formed by a pair of opposite-spin electrons at the center of each H$_2$ molecules.
+A more subtle difference is the presence of small periodic modulations of the electronic $g(r)$ that appear to persist at long distances.
+The atomic structure shows no enhancement of opposite-spin correlation function at $r=0$, whereas it shows the same periodic modulations as the molecular structures at long range.
 
 \begin{figure}[h]
 	\centering
@@ -668,7 +668,7 @@ The atomic structure shows no enhancement of unlike-spin correlation function at
 	\label{fig:hsolid-esk}
 \end{figure}
 
-The electron-electron static structure factor is shown in Fig.~\ref{fig:hsolid-esk}.
+Pair correlation function in reciprocal space, the electron-electron static structure factor $S(k)$, is shown in Fig.~\ref{fig:hsolid-esk}.
 At all densities and for all structures, both static-lattice and dynamic-lattice results are in excellent agreement with RPA $S(k)$ for the electron gas.
 However, small increase in correlation can be seen at intermediate range $k/k_F\approx 1.5$.
 Further, subtle differences at long-range ($k\rightarrow0$) can make the electronic properties of the candidate structures qualitatively different from those of the electron gas and from each other.
@@ -694,8 +694,8 @@ The inverse dielectric function is bounded from above by $\epsilon^{-1}(\bs{k}) 
 \begin{align}
 \Gamma_{\bs{k}} = \dfrac{2m S(\bs{k})}{\hbar^2 \bs{k}^2}.
 \end{align}
+The inequality becomes an equality if there is only a single excitation, such as plasmon, at long wavelength.
 The limit $\lim\limits_{k\rightarrow0} 1-\Gamma_k^2$ can be a good approximation to the inverse dielectric constant of an isotropic system.
-The inequality becomes an equality if there is only a single excitation energy such as a plasmon at long wavelength.
 Importantly, if this limit reaches zero, then the material is metallic.
 In Fig.~\ref{fig:hsolid-epsinv}, the isotropic limit is shown as a function of density.
 There are sizable systematic errors in these results due to a lack of data at small $k$ and the choice of fitting range.
@@ -742,7 +742,7 @@ C2/c-24 bond length is around $1.35$ bohr, Cmca-4 around $1.40$ bohr, and the Cm
 The C2/c-24 and Cmca-12 structures have remarkably similar p-p g(r).
 Since they are almost degenerate over the entire density range explored, we can infer that the slight monoclinic distortions of their unit cells and the small differences in their molecular bond lengths do not contribute significantly to the total energy.
 The less distorted C2/c-24 structure is more stable.
-The Cmca-4 structure is significantly different from C2/c-24. Cmca-4 has second- and third-nearest neighbor peaks at $2$ and $3$ bohr, respectively, rather than C2/c-24's $2.5$ and $3.2$. The size and shape of these peaks are more similar to those in the atomic structure than the other molecular candidates.
+The Cmca-4 structure is significantly different from C2/c-24. Cmca-4 has second- and third-nearest neighbor peaks at $2$ and $3$ bohr, respectively, rather than C2/c-24's $2.5$ and $3.2$. The size and shape of these peaks are more similar to those in the atomic structure than to the other molecular candidates.
 
 The long-range fluctuation and order of the protons can be observed in the proton-proton static structure factor. Its fluctuating part is shown in Fig.~\ref{fig:hsolid-ppgrsk}(b).
 All three molecular candidates have very similar levels of long-range fluctuations, whereas the atomic structure has noticeably more.
@@ -790,12 +790,12 @@ The atomic structure is twice as compressible as the molecular structures at all
 The ordering of the candidate structures from this dynamic-lattice study show similar features as the previous QMC study using vdW-DF geometries and harmonic ZPE~\cite{McMinis2015}.
 The Cmca-12 structure is nearly degenerate with C2/c-24 but slightly less stable at low pressures.
 There is a transition from C2/c-24 to Cmca-4 around $500$ GPa.
-Then a Cmca structure transitions to the I4$_1$/amd atomic structure at a higher pressure.
+Then, a Cmca structure transitions to the I4$_1$/amd atomic structure at a higher pressure.
 However, we predict no stability range for the Cmca-12 structure, whereas in Ref.~\cite{McMinis2015}, C2/c-24 transitions to it at $424(3)$ GPa.
 The most significant disagreement lies in the atomic phase.
 We see the atomic phase becomes more stable relative to C2/c-24 around $610$ GPa, whereas Ref.~\cite{McMinis2015} shows this crossing around $450$ GPa.
-Our final prediction for the molecular-to-atomic transition pressure is $660$ GPa, which is significantly higher than the previous experimental report~\cite{Silvera2017}.
-However, as already mentioned in Sec.~\ref{sec:hsolid-dep}, this prediction is not unreasonable.
+Our final prediction for the molecular-to-atomic transition pressure is $660$ GPa, which is significantly higher than the previous experimental result~\cite{Silvera2017}.
+However, as already mentioned in Sec.~\ref{sec:hsolid-dep}, this prediction is not impossible.
 The dynamic-lattice DMC method is a conceptually simple way to directly simulate an electron-ion system and offers more ionic observables as well as direct comparisons with the static-lattice system than a single clamped-ion calculation.
 A Born-Oppenheimer study using the DMC energy surface is needed to bridge the previous static-lattice and harmonic ZPE study with the current dynamic-lattice nonadiabatic calculation.
 A detailed comparison among the three variants will hopefully resolve some of the disagreements we currently have.
