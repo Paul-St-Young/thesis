@@ -1,3 +1,120 @@
+\chapter{Dynamic-ion DMC Study of Solid Hydrogen at Megabar Pressures}
+\label{chap:hsolid}
+\section{Introduction}
+
+% why is hydrogen under pressure interesting?
+The properties and phase transitions of hydrogen under megabar pressures are important in diverse fields of study. For astronomy, models of the interior of gas giants such as Jupiter and Saturn depend critically on the nature of the molecular liquid to atomic liquid transition (LLT), namely whether it is first-order or continuous~\cite{Hubbard2016,Wahl2017}. For condensed matter, metallic hydrogen holds promise for a room temperature conventional (BCS) superconductor~\cite{McMahon2011,McMahon2012}. For computational physics, hydrogen remains an important benchmark for both electronic structure~\cite{Motta2017} and ion dynamics methods. With no need for a pseudopotential, simulations of hydrogen avoid a significant source of bias. However, the low mass of the nuclei necessitates quantum treatment of the lattice degree of freedom, often beyond the harmonic approximation.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{mcmahon-phases}
+\caption{Partial phase diagram of hydrogen on log-log scale~\cite{McMahon2012rmp}.}
+\end{figure}
+
+% what controversies are there in experiment?
+Established experimental results on high-pressure hydrogen are limited. At room temperature and below, diamond anvil cell (DAC) is the dominant apparatus to achieve such high pressures. Small size of the cell and fragility of the sample limit experimental probes to low-power optics such as infrared and Raman spectroscopy\cite{RangaI.F.2017}. Hydrogen is a weak scatterer of X-Rays~\cite{Zha2014}, thus excluding this excellent tool for structural determination in most experiments. Only recently has X-ray analysis been performed up to 254 GPa~\cite{Akahama2010,Ji2019}.
+At high temperatures, shock wave compression is the main method to achieve megabar pressures. Due to the transient nature of theses experiments, acquiring and analyzing shock-wave data is challenging. Most notably, one cannot directly measure temperature, which may cause misinterpretation of raw data~\cite{Celliers2018,Knudson2004,Knudson2017}.
+Given the experimental difficulties, predictive simulations are highly desirable as they can inform and verify experiments~\cite{Pierleoni2016b}.
+
+% what controversies are there in calculations?
+Simulation of high-pressure hydrogen is also challenging. Without experimental structural information from X-ray, many theoretical calculations have been performed on structures found in density functional theory (DFT) random structure searches~\cite{Pickard2007}. Constrained by computational cost, these searches are limited to classical protons, causing the methods to miss, for example, saddle-point structures that can be stabilized by nuclear quantum effect~\cite{Monserrat2016}.
+%Most theoretical studies of high-pressure hydrogen suffer a similar dilemma between accuracy and practicality.
+%On the one hand,
+Predictive simulations of hydrogen require accurate methods both in the description of the electronic ground-state Born-Oppenheimer (BO) potential energy surface (PES) and in the inclusion of nuclear quantum effect beyond the quasi-harmonic approximation.
+%On the other hand, to explore such large pressure and temperature ranges using first-principle methods is not only time consuming, but also prone to other limitations such as inadequate treatment of finite-size effect, nuclear quantum effect, and simulation timescale. Further, some experimentally measurable properties, such as emission, absorption, infrared, and Raman spectra, heat conductivity, and diffusion constants are difficult to calculate in the most accurate electronic methods, e.g., DMC.
+The popular Perdew-Burke-Ernzerhof (PBE) density functional in DFT erroneously predicts some molecular structures to be metallic~\cite{Drummond2015}. However, its use in conjunction with Classical molecular dynamics (MD) results in reasonable transition pressure for the LLT at certain temperatures due to error cancellation~\cite{Morales2013a}.
+This and other fortuitous cancellations of error has led many to believe that the PBE functional provides a good description of solid hydrogen and caused much confusion in the community. PBE predicts a conductive molecular structure above 200 GPa, a molecular-to-atomic transition around 300 GPa~\cite{McMinis2015}, and low-temperature superconducting liquid. All these predictions contradict experimental evidence. Systematic benchmark of the PES from various DFT functionals against QMC found the vdW-DF1 functional to be the most accurate for molecular hydrogen at megabar pressures~\cite{Clay2016}. However, this functional has yet to gain widespread adoption due to its higher computational cost and lower popularity compared to PBE.
+
+In this chapter, I will focus on the solid phases of hydrogen. Sec.~\ref{sec:hsolid-expt} summarizes experimental observations, Sec.~\ref{sec:hsolid-calcs} summarizes relevant computational studies,
+Sec.~\ref{sec:hsolid-methods} details the approach taken in this study,
+and Sec.~\ref{sec:hsolid-results} presents the computational results.
+
+\subsection{Experiments}
+\label{sec:hsolid-expt}
+
+As element number one with the simplest atomic structure, hydrogen has surprisingly complex phases at megabar pressures.
+Further complicating matters, the phase diagram depends on the isotopes, e.g., hydrogen H, deuterium D, and spin isomers of molecular hydrogen.
+The proton spins anti-align to form a singlet in para-hydrogen (p-H$_2$), whereas they align to form a triplet in ortho-hydrogen (o-H$_2$).
+To clarify the narrative, I will first introduce the well-established phases in pure samples, then discuss changes due to isotopic and ortho-para conversion.
+
+For pure p-H$_2$ at low temperature (5$\sim$10 K), three solid phases are well-established. The low-pressure phase (LP) below 100 GPa is a molecular crystal having spherically symmetric H$_2$ molecules on hcp lattice sites. Above 110 GPa, hydrogen enters a broken-symmetry phase (BSP), where anisotropic intermolecular interactions favor the $J=2$ $v=1$ vibrational state of the H$_2$ molecules rather than the spherically symmetric $J=0$ $v=1$ state~\cite{Lorenzana1990}. Above 160 GPa, after crossing a first-order transition, one finds an orientationally-ordered phase known as the A phase (H-A)~\cite{Lorenzana1989}.
+
+As shown in Fig.~\ref{fig:hsolid-phases123}, the transition from LP to BSP phase is sensitive to isotope and nuclear spin. o-D$_2$, HD, and p-H$_2$ enters the BSP at 28 GPa~\cite{Silvera1981}, 70 GPa~\cite{Chijioke2006}, and 110 GPA~\cite{Lorenzana1990}, respectively. In contrast, the transition to the A phase is fairly robust across isotope and spin isomer variants. HD, o-D$_2$, and p-H$_2$ all enter the A phase between 150 and 160 GPa~\cite{Hemley1988,Lorenzana1989,Cui1994,Chijioke2006}. The phase lines for o-D$_2$ and HD are shown in Fig.~\ref{fig:hsolid-phases123}. The p-H$_2$ LP-BSP phase line near 100 GPa is not shown. The size and shape of the BSP is the only difference between the phase diagrams of p-H$_2$, o-D$_2$, and HD.
+These orientation transitions are not relevant to o-H$_2$ and p-D$_2$, which have a hcp to fcc transition at ambient pressure.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{phases123}
+\caption{Phase diagram of o-D$_2$ and HD below 200 K and 200 GPa~\cite{Chijioke2006}.}
+\label{fig:hsolid-phases123}
+\end{figure}
+
+Transitions to these orientationally ordered phases are detected by changes in Raman and IR spectra. As shown in Fig.~\ref{fig:hsolid-p-h2-bsp}, during the LP to BSP transition, one can observe clear broadening and weakening of the low-frequency roton bands around 350 cm$^{-1}$ and an associated small (15 cm$^{-1}$) discontinuity in the position of the vibron peak, which is about 4150 cm$^{-1}$ near the transition pressure 110 GPa~\cite{Lorenzana1990}. Upon further increase of pressure past 160 GPa, a much larger discontinuity of the Raman vibron (100 cm$^{-1}$) signals the onset of the A phase~\cite{Hemley1988,Lorenzana1989}. A direct transition from H-A back to the LP phase can be achieved by raising temperature. Across this transition, the intensities of the libron bands decrease discontinuously~\cite{Lorenzana1990}.
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.38\columnwidth}
+\centering
+\includegraphics[width=\columnwidth]{p-h2-bsp-rotons}
+(a) rotons
+\end{minipage}
+\begin{minipage}{0.58\columnwidth}
+\centering
+\includegraphics[width=\columnwidth]{p-h2-bsp-vibron}
+(b) vibron
+\end{minipage}
+\caption{Roton and vibron changes in p-H$_2$ across the BSP transition~\cite{Lorenzana1990}.}
+\label{fig:hsolid-p-h2-bsp}
+\end{figure}
+
+The optical signatures for the LP to BSP transition in o-D$_2$ are qualitatively similar to those in p-H$_2$. The vibron decreases discontinuously by 3 cm$^{-1}$ rather than 15 cm$^{-1}$, while the roton bands broaden and weaken near the transition pressure of 28 GPa rather than 110 GPa~\cite{Silvera1981}. Further confirmation of these two phase transitions were later obtained from IR absorption spectra~\cite{Cui1994}. Three absorption peaks appear around 3150 cm$^{-1}$ upon entering the BSP phase and are replaced by a single broad peak at the same frequency range when the A phase is reached. The same signatures were used to identify the BSP and A phases of HD at 70 and 160 GPa, respectively~\cite{Chijioke2006}.
+In the A phase, the rather broad and pressure-independent roton band weakens, disappears, and is replaced by a few sharp and strongly pressure-dependent peaks in the frequency range 100$\sim$700 cm$^{-1}$~\cite{Goncharov1998}.
+These new modes are considered to be lattice libration modes due to their pressure dependence.
+
+%As pressure increases, anisotropic intermolecular interactions mix the free roton states until the ground state distorts and molecules become orientationally ordered to lower potential energy. This broken-symmetry phase (BSP) or phase II, stable under 140 K, is considered a quantum phase based on observed strong isotope shift of the transition pressure. o-D$_2$ reaches the BSP phase at as low as 28 GPa at 1.1 K~\cite{Silvera1981}.
+
+Phases with mixed ortho-para concentrations of H$_2$ are labeled I, II, and III~\cite{Dias2016,Dias2019}, which correspond to the LP, BSP, and H-A phases of pure p-H$_2$, respectively.
+As shown in Fig.~\ref{fig:hsolid-phases}, at 300 K and above 220 GPa, we enter yet another solid phase IV, characterized by a splitting of the vibron peak~\cite{Zha2013}.
+Both theory and experiment suggest that phase IV consists of alternating layers having rather different in-plane structures, possibly with two types of molecules.
+Below 100 K and above 350 GPa, molecular hydrogen becomes semi-metallic, possibly due to the closure of an indirect band gap~\cite{Eremets2019}.
+Then, above 425 GPa, all IR radiation is absorbed indicating a closure of the direct band gap~\cite{Loubeyre2020}.
+Finally, at sufficiently high pressures, the hydrogen molecules will dissociate to form an atomic solid, reportedly at 495 GPa~\cite{Silvera2017}, although consensus has yet to be reached.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth]{hsolid-phases}
+\caption{Tentative phase diagram of solid hydrogen below 400 K~\cite{Dias2019}.}
+\label{fig:hsolid-phases}
+\end{figure}
+
+While the phase boundaries of solid hydrogen are reasonably well-established below 400 K and 400 GPa by diamond-anvil cell (DAC) experiments, characterizations of the solid structures are limited. Due to the small scattering cross section and small sample size in DAC experiments, only a handful of X-ray~\cite{Hazen1987,MAO1988,Loubeyre1996,Kawamura2002,Goncharenko2005a,Akahama2010,Ji2019} and only one neutron~\cite{Goncharenko2005a} scattering experiments have been published over the past 40 years. Most of our understanding of solid hydrogen is built upon IR and Raman spectra, which provide partial information on the microscopic details of the solid structures. This lack of definitive structural information poses significant difficulty for both theoretical and experimental understanding of solid hydrogen. Experimentally, this has lead to the misidentification of a triple point as a critical point~\cite{Lorenzana1990,Cui1994}, subtlety in the detection of a new phase~\cite{Eremets2009,Howie2012}, among many debates over interpretation of optical data.
+
+\subsection{Calculations}
+\label{sec:hsolid-calcs}
+
+Early computational studies of solid hydrogen rely on assumed crystal structures from known high-pressure phases of other materials or simple symmetry and energetic arguments. Even before the observation of the oriented A phase of solid hydrogen~\cite{Hemley1988}, S. Raynor~\cite{Raynor1987} used Hartree-Fock and perturbation theory to show that the molecular hexagonal closed packed structure with H$_2$ molecules aligned along the c-axis (mhcp-c) is more energetically favorable than previous considered cubic structures.
+While a promising candidate for phase III~\cite{Barbee1989}, the mhcp-c structure has an early band overlap, rendering it metallic below 150 GPa, resists compression along the c-axis, and has no IR-active vibron~\cite{Kaxiras1991,Kaxiras1992}, all in contradiction with experimental evidence.
+Thus, E. Kaxiras \textit{et al.}~\cite{Kaxiras1991} explored different orientations of H$_2$ molecules in the 2-atom hcp unit cell and found a more energetically favorable insulating structure with molecules oriented $\sim$60$^{\circ}$ from the c-axis.
+This static-lattice LDA study was later validated by a dynamic-lattice QMC calculation~\cite{Natoli1995}, and the structure named mhcp-o.
+In addition to the hcp structures, H. Nagara and T. Nakamura~\cite{Nagara1992} proposed various rutile structures by minimizing the static-lattice electric quadrupole-quadrupole (EQQ) interactions, while B. Edwards, N. W. Ashcroft, and T. Lenosky~\cite{Edwards1996} proposed an orthorhombic layered structure of Cmca symmetry, which turned out to be metallic at pressures relevant to phase III~\cite{Johnson2000}.
+This Cmca crystal structure also appeared spontaneously in path integral simulation~\cite{Cui2002}.
+These theoretical calculations drove much debate about the fate of phase III at pressures over 300 GPa. Does it become a metallic molecular solid or does it dissociate into an atomic solid without the band gap closing?
+
+In 2007, the advent of random structure searching algorithms produced new candidate crystal structures that have lower enthalpy than previous proposals~\cite{Pickard2007}. The insulating layered structure having C2/c symmetry became the main candidates for phase III.
+Three diffusion Monte Carlo studies followed to characterize the candidate structures: Azadi \textit{et al.}~\cite{Azadi2014}, McMinis \textit{et al.}~\cite{McMinis2015}, and Drummond \textit{et al.}~\cite{Drummond2015}.
+Azadi \textit{et al.} used PBE-optimized geometries and included anharmonic phonon zero-point energy, leading to a molecular dissociation at 374 GPa, from Cmca-12 to I4$_1$/amd.
+In contrast, McMinis \textit{et al.} used vdW-DF-optimized geometries and harmonic phonon zero-point energy to predict a dissociation pressure of 447(3) GPa.
+In hind sight, the prediction by McMinis \textit{et al.} is in better agreement with subsequent experiments.
+
+On the low pressure side, a new hexagonal candidate structure for phase III was proposed by Monserrat \textit{et al.}~\cite{Monserrat2016} in 2016, then calculated to be more stable than C2/c below 210 GPa~\cite{Azadi2019}.
+Band gap of the C2/c structure shows closure around 460 GPa, when extrapolated using IR measurements up to 420 GPa~\cite{Loubeyre2020}. This gap closure pressure agrees with the most recent DMC calculation~\cite{Gorelov2019}, which is at variance with the previous prediction by Azadi \textit{et al.}~\cite{Azadi2019}, presumably due to different treatments of finite-size effects.
+Finally, a recent coupled cluster calculation of the molecular candidate structures show good agreement with DMC results~\cite{Liao2019} at the static lattice level, although lattice zero-point energy has yet to be included.
+
+In this chapter, we examine the most promising candidate structures of solid hydrogen using dynamic-lattice DMC.
+This method treats the electrons and ions on the same footing while harnessing the accuracy of DMC.
+Lattice vibrations are included beyond the harmonic approximation. Further, nonadiabatic effects can be captured.
+The goal is to provide the most accurate properties of the solid hydrogen phases.
+
 \section{Methods}
 \label{sec:hsolid-methods}
 
@@ -6,20 +123,20 @@
 We consider three candidates C2/c-24~\cite{Pickard2007}, Cmca-4~\cite{Johnson2000}, Cmca-12~\cite{Pickard2007} for the molecular phase and one candidate I4$_1$/amd~\cite{McMahon2011} for the atomic phase at $T=0K$ over the pressure range 350 GPa to 700 GPa. The static-lattice structures in the molecular phase are optimized using the vdW-DF functional at constant pressure.
 As shown in Table~\ref{tab:hsolid-mol-press-rs}, all three molecular structures optimize to similar density at each pressure.
 \begin{table}[h]
-% 2020/05/18 notes, extracted from h11/analysis/11a_axes_pos.json
-% 2020/06/03 updated using h117a/data/h117a_dft-geo.json
-\centering
-\begin{tabular}{cccccccccc}
-\toprule
-vdW-DF P(GPa) & 360 & 400 & 440 & 480 & 520 & 560 & 650 & 700 & 780 \\
-\midrule
-Cmca-4  & 1.303 & 1.283 & 1.265 & 1.250 & 1.235 & 1.222 & 1.196 & 1.183 & 1.164 \\
-Cmca-12 & 1.306 & 1.286 & 1.268 & 1.252 & 1.237 & 1.224 & & & \\
-C2/c-24 & 1.307 & 1.287 & 1.269 & 1.253 & 1.239 & 1.225 & 1.198 & 1.185 & \\
-\bottomrule
-\end{tabular}
-\caption{vdW-DF pressure-density (expressed in $r_s$) relation of relaxed molecular candidate structures.}
-\label{tab:hsolid-mol-press-rs}
+	% 2020/05/18 notes, extracted from h11/analysis/11a_axes_pos.json
+	% 2020/06/03 updated using h117a/data/h117a_dft-geo.json
+	\centering
+	\begin{tabular}{cccccccccc}
+		\toprule
+		vdW-DF P(GPa) & 360 & 400 & 440 & 480 & 520 & 560 & 650 & 700 & 780 \\
+		\midrule
+		Cmca-4  & 1.303 & 1.283 & 1.265 & 1.250 & 1.235 & 1.222 & 1.196 & 1.183 & 1.164 \\
+		Cmca-12 & 1.306 & 1.286 & 1.268 & 1.252 & 1.237 & 1.224 & & & \\
+		C2/c-24 & 1.307 & 1.287 & 1.269 & 1.253 & 1.239 & 1.225 & 1.198 & 1.185 & \\
+		\bottomrule
+	\end{tabular}
+	\caption{vdW-DF pressure-density (expressed in $r_s$) relation of relaxed molecular candidate structures.}
+	\label{tab:hsolid-mol-press-rs}
 \end{table}
 In contrast, the atomic structure is optimized using DMC at constant volume.
 While both constant-volume and constant-pressure optimizations are valid ways to find the minimum energy structure, the final density and pressure differ in general.
@@ -40,19 +157,19 @@ The bond length in Cmca-4 is comparable to its isolated value of $1.4$ Bohr, whe
 One type of the H$_2$ molecules in Cmca-12 has pressure-sensitive bond length, increasing from $\sim 1.38$ Bohr at 360 GPa to $\sim 1.4$ Bohr at 560 GPa, while the other type has 3\% compressed bond length irrespective of pressure.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h11_mol-ca}
-(a) $a$ and $c$ lattice parameters
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h11_mol-rb}
-(b) H$_2$ bond length
-\end{minipage}
-\caption{vdW-DF optimized molecular candidate structures at target pressures. (a) lattice parameters (b) molecular bond length. C2/c and Cmca-12 each have two types of H$_2$ molecules, whereas Cmca-4 has only one.}
-\label{fig:hsolid-vdw-ca}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h11_mol-ca}
+		(a) $a$ and $c$ lattice parameters
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h11_mol-rb}
+		(b) H$_2$ bond length
+	\end{minipage}
+	\caption{vdW-DF optimized molecular candidate structures at target pressures. (a) lattice parameters (b) molecular bond length. C2/c and Cmca-12 each have two types of H$_2$ molecules, whereas Cmca-4 has only one.}
+	\label{fig:hsolid-vdw-ca}
 \end{figure}
 
 The atomic candidate structure I4$_1$/amd has only one free parameter, the $c/a$ ratio, at each density.
@@ -62,13 +179,13 @@ It increases continuously as density increases, whereas the PBE-optimized $c/a$ 
 We fit $c/a$ as a linear function of $r_s$ to smooth out noise from the optimization process.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117e_i4-ca}
-\end{minipage}
-\caption{DMC optimized atomic structure $c/a$ ratio as a function of density. The blue points are DFT(PBE) optimized $c/a$ ratios.}
-\label{fig:hsolid-i4-ca}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117e_i4-ca}
+	\end{minipage}
+	\caption{DMC optimized atomic structure $c/a$ ratio as a function of density. The blue points are DFT(PBE) optimized $c/a$ ratios.}
+	\label{fig:hsolid-i4-ca}
 \end{figure}
 
 While the vdW-DF optimized structures in Ref.~\cite{McMinis2015} are not published, we can infer from the enthalpy-pressure relations that the same structures as in Ref.~\cite{McMinis2015} have been reproduced in this study. Figure~\ref{fig:dft-opt-geo} shows the enthalpy of each candidate structure relative to C2/c-24 at the vdW-DF static-lattice minimum. The results agree well with those from McMinis \textit{et al.}~\cite{McMinis2015} where available.
@@ -76,10 +193,10 @@ In comparison to predictions by Drummond \textit{et al.}~\cite{Drummond2015}, ou
 They used BLYP rather than vdW-DF functional, so differences are expected. In fact, it is encouraging to see two different functionals give similar results (within a few meV/p).
 
 \begin{figure}[h]
-\centering
-\includegraphics[width=0.6\columnwidth]{010a_dh-vs-p}
-\caption{DFT(vdW-DF) static-lattice enthalpy of optimized structures relative to C2/c-24. Thin solid lines are enthalpies of the Cmca-4, Cmca-12 and I4$_1$/amd using our optimized structures. Dashed lines are DFT(BLYP) enthalpies of Cmca-4 and Cmca-12 from Drummond \textit{et al.}~\cite{Drummond2015}. Dash-dot lines are DFT(vdW-DF) enthalpies from McMinis \textit{et al.}~\cite{McMinis2015}.}
-\label{fig:dft-opt-geo}
+	\centering
+	\includegraphics[width=0.6\columnwidth]{010a_dh-vs-p}
+	\caption{DFT(vdW-DF) static-lattice enthalpy of optimized structures relative to C2/c-24. Thin solid lines are enthalpies of the Cmca-4, Cmca-12 and I4$_1$/amd using our optimized structures. Dashed lines are DFT(BLYP) enthalpies of Cmca-4 and Cmca-12 from Drummond \textit{et al.}~\cite{Drummond2015}. Dash-dot lines are DFT(vdW-DF) enthalpies from McMinis \textit{et al.}~\cite{McMinis2015}.}
+	\label{fig:dft-opt-geo}
 \end{figure}
 
 \subsection{Supercell Construction}
@@ -112,19 +229,19 @@ Once a supercell is chosen, the crystal structure can be created using the follo
 The total number of atoms in the supercell should be $\det(S)$ times that in the primitive cell.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=0.6\linewidth]{supercell-square}\\
-(a) square $a=2$ \AA
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{supercell-rhombus}\\
-(b) rhombus $a=2.149$ \AA
-\end{minipage}
-\caption{Cubic vs. rhombus supercells. The black cell is the supercell. The gray cells are periodic images. The blue line points between nearest-neighbor images, while the red line between second-nearest neighbors. The yellow circle is the inscribed circle in the Wigner-Seitz cell (not shown) of the supercell.}
-\label{fig:hsolid-square-vs-rhombus}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=0.6\linewidth]{supercell-square}\\
+		(a) square $a=2$ \AA
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{supercell-rhombus}\\
+		(b) rhombus $a=2.149$ \AA
+	\end{minipage}
+	\caption{Cubic vs. rhombus supercells. The black cell is the supercell. The gray cells are periodic images. The blue line points between nearest-neighbor images, while the red line between second-nearest neighbors. The yellow circle is the inscribed circle in the Wigner-Seitz cell (not shown) of the supercell.}
+	\label{fig:hsolid-square-vs-rhombus}
 \end{figure}
 
 Non-diagonal supercell matrices can be used to maximize the minimum image radius, radius of the real-space Wigner-Seitz cell $R_{WS}$.
@@ -136,38 +253,38 @@ A more useful application of non-diagonal supercell matrix is for accessing a pa
 The chosen supercell matrices and their resulting image radii are shown in Table~\ref{tab:hsolid-tmat72} and Fig.~\ref{fig:cell-radius}, respectively.
 The inscribing radius of each supercell $R_{sc}$ are also shown in Fig.~\ref{fig:cell-radius} to give a sense of how far each supercell is from being orthorhombic. An orthorhombic cell has $R_{WS} = R_{sc}$.
 \begin{table}[h]
-\centering
-\caption{Optimized 72-atom non-diagonal supercell matrices.}
-\label{tab:hsolid-tmat72}
-\begin{tabular}{cccc}
-\hline\hline
-Cmca-4 & Cmca-12 & C2/c-24 & I4$_1$/amd \\
-\hline
-$\left(\begin{array}{rrr}
--1 &  2 &  1 \\
- 2 & -1 &  1 \\
- 3 &  3 &  0 \\
-\end{array}\right)$ & $\left(\begin{array}{rrr}
- 2 &  1 &  -1 \\
- 2 &  1 &   1 \\
- -1 &  1 &  0 \\
-\end{array}\right)$ & $\left(\begin{array}{rrr}
- 2 &  1 &  0 \\
- 1 &  2 &  0 \\
- 0 &  0 &  1
-\end{array}\right)$ & $\left(\begin{array}{rrr}
- 2 & -2 &  1 \\
- 2 &  3 &  0 \\
--2 &  1 &  1
-\end{array}\right)$ \\
-\hline\hline
-\end{tabular}
+	\centering
+	\caption{Optimized 72-atom non-diagonal supercell matrices.}
+	\label{tab:hsolid-tmat72}
+	\begin{tabular}{cccc}
+		\hline\hline
+		Cmca-4 & Cmca-12 & C2/c-24 & I4$_1$/amd \\
+		\hline
+		$\left(\begin{array}{rrr}
+		-1 &  2 &  1 \\
+		2 & -1 &  1 \\
+		3 &  3 &  0 \\
+		\end{array}\right)$ & $\left(\begin{array}{rrr}
+		2 &  1 &  -1 \\
+		2 &  1 &   1 \\
+		-1 &  1 &  0 \\
+		\end{array}\right)$ & $\left(\begin{array}{rrr}
+		2 &  1 &  0 \\
+		1 &  2 &  0 \\
+		0 &  0 &  1
+		\end{array}\right)$ & $\left(\begin{array}{rrr}
+		2 & -2 &  1 \\
+		2 &  3 &  0 \\
+		-2 &  1 &  1
+		\end{array}\right)$ \\
+		\hline\hline
+	\end{tabular}
 \end{table}
 
 \begin{figure}[h]
-\centering
-\includegraphics[width=0.6\columnwidth]{101a1_cell-radius}
-\caption{Supercell radius as a function of density. $r_s$ is the Wigner-Seitz radius, which is determined by the average electron density $\frac{4\pi}{3}r_s=\rho$, where $\rho=N_e/\Omega$, with $\Omega$ the supercell volume. $R_{WS}$ is the radius of the real-space Wigner-Seitz cell of the supercell. $2R_{WS}$ is the minimum distance between periodic images. \label{fig:cell-radius}}
+	\centering
+	\includegraphics[width=0.6\columnwidth]{101a1_cell-radius}
+	\caption{Supercell radius as a function of density. $r_s$ is the Wigner-Seitz radius, which is determined by the average electron density $\frac{4\pi}{3}r_s=\rho$, where $\rho=N_e/\Omega$, with $\Omega$ the supercell volume. $R_{WS}$ is the radius of the real-space Wigner-Seitz cell of the supercell. $2R_{WS}$ is the minimum distance between periodic images. \label{fig:cell-radius}}
 \end{figure}
 
 %\input{papers/hsolid/supp1-geo}
@@ -193,19 +310,19 @@ This allows the exact e-p Jastrow to be re-introduced in the e-p Jastrow and is 
 Before back flow transformation, the static structure factor of the Slater determinant is quite similar to that of the unpolarized homogeneous electron gas, as shown in Fig.~\ref{fig:hsolid-det-sk-nk}(a). However, as shown in  Fig.~\ref{fig:hsolid-det-sk-nk}(a), the momentum distribution of the metallic atomic structure is different from the rest, because the molecular structures are insulating.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_mol-detsk-rs125}\\
-(a) structure factor
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_mol-detnk-rs125}\\
-(b) momentum distribution
-\end{minipage}
-\caption{Static structure factor $S_0(k)$ and momentum distribution $n_0(k)$ calculated using the Kohn-Sham determinant wave function at $r_s=1.25$. The black lines show the same functions for the free Fermi (FF) gas as reference.}
-\label{fig:hsolid-det-sk-nk}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117_mol-detsk-rs125}\\
+		(a) structure factor
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117_mol-detnk-rs125}\\
+		(b) momentum distribution
+	\end{minipage}
+	\caption{Static structure factor $S_0(k)$ and momentum distribution $n_0(k)$ calculated using the Kohn-Sham determinant wave function at $r_s=1.25$. The black lines show the same functions for the free Fermi (FF) gas as reference.}
+	\label{fig:hsolid-det-sk-nk}
 \end{figure}
 
 The Jastrow and back flow functions are variationally optimized using the electronic hamiltonian at vdW-DF optimized clamped-ion geometries. The optimized functions at 480 GPa ($r_s\approx 1.25$) are shown in Fig.~\ref{fig:hsolid-static-jas-bf}.
@@ -217,19 +334,19 @@ Its optimized e-p Jastrow and back flow have much in common with those of the at
 This is likely an artifact of either the clamped-ion approximation or under-converged optimization. Once these functions are reoptimized with dynamic ions, all Jastrow and back flow components involving the electrons become essentially identical across all candidate structures, as shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117b_sjas-rs125}\\
-(a) Jastrow pair functions
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117b_sbf-rs125}\\
-(b) Back flow pair functions
-\end{minipage}
-\caption{Jastrow and back flow pair functions optimized at static-lattice minimum at 480 GPa. Color denotes the crystal structure. The solid line is the pair function for electron-proton, the dashed line for same-spin electrons, and the dotted lines for unlike-spin electrons.}
-\label{fig:hsolid-static-jas-bf}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117b_sjas-rs125}\\
+		(a) Jastrow pair functions
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117b_sbf-rs125}\\
+		(b) Back flow pair functions
+	\end{minipage}
+	\caption{Jastrow and back flow pair functions optimized at static-lattice minimum at 480 GPa. Color denotes the crystal structure. The solid line is the pair function for electron-proton, the dashed line for same-spin electrons, and the dotted lines for unlike-spin electrons.}
+	\label{fig:hsolid-static-jas-bf}
 \end{figure}
 
 \subsubsection{Ionic Components}
@@ -253,19 +370,19 @@ The electron-ion Jastrow of the Cmca-4 Jastrow and back flow functions fall into
 As shown in Fig.~\ref{fig:hsolid-dynamic-jas-bf}, after re-optimization, the only noticeable difference among the three structures lie in the proton-proton Jastrow.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117b_nbjas-rs125}\\
-(a) Jastrow pair functions
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117b_nbbf-rs125}\\
-(b) Back flow pair functions
-\end{minipage}
-\caption{Jastrow and back flow pair functions optimized using dynamic-lattice VMC. The dash-dotted line is the pair function for proton-proton correlation. All other notations are identical to those in Fig.~\ref{fig:hsolid-static-jas-bf}.}
-\label{fig:hsolid-dynamic-jas-bf}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117b_nbjas-rs125}\\
+		(a) Jastrow pair functions
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117b_nbbf-rs125}\\
+		(b) Back flow pair functions
+	\end{minipage}
+	\caption{Jastrow and back flow pair functions optimized using dynamic-lattice VMC. The dash-dotted line is the pair function for proton-proton correlation. All other notations are identical to those in Fig.~\ref{fig:hsolid-static-jas-bf}.}
+	\label{fig:hsolid-dynamic-jas-bf}
 \end{figure}
 
 In contrast, the width of the gaussians in the proton orbital $C_p$ are optimized using \emph{maximum overlap}~\cite{Reatto1982,Natoli1993,Natoli1995}.
@@ -291,19 +408,19 @@ We further note that optimal $C_p$ is the same along $x$, $y$, and $z$ direction
 Finally, the exact value of $C_p$ will not bias the DMC result so long as the projection time is sufficiently converged. This is because the protons are treated as distinguishable particles and DMC is exact at infinite projection time.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_copt-c2c-rs127-ca175}\\
-(a) Lattice deviations vs. prediction from isolated gaussian wave function with exponent $C_p$
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117c_all-copt}\\
-(b) optimized exponents as a function of density
-\end{minipage}
-\caption{Maximum overlap optimization of the proton wave function. (a) Optimization of the C2/c-24 proton wave function at $r_s=1.269$. (b) Optimized proton wave function exponent $C_p$ of all candidate structures. The markers show the $C_p$ value at the intercept of VMC and DMC. The lines are linear fits, but shifted down slightly to error on the side of oversampling. These fits are used to determine the $C_p$ value in the dynamic-lattice calculations.}
-\label{fig:hsolid-cp-opt}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117_copt-c2c-rs127-ca175}\\
+		(a) Lattice deviations vs. prediction from isolated gaussian wave function with exponent $C_p$
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117c_all-copt}\\
+		(b) optimized exponents as a function of density
+	\end{minipage}
+	\caption{Maximum overlap optimization of the proton wave function. (a) Optimization of the C2/c-24 proton wave function at $r_s=1.269$. (b) Optimized proton wave function exponent $C_p$ of all candidate structures. The markers show the $C_p$ value at the intercept of VMC and DMC. The lines are linear fits, but shifted down slightly to error on the side of oversampling. These fits are used to determine the $C_p$ value in the dynamic-lattice calculations.}
+	\label{fig:hsolid-cp-opt}
 \end{figure}
 
 In practice, the choice of $C_p$ is important.
@@ -344,10 +461,10 @@ Equation~(\ref{eq:hsolid-drum-ref}) reproduces the QMC data to well within $1$ m
 Thus, we can expect the reference EOS to be accurate over the pressure range $150$ ($r_s=1.48$) to $460$ GPa ($r_s=1.26$), but fail when extrapolated much beyond these limits.
 
 \begin{figure}[h]
-\centering
-\includegraphics[scale=0.6]{h117ds_c2c-drum-eps}
-\caption{Fitting of reference equation of state. The solid symbols are DMC data from Ref.~\cite{Drummond2015}, while the line is a quadratic fit to the circled points. The bottom panels shows the error in the fit.}
-\label{fig:hsolid-drum-eos}
+	\centering
+	\includegraphics[scale=0.6]{h117ds_c2c-drum-eps}
+	\caption{Fitting of reference equation of state. The solid symbols are DMC data from Ref.~\cite{Drummond2015}, while the line is a quadratic fit to the circled points. The bottom panels shows the error in the fit.}
+	\label{fig:hsolid-drum-eos}
 \end{figure}
 
 The static-lattice DMC energy is plotted relative to reference in Fig.~\ref{fig:static-qmc-vs-drummond}(a). At the same density, we obtain lower total energy than Drummond \textit{et al.}~\cite{Drummond2015} partly due to our use of vdW-DF, rather than  PBE, to optimize the crystal structure; and partly due to in the inclusion of back flow transformations. At the same geometry, DMC energy is unchanged to within 3 meV/p whether PBE or vdW-DF is used to generate the orbitals in the determinant wave function.
@@ -357,19 +474,19 @@ This is encouraging, because it implies that the fixed-node error on the pressur
 Even with improved geometry and wave function, we get back very similar pressure as PBE geometry and Slater-Jastrow wave function at the same density.
 
 \begin{figure}[h]
-\begin{minipage}{0.49\textwidth}
-\centering
-%\includegraphics[width=\linewidth]{101sd_ev-s3}
-\includegraphics[width=\linewidth]{h117ds_fsc1_e-vs-rho}
-(a) energy-density relation
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-%\includegraphics[width=\linewidth]{101se_hp}
-\includegraphics[width=\linewidth]{h117ds_fsc1_h-vs-p}
-(b) enthalpy-pressure relation
-\end{minipage}
-\caption{Static-lattice DMC energy and enthalpy relative to Drummond \textit{et al.}~\cite{Drummond2015} reference eq.~(\ref{eq:hsolid-drum-ref}). Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-density EOS, which is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of $\rho$. The markers are finite-size corrected simulation data without performing a fit. $P_0$ is the pressure calculated from the reference EOS $P_0=-dE_0/d\Omega$. \label{fig:static-qmc-vs-drummond}}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		%\includegraphics[width=\linewidth]{101sd_ev-s3}
+		\includegraphics[width=\linewidth]{h117ds_fsc1_e-vs-rho}
+		(a) energy-density relation
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		%\includegraphics[width=\linewidth]{101se_hp}
+		\includegraphics[width=\linewidth]{h117ds_fsc1_h-vs-p}
+		(b) enthalpy-pressure relation
+	\end{minipage}
+	\caption{Static-lattice DMC energy and enthalpy relative to Drummond \textit{et al.}~\cite{Drummond2015} reference eq.~(\ref{eq:hsolid-drum-ref}). Relative energies are shown in meV per proton (meV/p). Each solid line is obtained using a fitted energy-density EOS, which is obtained by fitting the finite-size corrected (FSC) total energy as a quadratic function of $\rho$. The markers are finite-size corrected simulation data without performing a fit. $P_0$ is the pressure calculated from the reference EOS $P_0=-dE_0/d\Omega$. \label{fig:static-qmc-vs-drummond}}
 \end{figure}
 
 QMC enthalpy can be calculated from virial pressure and plotted relative to the reference EOS as shown in Fig.~\ref{fig:static-qmc-vs-drummond}(b). We observe a transition from C2/c-24 to Cmca-4 around $640$ GPa and no transition to the atomic structure up to $800$ GPa.
@@ -387,20 +504,20 @@ we see that the QMC virial pressure is 4.2\% and 3.2\% lower than vdW-DF pressur
 In this plot, we also see that the mixed estimator error is 1 to 5 GPa, so the linearly-extrapolated static-lattice DMC pressure should be accurate to 1 GPa.
 
 \begin{figure}[ht]
-\centering
-\begin{minipage}{0.49\linewidth}
-\centering
-\includegraphics[width=\textwidth]{h117dc_static_var-vs-pgpa}
-(a) static lattice
-\end{minipage}
-\centering
-\begin{minipage}{0.49\linewidth}
-\centering
-\includegraphics[width=\textwidth]{h117dc_dynamic_var-vs-pgpa}
-(a) dynamic lattice
-\end{minipage}
-\caption{QMC variance vs. pressure. The lines are guides to the eye.}
-\label{fig:hsolid-v-vs-p}
+	\centering
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=\textwidth]{h117dc_static_var-vs-pgpa}
+		(a) static lattice
+	\end{minipage}
+	\centering
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=\textwidth]{h117dc_dynamic_var-vs-pgpa}
+		(a) dynamic lattice
+	\end{minipage}
+	\caption{QMC variance vs. pressure. The lines are guides to the eye.}
+	\label{fig:hsolid-v-vs-p}
 \end{figure}
 
 Finally, the variance of the optimized static-lattice wave functions are shown in Fig.~\ref{fig:hsolid-v-vs-p}(a) as a function of pressure.
@@ -430,29 +547,29 @@ As shown in Fig.~\ref{fig:hsolid-ion-energy}(a), the ZPE increases from $\sim 47
 Most of the density dependence of the ZPE comes from the proton kinetic energy.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117dc_LocalEnergy}\\
-(a) total energy change (zero-point energy)
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117dc_LocalPotential}\\
-(b) potential energy change
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117dc_skinetic_e}\\
-(c) electronic kinetic energy change
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117dc_skinetic_p}\\
-(d) proton kinetic energy
-\end{minipage}
-\caption{Energy changes from static-lattice to dynamic-lattice simulations as functions of electron density $\rho=N/\Omega$. (a) zero-point energies of the candidate structures. (b) total potential energy change due to dynamic protons. (c) electronic kinetic energy change due to dynamic protons. (d) proton kinetic energy. Color and marker label candidate structures. The solid lines are guides to the eyes.}
-\label{fig:hsolid-ion-energy}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117dc_LocalEnergy}\\
+		(a) total energy change (zero-point energy)
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117dc_LocalPotential}\\
+		(b) potential energy change
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117dc_skinetic_e}\\
+		(c) electronic kinetic energy change
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117dc_skinetic_p}\\
+		(d) proton kinetic energy
+	\end{minipage}
+	\caption{Energy changes from static-lattice to dynamic-lattice simulations as functions of electron density $\rho=N/\Omega$. (a) zero-point energies of the candidate structures. (b) total potential energy change due to dynamic protons. (c) electronic kinetic energy change due to dynamic protons. (d) proton kinetic energy. Color and marker label candidate structures. The solid lines are guides to the eyes.}
+	\label{fig:hsolid-ion-energy}
 \end{figure}
 
 An immediate consequence of the higher kinetic and potentials energies in the dynamic-lattice simulation is higher virial pressure, about $20$ GPa higher than its static-lattice counterpart.
@@ -472,18 +589,18 @@ In summary, ZPE stabilizes the atomic phase by roughly $40$ meV/p and the Cmca-4
 
 % exclude Cmca-4 rs=1.22
 \begin{figure}[h]
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117dd_e-vs-rho}
-(a) energy-density relation
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117dd_h-vs-p}
-(a) enthalpy-pressure relation
-\end{minipage}
-\caption{Dynamic-lattice energy and enthalpy relative to reference. Lines are quadratic fits. The crossed out points are excluded from the fit.}
-\label{fig:dynamic-qmc-vs-drummond}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117dd_e-vs-rho}
+		(a) energy-density relation
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117dd_h-vs-p}
+		(a) enthalpy-pressure relation
+	\end{minipage}
+	\caption{Dynamic-lattice energy and enthalpy relative to reference. Lines are quadratic fits. The crossed out points are excluded from the fit.}
+	\label{fig:dynamic-qmc-vs-drummond}
 \end{figure}
 
 The enthalpy-pressure relation in Fig.~\ref{fig:dynamic-qmc-vs-drummond}(b) tells the same story and we can read off the transition pressures among the candidate structures.
@@ -499,29 +616,29 @@ This ``frozen orbital'' approach incurs around $80$ meV/p more fixed-node error 
 \subsection{Effect of Dynamic Ions on Electronic Correlation Functions}
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117ga_static-rs125-s2-gr}\\
-(a) static lattice
-\end{minipage}
-%\begin{minipage}{0.49\textwidth}
-%\centering
-%\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s0-gr}\\
-%(b) dynamic lattice VMC
-%\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s2-gr}\\
-(b) dynamic lattice %DMC ts=3.0
-\end{minipage}
-%\begin{minipage}{0.49\textwidth}
-%\centering
-%\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s3-gr}\\
-%(d) dynamic lattice DMC ts=1.5
-%\end{minipage}
-\caption{DMC electronic pair correlation functions at $r_s=1.25$. Color denotes candidate structure, while the black lines are $g(r)$ of the unpolarized homogeneous electron gas at the same density as parametrized by P. Gori-Giorgi, F. Sacchetti and G. B. Bachelet (GSB)~\cite{Gori-Giorgi2000}.}
-\label{fig:hsolid-eegr}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117ga_static-rs125-s2-gr}\\
+		(a) static lattice
+	\end{minipage}
+	%\begin{minipage}{0.49\textwidth}
+	%\centering
+	%\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s0-gr}\\
+	%(b) dynamic lattice VMC
+	%\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s2-gr}\\
+		(b) dynamic lattice %DMC ts=3.0
+	\end{minipage}
+	%\begin{minipage}{0.49\textwidth}
+	%\centering
+	%\includegraphics[width=\linewidth]{h117ga_dynamic-rs125-s3-gr}\\
+	%(d) dynamic lattice DMC ts=1.5
+	%\end{minipage}
+	\caption{DMC electronic pair correlation functions at $r_s=1.25$. Color denotes candidate structure, while the black lines are $g(r)$ of the unpolarized homogeneous electron gas at the same density as parametrized by P. Gori-Giorgi, F. Sacchetti and G. B. Bachelet (GSB)~\cite{Gori-Giorgi2000}.}
+	\label{fig:hsolid-eegr}
 \end{figure}
 
 The electron-electron pair correlation function are shown in real space $g(r)$ in Fig.~\ref{fig:hsolid-eegr}.
@@ -536,19 +653,19 @@ A more subtle difference is the presence of small periodic modulations of the el
 The atomic structure shows no enhancement of unlike-spin correlation function at $r=0$, whereas it shows the same periodic modulations as the molecular structures at long range.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_grsk-static-sk}\\
-(a) static
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_grsk-dynamic-esk}\\
-(b) dynamic
-\end{minipage}
-\caption{Electron-electron static structure factor $S(k)$.}
-\label{fig:hsolid-esk}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117_grsk-static-sk}\\
+		(a) static
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117_grsk-dynamic-esk}\\
+		(b) dynamic
+	\end{minipage}
+	\caption{Electron-electron static structure factor $S(k)$.}
+	\label{fig:hsolid-esk}
 \end{figure}
 
 The electron-electron static structure factor is shown in Fig.~\ref{fig:hsolid-esk}.
@@ -557,19 +674,19 @@ However, small increase in correlation can be seen at intermediate range $k/k_F\
 Further, subtle differences at long-range ($k\rightarrow0$) can make the electronic properties of the candidate structures qualitatively different from those of the electron gas and from each other.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117gs_eps-vs-rho}\\
-(a) static lattice
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117gd_eps-vs-rho}\\
-(b) dynamic lattice
-\end{minipage}
-\caption{Upper bound on inverse dielectric constant.}
-\label{fig:hsolid-epsinv}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117gs_eps-vs-rho}\\
+		(a) static lattice
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117gd_eps-vs-rho}\\
+		(b) dynamic lattice
+	\end{minipage}
+	\caption{Upper bound on inverse dielectric constant.}
+	\label{fig:hsolid-epsinv}
 \end{figure}
 
 %\subsection{Dielectric Constants from S(k)}
@@ -593,30 +710,30 @@ The dynamic-lattice results Fig.~\ref{fig:hsolid-epsinv}(b) show all structures 
 \subsection{Proton-proton g(r) and S(k)}
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117gd_ppgr-s2}\\
-(a) pair correlation function $g(r)$
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117gd_sk0-s2}\\
-(b) static structure factor $S(k)$
-\end{minipage}
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117gd_ppsk-peaks-vs-pgpa}\\
-(c) Bragg peaks of p-p $S(k)$
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117gd_ppsk-k0-vs-pgpa}\\
-(d) long wavelength limit
-\end{minipage}
-\caption{Proton-proton pair correlation functions around $r_s=1.25$ ($480$ GPa). The solid lines in (b) are quadratic fits to the smooth part of $S(k)$. (c) Bragg peaks of the p-p $S(k)$ (d) long wavelength limit $S(0)$.  $\vert\bs{G}_1\vert\approx 1.81$ bohr$^{-1}$, $\vert\bs{G}_2\vert\approx 1.87$ bohr$^{-1}$ for all three molecular structures. $\vert\bs{G}_3\vert\approx 2.5$ for C2/c-24 and Cmca-4 and $1.93$ for Cmca-12. The atomic structure's Bragg peak can be found between $1.83$ and $1.88$ bohr$^{-1}$. The same outliers as Fig.~\ref{fig:dynamic-qmc-vs-drummond} are excluded from the quadratic fits in (d).}
-\label{fig:hsolid-ppgrsk}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117gd_ppgr-s2}\\
+		(a) pair correlation function $g(r)$
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117gd_sk0-s2}\\
+		(b) static structure factor $S(k)$
+	\end{minipage}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117gd_ppsk-peaks-vs-pgpa}\\
+		(c) Bragg peaks of p-p $S(k)$
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117gd_ppsk-k0-vs-pgpa}\\
+		(d) long wavelength limit
+	\end{minipage}
+	\caption{Proton-proton pair correlation functions around $r_s=1.25$ ($480$ GPa). The solid lines in (b) are quadratic fits to the smooth part of $S(k)$. (c) Bragg peaks of the p-p $S(k)$ (d) long wavelength limit $S(0)$.  $\vert\bs{G}_1\vert\approx 1.81$ bohr$^{-1}$, $\vert\bs{G}_2\vert\approx 1.87$ bohr$^{-1}$ for all three molecular structures. $\vert\bs{G}_3\vert\approx 2.5$ for C2/c-24 and Cmca-4 and $1.93$ for Cmca-12. The atomic structure's Bragg peak can be found between $1.83$ and $1.88$ bohr$^{-1}$. The same outliers as Fig.~\ref{fig:dynamic-qmc-vs-drummond} are excluded from the quadratic fits in (d).}
+	\label{fig:hsolid-ppgrsk}
 \end{figure}
 
 The proton-proton pair correlation function of all candidate structures at $r_s\approx1.25$ are shown in Fig.~\ref{fig:hsolid-ppgrsk}(a).
@@ -644,29 +761,29 @@ The compressibility of C2/c-24 is approximately independent of pressure, whereas
 The atomic structure is twice as compressible as the molecular structures at all pressures.
 
 \begin{figure}[h]
-\centering
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_evp-static-fsc1-rel0-rm121}\\
-(a) static-lattice absolute scale
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_evp-dynamic-fsc1-rel0-rm121_p-rs}\\
-(b) dynamic-lattice absolute scale
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_evp-static-fsc1-rel1-rm121}\\
-(c) static-lattice relative to $P_0$
-\end{minipage}
-\begin{minipage}{0.49\textwidth}
-\centering
-\includegraphics[width=\linewidth]{h117_evp-dynamic-fsc1-rel1-rm121_p-rs}\\
-(d) dynamic-lattice relative to $P_0$
-\end{minipage}
-\caption{Pressure-density relation. The solid lines are clamped-ion vdW-DF pressures, whereas the symbols are QMC pressures. (a) (c) show static-lattice results, while (b) (d) show dynamic lattice results. Color denotes different candidate structures. The open and filled symbols represent VMC and linearly extrapolated DMC estimator results. They overlap on the absolute scale in (a) but can be seen to differ by 1 to 5 GPa on a relative scale in (b). The reference pressure-density relation $P_0=-dE_0/dv$ is calculated from the reference EOS $E_0(1/v)$. The same clamped-ion reference is used for both static-lattice and dynamic-lattice results.}
-\label{fig:hsolid-p-vs-n}
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117_evp-static-fsc1-rel0-rm121}\\
+		(a) static-lattice absolute scale
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117_evp-dynamic-fsc1-rel0-rm121_p-rs}\\
+		(b) dynamic-lattice absolute scale
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117_evp-static-fsc1-rel1-rm121}\\
+		(c) static-lattice relative to $P_0$
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{h117_evp-dynamic-fsc1-rel1-rm121_p-rs}\\
+		(d) dynamic-lattice relative to $P_0$
+	\end{minipage}
+	\caption{Pressure-density relation. The solid lines are clamped-ion vdW-DF pressures, whereas the symbols are QMC pressures. (a) (c) show static-lattice results, while (b) (d) show dynamic lattice results. Color denotes different candidate structures. The open and filled symbols represent VMC and linearly extrapolated DMC estimator results. They overlap on the absolute scale in (a) but can be seen to differ by 1 to 5 GPa on a relative scale in (b). The reference pressure-density relation $P_0=-dE_0/dv$ is calculated from the reference EOS $E_0(1/v)$. The same clamped-ion reference is used for both static-lattice and dynamic-lattice results.}
+	\label{fig:hsolid-p-vs-n}
 \end{figure}
 
 \section{Conclusion}
