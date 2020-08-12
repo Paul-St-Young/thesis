@@ -13,8 +13,10 @@
 \usepackage[toc,page]{appendix}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[chapter]
+\renewcommand{\thedefinition}{\thechapter.\arabic{definition}}
+\newtheorem{theorem}{Theorem}[chapter]
+\renewcommand{\thetheorem}{\thechapter.\arabic{theorem}}
 
 % try bibtex
 \usepackage[
@@ -129,6 +131,12 @@ sorting=none
 \input{sections/dvs}
 \end{appendices}
 
-\printbibliography
+%\clearpage
+%\addcontentsline{toc}{chapter}{Bibliography}
+
+%\chapter{References}
+%\printbibliography[heading=none]
+
+\printbibliography[heading=bibintoc, title={References}]
 
 \end{document}

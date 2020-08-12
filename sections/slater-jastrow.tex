@@ -67,9 +67,9 @@ This chapter will serve as a summary of some physical insights we have been able
 
 \section{Definitions}
 
-\subsection{Definition 1: Fourier Transform}
+\begin{definition}
 \label{sec:def-ft}
-The Fourier transform of a 3D function in coordinate space is defined as
+The \textit{Fourier Transform} of a 3D function in coordinate space is defined as
 \begin{align}
 f(\bs{k}) = \int d^3\bs{r} e^{i\bs{k}\cdot\bs{r}} f(\bs{r}). \label{eq:forward-ft}
 \end{align}
@@ -83,9 +83,11 @@ In a finite cell of volume $\Omega$, momentum states are discretized. Each state
 \begin{align} \label{eq:lattice-ift}
 f(\bs{r}) = \frac{1}{\Omega} \sum\limits_{\bs{k}} e^{-i\bs{k}\cdot\bs{r}} f_{\bs{k}}.
 \end{align}
+\end{definition}
+%\subsection{Definition 1: Fourier Transform}
 
-\subsection{Definition 2: Collective Coordinates}
-The collective coordinate of $N$ particles of species $\alpha$ is the Fourier transform of their instantaneous number density
+\begin{definition}
+The \textit{collective coordinates} of $N$ particles of species $\alpha$ is the Fourier transform of their instantaneous number density
 \begin{align}
 \rho^\alpha(\bs{k}) = \int d^3\bs{r} e^{i\bs{k}\cdot\bs{r}} \rho^\alpha(\bs{r})
 = \int d^3\bs{r} e^{i\bs{k}\cdot\bs{r}} \sum\limits_{j=1}^{N_\alpha} \delta(\bs{r}-\bs{r}^\alpha_j)=\sum\limits_{j=1}^{N_\alpha} e^{i\bs{k}\cdot\bs{r}_j^\alpha}. \label{eq:rhok}
@@ -107,8 +109,9 @@ For particles interacting via the Coulomb pair potential
 v^{\alpha\beta}(\bs{r}) = \frac{Q_\alpha Q_\beta}{r},
 \end{align}
 where $Q_\alpha$ and $Q_\beta$ are the charges of species $\alpha$ and $\beta$, respectively.
+\end{definition}
 
-\subsection{Definition 3: Jastrow Pair Function}
+\begin{definition}\textit{Jastrow Pair Function}:
 The general form of a Jastrow wavefunction containing two-body terms is
 \begin{align} \label{eq:wf-def-jas}
 \Psi = \exp\left(-U\right),
@@ -121,13 +124,15 @@ u^{\alpha\beta}(\vert\bs{r}_i^\alpha - \bs{r}_j^\beta \vert) \nonumber \\
 u^{\alpha\beta}_{\bs{k}} \left( \rho^\beta_{\bs{k}}\rho^\alpha_{-\bs{k}}-\delta_{\alpha\beta}N_\alpha \right).
 \end{align}
 $u^{\alpha\beta}(\bs{r})$ is the \emph{Jastrow pair function}. In the high temperature limit, $u^{\alpha\beta}(\bs{r})=\frac{v^{\alpha\beta}(\bs{r})}{2k_BT}$. $u^{\alpha\beta}_{\bs{k}}$ is the Fourier transform of $u^{\alpha\beta}(\bs{r})$ in the unit cell having volume $\Omega$ as defined by eq.~(\ref{eq:lattice-ift}).
+\end{definition}
 
-\subsection{Definition 4: Slater Determinant}
-A Slater determinant is a many-body wavefunction ansatz for the ground state of a collection of same-spin fermions. It is the anti-symmetrized version of a product wavefunction ansatz for distinguishable particles.
+\begin{definition}
+A \textit{Slater determinant} is a many-body wavefunction ansatz for the ground state of a collection of same-spin fermions. It is the anti-symmetrized version of a product wavefunction ansatz for distinguishable particles.
 \begin{align}
 \Psi = \frac{1}{\sqrt{N!}}\sum\limits_{\mathcal{P}} (-1)^{\mathcal{P}} \left( \prod\limits_{i=1}^N \phi_{\mathcal{P}_i}(\bs{r}_i) \right),\label{eq:det}
 \end{align}
 where $N$ is the number of fermions, $\bs{r}_1, \bs{r}_2, \dots, \bs{r}_N$ are their spatial coordinates. $\mathcal{P}$ is a permutation of the particle indices $1, 2, \dots, N$. $\phi_1, \phi_2, \dots, \phi_N$ are a set of one-body wave functions (a.k.a. orbitals).
+\end{definition}
 
 \section{Cusp Conditions}\label{sec:wf-cusp}
 \emph{Derivation guided by Ex.~6.6 in Ref.~\cite{Martin2016}}
