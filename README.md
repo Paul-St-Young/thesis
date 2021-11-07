@@ -12,3 +12,9 @@
 
 ### remove abstract from .bib
 biber.exe --tool --configfile=remabs.conf hsolid.bib
+
+Fedora:
+texlive-make4ht
+texlive-latex
+Ubuntu:
+textlive-extra-utils
