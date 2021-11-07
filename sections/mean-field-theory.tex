@@ -106,7 +106,7 @@ The difference between the exact and the RHF energies defines the \textit{correl
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6\linewidth]{f19a_h2-rhf-basis}
+\includegraphics[width=0.6\linewidth]{f19a_h2-rhf-basis.pdf}
 \caption{RHF electronic ground-state energy of H$_2$ in STO-3G and correlation consistent (cc) basis sets as compared to the exact values calculated by Kolos and Wolniewicz (KW)~\cite{Kolos1964}}
 \label{fig:hf-h2}
 \end{figure}
@@ -229,8 +229,8 @@ This is a special case, because the ionization energy is dominated by the long-r
 When extended to handle systems with fractional electron number, the derivative discontinuity of the exact density functional is $E_g$. It has contribution from both the non-interacting kinetic functional $T_s[n]$ and the exact exchange-correlation functional $E_{xc}[n]$. The KS HOMO-LUMO gap measures the derivative discontinuity in $T_s[n]$. However, as shown in Fig.~\ref{fig:method-dft-smooth-lda}, the $E_{xc}[n]$ under LDA is smooth, so its contribution to the gap is missing. As a result, the LDA gap is $\sim 50\%$ that of experiment, showing that the derivative discontinuity in $E_{xc}[n]$ can be of similar magnitude as the gap and cannot be ignored.
 
 \begin{figure}[h]
-\includegraphics[width=0.45\linewidth]{cohen2008-fig1}
-\includegraphics[width=0.52\linewidth]{cohen2008-fig2}
+\includegraphics[width=0.45\linewidth]{cohen2008-fig1.png}
+\includegraphics[width=0.52\linewidth]{cohen2008-fig2.png}
 \caption{A. J. Cohen, P. Mori-S\'anchez, and W. Yang~\cite{Cohen2008} explains that the self-interaction error in H$_2^+$ binding curve (left panel A) is due to the presence of fractional electron (left panel B), which leads to a delocalization error when LDA is used.}
 \label{fig:method-dft-smooth-lda}
 \end{figure}
